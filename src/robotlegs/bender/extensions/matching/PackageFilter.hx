@@ -1,0 +1,153 @@
+//------------------------------------------------------------------------------
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
+// 
+//  NOTICE: You are permitted to use, modify, and distribute this file 
+//  in accordance with the terms of the license agreement accompanying it. 
+//------------------------------------------------------------------------------
+
+package robotlegs.bender.extensions.matching;
+
+import flash.utils.getQualifiedClassName;
+
+/**
+ * A filter that describes a package matcher
+ */
+class PackageFilter implements ITypeFilter
+{
+
+	/*============================================================================*/
+	/* Public Properties                                                          */
+	/*============================================================================*/
+
+	private var _descriptor:String;
+
+	/**
+	 * @inheritDoc
+	 */
+	public function get descriptor():String
+	{
+		return _descriptor ||= createDescriptor();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function get allOfTypes():Array<Class>
+	{
+		return emptyVector;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function get anyOfTypes():Array<Class>
+	{
+		return emptyVector;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function get noneOfTypes():Array<Class>
+	{
+		return emptyVector;
+	}
+
+	/*============================================================================*/
+	/* private Properties                                                       */
+	/*============================================================================*/
+
+	private var emptyVector:Array<Class> = new Array<Class>();
+
+	private var _requirePackage:String;
+
+	private var _anyOfPackages:Array<String>;
+
+	private var _noneOfPackages:Array<String>;
+
+	/*============================================================================*/
+	/* Constructor                                                                */
+	/*============================================================================*/
+
+	/**
+	 * Creates a new Package Filter
+	 * @param requiredPackage
+	 * @param anyOfPackages
+	 * @param noneOfPackages
+	 */
+	public function new(requiredPackage:String, anyOfPackages:Array<String>, noneOfPackages:Array<String>)
+	{
+		_requirePackage = requiredPackage;
+		_anyOfPackages = anyOfPackages;
+		_noneOfPackages = noneOfPackages;
+		_anyOfPackages.sort(stringSort);
+		_noneOfPackages.sort(stringSort);
+	}
+
+	/*============================================================================*/
+	/* Public Functions                                                           */
+	/*============================================================================*/
+
+	/**
+	 * @inheritDoc
+	 */
+	public function matches(item:Dynamic):Bool
+	{
+		var fqcn:String = getQualifiedClassName(item);
+		var packageName:String;
+
+		if (_requirePackage && (!matchPackageInFQCN(_requirePackage, fqcn)))
+			return false;
+
+		for each (packageName in _noneOfPackages)
+		{
+			if (matchPackageInFQCN(packageName, fqcn))
+				return false;
+		}
+
+		for each (packageName in _anyOfPackages)
+		{
+			if (matchPackageInFQCN(packageName, fqcn))
+				return true;
+		}
+		if (_anyOfPackages.length > 0)
+			return false;
+
+		if (_requirePackage)
+			return true;
+
+		if (_noneOfPackages.length > 0)
+			return true;
+
+		return false;
+	}
+
+	/*============================================================================*/
+	/* private Functions                                                        */
+	/*============================================================================*/
+
+	private function stringSort(item1:String, item2:String):Int
+	{
+		if (item1 > item2)
+		{
+			return 1;
+		}
+		return -1;
+	}
+
+	/*============================================================================*/
+	/* Private Functions                                                          */
+	/*============================================================================*/
+
+	private function createDescriptor():String
+	{
+		return "require: " + _requirePackage
+			+ ", any of: " + _anyOfPackages.toString()
+			+ ", none of: " + _noneOfPackages.toString();
+	}
+
+	private function matchPackageInFQCN(packageName:String, fqcn:String):Bool
+	{
+		return (fqcn.indexOf(packageName) == 0)
+	}
+}

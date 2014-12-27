@@ -21,7 +21,7 @@ interface IDirectCommandMapper
 	 * @param commandClass The concrete Command class
 	 * @return Mapping configurator
 	 */
-	function map(commandClass:Class):IDirectCommandConfigurator;
+	function map(commandClass:Class<Dynamic>):IDirectCommandConfigurator;
 
 	/**
 	 * Execute the configured command(s)

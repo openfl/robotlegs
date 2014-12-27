@@ -53,14 +53,14 @@ class LifecycleEvent extends Event
 	/*============================================================================*/
 
 	private var _error:Error;
-
+	public var error(default, null):Error;
 	/**
 	 * Associated lifecycle error
 	 */
-	public function get error():Error
+	/*public function get_error():Error
 	{
 		return _error;
-	}
+	}*/
 
 	/*============================================================================*/
 	/* Constructor                                                                */

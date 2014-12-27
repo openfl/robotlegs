@@ -41,7 +41,8 @@ class EventRelay
 	{
 		_source = source;
 		_destination = destination;
-		_types = types || [];
+		if (types != null) _types = types;
+		else _types = [];
 	}
 
 	/*============================================================================*/
@@ -54,7 +55,7 @@ class EventRelay
 	 */
 	public function start():EventRelay
 	{
-		if (_active == null)
+		if (!_active)
 		{
 			_active = true;
 			addListeners();
@@ -83,7 +84,7 @@ class EventRelay
 	public function addType(eventType:String):Void
 	{
 		_types.push(eventType);
-		_active && addListener(eventType);
+		if (_active) addListener(eventType);
 	}
 
 	/**
@@ -116,7 +117,7 @@ class EventRelay
 
 	private function addListeners():Void
 	{
-		for each (var type:String in _types)
+		for (type in _types)
 		{
 			addListener(type);
 		}
@@ -124,7 +125,7 @@ class EventRelay
 
 	private function removeListeners():Void
 	{
-		for each (var type:String in _types)
+		for (type in _types)
 		{
 			removeListener(type);
 		}

@@ -28,7 +28,7 @@ class ModuleConnector implements IModuleConnector
 
 	private var _localDispatcher:IEventDispatcher;
 
-	private var _configuratorsByChannel:Dynamic = {};
+	private var _configuratorsByChannel:Map<String, ModuleConnectionConfigurator>;
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -71,11 +71,12 @@ class ModuleConnector implements IModuleConnector
 
 	private function destroy():Void
 	{
-		for (var channelId:String in _configuratorsByChannel)
+		for (channelId in _configuratorsByChannel)
 		{
-			var configurator:ModuleConnectionConfigurator = _configuratorsByChannel[channelId];
+			var id = cast(channelId, String);
+			var configurator:ModuleConnectionConfigurator = _configuratorsByChannel[id];
 			configurator.destroy();
-			delete _configuratorsByChannel[channelId];
+			_configuratorsByChannel[id] = null;
 		}
 
 		_configuratorsByChannel = null;
@@ -85,12 +86,20 @@ class ModuleConnector implements IModuleConnector
 
 	private function getOrCreateConfigurator(channelId:String):ModuleConnectionConfigurator
 	{
-		return _configuratorsByChannel[channelId] ||= createConfigurator(channelId);
+		// CHECK
+		if (!Reflect.hasField(_configuratorsByChannel, channelId)) {
+		//if (_configuratorsByChannel[channelId] == null) {
+			Reflect.setField(_configuratorsByChannel, channelId, createConfigurator(channelId));
+			//_configuratorsByChannel[channelId] = createConfigurator(channelId);
+		}
+		return Reflect.getProperty(_configuratorsByChannel, channelId);
+		//return _configuratorsByChannel[channelId];
+		//return _configuratorsByChannel[channelId] ||= createConfigurator(channelId);
 	}
 
 	private function createConfigurator(channelId:String):ModuleConnectionConfigurator
 	{
-		if (_rootInjector.hasMapping(IEventDispatcher, channelId) == null)
+		if (_rootInjector.hasMapping(IEventDispatcher, channelId))
 		{
 			_rootInjector.map(IEventDispatcher, channelId)
 				.toValue(new EventDispatcher());
@@ -100,7 +109,7 @@ class ModuleConnector implements IModuleConnector
 
 	private function getRootInjector(injector:IInjector):IInjector
 	{
-		while (injector.parent)
+		while (injector.parent != null)
 		{
 			injector = injector.parent;
 		}

@@ -6,6 +6,7 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.extensions.viewProcessorMap.api;
+import openfl.errors.Error;
 
 /**
  * View Processor Map Error

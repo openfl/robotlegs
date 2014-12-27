@@ -17,7 +17,7 @@ interface ICommandMappingList
 	 * @param sorter Sort function
 	 * @return Self
 	 */
-	function withSortFunction(sorter:Function):ICommandMappingList;
+	function withSortFunction(sorter:Dynamic):ICommandMappingList;
 
 	/**
 	 * Sorted list of active mappings
@@ -41,7 +41,7 @@ interface ICommandMappingList
 	 * Removes a mapping from the mapping list using the Command class
 	 * @param commandClass The command class to remove the mapping for
 	 */
-	function removeMappingFor(commandClass:Class):Void;
+	function removeMappingFor(commandClass:Class<Dynamic>):Void;
 
 	/**
 	 * Removes all mappings for this command mapping list

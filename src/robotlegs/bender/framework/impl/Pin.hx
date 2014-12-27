@@ -22,7 +22,7 @@ class Pin
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _instances:Map = new Map<Dynamic, true>();
+	private var _instances = new Map<String, Dynamic>();
 
 	private var _dispatcher:IEventDispatcher;
 
@@ -63,7 +63,7 @@ class Pin
 	{
 		if (_instances[instance])
 		{
-			delete _instances[instance];
+			_instances.remove(instance);
 			_dispatcher.dispatchEvent(new PinEvent(PinEvent.RELEASE, instance));
 		}
 	}
@@ -73,7 +73,7 @@ class Pin
 	 */
 	public function releaseAll():Void
 	{
-		for (var instance:Dynamic in _instances)
+		for (instance in _instances)
 		{
 			release(instance);
 		}

@@ -7,7 +7,7 @@
 
 package robotlegs.bender.extensions.viewProcessorMap.impl;
 
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorMapping;
 
 /**
@@ -22,7 +22,7 @@ class ViewProcessorViewHandler implements IViewProcessorViewHandler
 
 	private var _mappings:Array<Dynamic> = [];
 
-	private var _knownMappings:Dictionary = new Dictionary(true);
+	private var _knownMappings = new Map<String,Dynamic>();
 
 	private var _factory:IViewProcessorFactory;
 
@@ -69,20 +69,20 @@ class ViewProcessorViewHandler implements IViewProcessorViewHandler
 	/**
 	 * @inheritDoc
 	 */
-	public function processItem(item:Dynamic, type:Class):Void
+	public function processItem(item:Dynamic, type:Class<Dynamic>):Void
 	{
 		var interestedMappings:Array<Dynamic> = getInterestedMappingsFor(item, type);
-		if (interestedMappings)
+		if (interestedMappings != null)
 			_factory.runProcessors(item, type, interestedMappings);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function unprocessItem(item:Dynamic, type:Class):Void
+	public function unprocessItem(item:Dynamic, type:Class<Dynamic>):Void
 	{
 		var interestedMappings:Array<Dynamic> = getInterestedMappingsFor(item, type);
-		if (interestedMappings)
+		if (interestedMappings != null)
 			_factory.runUnprocessors(item, type, interestedMappings);
 	}
 
@@ -92,35 +92,40 @@ class ViewProcessorViewHandler implements IViewProcessorViewHandler
 
 	private function flushCache():Void
 	{
-		_knownMappings = new Dictionary(true);
+		_knownMappings = new Map<String,Dynamic>();
 	}
 
-	private function getInterestedMappingsFor(view:Dynamic, type:Class):Array
+	private function getInterestedMappingsFor(view:Dynamic, type:Class<Dynamic>):Array<Dynamic>
 	{
 		var mapping:IViewProcessorMapping;
 
 		// we've seen this type before and nobody was interested
-		if (_knownMappings[type] === false)
+		if (_knownMappings[UID.create(type)] == false)
 			return null;
 
 		// we haven't seen this type before
-		if (_knownMappings[type] == undefined)
+		// CHECK
+		//if (_knownMappings[UID.create(type)] == undefined)
+		if (_knownMappings[UID.create(type)] == null)
 		{
-			_knownMappings[type] = false;
-			for each (mapping in _mappings)
+			_knownMappings[UID.create(type)] = false;
+			for (mapping in _mappings)
 			{
 				if (mapping.matcher.matches(view))
 				{
-					_knownMappings[type] ||= [];
-					_knownMappings[type].push(mapping);
+					// CHECK
+					if (_knownMappings[UID.create(type)] == null) _knownMappings[UID.create(type)] = [];
+					
+					//_knownMappings[UID.create(type)] ||= [];
+					_knownMappings[UID.create(type)].push(mapping);
 				}
 			}
 			// nobody cares, let's get out of here
-			if (_knownMappings[type] === false)
+			if (_knownMappings[UID.create(type)] == false)
 				return null;
 		}
 
 		// these mappings really do care
-		return _knownMappings[type] as Array;
+		return cast(_knownMappings[UID.create(type)], Array<Dynamic>);
 	}
 }

@@ -64,7 +64,7 @@ class ContextViewExtension implements IExtension
 
 	private function beforeInitializing():Void
 	{
-		if (_injector.hasDirectMapping(ContextView) == null)
+		if (!_injector.hasDirectMapping(ContextView))
 		{
 			_logger.error("A ContextView must be installed if you install the ContextViewExtension.");
 		}

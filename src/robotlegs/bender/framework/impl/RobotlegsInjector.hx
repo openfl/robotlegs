@@ -24,17 +24,20 @@ class RobotlegsInjector extends Injector implements IInjector
 	/**
 	 * @inheritDoc
 	 */
-	public function set parent(parentInjector:IInjector):Void
+	public var parent(get, set):IInjector;
+	
+	public function set_parent(parentInjector:IInjector):IInjector
 	{
-		this.parentInjector = parentInjector as RobotlegsInjector;
+		this.parentInjector = cast(parentInjector, RobotlegsInjector);
+		return cast(parentInjector, IInjector);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function get parent():IInjector
+	public function get_parent():IInjector
 	{
-		return this.parentInjector as RobotlegsInjector;
+		return cast(this.parentInjector, RobotlegsInjector);
 	}
 
 	/*============================================================================*/
@@ -47,7 +50,8 @@ class RobotlegsInjector extends Injector implements IInjector
 	public function createChild(applicationDomain:ApplicationDomain = null):IInjector
 	{
 		var childInjector:IInjector = new RobotlegsInjector();
-		childInjector.applicationDomain = applicationDomain || this.applicationDomain;
+		if (applicationDomain != null) childInjector.applicationDomain = applicationDomain;
+		else childInjector.applicationDomain = this.applicationDomain;
 		childInjector.parent = this;
 		return childInjector;
 	}

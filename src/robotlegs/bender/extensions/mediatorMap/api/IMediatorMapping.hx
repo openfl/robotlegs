@@ -17,25 +17,30 @@ interface IMediatorMapping
 	/**
 	 * The matcher for this mapping
 	 */
-	function get matcher():ITypeFilter;
+	public var matcher(get, null):ITypeFilter;
+	function get_matcher():ITypeFilter;
 
 	/**
 	 * The concrete mediator class
 	 */
-	function get mediatorClass():Class;
+	public var mediatorClass(get, null):Class<Dynamic>;
+	function get_mediatorClass():Class<Dynamic>;
 
 	/**
 	 * A list of guards to check before allowing mediator creation
 	 */
-	function get guards():Array;
+	public var guards(get, null):Array<Dynamic>;
+	function get_guards():Array<Dynamic>;
 
 	/**
 	 * A list of hooks to run before creating a mediator
 	 */
-	function get hooks():Array;
+	public var hooks(get, null):Array<Dynamic>;
+	function get_hooks():Array<Dynamic>;
 
 	/**
 	 * Should the mediator be removed when the mediated item looses scope?
 	 */
-	function get autoRemoveEnabled():Bool;
+	public var autoRemoveEnabled(get, null):Bool;
+	function get_autoRemoveEnabled():Bool;
 }

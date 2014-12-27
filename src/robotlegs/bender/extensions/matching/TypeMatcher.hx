@@ -10,18 +10,18 @@ package robotlegs.bender.extensions.matching;
 /**
  * A Type Matcher matches objects that satisfy type matching rules
  */
-class TypeMatcher implements ITypeMatcher, ITypeMatcherFactory
+class TypeMatcher implements ITypeMatcher implements ITypeMatcherFactory
 {
 
 	/*============================================================================*/
 	/* private Properties                                                       */
 	/*============================================================================*/
 
-	private var _allOfTypes:Array<Class> = new Array<Class>();
+	private var _allOfTypes = new Array<Class<Dynamic>>();
 
-	private var _anyOfTypes:Array<Class> = new Array<Class>();
+	private var _anyOfTypes = new Array<Class<Dynamic>>();
 
-	private var _noneOfTypes:Array<Class> = new Array<Class>();
+	private var _noneOfTypes = new Array<Class<Dynamic>>();
 
 	private var _typeFilter:ITypeFilter;
 
@@ -32,7 +32,8 @@ class TypeMatcher implements ITypeMatcher, ITypeMatcherFactory
 	/**
 	 * All types that an item must extend or implement
 	 */
-	public function allOf(... types):TypeMatcher
+	
+	public function allOf(types:Array<Dynamic>):TypeMatcher
 	{
 		pushAddedTypesTo(types, _allOfTypes);
 		return this;
@@ -41,7 +42,7 @@ class TypeMatcher implements ITypeMatcher, ITypeMatcherFactory
 	/**
 	 * Any types that an item must extend or implement
 	 */
-	public function anyOf(... types):TypeMatcher
+	public function anyOf(types:Array<Dynamic>):TypeMatcher
 	{
 		pushAddedTypesTo(types, _anyOfTypes);
 		return this;
@@ -50,7 +51,7 @@ class TypeMatcher implements ITypeMatcher, ITypeMatcherFactory
 	/**
 	 * Types that an item must not extend or implement
 	 */
-	public function noneOf(... types):TypeMatcher
+	public function noneOf(types:Array<Dynamic>):TypeMatcher
 	{
 		pushAddedTypesTo(types, _noneOfTypes);
 		return this;
@@ -62,7 +63,13 @@ class TypeMatcher implements ITypeMatcher, ITypeMatcherFactory
 	public function createTypeFilter():ITypeFilter
 	{
 		// calling this seals the matcher
-		return _typeFilter ||= buildTypeFilter();
+		// CHECK
+		if (_typeFilter == null) {
+			_typeFilter = buildTypeFilter();
+		}
+		return _typeFilter;
+		
+		//return _typeFilter ||= buildTypeFilter();
 	}
 
 	/**
@@ -98,9 +105,9 @@ class TypeMatcher implements ITypeMatcher, ITypeMatcherFactory
 		return new TypeFilter(_allOfTypes, _anyOfTypes, _noneOfTypes);
 	}
 
-	private function pushAddedTypesTo(types:Array<Dynamic>, targetSet:Array<Class>):Void
+	private function pushAddedTypesTo(types:Array<Dynamic>, targetSet:Array<Class<Dynamic>>):Void
 	{
-		_typeFilter && throwSealedMatcherError();
+		if (_typeFilter == null) throwSealedMatcherError();
 
 		pushValuesToClassVector(types, targetSet);
 	}
@@ -110,19 +117,22 @@ class TypeMatcher implements ITypeMatcher, ITypeMatcherFactory
 		throw new TypeMatcherError(TypeMatcherError.SEALED_MATCHER);
 	}
 
-	private function pushValuesToClassVector(values:Array<Dynamic>, vector:Array<Class>):Void
+	private function pushValuesToClassVector(values:Array<Dynamic>, vector:Array<Class<Dynamic>>):Void
 	{
-		if (values.length == 1
-			&& (values[0] is Array || values[0] is Array<Class>))
+		var isArray = Std.is(values[0], Array);
+		
+		//var isClass = Std.is(values[0], Array<Class<Dynamic>>);
+		if (values.length == 1 && (isArray))
 		{
-			for each (var type:Class in values[0])
+			var array = cast(values[0], Array<Dynamic>);
+			for (type in array)
 			{
 				vector.push(type);
 			}
 		}
 		else
 		{
-			for each (type in values)
+			for (type in values)
 			{
 				vector.push(type);
 			}

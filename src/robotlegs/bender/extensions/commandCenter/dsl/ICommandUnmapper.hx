@@ -16,7 +16,7 @@ interface ICommandUnmapper
 	 * Unmaps a Command
 	 * @param commandClass Command to unmap
 	 */
-	function fromCommand(commandClass:Class):Void;
+	function fromCommand(commandClass:Class<Dynamic>):Void;
 
 	/**
 	 * Unmaps all commands from this trigger

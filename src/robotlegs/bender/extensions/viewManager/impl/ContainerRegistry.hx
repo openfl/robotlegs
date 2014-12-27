@@ -10,7 +10,7 @@ package robotlegs.bender.extensions.viewManager.impl;
 import openfl.display.DisplayObject;
 import openfl.display.DisplayObjectContainer;
 import openfl.events.EventDispatcher;
-import openfl.utils.Dictionary;
+
 
 @:meta(Event(name="containerAdd", type="robotlegs.bender.extensions.viewManager.impl.ContainerRegistryEvent"))
 @:meta(Event(name="containerRemove", type="robotlegs.bender.extensions.viewManager.impl.ContainerRegistryEvent"))
@@ -19,6 +19,7 @@ import openfl.utils.Dictionary;
 /**
  * @private
  */
+@:rtti
 class ContainerRegistry extends EventDispatcher
 {
 
@@ -26,22 +27,23 @@ class ContainerRegistry extends EventDispatcher
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	private var _bindings:Array<ContainerBinding> = new Array<ContainerBinding>;
-
+	private var _bindings = new Array<ContainerBinding>();
+	public var bindings(get, null):Array<ContainerBinding>;
 	/**
 	 * @private
 	 */
-	public function get bindings():Array<ContainerBinding>
+	public function get_bindings():Array<ContainerBinding>
 	{
 		return _bindings;
 	}
 
-	private var _rootBindings:Array<ContainerBinding> = new Array<ContainerBinding>;
-
+	private var _rootBindings = new Array<ContainerBinding>();
+	public var rootBindings(get, null):Array<ContainerBinding>;
 	/**
 	 * @private
 	 */
-	public function get rootBindings():Array<ContainerBinding>
+	
+	public function get_rootBindings():Array<ContainerBinding>
 	{
 		return _rootBindings;
 	}
@@ -50,7 +52,7 @@ class ContainerRegistry extends EventDispatcher
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _bindingByContainer:Dictionary = new Dictionary();
+	private var _bindingByContainer = new Map<DisplayObject,Dynamic>();
 
 	/*============================================================================*/
 	/* Public Functions                                                           */
@@ -61,7 +63,12 @@ class ContainerRegistry extends EventDispatcher
 	 */
 	public function addContainer(container:DisplayObjectContainer):ContainerBinding
 	{
-		return _bindingByContainer[container] ||= createBinding(container);
+		// CHECK
+		if (_bindingByContainer[container] == null) {
+			_bindingByContainer[container] = createBinding(container);
+		}
+		return _bindingByContainer[container];
+		//return _bindingByContainer[container] ||= createBinding(container);
 	}
 
 	/**
@@ -70,7 +77,7 @@ class ContainerRegistry extends EventDispatcher
 	public function removeContainer(container:DisplayObjectContainer):ContainerBinding
 	{
 		var binding:ContainerBinding = _bindingByContainer[container];
-		binding && removeBinding(binding);
+		if (binding != null) removeBinding(binding);
 		return binding;
 	}
 
@@ -82,10 +89,10 @@ class ContainerRegistry extends EventDispatcher
 	public function findParentBinding(target:DisplayObject):ContainerBinding
 	{
 		var parent:DisplayObjectContainer = target.parent;
-		while (parent)
+		while (parent != null)
 		{
 			var binding:ContainerBinding = _bindingByContainer[parent];
-			if (binding)
+			if (binding != null)
 			{
 				return binding;
 			}
@@ -124,16 +131,17 @@ class ContainerRegistry extends EventDispatcher
 		// Reparent any bindings which are contained within the new binding AND
 		// A. Don't have a parent, OR
 		// B. Have a parent that is not contained within the new binding
-		for each (var childBinding:ContainerBinding in _bindingByContainer)
+		for (childBinding in _bindingByContainer)
 		{
 			if (container.contains(childBinding.container))
 			{
 				if (childBinding.parent == null)
 				{
-					removeRootBinding(childBinding);
+					// CHECK
+					removeRootBinding(cast(childBinding, ContainerBinding));
 					childBinding.parent = binding;
 				}
-				else if (container.contains(childBinding.parent.container) == null)
+				else if (container.contains(childBinding.parent.container))
 				{
 					childBinding.parent = binding;
 				}
@@ -147,7 +155,7 @@ class ContainerRegistry extends EventDispatcher
 	private function removeBinding(binding:ContainerBinding):Void
 	{
 		// Remove the binding itself
-		delete _bindingByContainer[binding.container];
+		_bindingByContainer.remove(binding.container);
 		var index:Int = _bindings.indexOf(binding);
 		_bindings.splice(index, 1);
 
@@ -161,7 +169,7 @@ class ContainerRegistry extends EventDispatcher
 		}
 
 		// Re-parent the bindings
-		for each (var childBinding:ContainerBinding in _bindingByContainer)
+		for (childBinding in _bindingByContainer)
 		{
 			if (childBinding.parent == binding)
 			{
@@ -170,7 +178,8 @@ class ContainerRegistry extends EventDispatcher
 				{
 					// This binding used to have a parent,
 					// but no longer does, so it is now a Root
-					addRootBinding(childBinding);
+					// CHECK
+					addRootBinding(cast(childBinding, ContainerBinding));
 				}
 			}
 		}
@@ -193,6 +202,6 @@ class ContainerRegistry extends EventDispatcher
 
 	private function onBindingEmpty(event:ContainerBindingEvent):Void
 	{
-		removeBinding(event.target as ContainerBinding);
+		removeBinding(cast(event.target, ContainerBinding));
 	}
 }

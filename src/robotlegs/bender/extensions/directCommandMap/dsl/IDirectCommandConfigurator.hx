@@ -26,14 +26,15 @@ interface IDirectCommandConfigurator extends IDirectCommandMapper
 	 * @param guards Guards
 	 * @return Self
 	 */
-	function withGuards(... guards):IDirectCommandConfigurator;
+	
+	function withGuards(guards:Array<Dynamic>):IDirectCommandConfigurator;
 
 	/**
 	 * Hooks to run before command execution
 	 * @param hooks Hooks
 	 * @return Self
 	 */
-	function withHooks(... hooks):IDirectCommandConfigurator;
+	function withHooks(hooks:Array<Dynamic>):IDirectCommandConfigurator;
 
 	/**
 	 * Should the payload values be injected into the command instance?

@@ -51,7 +51,7 @@ class ViewManagerBasedExistenceWatcher
 
 	private function init():Void
 	{
-		for each (var container:DisplayObjectContainer in _viewManager.containers)
+		for (container in _viewManager.containers)
 		{
 			_logger.debug("Adding context existence event listener to container {0}", [container]);
 			container.addEventListener(ModularContextEvent.CONTEXT_ADD, onContextAdd);
@@ -62,7 +62,7 @@ class ViewManagerBasedExistenceWatcher
 
 	private function destroy():Void
 	{
-		for each (var container:DisplayObjectContainer in _viewManager.containers)
+		for (container in _viewManager.containers)
 		{
 			_logger.debug("Removing context existence event listener from container {0}", [container]);
 			container.removeEventListener(ModularContextEvent.CONTEXT_ADD, onContextAdd);

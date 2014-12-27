@@ -29,7 +29,7 @@ interface IViewProcessorMap
 	 * @param type The class or interface to be matched against.
 	 * @return the mapper so that you can continue the mapping.
 	 */
-	function map(type:Class):IViewProcessorMapper;
+	function map(type:Class<Dynamic>):IViewProcessorMapper;
 
 	/**
 	 * Removes a mapping that was made against a matcher.
@@ -45,7 +45,7 @@ interface IViewProcessorMap
 	 * @param type The class or interface to be matched against.
 	 * @return the unmapper so that you can continue the unmapping.
 	 */
-	function unmap(type:Class):IViewProcessorUnmapper;
+	function unmap(type:Class<Dynamic>):IViewProcessorUnmapper;
 
 	/**
 	 * Processes an item directly. If the item matches any mapped matchers or types then it will be processed according to those mappings.

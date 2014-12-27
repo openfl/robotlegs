@@ -49,10 +49,16 @@ class ViewManagerExtension implements IExtension
 
 		_injector = context.injector;
 
+		
 		// Just one Container Registry
-		_containerRegistry ||= new ContainerRegistry();
+		
+		if (_containerRegistry == null) {
+			_containerRegistry = new ContainerRegistry();
+		}
+		//_containerRegistry ||= new ContainerRegistry();
+		
 		_injector.map(ContainerRegistry).toValue(_containerRegistry);
-
+		
 		// But you get your own View Manager
 		_injector.map(IViewManager).toSingleton(ViewManager);
 	}

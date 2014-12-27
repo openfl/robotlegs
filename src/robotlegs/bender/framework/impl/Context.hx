@@ -45,7 +45,8 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function get injector():IInjector
+	public var injector (get, null):IInjector;
+	public function get_injector():IInjector
 	{
 		return _injector;
 	}
@@ -53,7 +54,8 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function get logLevel():UInt
+	public var logLevel (get, set):UInt;
+	public function get_logLevel():UInt
 	{
 		return _logManager.logLevel;
 	}
@@ -61,56 +63,64 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function set logLevel(value:UInt):Void
+	public function set_logLevel(value:UInt):UInt
 	{
 		_logManager.logLevel = value;
+		return value;
 	}
 
-	[Bindable("stateChange")]
+	public var state(get, null):String;
+	//[Bindable("stateChange")]
+	@:meta(Bindable('stateChange'))
 	/**
 	 * @inheritDoc
 	 */
-	public function get state():String
+	public function get_state():String
 	{
 		return _lifecycle.state;
 	}
 
+	public var uninitialized(get, null):Bool;
 	/**
 	 * @inheritDoc
 	 */
-	public function get uninitialized():Bool
+	public function get_uninitialized():Bool
 	{
 		return _lifecycle.uninitialized;
 	}
 
+	public var initialized(get, null):Bool;
 	/**
 	 * @inheritDoc
 	 */
-	public function get initialized():Bool
+	public function get_initialized():Bool
 	{
 		return _lifecycle.initialized;
 	}
 
+	public var active(get, null):Bool;
 	/**
 	 * @inheritDoc
 	 */
-	public function get active():Bool
+	public function get_active():Bool
 	{
 		return _lifecycle.active;
 	}
-
+	
+	public var suspended(get, null):Bool;
 	/**
 	 * @inheritDoc
 	 */
-	public function get suspended():Bool
+	public function get_suspended():Bool
 	{
 		return _lifecycle.suspended;
 	}
 
+	public var destroyed(get, null):Bool;
 	/**
 	 * @inheritDoc
 	 */
-	public function get destroyed():Bool
+	public function get_destroyed():Bool
 	{
 		return _lifecycle.destroyed;
 	}
@@ -145,6 +155,7 @@ class Context extends EventDispatcher implements IContext
 	public function new()
 	{
 		setup();
+		super();
 	}
 
 	/*============================================================================*/
@@ -154,7 +165,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function initialize(callback:Function = null):Void
+	public function initialize(callback:Void->Void = null):Void
 	{
 		_lifecycle.initialize(callback);
 	}
@@ -162,7 +173,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function suspend(callback:Function = null):Void
+	public function suspend(callback:Void->Void = null):Void
 	{
 		_lifecycle.suspend(callback);
 	}
@@ -170,7 +181,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function resume(callback:Function = null):Void
+	public function resume(callback:Void->Void = null):Void
 	{
 		_lifecycle.resume(callback);
 	}
@@ -178,7 +189,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function destroy(callback:Function = null):Void
+	public function destroy(callback:Void->Void = null):Void
 	{
 		_lifecycle.destroy(callback);
 	}
@@ -186,7 +197,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function beforeInitializing(handler:Function):IContext
+	public function beforeInitializing(handler:Void->Void):IContext
 	{
 		_lifecycle.beforeInitializing(handler);
 		return this;
@@ -195,7 +206,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function whenInitializing(handler:Function):IContext
+	public function whenInitializing(handler:Void->Void):IContext
 	{
 		_lifecycle.whenInitializing(handler);
 		return this;
@@ -204,7 +215,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function afterInitializing(handler:Function):IContext
+	public function afterInitializing(handler:Void->Void):IContext
 	{
 		_lifecycle.afterInitializing(handler);
 		return this;
@@ -213,7 +224,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function beforeSuspending(handler:Function):IContext
+	public function beforeSuspending(handler:Void->Void):IContext
 	{
 		_lifecycle.beforeSuspending(handler);
 		return this;
@@ -222,7 +233,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function whenSuspending(handler:Function):IContext
+	public function whenSuspending(handler:Void->Void):IContext
 	{
 		_lifecycle.whenSuspending(handler);
 		return this;
@@ -231,7 +242,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function afterSuspending(handler:Function):IContext
+	public function afterSuspending(handler:Void->Void):IContext
 	{
 		_lifecycle.afterSuspending(handler);
 		return this;
@@ -240,7 +251,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function beforeResuming(handler:Function):IContext
+	public function beforeResuming(handler:Void->Void):IContext
 	{
 		_lifecycle.beforeResuming(handler);
 		return this;
@@ -249,7 +260,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function whenResuming(handler:Function):IContext
+	public function whenResuming(handler:Void->Void):IContext
 	{
 		_lifecycle.whenResuming(handler);
 		return this;
@@ -258,7 +269,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function afterResuming(handler:Function):IContext
+	public function afterResuming(handler:Void->Void):IContext
 	{
 		_lifecycle.afterResuming(handler);
 		return this;
@@ -267,7 +278,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function beforeDestroying(handler:Function):IContext
+	public function beforeDestroying(handler:Void->Void):IContext
 	{
 		_lifecycle.beforeDestroying(handler);
 		return this;
@@ -276,7 +287,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function whenDestroying(handler:Function):IContext
+	public function whenDestroying(handler:Void->Void):IContext
 	{
 		_lifecycle.whenDestroying(handler);
 		return this;
@@ -285,7 +296,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function afterDestroying(handler:Function):IContext
+	public function afterDestroying(handler:Void->Void):IContext
 	{
 		_lifecycle.afterDestroying(handler);
 		return this;
@@ -294,9 +305,10 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function install(... extensions):IContext
+	
+	public function install(extensions:Array<Dynamic>):IContext
 	{
-		for each (var extension:Dynamic in extensions)
+		for (extension in extensions)
 		{
 			_extensionInstaller.install(extension);
 		}
@@ -306,9 +318,9 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function configure(... configs):IContext
+	public function configure(configs:Array<Dynamic>):IContext
 	{
-		for each (var config:Dynamic in configs)
+		for (config in configs)
 		{
 			_configManager.addConfig(config);
 		}
@@ -323,11 +335,11 @@ class Context extends EventDispatcher implements IContext
 		if (_children.indexOf(child) == -1)
 		{
 			_logger.info("Adding child context {0}", [child]);
-			if (child.uninitialized == null)
+			if (child.uninitialized)
 			{
 				_logger.warn("Child context {0} must be uninitialized", [child]);
 			}
-			if (child.injector.parent)
+			if (child.injector.parent != null)
 			{
 				_logger.warn("Child context {0} must not have a parent Injector", [child]);
 			}
@@ -361,7 +373,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function addConfigHandler(matcher:IMatcher, handler:Function):IContext
+	public function addConfigHandler(matcher:IMatcher, handler:Void->Void):IContext
 	{
 		_configManager.addConfigHandler(matcher, handler);
 		return this;
@@ -372,9 +384,10 @@ class Context extends EventDispatcher implements IContext
 	 */
 	public function getLogger(source:Dynamic):ILogger
 	{
-		return _logManager.getLogger(source);
+		var returnVal:ILogger = _logManager.getLogger(source);
+		return returnVal;
 	}
-
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -387,24 +400,24 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function detain(... instances):IContext
+	public function detain(instance:Dynamic):IContext
 	{
-		for each (var instance:Dynamic in instances)
-		{
+		//for each (var instance:Dynamic in instances)
+		//{
 			_pin.detain(instance);
-		}
+		//}
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function release(... instances):IContext
+	public function release(instance:Dynamic):IContext
 	{
-		for each (var instance:Dynamic in instances)
-		{
+		//for each (var instance:Dynamic in instances)
+		//{
 			_pin.release(instance);
-		}
+		//}
 		return this;
 	}
 
@@ -466,15 +479,16 @@ class Context extends EventDispatcher implements IContext
 
 	private function onChildDestroy(event:LifecycleEvent):Void
 	{
-		removeChild(event.target as IContext);
+		removeChild(cast(event.target, IContext));
 	}
 
 	private function removeChildren():Void
 	{
-		for each (var child:IContext in _children.concat())
+		// CHECK
+		for (child in _children)
 		{
 			removeChild(child);
 		}
-		_children.length = 0;
+		_children = [];
 	}
 }

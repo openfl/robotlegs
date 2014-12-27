@@ -31,61 +31,61 @@ interface ILifecycle extends IEventDispatcher
 	/**
 	 * The current lifecycle state of the target object
 	 */
-	function get state():String;
+	function get_state():String;
 
 	/**
 	 * The target object associated with this lifecycle
 	 */
-	function get target():Dynamic;
+	function get_target():Dynamic;
 
 	/**
 	 * Is this object uninitialized?
 	 */
-	function get uninitialized():Bool;
+	function get_uninitialized():Bool;
 
 	/**
 	 * Has this object been fully initialized?
 	 */
-	function get initialized():Bool;
+	function get_initialized():Bool;
 
 	/**
 	 * Is this object currently active?
 	 */
-	function get active():Bool;
+	function get_active():Bool;
 
 	/**
 	 * Has this object been fully suspended?
 	 */
-	function get suspended():Bool;
+	function get_suspended():Bool;
 
 	/**
 	 * Has this object been fully destroyed?
 	 */
-	function get destroyed():Bool;
+	function get_destroyed():Bool;
 
 	/**
 	 * Initializes the lifecycle
 	 * @param callback Initialization callback
 	 */
-	function initialize(callback:Function = null):Void;
+	function initialize(callback:Void->Void = null):Void;
 
 	/**
 	 * Suspends the lifecycle
 	 * @param callback Suspension callback
 	 */
-	function suspend(callback:Function = null):Void;
+	function suspend(callback:Void->Void = null):Void;
 
 	/**
 	 * Resumes a suspended lifecycle
 	 * @param callback Resumption callback
 	 */
-	function resume(callback:Function = null):Void;
+	function resume(callback:Void->Void = null):Void;
 
 	/**
 	 * Destroys an active lifecycle
 	 * @param callback Destruction callback
 	 */
-	function destroy(callback:Function = null):Void;
+	function destroy(callback:Void->Void = null):Void;
 
 	/**
 	 * A handler to run before the target object is initialized
@@ -95,7 +95,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Pre-initialize handler
 	 * @return Self
 	 */
-	function beforeInitializing(handler:Function):ILifecycle;
+	function beforeInitializing(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run during initialization
@@ -104,7 +104,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Initialization handler
 	 * @return Self
 	 */
-	function whenInitializing(handler:Function):ILifecycle;
+	function whenInitializing(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run after initialization
@@ -113,7 +113,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Post-initialize handler
 	 * @return Self
 	 */
-	function afterInitializing(handler:Function):ILifecycle;
+	function afterInitializing(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run before the target object is suspended
@@ -123,7 +123,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Pre-suspend handler
 	 * @return Self
 	 */
-	function beforeSuspending(handler:Function):ILifecycle;
+	function beforeSuspending(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run during suspension
@@ -132,7 +132,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Suspension handler
 	 * @return Self
 	 */
-	function whenSuspending(handler:Function):ILifecycle;
+	function whenSuspending(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run after suspension
@@ -141,7 +141,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Post-suspend handler
 	 * @return Self
 	 */
-	function afterSuspending(handler:Function):ILifecycle;
+	function afterSuspending(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run before the target object is resumed
@@ -151,7 +151,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Pre-resume handler
 	 * @return Self
 	 */
-	function beforeResuming(handler:Function):ILifecycle;
+	function beforeResuming(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run during resumption
@@ -160,7 +160,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Resumption handler
 	 * @return Self
 	 */
-	function whenResuming(handler:Function):ILifecycle;
+	function whenResuming(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run after resumption
@@ -169,7 +169,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Post-resume handler
 	 * @return Self
 	 */
-	function afterResuming(handler:Function):ILifecycle;
+	function afterResuming(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run before the target object is destroyed
@@ -179,7 +179,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Pre-destroy handler
 	 * @return Self
 	 */
-	function beforeDestroying(handler:Function):ILifecycle;
+	function beforeDestroying(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run during destruction
@@ -188,7 +188,7 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Destruction handler
 	 * @return Self
 	 */
-	function whenDestroying(handler:Function):ILifecycle;
+	function whenDestroying(handler:Void->Void):ILifecycle;
 
 	/**
 	 * A handler to run after destruction
@@ -197,5 +197,5 @@ interface ILifecycle extends IEventDispatcher
 	 * @param handler Post-destroy handler
 	 * @return Self
 	 */
-	function afterDestroying(handler:Function):ILifecycle;
+	function afterDestroying(handler:Void->Void):ILifecycle;
 }

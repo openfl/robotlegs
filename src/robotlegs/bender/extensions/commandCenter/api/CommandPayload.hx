@@ -18,31 +18,33 @@ class CommandPayload
 	/*============================================================================*/
 
 	private var _values:Array<Dynamic>;
-
+	public var values(default, null):Array<Dynamic>;
 	/**
 	 * Ordered list of values
 	 */
-	public function get values():Array
+	/*public function get_values():Array
 	{
 		return _values;
-	}
+	}*/
 
 	private var _classes:Array<Dynamic>;
-
+	public var classes(default, null):Array<Dynamic>;
 	/**
 	 * Ordered list of value classes
 	 */
-	public function get classes():Array
+	/*public function get_classes():Array
 	{
 		return _classes;
-	}
+	}*/
 
+	public var length(get_length, null):UInt;
 	/**
 	 * The number of payload items
 	 */
-	public function get length():UInt
+	public function get_length():UInt
 	{
-		return _classes ? _classes.length:0;
+		if (_classes != null) return _classes.length;
+		else return 0;
 	}
 
 	/*============================================================================*/
@@ -70,9 +72,9 @@ class CommandPayload
 	 * @param payloadClass The class of the value
 	 * @return Self
 	 */
-	public function addPayload(payloadValue:Dynamic, payloadClass:Class):CommandPayload
+	public function addPayload(payloadValue:Dynamic, payloadClass:Class<Dynamic>):CommandPayload
 	{
-		if (_values)
+		if (_values != null)
 		{
 			_values.push(payloadValue);
 		}
@@ -80,7 +82,7 @@ class CommandPayload
 		{
 			_values = [payloadValue];
 		}
-		if (_classes)
+		if (_classes != null)
 		{
 			_classes.push(payloadClass);
 		}
@@ -100,7 +102,18 @@ class CommandPayload
 	{
 		// todo: the final clause will make this fail silently
 		// todo: rethink
-		return _values && _values.length > 0
-			&& _classes && _classes.length == _values.length;
+		// CHECK
+		if (_values != null && _classes != null) {
+			if (_values.length > 0 && _classes.length == _values.length) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+		//return _values && _values.length > 0 && _classes && _classes.length == _values.length;
 	}
 }

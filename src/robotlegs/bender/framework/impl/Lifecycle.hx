@@ -7,9 +7,10 @@
 
 package robotlegs.bender.framework.impl;
 
+import openfl.events.Event;
 import openfl.events.EventDispatcher;
 import openfl.events.IEventDispatcher;
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.framework.api.ILifecycle;
 import robotlegs.bender.framework.api.LifecycleError;
 import robotlegs.bender.framework.api.LifecycleEvent;
@@ -42,22 +43,25 @@ class Lifecycle implements ILifecycle
 	/*============================================================================*/
 
 	private var _state:String = LifecycleState.UNINITIALIZED;
-
-	[Bindable("stateChange")]
+	
+	//[Bindable("stateChange")]
+	@:meta(Bindable('stateChange'))
+	public var state(get, null):String;
 	/**
 	 * @inheritDoc
 	 */
-	public function get state():String
+	public function get_state():String
 	{
 		return _state;
 	}
 
 	private var _target:Dynamic;
-
+	public var target(get, null):Dynamic;
+	
 	/**
 	 * @inheritDoc
 	 */
-	public function get target():Dynamic
+	public function get_target():Dynamic
 	{
 		return _target;
 	}
@@ -65,7 +69,8 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public function get uninitialized():Bool
+	public var uninitialized(get_uninitialized, null):Bool;
+	public function get_uninitialized():Bool
 	{
 		return _state == LifecycleState.UNINITIALIZED;
 	}
@@ -73,7 +78,8 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public function get initialized():Bool
+	public var initialized(get_initialized, null):Bool;
+	public function get_initialized():Bool
 	{
 		return _state != LifecycleState.UNINITIALIZED
 			&& _state != LifecycleState.INITIALIZING;
@@ -82,7 +88,8 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public function get active():Bool
+	public var active(get_active, null):Bool;
+	public function get_active():Bool
 	{
 		return _state == LifecycleState.ACTIVE;
 	}
@@ -90,7 +97,8 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public function get suspended():Bool
+	public var suspended(get_suspended, null):Bool;
+	public function get_suspended():Bool
 	{
 		return _state == LifecycleState.SUSPENDED;
 	}
@@ -98,7 +106,8 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public function get destroyed():Bool
+	public var destroyed(get_destroyed, null):Bool;
+	public function get_destroyed():Bool
 	{
 		return _state == LifecycleState.DESTROYED;
 	}
@@ -107,7 +116,7 @@ class Lifecycle implements ILifecycle
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _reversedEventTypes:Dictionary = new Dictionary();
+	private var _reversedEventTypes = new Map<String,Dynamic>();
 
 	private var _reversePriority:Int;
 
@@ -132,7 +141,8 @@ class Lifecycle implements ILifecycle
 	public function new(target:Dynamic)
 	{
 		_target = target;
-		_dispatcher = target as IEventDispatcher || new EventDispatcher(this);
+		if (cast(target, IEventDispatcher) != null) _dispatcher = cast(target, IEventDispatcher);
+		else _dispatcher = new EventDispatcher(this);
 		configureTransitions();
 	}
 
@@ -143,7 +153,7 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public function initialize(callback:Dynamic = null):Void
+	public function initialize(callback:Void->Void = null):Void
 	{
 		_initialize.enter(callback);
 	}
@@ -151,7 +161,7 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public function suspend(callback:Dynamic = null):Void
+	public function suspend(callback:Void->Void = null):Void
 	{
 		_suspend.enter(callback);
 	}
@@ -159,7 +169,7 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public function resume(callback:Dynamic = null):Void
+	public function resume(callback:Void->Void = null):Void
 	{
 		_resume.enter(callback);
 	}
@@ -167,7 +177,7 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public function destroy(callback:Dynamic = null):Void
+	public function destroy(callback:Void->Void = null):Void
 	{
 		_destroy.enter(callback);
 	}
@@ -177,7 +187,8 @@ class Lifecycle implements ILifecycle
 	 */
 	public function beforeInitializing(handler:Dynamic):ILifecycle
 	{
-		uninitialized || reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
+		// CHECK
+		if (!uninitialized) reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
 		_initialize.addBeforeHandler(handler);
 		return this;
 	}
@@ -187,7 +198,8 @@ class Lifecycle implements ILifecycle
 	 */
 	public function whenInitializing(handler:Dynamic):ILifecycle
 	{
-		initialized && reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
+		// CHECK
+		if (initialized) reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
 		addEventListener(LifecycleEvent.INITIALIZE, createSyncLifecycleListener(handler, true));
 		return this;
 	}
@@ -197,7 +209,8 @@ class Lifecycle implements ILifecycle
 	 */
 	public function afterInitializing(handler:Dynamic):ILifecycle
 	{
-		initialized && reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
+		// CHECK
+		if (initialized) reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
 		addEventListener(LifecycleEvent.POST_INITIALIZE, createSyncLifecycleListener(handler, true));
 		return this;
 	}
@@ -328,19 +341,20 @@ class Lifecycle implements ILifecycle
 	/* Internal Functions                                                         */
 	/*============================================================================*/
 
-	internal function setCurrentState(state:String):Void
+	public function setCurrentState(state:String):Void
 	{
 		if (_state == state)
 			return;
 		_state = state;
 		dispatchEvent(new LifecycleEvent(LifecycleEvent.STATE_CHANGE));
 	}
-
-	internal function addReversedEventTypes(... types):Void
+	
+	//public function addReversedEventTypes(type:String/*... types*/):Void
+	public function addReversedEventTypes(types:Array<String>):Void
 	{
-		for each (var type:String in types)
+		for (i in 0...types.length)
 		{
-			_reversedEventTypes[type] = true;
+			_reversedEventTypes[types[i]] = true;
 		}
 	}
 
@@ -351,23 +365,23 @@ class Lifecycle implements ILifecycle
 	private function configureTransitions():Void
 	{
 		_initialize = new LifecycleTransition(LifecycleEvent.PRE_INITIALIZE, this)
-			.fromStates(LifecycleState.UNINITIALIZED)
+			.fromStates([LifecycleState.UNINITIALIZED])
 			.toStates(LifecycleState.INITIALIZING, LifecycleState.ACTIVE)
 			.withEvents(LifecycleEvent.PRE_INITIALIZE, LifecycleEvent.INITIALIZE, LifecycleEvent.POST_INITIALIZE);
 
 		_suspend = new LifecycleTransition(LifecycleEvent.PRE_SUSPEND, this)
-			.fromStates(LifecycleState.ACTIVE)
+			.fromStates([LifecycleState.ACTIVE])
 			.toStates(LifecycleState.SUSPENDING, LifecycleState.SUSPENDED)
 			.withEvents(LifecycleEvent.PRE_SUSPEND, LifecycleEvent.SUSPEND, LifecycleEvent.POST_SUSPEND)
 			.inReverse();
-
+		
 		_resume = new LifecycleTransition(LifecycleEvent.PRE_RESUME, this)
-			.fromStates(LifecycleState.SUSPENDED)
+			.fromStates([LifecycleState.SUSPENDED])
 			.toStates(LifecycleState.RESUMING, LifecycleState.ACTIVE)
 			.withEvents(LifecycleEvent.PRE_RESUME, LifecycleEvent.RESUME, LifecycleEvent.POST_RESUME);
-
+			
 		_destroy = new LifecycleTransition(LifecycleEvent.PRE_DESTROY, this)
-			.fromStates(LifecycleState.SUSPENDED, LifecycleState.ACTIVE)
+			.fromStates([LifecycleState.SUSPENDED, LifecycleState.ACTIVE])
 			.toStates(LifecycleState.DESTROYING, LifecycleState.DESTROYED)
 			.withEvents(LifecycleEvent.PRE_DESTROY, LifecycleEvent.DESTROY, LifecycleEvent.POST_DESTROY)
 			.inReverse();
@@ -387,25 +401,29 @@ class Lifecycle implements ILifecycle
 		{
 			throw new LifecycleError(LifecycleError.SYNC_HANDLER_ARG_MISMATCH);
 		}
-
+		
+		// CHECK
+		var syncLifecycleListener:SyncLifecycleListener = new SyncLifecycleListener();
+		return syncLifecycleListener.init(handler, once, handler.length);
+		
 		// A handler that accepts 1 argument is provided with the event type
-		if (handler.length == 1)
+		/*if (handler.length == 1)
 		{
 			return function(event:LifecycleEvent):Void {
-				once && IEventDispatcher(event.target)
-					.removeEventListener(event.type, arguments.callee);
+				//once && IEventDispatcher(event.target).removeEventListener(event.type, arguments.callee);
+				if (once) cast(event.target, IEventDispatcher).removeEventListener(event.type, arguments.callee);
 				handler(event.type);
 			};
 		}
 
 		// Or, just call the handler
 		return function(event:LifecycleEvent):Void {
-			once && IEventDispatcher(event.target)
-				.removeEventListener(event.type, arguments.callee);
+			//once && IEventDispatcher(event.target).removeEventListener(event.type, arguments.callee);
+			if (once) cast(event.target, IEventDispatcher).removeEventListener(event.type, arguments.callee);
 			handler();
-		};
+		};*/
 	}
-
+	
 	private function reportError(message:String):Void
 	{
 		var error:LifecycleError = new LifecycleError(message);
@@ -418,5 +436,36 @@ class Lifecycle implements ILifecycle
 		{
 			throw error;
 		}
+	}
+}
+
+class SyncLifecycleListener
+{
+	private var once:Bool;
+	private var handler:Dynamic;
+	
+	public function new()
+	{
+		
+	}
+	
+	public function init(handler:Dynamic, once:Bool, handlerLength:Int) 
+	{
+		this.handler = handler;
+		this.once = once;
+		if (handlerLength == 1) return createSyncLifecycleListenerFunction;
+		return createSyncLifecycleListenerFunction2;
+	}
+	
+	private function createSyncLifecycleListenerFunction(event:LifecycleEvent):Void
+	{
+		if (once) cast(event.target, IEventDispatcher).removeEventListener(event.type, createSyncLifecycleListenerFunction);
+		handler(event.type);
+	}
+
+	private function createSyncLifecycleListenerFunction2(event:LifecycleEvent):Void
+	{
+		if (once) cast(event.target, IEventDispatcher).removeEventListener(event.type, createSyncLifecycleListenerFunction2);
+		handler();
 	}
 }

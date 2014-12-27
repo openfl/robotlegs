@@ -21,7 +21,7 @@ interface IEventCommandMap
 	 * @param eventClass The concrete Event class
 	 * @return Command Mapper
 	 */
-	function map(type:String, eventClass:Class = null):ICommandMapper;
+	function map(type:String, eventClass:Class<Dynamic> = null):ICommandMapper;
 
 	/**
 	 * Unmaps an Event based trigger from a Command
@@ -29,12 +29,12 @@ interface IEventCommandMap
 	 * @param eventClass The concrete Event class
 	 * @return Command Unmapper
 	 */
-	function unmap(type:String, eventClass:Class = null):ICommandUnmapper;
+	function unmap(type:String, eventClass:Class<Dynamic> = null):ICommandUnmapper;
 
 	/**
 	 * Adds a handler to process mappings
 	 * @param handler Function that accepts a mapping
 	 * @return Self
 	 */
-	function addMappingProcessor(handler:Function):IEventCommandMap;
+	function addMappingProcessor(handler:Void->Void):IEventCommandMap;
 }

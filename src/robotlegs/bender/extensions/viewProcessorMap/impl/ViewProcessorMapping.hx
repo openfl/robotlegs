@@ -14,7 +14,7 @@ import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorMappingCon
 /**
  * @private
  */
-class ViewProcessorMapping implements IViewProcessorMapping, IViewProcessorMappingConfig
+class ViewProcessorMapping implements IViewProcessorMapping implements IViewProcessorMappingConfig
 {
 
 	/*============================================================================*/
@@ -22,21 +22,21 @@ class ViewProcessorMapping implements IViewProcessorMapping, IViewProcessorMappi
 	/*============================================================================*/
 
 	private var _matcher:ITypeFilter;
-
+	public var matcher(get, null):ITypeFilter;
 	/**
 	 * @inheritDoc
 	 */
-	public function get matcher():ITypeFilter
+	public function get_matcher():ITypeFilter
 	{
 		return _matcher;
 	}
 
 	private var _processor:Dynamic;
-
+	public var processor(get, set):Dynamic;
 	/**
 	 * @inheritDoc
 	 */
-	public function get processor():Dynamic
+	public function get_processor():Dynamic
 	{
 		return _processor;
 	}
@@ -44,37 +44,38 @@ class ViewProcessorMapping implements IViewProcessorMapping, IViewProcessorMappi
 	/**
 	 * @inheritDoc
 	 */
-	public function set processor(value:Dynamic):Void
+	public function set_processor(value:Dynamic):Dynamic
 	{
 		_processor = value;
+		return _processor;
 	}
 
-	private var _processorClass:Class;
-
+	private var _processorClass:Class<Dynamic>;
+	public var processorClass(get, null):Class<Dynamic>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get processorClass():Class
+	public function get_processorClass():Class<Dynamic>
 	{
 		return _processorClass;
 	}
 
 	private var _guards:Array<Dynamic> = [];
-
+	public var guards(get, null):Array<Dynamic>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get guards():Array
+	public function get_guards():Array<Dynamic>
 	{
 		return _guards;
 	}
 
 	private var _hooks:Array<Dynamic> = [];
-
+	public var hooks(get, null):Array<Dynamic>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get hooks():Array
+	public function get_hooks():Array<Dynamic>
 	{
 		return _hooks;
 	}
@@ -100,18 +101,28 @@ class ViewProcessorMapping implements IViewProcessorMapping, IViewProcessorMappi
 	/**
 	 * @inheritDoc
 	 */
-	public function withGuards(... guards):IViewProcessorMappingConfig
+	public function withGuards(guards:Array<Dynamic>):IViewProcessorMappingConfig
 	{
-		_guards = _guards.concat.apply(null, guards);
+		// CHECK
+		for (i in 0...guards.length) 
+		{
+			_guards.push(guards[i]);
+		}
+		//_guards = _guards.concat.apply(null, guards);
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function withHooks(... hooks):IViewProcessorMappingConfig
+	public function withHooks(hooks:Array<Dynamic>):IViewProcessorMappingConfig
 	{
-		_hooks = _hooks.concat.apply(null, hooks);
+		// CHECK
+		for (i in 0...hooks.length) 
+		{
+			_hooks.push(hooks[i]);
+		}
+		//_hooks = _hooks.concat.apply(null, hooks);
 		return this;
 	}
 
@@ -126,14 +137,14 @@ class ViewProcessorMapping implements IViewProcessorMapping, IViewProcessorMappi
 
 	private function setProcessor(processor:Dynamic):Void
 	{
-		if (processor is Class)
+		if (Std.is(processor, Class))
 		{
-			_processorClass = processor as Class;
+			_processorClass = cast(processor, Class<Dynamic>);
 		}
 		else
 		{
 			_processor = processor;
-			_processorClass = _processor.constructor;
+			_processorClass = Type.getClass(_processor);
 		}
 	}
 }

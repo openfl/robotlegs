@@ -16,6 +16,7 @@ import robotlegs.bender.framework.api.IConfig;
  * It requires that the ViewManagerExtension, ContextViewExtension
  * and a ContextView have been installed.
  */
+@:rtti
 class ContextViewListenerConfig implements IConfig
 {
 
@@ -23,11 +24,9 @@ class ContextViewListenerConfig implements IConfig
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	[Inject]
-	public var contextView:ContextView;
+	@inject public var contextView:ContextView;
 
-	[Inject]
-	public var viewManager:IViewManager;
+	@inject public var viewManager:IViewManager;
 
 	/*============================================================================*/
 	/* Public Functions                                                           */

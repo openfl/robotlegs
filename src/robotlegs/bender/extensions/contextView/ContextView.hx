@@ -12,6 +12,7 @@ import openfl.display.DisplayObjectContainer;
 /**
  * The Context View represents the root DisplayObjectContainer for a Context
  */
+@:rtti
 class ContextView
 {
 
@@ -20,11 +21,11 @@ class ContextView
 	/*============================================================================*/
 
 	private var _view:DisplayObjectContainer;
-
+	public var view(get, null):DisplayObjectContainer;
 	/**
 	 * The root DisplayObjectContainer for this Context
 	 */
-	public function get view():DisplayObjectContainer
+	public function get_view():DisplayObjectContainer
 	{
 		return _view;
 	}

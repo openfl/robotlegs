@@ -35,24 +35,24 @@ class ViewManagerEvent extends Event
 	/*============================================================================*/
 
 	private var _container:DisplayObjectContainer;
-
+	public var container(default, null):DisplayObjectContainer;
 	/**
 	 * The container associated with this event
 	 */
-	public function get container():DisplayObjectContainer
+	/*public function get_container():DisplayObjectContainer
 	{
 		return _container;
-	}
+	}*/
 
 	private var _handler:IViewHandler;
-
+	public var handler(default, null):IViewHandler;
 	/**
 	 * The view handler associated with this event
 	 */
-	public function get handler():IViewHandler
+	/*public function get_handler():IViewHandler
 	{
 		return _handler;
-	}
+	}*/
 
 	/*============================================================================*/
 	/* Constructor                                                                */

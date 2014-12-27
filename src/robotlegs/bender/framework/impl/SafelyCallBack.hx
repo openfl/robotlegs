@@ -6,6 +6,7 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.framework.impl;
+import openfl.errors.Error;
 
 class SafelyCallBack 
 {
@@ -34,19 +35,55 @@ class SafelyCallBack
 	 * @param message An optional message
 	 */
 
-	public static function call(callback:Dynamic, error:Dynamic = null, message:Dynamic = null)
+	public static function call(callback:Dynamic, errorMsg:Dynamic = null, message:Dynamic = null)
 	{
-		if (error != null && message != null)
-		{
-			callback(error, message);
+		if (message != null) {
+			try {
+				callback(errorMsg, message);
+			}
+			catch( error : Error ) {
+				try {
+					callback(errorMsg);
+				}
+				catch( error2 : Error ) {
+					try {
+						callback();
+					}
+					catch( error3 : Error ) {
+						trace("Error calling CallBack : " + error3 );
+					}
+				}
+			}
 		}
-		else if (error != null)
-		{
-			callback(error);
+		else if (errorMsg != null) {
+			try {
+				callback(errorMsg);
+			}
+			catch( error2 : Error ) {
+				try {
+					callback();
+				}
+				catch( error3 : Error ) {
+					trace("Error calling CallBack : " + error3 );
+				}
+			}
 		}
-		else
-		{
-			callback();
+		
+		try {
+			callback(errorMsg, message);
+		}
+		catch( error : Error ) {
+			try {
+				callback(errorMsg);
+			}
+			catch( error2 : Error ) {
+				try {
+					callback();
+				}
+				catch( error3 : Error ) {
+					trace("Error calling CallBack : " + error3 );
+				}
+			}
 		}
 	}
 }

@@ -28,14 +28,15 @@ class ModularContextEvent extends Event
 	/*============================================================================*/
 
 	private var _context:IContext;
-
+	public var context(default, null):IContext;
+	
 	/**
 	 * The context associated with this event
 	 */
-	public function get context():IContext
+	/*public function get_context():IContext
 	{
 		return _context;
-	}
+	}*/
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -66,6 +67,6 @@ class ModularContextEvent extends Event
 
 	override public function toString():String
 	{
-		return formatToString("ModularContextEvent", "context");
+		return "[ModularContextEvent, context]";
 	}
 }

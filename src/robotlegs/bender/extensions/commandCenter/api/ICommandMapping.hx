@@ -13,34 +13,40 @@ package robotlegs.bender.extensions.commandCenter.api;
 interface ICommandMapping
 {
 	/**
-	 * The concrete Command Class for this mapping
+	 * The concrete Command Class<Dynamic> for this mapping
 	 */
-	function get commandClass():Class;
-
+	public var commandClass(get, null):Class<Dynamic>;
+	function get_commandClass():Class<Dynamic>;
+	
 	/**
 	 * The "execute" method to invoke on the Command instance
 	 */
-	function get executeMethod():String;
+	public var executeMethod(get, null):String;
+	function get_executeMethod():String;
 
 	/**
 	 * A list of Guards to query before execution
 	 */
-	function get guards():Array;
+	public var guards(get, null):Array<Dynamic>;
+	function get_guards():Array<Dynamic>;
 
 	/**
 	 * A list of Hooks to run during execution
 	 */
-	function get hooks():Array;
+	public var hooks(get, null):Array<Dynamic>;
+	function get_hooks():Array<Dynamic>;
 
 	/**
 	 * Unmaps a Command after a successful execution
 	 */
-	function get fireOnce():Bool;
+	public var fireOnce(get, null):Bool;
+	function get_fireOnce():Bool;
 
 	/**
 	 * Supply the payload values via instance injection
 	 */
-	function get payloadInjectionEnabled():Bool;
+	public var payloadInjectionEnabled(get, null):Bool;
+	function get_payloadInjectionEnabled():Bool;
 
 	/**
 	 * The "execute" method to invoke on the Command instance
@@ -50,12 +56,12 @@ interface ICommandMapping
 	/**
 	 * A list of Guards to query before execution
 	 */
-	function addGuards(... guards):ICommandMapping;
+	function addGuards(guards:Array<Dynamic>):ICommandMapping;
 
 	/**
 	 * A list of Hooks to run during execution
 	 */
-	function addHooks(... hooks):ICommandMapping;
+	function addHooks(hooks:Array<Dynamic>):ICommandMapping;
 
 	/**
 	 * Unmaps a Command after a successful execution

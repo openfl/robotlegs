@@ -7,8 +7,9 @@
 
 package robotlegs.bender.extensions.commandCenter.impl;
 
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
+import robotlegs.bender.extensions.eventCommandMap.impl.EventCommandTrigger;
 
 /**
  * @private
@@ -20,11 +21,11 @@ class CommandTriggerMap
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _triggers:Dictionary = new Dictionary();
+	private var _triggers = new Map<String,Dynamic>();
 
-	private var _keyFactory:Function;
+	private var _keyFactory:String -> Class<Dynamic> -> String;
 
-	private var _triggerFactory:Function;
+	private var _triggerFactory:String -> Class<Dynamic> -> EventCommandTrigger;
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -35,7 +36,7 @@ class CommandTriggerMap
 	 * @param keyFactory Factory function to creates keys
 	 * @param triggerFactory Factory function to create triggers
 	 */
-	public function new(keyFactory:Function, triggerFactory:Function)
+	public function new(keyFactory:String -> Class<Dynamic> -> String, triggerFactory:String -> Class<Dynamic> -> EventCommandTrigger)
 	{
 		_keyFactory = keyFactory;
 		_triggerFactory = triggerFactory;
@@ -48,16 +49,23 @@ class CommandTriggerMap
 	/**
 	 * @private
 	 */
-	public function getTrigger(... params):ICommandTrigger
+	
+	public function getTrigger(params:Array<Dynamic>):ICommandTrigger
 	{
+		//CHECK
 		var key:Dynamic = getKey(params);
-		return _triggers[key] ||= createTrigger(params);
+		if (_triggers[UID.create(key)] == null) {
+			_triggers[UID.create(key)] = createTrigger(params);
+		}
+		return _triggers[UID.create(key)];
+		
+		//return _triggers[UID.create(key)] ||= createTrigger(params);
 	}
 
 	/**
 	 * @private
 	 */
-	public function removeTrigger(... params):ICommandTrigger
+	public function removeTrigger(params:Array<Dynamic>):ICommandTrigger
 	{
 		return destroyTrigger(getKey(params));
 	}
@@ -68,21 +76,23 @@ class CommandTriggerMap
 
 	private function getKey(mapperArgs:Array<Dynamic>):Dynamic
 	{
-		return _keyFactory.apply(null, mapperArgs);
+		return Reflect.callMethod (null, _keyFactory, mapperArgs);
+		//return _keyFactory.apply(null, mapperArgs);
 	}
 
 	private function createTrigger(mapperArgs:Array<Dynamic>):ICommandTrigger
 	{
-		return _triggerFactory.apply(null, mapperArgs);
+		return Reflect.callMethod (null, _triggerFactory, mapperArgs);
+		//return _triggerFactory.apply(null, mapperArgs);
 	}
 
 	private function destroyTrigger(key:Dynamic):ICommandTrigger
 	{
-		var trigger:ICommandTrigger = _triggers[key];
-		if (trigger)
+		var trigger:ICommandTrigger = _triggers[UID.create(key)];
+		if (trigger != null)
 		{
 			trigger.deactivate();
-			delete _triggers[key];
+			_triggers.remove(UID.create(key));
 		}
 		return trigger;
 	}

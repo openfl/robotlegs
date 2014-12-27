@@ -7,7 +7,7 @@
 
 package robotlegs.bender.extensions.viewProcessorMap.impl;
 
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.framework.api.IInjector;
 
 /**
@@ -21,7 +21,7 @@ class ViewInjectionProcessor
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _injectedObjects:Dictionary = new Dictionary(true);
+	private var _injectedObjects = new Map<String,Dynamic>();
 
 	/*============================================================================*/
 	/* Public Functions                                                           */
@@ -30,15 +30,15 @@ class ViewInjectionProcessor
 	/**
 	 * @private
 	 */
-	public function process(view:Dynamic, type:Class, injector:IInjector):Void
+	public function process(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
 	{
-		_injectedObjects[view] || injectAndRemember(view, injector);
+		if (!_injectedObjects[UID.create(view)]) injectAndRemember(view, injector);
 	}
 
 	/**
 	 * @private
 	 */
-	public function unprocess(view:Dynamic, type:Class, injector:IInjector):Void
+	public function unprocess(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
 	{
 		// assumption is that teardown is not wanted.
 		// if you *do* want teardown, copy this class
@@ -51,6 +51,6 @@ class ViewInjectionProcessor
 	private function injectAndRemember(view:Dynamic, injector:IInjector):Void
 	{
 		injector.injectInto(view);
-		_injectedObjects[view] = view;
+		_injectedObjects[UID.create(view)] = view;
 	}
 }

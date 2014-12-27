@@ -16,7 +16,7 @@ interface IMediatorUnmapper
 	 * Unmaps a mediator from this matcher
 	 * @param mediatorClass Mediator to unmap
 	 */
-	function fromMediator(mediatorClass:Class):Void;
+	function fromMediator(mediatorClass:Class<Dynamic>):Void;
 
 	/**
 	 * Unmaps all mediator mappings for this matcher

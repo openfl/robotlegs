@@ -28,7 +28,8 @@ class LogManager implements ILogTarget
 	/**
 	 * The current log level
 	 */
-	public function get logLevel():UInt
+	public var logLevel(get, set):UInt;
+	public function get_logLevel():UInt
 	{
 		return _logLevel;
 	}
@@ -36,16 +37,17 @@ class LogManager implements ILogTarget
 	/**
 	 * Sets the current log level
 	 */
-	public function set logLevel(value:UInt):Void
+	public function set_logLevel(value:UInt):UInt
 	{
 		_logLevel = value;
+		return _logLevel;
 	}
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _targets:Array<ILogTarget> = new Array<ILogTarget>;
+	private var _targets:Array<ILogTarget> = [];
 
 	/*============================================================================*/
 	/* Public Functions                                                           */
@@ -79,7 +81,7 @@ class LogManager implements ILogTarget
 		if (level > _logLevel)
 			return;
 
-		for each (var target:ILogTarget in _targets)
+		for (target in _targets)
 		{
 			target.log(source, level, timestamp, message, params);
 		}
@@ -87,6 +89,6 @@ class LogManager implements ILogTarget
 
 	public function removeAllTargets():Void
 	{
-		_targets.length = 0;
+		_targets = [];
 	}
 }

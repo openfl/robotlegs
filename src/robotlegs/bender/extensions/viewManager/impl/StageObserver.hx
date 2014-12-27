@@ -10,7 +10,6 @@ package robotlegs.bender.extensions.viewManager.impl;
 import openfl.display.DisplayObject;
 import openfl.display.DisplayObjectContainer;
 import openfl.events.Event;
-import flash.utils.getQualifiedClassName;
 
 /**
  * @private
@@ -40,7 +39,7 @@ class StageObserver
 		_registry.addEventListener(ContainerRegistryEvent.ROOT_CONTAINER_ADD, onRootContainerAdd);
 		_registry.addEventListener(ContainerRegistryEvent.ROOT_CONTAINER_REMOVE, onRootContainerRemove);
 		// We might have arrived late on the scene
-		for each (var binding:ContainerBinding in _registry.rootBindings)
+		for (binding in _registry.rootBindings)
 		{
 			addRootListener(binding.container);
 		}
@@ -57,7 +56,7 @@ class StageObserver
 	{
 		_registry.removeEventListener(ContainerRegistryEvent.ROOT_CONTAINER_ADD, onRootContainerAdd);
 		_registry.removeEventListener(ContainerRegistryEvent.ROOT_CONTAINER_REMOVE, onRootContainerRemove);
-		for each (var binding:ContainerBinding in _registry.rootBindings)
+		for (binding in _registry.rootBindings)
 		{
 			removeRootListener(binding.container);
 		}
@@ -93,17 +92,19 @@ class StageObserver
 
 	private function onViewAddedToStage(event:Event):Void
 	{
-		var view:DisplayObject = event.target as DisplayObject;
-		// Question: would it be worth caching QCNs by view in a weak dictionary,
-		// to avoid getQualifiedClassName() cost?
-		var qcn:String = getQualifiedClassName(view);
-		var filtered:Bool = _filter.test(qcn);
+		var view:DisplayObject = cast(event.target, DisplayObject);
+		// Question: would it be worth caching QCNs by view in a weak Map<Dynamic,Dynamic>,
+		// to avoid Type.getClassName() cost?
+		var qcn:String = Type.getClassName(Type.getClass(view));
+		// CHECK
+		//var filtered:Bool = _filter.test(qcn);
+		var filtered:Bool = _filter.match(qcn);
 		if (filtered)
 			return;
-		var type:Class = view['constructor'];
+		var type:Class<Dynamic> = Type.getClass(view);
 		// Walk upwards from the nearest binding
 		var binding:ContainerBinding = _registry.findParentBinding(view);
-		while (binding)
+		while (binding != null)
 		{
 			binding.handleView(view, type);
 			binding = binding.parent;
@@ -112,9 +113,9 @@ class StageObserver
 
 	private function onContainerRootAddedToStage(event:Event):Void
 	{
-		var container:DisplayObjectContainer = event.target as DisplayObjectContainer;
+		var container:DisplayObjectContainer = cast(event.target, DisplayObjectContainer);
 		container.removeEventListener(Event.ADDED_TO_STAGE, onContainerRootAddedToStage);
-		var type:Class = container['constructor'];
+		var type:Class<Dynamic> = Type.getClass(container);
 		var binding:ContainerBinding = _registry.getBinding(container);
 		binding.handleView(container, type);
 	}

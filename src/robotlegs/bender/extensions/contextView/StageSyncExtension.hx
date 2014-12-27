@@ -44,9 +44,7 @@ class StageSyncExtension implements IExtension
 	{
 		_context = context;
 		_logger = context.getLogger(this);
-		_context.addConfigHandler(
-			InstanceOfType.call(ContextView),
-			handleContextView);
+		_context.addConfigHandler(InstanceOfType.call(ContextView), handleContextView);
 	}
 
 	/*============================================================================*/
@@ -55,13 +53,13 @@ class StageSyncExtension implements IExtension
 
 	private function handleContextView(contextView:ContextView):Void
 	{
-		if (_contextView)
+		if (_contextView != null)
 		{
 			_logger.warn('A contextView has already been installed, ignoring {0}', [contextView.view]);
 			return;
 		}
 		_contextView = contextView.view;
-		if (_contextView.stage)
+		if (_contextView.stage != null)
 		{
 			initializeContext();
 		}

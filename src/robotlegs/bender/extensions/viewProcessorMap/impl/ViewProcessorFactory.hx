@@ -9,8 +9,9 @@ package robotlegs.bender.extensions.viewProcessorMap.impl;
 
 import openfl.display.DisplayObject;
 import openfl.events.Event;
-import openfl.utils.Dictionary;
 import org.swiftsuspenders.errors.InjectorInterfaceConstructionError;
+
+//import org.swiftsuspenders.errors.InjectorInterfaceConstructionError;
 import robotlegs.bender.extensions.matching.ITypeFilter;
 import robotlegs.bender.extensions.viewProcessorMap.api.ViewProcessorMapError;
 import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorMapping;
@@ -30,7 +31,7 @@ class ViewProcessorFactory implements IViewProcessorFactory
 
 	private var _injector:IInjector;
 
-	private var _listenersByView:Dictionary = new Dictionary(true);
+	private var _listenersByView = new Map<String,Dynamic>();
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -51,13 +52,13 @@ class ViewProcessorFactory implements IViewProcessorFactory
 	/**
 	 * @inheritDoc
 	 */
-	public function runProcessors(view:Dynamic, type:Class, processorMappings:Array<Dynamic>):Void
+	public function runProcessors(view:Dynamic, type:Class<Dynamic>, processorMappings:Array<Dynamic>):Void
 	{
 		createRemovedListener(view, type, processorMappings);
 
 		var filter:ITypeFilter;
 
-		for each (var mapping:IViewProcessorMapping in processorMappings)
+		for (mapping in processorMappings)
 		{
 			filter = mapping.matcher;
 			mapTypeForFilterBinding(filter, type, view);
@@ -69,12 +70,16 @@ class ViewProcessorFactory implements IViewProcessorFactory
 	/**
 	 * @inheritDoc
 	 */
-	public function runUnprocessors(view:Dynamic, type:Class, processorMappings:Array<Dynamic>):Void
+	public function runUnprocessors(view:Dynamic, type:Class<Dynamic>, processorMappings:Array<Dynamic>):Void
 	{
-		for each (var mapping:IViewProcessorMapping in processorMappings)
+		for (mapping in processorMappings)
 		{
 			// ?? Is this correct - will assume that people are implementing something sensible in their processors.
-			mapping.processor ||= createProcessor(mapping.processorClass);
+			// CHECK
+			if (mapping.processor == null) {
+				mapping.processor = createProcessor(mapping.processorClass);
+			}
+			//mapping.processor ||= createProcessor(mapping.processorClass);
 			mapping.processor.unprocess(view, type, _injector);
 		}
 	}
@@ -84,12 +89,16 @@ class ViewProcessorFactory implements IViewProcessorFactory
 	 */
 	public function runAllUnprocessors():Void
 	{
-		for each (var removalHandlers:Array<Dynamic> in _listenersByView)
+		for (removalHandlers in _listenersByView)
 		{
-			var iLength:UInt = removalHandlers.length;
-			for (var i:UInt = 0; i < iLength; i++)
+			var removalHandlers2 = cast(removalHandlers, Array<Dynamic>);
+			var iLength:UInt = removalHandlers2.length;
+			for (i in 0...iLength)
 			{
-				removalHandlers[i](null);
+				if (Reflect.isFunction(removalHandlers2[i])){
+					var removalHandler = removalHandlers2[i];
+					removalHandler(null);
+				}
 			}
 		}
 	}
@@ -98,19 +107,23 @@ class ViewProcessorFactory implements IViewProcessorFactory
 	/* Private Functions                                                          */
 	/*============================================================================*/
 
-	private function runProcess(view:Dynamic, type:Class, mapping:IViewProcessorMapping):Void
+	private function runProcess(view:Dynamic, type:Class<Dynamic>, mapping:IViewProcessorMapping):Void
 	{
 		if (GuardsApprove.call(mapping.guards, _injector))
 		{
-			mapping.processor ||= createProcessor(mapping.processorClass);
-			ApplyHooks(mapping.hooks, _injector);
+			// CHECK
+			if (mapping.processor == null) {
+				mapping.processor = createProcessor(mapping.processorClass);
+			}
+			//mapping.processor ||= createProcessor(mapping.processorClass);
+			ApplyHooks.call(mapping.hooks, _injector);
 			mapping.processor.process(view, type, _injector);
 		}
 	}
 
-	private function createProcessor(processorClass:Class):Dynamic
+	private function createProcessor(processorClass:Class<Dynamic>):Dynamic
 	{
-		if (_injector.hasMapping(processorClass) == null)
+		if (_injector.hasMapping(processorClass))
 		{
 			_injector.map(processorClass).asSingleton();
 		}
@@ -121,42 +134,38 @@ class ViewProcessorFactory implements IViewProcessorFactory
 		}
 		catch (error:InjectorInterfaceConstructionError)
 		{
-			var errorMsg:String = "The view processor "
-				+ processorClass
-				+ " has not been mapped in the injector, "
-				+ "and it is not possible to instantiate an interface. "
-				+ "Please map a concrete type against this interface.";
+			var errorMsg:String = "The view processor " + processorClass + " has not been mapped in the injector, " + "and it is not possible to instantiate an interface. " + "Please map a concrete type against this interface.";
 			throw(new ViewProcessorMapError(errorMsg));
 		}
 		return null;
 	}
 
-	private function mapTypeForFilterBinding(filter:ITypeFilter, type:Class, view:Dynamic):Void
+	private function mapTypeForFilterBinding(filter:ITypeFilter, type:Class<Dynamic>, view:Dynamic):Void
 	{
-		var requiredType:Class;
-		var requiredTypes:Array<Class> = requiredTypesFor(filter, type);
+		var requiredType:Class<Dynamic>;
+		var requiredTypes:Array<Class<Dynamic>> = requiredTypesFor(filter, type);
 
-		for each (requiredType in requiredTypes)
+		for (requiredType in requiredTypes)
 		{
 			_injector.map(requiredType).toValue(view);
 		}
 	}
 
-	private function unmapTypeForFilterBinding(filter:ITypeFilter, type:Class, view:Dynamic):Void
+	private function unmapTypeForFilterBinding(filter:ITypeFilter, type:Class<Dynamic>, view:Dynamic):Void
 	{
-		var requiredType:Class;
-		var requiredTypes:Array<Class> = requiredTypesFor(filter, type);
+		var requiredType:Class<Dynamic>;
+		var requiredTypes:Array<Class<Dynamic>> = requiredTypesFor(filter, type);
 
-		for each (requiredType in requiredTypes)
+		for (requiredType in requiredTypes)
 		{
 			if (_injector.hasDirectMapping(requiredType))
 				_injector.unmap(requiredType);
 		}
 	}
 
-	private function requiredTypesFor(filter:ITypeFilter, type:Class):Array<Class>
+	private function requiredTypesFor(filter:ITypeFilter, type:Class<Dynamic>):Array<Class<Dynamic>>
 	{
-		var requiredTypes:Array<Class> = filter.allOfTypes.concat(filter.anyOfTypes);
+		var requiredTypes:Array<Class<Dynamic>> = filter.allOfTypes.concat(filter.anyOfTypes);
 
 		if (requiredTypes.indexOf(type) == -1)
 			requiredTypes.push(type);
@@ -164,33 +173,64 @@ class ViewProcessorFactory implements IViewProcessorFactory
 		return requiredTypes;
 	}
 
-	private function createRemovedListener(view:Dynamic, type:Class, processorMappings:Array<Dynamic>):Void
+	private function createRemovedListener(view:Dynamic, type:Class<Dynamic>, processorMappings:Array<Dynamic>):Void
 	{
-		if (view is DisplayObject)
-		{
-			_listenersByView[view] ||= [];
-
-			var handler:Function = function(e:Event):Void {
-				runUnprocessors(view, type, processorMappings);
-				(view as DisplayObject).removeEventListener(Event.REMOVED_FROM_STAGE, handler);
-				removeHandlerFromView(view, handler);
-			};
-
-			_listenersByView[view].push(handler);
-			(view as DisplayObject).addEventListener(Event.REMOVED_FROM_STAGE, handler, false, 0, true);
-		}
+		var viewProcessorFactoryCreateRemovedListener:ViewProcessorFactoryCreateRemovedListener = new ViewProcessorFactoryCreateRemovedListener();
+		viewProcessorFactoryCreateRemovedListener.init(_listenersByView, runUnprocessors, removeHandlerFromView, view, type, processorMappings);
 	}
 
-	private function removeHandlerFromView(view:Dynamic, handler:Function):Void
+	private function removeHandlerFromView(view:Dynamic, handler:Void->Void):Void
 	{
-		if (_listenersByView[view] && (_listenersByView[view].length > 0))
+		if (_listenersByView[UID.create(view)] && (_listenersByView[UID.create(view)].length > 0))
 		{
-			var handlerIndex:UInt = _listenersByView[view].indexOf(handler);
-			_listenersByView[view].splice(handlerIndex, 1);
-			if (_listenersByView[view].length == 0)
+			var handlerIndex:UInt = _listenersByView[UID.create(view)].indexOf(handler);
+			_listenersByView[UID.create(view)].splice(handlerIndex, 1);
+			if (_listenersByView[UID.create(view)].length == 0)
 			{
-				delete _listenersByView[view];
+				_listenersByView.remove(UID.create(view));
 			}
 		}
+	}
+}
+
+class ViewProcessorFactoryCreateRemovedListener
+{
+	var _listenersByView:Map<String, Dynamic>;
+	var view:Dynamic;
+	var type:Class<Dynamic>;
+	var processorMappings:Array<Dynamic>;
+	var runUnprocessors:Dynamic -> Class<Dynamic> -> Array<Dynamic> -> Void;
+	var removeHandlerFromView:Dynamic->Dynamic->Void;
+	
+	public function new()
+	{
+		
+	}
+	
+	public function init(_listenersByView:Map<String,Dynamic>, runUnprocessors:Dynamic -> Class<Dynamic> -> Array<Dynamic> -> Void, removeHandlerFromView:Dynamic -> Dynamic -> Void, view:Dynamic, type:Class<Dynamic>, processorMappings:Array<Dynamic>) 
+	{
+		this.removeHandlerFromView = removeHandlerFromView;
+		this.runUnprocessors = runUnprocessors;
+		this.processorMappings = processorMappings;
+		this.type = type;
+		this.view = view;
+		this._listenersByView = _listenersByView;
+		
+		if (Std.is(view, DisplayObject))
+		{
+			// CHECK
+			if (_listenersByView[UID.create(view)] == null) _listenersByView[UID.create(view)] = [];
+			//_listenersByView[view] ||= [];
+			
+			_listenersByView[UID.create(view)].push(handler);
+			cast(view, DisplayObject).addEventListener(Event.REMOVED_FROM_STAGE, handler, false, 0, true);
+		}
+	}
+	
+	private function handler(e:Event):Void
+	{
+		runUnprocessors(view, type, processorMappings);
+		cast(view, DisplayObject).removeEventListener(Event.REMOVED_FROM_STAGE, handler);
+		removeHandlerFromView(view, handler);
 	}
 }

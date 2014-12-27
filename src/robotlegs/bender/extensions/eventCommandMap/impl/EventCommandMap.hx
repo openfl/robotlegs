@@ -58,7 +58,7 @@ class EventCommandMap implements IEventCommandMap
 	/**
 	 * @inheritDoc
 	 */
-	public function map(type:String, eventClass:Class = null):ICommandMapper
+	public function map(type:String, eventClass:Class<Dynamic> = null):ICommandMapper
 	{
 		return getTrigger(type, eventClass).createMapper();
 	}
@@ -66,7 +66,7 @@ class EventCommandMap implements IEventCommandMap
 	/**
 	 * @inheritDoc
 	 */
-	public function unmap(type:String, eventClass:Class = null):ICommandUnmapper
+	public function unmap(type:String, eventClass:Class<Dynamic> = null):ICommandUnmapper
 	{
 		return getTrigger(type, eventClass).createMapper();
 	}
@@ -74,7 +74,7 @@ class EventCommandMap implements IEventCommandMap
 	/**
 	 * @inheritDoc
 	 */
-	public function addMappingProcessor(handler:Function):IEventCommandMap
+	public function addMappingProcessor(handler:Void->Void):IEventCommandMap
 	{
 		if (_mappingProcessors.indexOf(handler) == -1)
 			_mappingProcessors.push(handler);
@@ -85,17 +85,17 @@ class EventCommandMap implements IEventCommandMap
 	/* Private Functions                                                          */
 	/*============================================================================*/
 
-	private function getKey(type:String, eventClass:Class):String
+	private function getKey(type:String, eventClass:Class<Dynamic>):String
 	{
 		return type + eventClass;
 	}
 
-	private function getTrigger(type:String, eventClass:Class):EventCommandTrigger
+	private function getTrigger(type:String, eventClass:Class<Dynamic>):EventCommandTrigger
 	{
-		return _triggerMap.getTrigger(type, eventClass) as EventCommandTrigger;
+		return cast(_triggerMap.getTrigger([type, eventClass]), EventCommandTrigger);
 	}
 
-	private function createTrigger(type:String, eventClass:Class):EventCommandTrigger
+	private function createTrigger(type:String, eventClass:Class<Dynamic>):EventCommandTrigger
 	{
 		return new EventCommandTrigger(_injector, _dispatcher, type, eventClass, _mappingProcessors, _logger);
 	}

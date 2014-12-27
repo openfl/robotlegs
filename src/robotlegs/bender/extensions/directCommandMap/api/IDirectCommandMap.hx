@@ -30,5 +30,5 @@ interface IDirectCommandMap extends IDirectCommandMapper
 	 * @param handler Function that accepts a mapping
 	 * @return Self
 	 */
-	function addMappingProcessor(handler:Function):IDirectCommandMap;
+	function addMappingProcessor(handler:Void->Void):IDirectCommandMap;
 }

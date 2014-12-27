@@ -7,19 +7,21 @@
 
 package robotlegs.bender.framework.impl;
 
-import openfl.utils.Dictionary;
+
+import openfl.errors.Error;
+import robotlegs.bender.framework.impl.SafelyCallBack;
 
 /**
  * Message Dispatcher implementation.
  */
-public class MessageDispatcher
+class MessageDispatcher
 {
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _handlers:Dictionary = new Dictionary();
+	private var _handlers = new Map<String,Dynamic>();
 
 	/*============================================================================*/
 	/* Public Functions                                                           */
@@ -30,10 +32,10 @@ public class MessageDispatcher
 	 * @param message The interesting message
 	 * @param handler The handler function
 	 */
-	public function addMessageHandler(message:Dynamic, handler:Function):Void
+	public function addMessageHandler(message:Dynamic, handler:Void->Void):Void
 	{
 		var messageHandlers:Array<Dynamic> = _handlers[message];
-		if (messageHandlers)
+		if (messageHandlers != null)
 		{
 			if (messageHandlers.indexOf(handler) == -1)
 				messageHandlers.push(handler);
@@ -59,15 +61,15 @@ public class MessageDispatcher
 	 * @param message The interesting message
 	 * @param handler The handler function
 	 */
-	public function removeMessageHandler(message:Dynamic, handler:Function):Void
+	public function removeMessageHandler(message:Dynamic, handler:Void->Void):Void
 	{
 		var messageHandlers:Array<Dynamic> = _handlers[message];
-		var index:Int = messageHandlers ? messageHandlers.indexOf(handler):-1;
+		var index:Int = (messageHandlers != null) ? messageHandlers.indexOf(handler):-1;
 		if (index != -1)
 		{
 			messageHandlers.splice(index, 1);
 			if (messageHandlers.length == 0)
-				delete _handlers[message];
+				_handlers.remove(message);
 		}
 	}
 
@@ -77,23 +79,24 @@ public class MessageDispatcher
 	 * @param callback The completion callback function
 	 * @param reverse Should handlers be called in reverse order
 	 */
-	public function dispatchMessage(message:Dynamic, callback:Function = null, reverse:Bool = false):Void
+	public function dispatchMessage(message:Dynamic, callback:Dynamic = null, reverse:Bool = false):Void
 	{
 		var handlers:Array<Dynamic> = _handlers[message];
-		if (handlers)
+		// CHECK
+		if (handlers.length > 0)
 		{
-			handlers = handlers.concat();
-			reverse || handlers.reverse();
+			handlers = handlers.concat([]);
+			if (!reverse) handlers.reverse();
 			new MessageRunner(message, handlers, callback).run();
 		}
 		else
 		{
-			callback && SafelyCallBack.call(callback);
+			if (callback != null) SafelyCallBack.call(callback);
 		}
 	}
 }
 
-import robotlegs.bender.framework.impl.SafelyCallBack;
+
 
 class MessageRunner
 {
@@ -106,7 +109,7 @@ class MessageRunner
 
 	private var _handlers:Array<Dynamic>;
 
-	private var _callback:Function;
+	private var _callback:Void->Void;
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -115,7 +118,7 @@ class MessageRunner
 	/**
 	 * @private
 	 */
-	public function new(message:Dynamic, handlers:Array<Dynamic>, callback:Function)
+	public function new(message:Dynamic, handlers:Array<Dynamic>, callback:Void->Void)
 	{
 		_message = message;
 		_handlers = handlers;
@@ -143,8 +146,9 @@ class MessageRunner
 		// Try to keep things synchronous with a simple loop,
 		// forcefully breaking out for async handlers and recursing.
 		// We do this to avoid increasing the stack depth unnecessarily.
-		var handler:Function;
-		while (handler = _handlers.pop())
+		var handler:Dynamic;
+		// CHECK
+		while ((handler = _handlers.pop()) != null)
 		{
 			if (handler.length == 0) // sync handler: ()
 			{
@@ -156,16 +160,16 @@ class MessageRunner
 			}
 			else if (handler.length == 2) // sync or async handler: (message, callback)
 			{
-				var handled:Bool;
+				var handled:Bool = false;
 				handler(_message, function(error:Dynamic = null, msg:Dynamic = null):Void
 				{
 					// handler must not invoke the callback more than once
 					if (handled) return;
 
 					handled = true;
-					if (error || _handlers.length == 0)
+					if (error != null || _handlers.length == 0)
 					{
-						_callback && SafelyCallBack.call(_callback, error, _message);
+						if (_callback != null) SafelyCallBack.call(_callback, error, _message);
 					}
 					else
 					{
@@ -183,6 +187,6 @@ class MessageRunner
 		// If we got here then this loop finished synchronously.
 		// Nobody broke out, so we are done.
 		// This relies on the various return statements above. Be careful.
-		_callback && SafelyCallBack.call(_callback, null, _message);
+		if (_callback != null) SafelyCallBack.call(_callback, null, _message);
 	}
 }

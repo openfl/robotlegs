@@ -17,12 +17,12 @@ interface IViewProcessorMappingConfig
 	 * @param guards A list of guards
 	 * @return Self
 	 */
-	function withGuards(... guards):IViewProcessorMappingConfig;
+	function withGuards(guards:Array<Dynamic>):IViewProcessorMappingConfig;
 
 	/**
 	 * A list of hooks to run before processing a view
 	 * @param hooks A list of hooks
 	 * @return Self
 	 */
-	function withHooks(... hooks):IViewProcessorMappingConfig;
+	function withHooks(hooks:Array<Dynamic>):IViewProcessorMappingConfig;
 }

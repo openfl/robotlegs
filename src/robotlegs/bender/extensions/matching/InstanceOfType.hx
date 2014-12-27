@@ -10,6 +10,7 @@ package robotlegs.bender.extensions.matching;
 import robotlegs.bender.framework.api.IMatcher;
 
 class InstanceOfType
+{
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
@@ -19,13 +20,13 @@ class InstanceOfType
 	 * @param type The type to match
 	 * @return A matcher
 	 */
-	public static function call(type:Class):IMatcher
+	public static function call(type:Class<Dynamic>):IMatcher
 	{
 		return new InstanceOfMatcher(type);
 	}
 }
 
-import robotlegs.bender.framework.api.IMatcher;
+
 
 /**
  * @private
@@ -37,7 +38,7 @@ class InstanceOfMatcher implements IMatcher
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _type:Class;
+	private var _type:Class<Dynamic>;
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -46,7 +47,7 @@ class InstanceOfMatcher implements IMatcher
 	/**
 	 * @private
 	 */
-	public function new(type:Class)
+	public function new(type:Class<Dynamic>)
 	{
 		_type = type;
 	}
@@ -60,6 +61,6 @@ class InstanceOfMatcher implements IMatcher
 	 */
 	public function matches(item:Dynamic):Bool
 	{
-		return item is _type;
+		return Std.is(item, _type);
 	}
 }

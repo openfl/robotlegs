@@ -17,30 +17,35 @@ interface IViewProcessorMapping
 	/**
 	 * The matcher for this mapping
 	 */
-	function get matcher():ITypeFilter;
+	public var matcher(get, null):ITypeFilter;
+	function get_matcher():ITypeFilter;
 
 	/**
 	 * The processor for this mapping
 	 */
-	function get processor():Dynamic;
+	public var processor(get, set):Dynamic;
+	function get_processor():Dynamic;
 
 	/**
 	 * Sets the processor for this mapping
 	 */
-	function set processor(value:Dynamic):Void;
+	function set_processor(value:Dynamic):Dynamic;
 
 	/**
 	 * The processor class for this mapping
 	 */
-	function get processorClass():Class;
+	public var processorClass(get, null):Class<Dynamic>;
+	function get_processorClass():Class<Dynamic>;
 
 	/**
 	 * A list of guards to consult before allowing a view to be processed
 	 */
-	function get guards():Array;
+	public var guards(get, null):Array<Dynamic>;
+	function get_guards():Array<Dynamic>;
 
 	/**
 	 * A list of hooks to run before processing a view
 	 */
-	function get hooks():Array;
+	public var hooks(get, null):Array<Dynamic>;
+	function get_hooks():Array<Dynamic>;
 }

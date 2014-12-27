@@ -7,7 +7,7 @@
 
 package robotlegs.bender.extensions.mediatorMap.impl;
 
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.extensions.matching.ITypeFilter;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorConfigurator;
@@ -18,14 +18,14 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
-class MediatorMapper implements IMediatorMapper, IMediatorUnmapper
+class MediatorMapper implements IMediatorMapper implements IMediatorUnmapper
 {
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _mappings:Dictionary = new Dictionary();
+	private var _mappings = new Map<String,Dynamic>();
 
 	private var _typeFilter:ITypeFilter;
 
@@ -54,10 +54,10 @@ class MediatorMapper implements IMediatorMapper, IMediatorUnmapper
 	/**
 	 * @inheritDoc
 	 */
-	public function toMediator(mediatorClass:Class):IMediatorConfigurator
+	public function toMediator(mediatorClass:Class<Dynamic>):IMediatorConfigurator
 	{
-		var mapping:IMediatorMapping = _mappings[mediatorClass];
-		return mapping
+		var mapping:IMediatorMapping = _mappings[UID.create(mediatorClass)];
+		return (mapping != null)
 			? overwriteMapping(mapping)
 			: createMapping(mediatorClass);
 	}
@@ -65,10 +65,10 @@ class MediatorMapper implements IMediatorMapper, IMediatorUnmapper
 	/**
 	 * @inheritDoc
 	 */
-	public function fromMediator(mediatorClass:Class):Void
+	public function fromMediator(mediatorClass:Class<Dynamic>):Void
 	{
-		var mapping:IMediatorMapping = _mappings[mediatorClass];
-		mapping && deleteMapping(mapping);
+		var mapping:IMediatorMapping = _mappings[UID.create(mediatorClass)];
+		if (mapping != null) deleteMapping(mapping);
 	}
 
 	/**
@@ -76,7 +76,7 @@ class MediatorMapper implements IMediatorMapper, IMediatorUnmapper
 	 */
 	public function fromAll():Void
 	{
-		for each (var mapping:IMediatorMapping in _mappings)
+		for (mapping in _mappings)
 		{
 			deleteMapping(mapping);
 		}
@@ -86,25 +86,25 @@ class MediatorMapper implements IMediatorMapper, IMediatorUnmapper
 	/* Private Functions                                                          */
 	/*============================================================================*/
 
-	private function createMapping(mediatorClass:Class):MediatorMapping
+	private function createMapping(mediatorClass:Class<Dynamic>):MediatorMapping
 	{
 		var mapping:MediatorMapping = new MediatorMapping(_typeFilter, mediatorClass);
 		_handler.addMapping(mapping);
-		_mappings[mediatorClass] = mapping;
-		_logger && _logger.debug('{0} mapped to {1}', [_typeFilter, mapping]);
+		_mappings[UID.create(mediatorClass)] = mapping;
+		if (_logger != null) _logger.debug('{0} mapped to {1}', [_typeFilter, mapping]);
 		return mapping;
 	}
 
 	private function deleteMapping(mapping:IMediatorMapping):Void
 	{
 		_handler.removeMapping(mapping);
-		delete _mappings[mapping.mediatorClass];
-		_logger && _logger.debug('{0} unmapped from {1}', [_typeFilter, mapping]);
+		_mappings.remove(UID.create(mapping.mediatorClass));
+		if (_logger != null) _logger.debug('{0} unmapped from {1}', [_typeFilter, mapping]);
 	}
 
 	private function overwriteMapping(mapping:IMediatorMapping):IMediatorConfigurator
 	{
-		_logger && _logger.warn('{0} already mapped to {1}\n' +
+		if (_logger != null) _logger.warn('{0} already mapped to {1}\n' +
 			'If you have overridden this mapping intentionally you can use "unmap()" ' +
 			'prior to your replacement mapping in order to avoid seeing this message.\n',
 			[_typeFilter, mapping]);

@@ -9,7 +9,7 @@ package robotlegs.bender.extensions.mediatorMap.impl;
 
 import openfl.display.DisplayObject;
 import openfl.events.Event;
-import flash.utils.getDefinitionByName;
+//import flash.utils.getDefinitionByName;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 
 /**
@@ -22,11 +22,11 @@ class MediatorManager
 	/* Private Static Properties                                                  */
 	/*============================================================================*/
 
-	private static var UIComponentClass:Class;
+	private static var UIComponentClass:Class<Dynamic>;
 
-	private static var flexAvailable:Bool = checkFlex();
+	private static var flexAvailable:Bool = false;// checkFlex();
 
-	private static var CREATION_COMPLETE:String = "creationComplete";
+	public static var CREATION_COMPLETE:String = "creationComplete";
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
@@ -50,18 +50,18 @@ class MediatorManager
 	/* Private Static Functions                                                   */
 	/*============================================================================*/
 
-	private static function checkFlex():Bool
+	/*private static function checkFlex():Bool
 	{
 		try
 		{
-			UIComponentClass = getDefinitionByName('mx.core::UIComponent') as Class;
+			UIComponentClass = cast(getDefinitionByName('mx.core::UIComponent'), Class<Dynamic>);
 		}
 		catch (error:Error)
 		{
 			// Do nothing
 		}
 		return UIComponentClass != null;
-	}
+	}*/
 
 	/*============================================================================*/
 	/* Public Functions                                                           */
@@ -72,10 +72,10 @@ class MediatorManager
 	 */
 	public function addMediator(mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping):Void
 	{
-		var displayObject:DisplayObject = item as DisplayObject;
+		var displayObject:DisplayObject = cast(item, DisplayObject);
 
 		// Watch Display Dynamic for removal
-		if (displayObject && mapping.autoRemoveEnabled)
+		if (displayObject != null && mapping.autoRemoveEnabled)
 			displayObject.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 
 		// Synchronize with item life-cycle
@@ -85,23 +85,18 @@ class MediatorManager
 		}
 		else
 		{
-			displayObject.addEventListener(CREATION_COMPLETE, function(e:Event):Void
-			{
-				displayObject.removeEventListener(CREATION_COMPLETE, arguments.callee);
-				// Ensure that we haven't been removed in the meantime
-				if (_factory.getMediator(item, mapping) == mediator)
-					initializeMediator(mediator, item);
-			});
+			var mediatorManagerAddMediator:MediatorManagerAddMediator = new MediatorManagerAddMediator(initializeMediator, _factory, displayObject, mediator, item, mapping);
+			displayObject.addEventListener(MediatorManager.CREATION_COMPLETE, mediatorManagerAddMediator.creationComplete);
 		}
 	}
-
+	
 	/**
 	 * @private
 	 */
 	public function removeMediator(mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping):Void
 	{
-		if (item is DisplayObject)
-			DisplayObject(item).removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		if (Std.is(item, DisplayObject))
+			cast(item, DisplayObject).removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 
 		if (itemInitialized(item))
 			destroyMediator(mediator);
@@ -118,38 +113,67 @@ class MediatorManager
 
 	private function itemInitialized(item:Dynamic):Bool
 	{
-		if (flexAvailable && (item is UIComponentClass) && !item['initialized'])
+		if (flexAvailable && (Std.is(item, UIComponentClass)) && !Reflect.hasField(item, 'initialized'))
 			return false;
 		return true;
 	}
 
 	private function initializeMediator(mediator:Dynamic, mediatedItem:Dynamic):Void
 	{
-		if ('preInitialize' in mediator)
+		if (Reflect.hasField(mediator, 'preInitialize'))
 			mediator.preInitialize();
 
-		if ('viewComponent' in mediator)
+		if (Reflect.hasField(mediator, 'viewComponent'))
 			mediator.viewComponent = mediatedItem;
 
-		if ('initialize' in mediator)
+		if (Reflect.hasField(mediator, 'initialize'))
 			mediator.initialize();
 
-		if ('postInitialize' in mediator)
+		if (Reflect.hasField(mediator, 'postInitialize'))
 			mediator.postInitialize();
 	}
 
 	private function destroyMediator(mediator:Dynamic):Void
 	{
-		if ('preDestroy' in mediator)
+		if (Reflect.hasField(mediator, 'preDestroy'))
 			mediator.preDestroy();
 
-		if ('destroy' in mediator)
+		if (Reflect.hasField(mediator, 'destroy'))
 			mediator.destroy();
 
-		if ('viewComponent' in mediator)
+		if (Reflect.hasField(mediator, 'viewComponent'))
 			mediator.viewComponent = null;
 
-		if ('postDestroy' in mediator)
+		if (Reflect.hasField(mediator, 'postDestroy'))
 			mediator.postDestroy();
+	}
+}
+
+class MediatorManagerAddMediator
+{
+	var displayObject:DisplayObject;
+	var mediator:Dynamic;
+	var item:Dynamic;
+	var mapping:IMediatorMapping;
+	var _factory:MediatorFactory;
+	var initializeMediator:Dynamic;
+	
+	public function new(initializeMediator:Dynamic -> Dynamic -> Void, _factory:MediatorFactory, displayObject:DisplayObject, mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping)
+	{
+		this.initializeMediator = initializeMediator;
+		this._factory = _factory;
+		this.mapping = mapping;
+		this.item = item;
+		this.mediator = mediator;
+		this.displayObject = displayObject;
+	}
+	
+	public function creationComplete(e:Event):Void 
+	{
+		displayObject.removeEventListener(MediatorManager.CREATION_COMPLETE, creationComplete);
+		// Ensure that we haven't been removed in the meantime
+		if (_factory.getMediator(item, mapping) == mediator) {
+			initializeMediator(mediator, item);
+		}
 	}
 }

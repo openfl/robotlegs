@@ -19,5 +19,5 @@ interface IViewHandler
 	 * @param view The view instance to handle
 	 * @param type The class of the view instance
 	 */
-	function handleView(view:DisplayObject, type:Class):Void;
+	function handleView(view:DisplayObject, type:Class<Dynamic>):Void;
 }

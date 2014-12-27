@@ -37,7 +37,7 @@ class DirectCommandMapper implements IDirectCommandConfigurator
 	/**
 	 * @private
 	 */
-	public function new(executor:ICommandExecutor, mappings:ICommandMappingList, commandClass:Class)
+	public function new(executor:ICommandExecutor, mappings:ICommandMappingList, commandClass:Class<Dynamic>)
 	{
 		_executor = executor;
 		_mappings = mappings;
@@ -62,18 +62,20 @@ class DirectCommandMapper implements IDirectCommandConfigurator
 	/**
 	 * @inheritDoc
 	 */
-	public function withGuards(... guards):IDirectCommandConfigurator
+	public function withGuards(guards:Array<Dynamic>):IDirectCommandConfigurator
 	{
-		_mapping.addGuards.apply(null, guards);
+		Reflect.callMethod (null, _mapping.addGuards, guards);
+		//_mapping.addGuards.apply(null, guards);
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function withHooks(... hooks):IDirectCommandConfigurator
+	public function withHooks(hooks:Array<Dynamic>):IDirectCommandConfigurator
 	{
-		_mapping.addHooks.apply(null, hooks);
+		Reflect.callMethod (null, _mapping.addHooks, hooks);
+		//_mapping.addHooks.apply(null, hooks);
 		return this;
 	}
 
@@ -97,7 +99,7 @@ class DirectCommandMapper implements IDirectCommandConfigurator
 	/**
 	 * @inheritDoc
 	 */
-	public function map(commandClass:Class):IDirectCommandConfigurator
+	public function map(commandClass:Class<Dynamic>):IDirectCommandConfigurator
 	{
 		return new DirectCommandMapper(_executor, _mappings, commandClass);
 	}

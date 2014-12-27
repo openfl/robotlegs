@@ -21,7 +21,7 @@ class EventMap implements IEventMap
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _listeners:Array<EventMapConfig> = new Array<EventMapConfig>();
+	private var _listeners = new Array<EventMapConfig>();
 
 	private var _suspendedListeners:Array<EventMapConfig> = new Array<EventMapConfig>();
 
@@ -34,16 +34,13 @@ class EventMap implements IEventMap
 	/**
 	 * @inheritDoc
 	 */
-	public function mapListener(
-		dispatcher:IEventDispatcher,
-		eventString:String,
-		listener:Function,
-		eventClass:Class = null,
-		useCapture:Bool = false,
-		priority:Int = 0,
-		useWeakReference:Bool = true):Void
+	public function mapListener(dispatcher:IEventDispatcher, eventString:String, listener:Dynamic, eventClass:Class<Dynamic> = null, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = true):Void
 	{
-		eventClass ||= Event;
+		// CHECK
+		if (eventClass == null) {
+			eventClass = Event;
+		}
+		//eventClass ||= Event;
 
 		var currentListeners:Array<EventMapConfig> = _suspended
 				? _suspendedListeners
@@ -52,7 +49,7 @@ class EventMap implements IEventMap
 		var config:EventMapConfig;
 
 		var i:Int = currentListeners.length;
-		while (i--)
+		while (i-- > 0)
 		{
 			config = currentListeners[i];
 			if (config.equalTo(dispatcher, eventString, listener, eventClass, useCapture))
@@ -61,7 +58,7 @@ class EventMap implements IEventMap
 			}
 		}
 
-		var callback:Function = eventClass == Event
+		var callback:Dynamic = eventClass == Event
 			? listener
 			: function(event:Event):Void
 			{
@@ -77,7 +74,7 @@ class EventMap implements IEventMap
 
 		currentListeners.push(config);
 
-		if (_suspended == null)
+		if (!_suspended)
 		{
 			dispatcher.addEventListener(eventString, callback, useCapture, priority, useWeakReference);
 		}
@@ -86,26 +83,25 @@ class EventMap implements IEventMap
 	/**
 	 * @inheritDoc
 	 */
-	public function unmapListener(
-		dispatcher:IEventDispatcher,
-		eventString:String,
-		listener:Function,
-		eventClass:Class = null,
-		useCapture:Bool = false):Void
+	public function unmapListener(dispatcher:IEventDispatcher,eventString:String,listener:Dynamic,eventClass:Class<Dynamic> = null,useCapture:Bool = false):Void
 	{
-		eventClass ||= Event;
+		// CHECK
+		if (eventClass == null) {
+			eventClass = Event;
+		}
+		//eventClass ||= Event;
 
 		var currentListeners:Array<EventMapConfig> = _suspended
 			? _suspendedListeners
 			: _listeners;
 
 		var i:Int = currentListeners.length;
-		while (i--)
+		while (i-- > 0)
 		{
 			var config:EventMapConfig = currentListeners[i];
 			if (config.equalTo(dispatcher, eventString, listener, eventClass, useCapture))
 			{
-				if (_suspended == null)
+				if (!_suspended)
 				{
 					dispatcher.removeEventListener(eventString, config.callback, useCapture);
 				}
@@ -124,9 +120,9 @@ class EventMap implements IEventMap
 
 		var eventConfig:EventMapConfig;
 		var dispatcher:IEventDispatcher;
-		while (eventConfig = currentListeners.pop())
+		while ((eventConfig = currentListeners.pop()) != null)
 		{
-			if (_suspended == null)
+			if (!_suspended)
 			{
 				dispatcher = eventConfig.dispatcher;
 				dispatcher.removeEventListener(eventConfig.eventString, eventConfig.callback, eventConfig.useCapture);
@@ -146,7 +142,7 @@ class EventMap implements IEventMap
 
 		var eventConfig:EventMapConfig;
 		var dispatcher:IEventDispatcher;
-		while (eventConfig = _listeners.pop())
+		while ((eventConfig = _listeners.pop()) != null)
 		{
 			dispatcher = eventConfig.dispatcher;
 			dispatcher.removeEventListener(eventConfig.eventString, eventConfig.callback, eventConfig.useCapture);
@@ -159,14 +155,14 @@ class EventMap implements IEventMap
 	 */
 	public function resume():Void
 	{
-		if (_suspended == null)
+		if (!_suspended)
 			return;
 
 		_suspended = false;
 
 		var eventConfig:EventMapConfig;
 		var dispatcher:IEventDispatcher;
-		while (eventConfig = _suspendedListeners.pop())
+		while ((eventConfig = _suspendedListeners.pop()) != null)
 		{
 			dispatcher = eventConfig.dispatcher;
 			dispatcher.addEventListener(eventConfig.eventString, eventConfig.callback, eventConfig.useCapture);
@@ -185,9 +181,9 @@ class EventMap implements IEventMap
 	 * @param listener
 	 * @param originalEventClass
 	 */
-	private function routeEventToListener(event:Event, listener:Function, originalEventClass:Class):Void
+	private function routeEventToListener(event:Event, listener:Dynamic, originalEventClass:Class<Dynamic>):Void
 	{
-		if (event is originalEventClass)
+		if (Std.is(event, originalEventClass))
 		{
 			listener(event);
 		}

@@ -63,7 +63,7 @@ class ViewProcessorMapExtension implements IExtension
 		if (_injector.satisfiesDirectly(IViewManager))
 		{
 			_viewManager = _injector.getInstance(IViewManager);
-			_viewManager.addViewHandler(_viewProcessorMap as IViewHandler);
+			_viewManager.addViewHandler(cast(_viewProcessorMap, IViewHandler));
 		}
 	}
 
@@ -74,7 +74,7 @@ class ViewProcessorMapExtension implements IExtension
 		if (_injector.satisfiesDirectly(IViewManager))
 		{
 			_viewManager = _injector.getInstance(IViewManager);
-			_viewManager.removeViewHandler(_viewProcessorMap as IViewHandler);
+			_viewManager.removeViewHandler(cast(_viewProcessorMap, IViewHandler));
 		}
 	}
 

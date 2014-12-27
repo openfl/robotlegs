@@ -14,7 +14,7 @@ import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorConfigurator;
 /**
  * @private
  */
-class MediatorMapping implements IMediatorMapping, IMediatorConfigurator
+class MediatorMapping implements IMediatorMapping implements IMediatorConfigurator
 {
 
 	/*============================================================================*/
@@ -22,51 +22,51 @@ class MediatorMapping implements IMediatorMapping, IMediatorConfigurator
 	/*============================================================================*/
 
 	private var _matcher:ITypeFilter;
-
+	public var matcher(get, null):ITypeFilter;
 	/**
 	 * @inheritDoc
 	 */
-	public function get matcher():ITypeFilter
+	public function get_matcher():ITypeFilter
 	{
 		return _matcher;
 	}
 
-	private var _mediatorClass:Class;
-
+	private var _mediatorClass:Class<Dynamic>;
+	public var mediatorClass(get, null):Class<Dynamic>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get mediatorClass():Class
+	public function get_mediatorClass():Class<Dynamic>
 	{
 		return _mediatorClass;
 	}
 
 	private var _guards:Array<Dynamic> = [];
-
+	public var guards(get, null):Array<Dynamic>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get guards():Array
+	public function get_guards():Array<Dynamic>
 	{
 		return _guards;
 	}
 
 	private var _hooks:Array<Dynamic> = [];
-
+	public var hooks(get, null):Array<Dynamic>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get hooks():Array
+	public function get_hooks():Array<Dynamic>
 	{
 		return _hooks;
 	}
 
 	private var _autoRemoveEnabled:Bool = true;
-
+	public var autoRemoveEnabled(get, null):Bool;
 	/**
 	 * @inheritDoc
 	 */
-	public function get autoRemoveEnabled():Bool
+	public function get_autoRemoveEnabled():Bool
 	{
 		return _autoRemoveEnabled;
 	}
@@ -78,7 +78,7 @@ class MediatorMapping implements IMediatorMapping, IMediatorConfigurator
 	/**
 	 * @private
 	 */
-	public function new(matcher:ITypeFilter, mediatorClass:Class)
+	public function new(matcher:ITypeFilter, mediatorClass:Class<Dynamic>)
 	{
 		_matcher = matcher;
 		_mediatorClass = mediatorClass;
@@ -91,18 +91,26 @@ class MediatorMapping implements IMediatorMapping, IMediatorConfigurator
 	/**
 	 * @inheritDoc
 	 */
-	public function withGuards(... guards):IMediatorConfigurator
+	public function withGuards(guards:Array<Dynamic>):IMediatorConfigurator
 	{
-		_guards = _guards.concat.apply(null, guards);
+		for (i in 0...guards.length) 
+		{
+			_guards.push(guards[i]);
+		}
+		//_guards = _guards.concat.apply(null, guards);
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function withHooks(... hooks):IMediatorConfigurator
+	public function withHooks(hooks:Array<Dynamic>):IMediatorConfigurator
 	{
-		_hooks = _hooks.concat.apply(null, hooks);
+		for (i in 0...hooks.length) 
+		{
+			_hooks.push(hooks[i]);
+		}
+		//_hooks = _hooks.concat.apply(null, hooks);
 		return this;
 	}
 

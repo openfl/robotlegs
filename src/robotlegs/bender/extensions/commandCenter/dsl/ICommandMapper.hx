@@ -14,8 +14,8 @@ interface ICommandMapper
 {
 	/**
 	 * Creates a command mapping
-	 * @param commandClass The Command Class to map
+	 * @param commandClass The Command Class<Dynamic> to map
 	 * @return Mapping configurator
 	 */
-	function toCommand(commandClass:Class):ICommandConfigurator;
+	function toCommand(commandClass:Class<Dynamic>):ICommandConfigurator;
 }

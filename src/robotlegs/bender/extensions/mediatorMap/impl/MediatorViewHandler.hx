@@ -8,7 +8,7 @@
 package robotlegs.bender.extensions.mediatorMap.impl;
 
 import openfl.display.DisplayObject;
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 import robotlegs.bender.extensions.viewManager.api.IViewHandler;
 
@@ -24,7 +24,7 @@ class MediatorViewHandler implements IViewHandler
 
 	private var _mappings:Array<Dynamic> = [];
 
-	private var _knownMappings:Dictionary = new Dictionary(true);
+	private var _knownMappings = new Map<String,Dynamic>();
 
 	private var _factory:MediatorFactory;
 
@@ -71,20 +71,20 @@ class MediatorViewHandler implements IViewHandler
 	/**
 	 * @private
 	 */
-	public function handleView(view:DisplayObject, type:Class):Void
+	public function handleView(view:DisplayObject, type:Class<Dynamic>):Void
 	{
 		var interestedMappings:Array<Dynamic> = getInterestedMappingsFor(view, type);
-		if (interestedMappings)
+		if (interestedMappings != null)
 			_factory.createMediators(view, type, interestedMappings);
 	}
 
 	/**
 	 * @private
 	 */
-	public function handleItem(item:Dynamic, type:Class):Void
+	public function handleItem(item:Dynamic, type:Class<Dynamic>):Void
 	{
 		var interestedMappings:Array<Dynamic> = getInterestedMappingsFor(item, type);
-		if (interestedMappings)
+		if (interestedMappings != null)
 			_factory.createMediators(item, type, interestedMappings);
 	}
 
@@ -94,35 +94,40 @@ class MediatorViewHandler implements IViewHandler
 
 	private function flushCache():Void
 	{
-		_knownMappings = new Dictionary(true);
+		_knownMappings = new Map<String,Dynamic>();
 	}
 
-	private function getInterestedMappingsFor(item:Dynamic, type:Class):Array
+	private function getInterestedMappingsFor(item:Dynamic, type:Class<Dynamic>):Array<Dynamic>
 	{
 		var mapping:IMediatorMapping;
 
 		// we've seen this type before and nobody was interested
-		if (_knownMappings[type] === false)
+		if (_knownMappings[UID.create(type)] == false)
 			return null;
 
 		// we haven't seen this type before
-		if (_knownMappings[type] == undefined)
+		// CHECK null
+		//if (_knownMappings[UID.create(type)] == undefined)
+		if (_knownMappings[UID.create(type)] == null)
 		{
-			_knownMappings[type] = false;
-			for each (mapping in _mappings)
+			_knownMappings[UID.create(type)] = false;
+			for (mapping in _mappings)
 			{
 				if (mapping.matcher.matches(item))
 				{
-					_knownMappings[type] ||= [];
-					_knownMappings[type].push(mapping);
+					// CHECK
+					if (_knownMappings[UID.create(type)] == null) _knownMappings[UID.create(type)] = [];
+					
+					//_knownMappings[UID.create(type)] ||= [];
+					_knownMappings[UID.create(type)].push(mapping);
 				}
 			}
 			// nobody cares, let's get out of here
-			if (_knownMappings[type] === false)
+			if (_knownMappings[UID.create(type)] == false)
 				return null;
 		}
 
 		// these mappings really do care
-		return _knownMappings[type] as Array;
+		return cast(_knownMappings[UID.create(type)], Array<Dynamic>);
 	}
 }

@@ -7,7 +7,7 @@
 
 package robotlegs.bender.framework.impl;
 
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.framework.api.IConfig;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.IInjector;
@@ -32,7 +32,7 @@ class ConfigManager
 
 	private var _objectProcessor:ObjectProcessor = new ObjectProcessor();
 
-	private var _configs:Dictionary = new Dictionary();
+	private var _configs = new Map<String,Bool>();
 
 	private var _queue:Array<Dynamic> = [];
 
@@ -54,6 +54,7 @@ class ConfigManager
 	public function new(context:IContext)
 	{
 		_context = context;
+		
 		_injector = context.injector;
 		_logger = context.getLogger(this);
 		addConfigHandler(new ClassMatcher(), handleClass);
@@ -75,9 +76,10 @@ class ConfigManager
 	 */
 	public function addConfig(config:Dynamic):Void
 	{
-		if (_configs[config] == null)
+		
+		if (_configs[UID.create(config)] == null)
 		{
-			_configs[config] = true;
+			_configs[UID.create(config)] = true;
 			_objectProcessor.processObject(config);
 		}
 	}
@@ -99,10 +101,10 @@ class ConfigManager
 	{
 		_context.removeEventListener(LifecycleEvent.INITIALIZE, initialize);
 		_objectProcessor.removeAllHandlers();
-		_queue.length = 0;
-		for (var config:Dynamic in _configs)
+		_queue = [];
+		for (config in _configs)
 		{
-			delete _configs[config];
+			_configs.remove(UID.create(config));
 		}
 	}
 
@@ -112,14 +114,14 @@ class ConfigManager
 
 	private function initialize(event:LifecycleEvent):Void
 	{
-		if (_initialized == null)
+		if (_initialized == false)
 		{
 			_initialized = true;
 			processQueue();
 		}
 	}
 
-	private function handleClass(type:Class):Void
+	private function handleClass(type:Class<Dynamic>):Void
 	{
 		if (_initialized)
 		{
@@ -149,12 +151,12 @@ class ConfigManager
 
 	private function processQueue():Void
 	{
-		for each (var config:Dynamic in _queue)
+		for (config in _queue)
 		{
-			if (config is Class)
+			if (Std.is(config, Class))
 			{
 				_logger.debug("Now initializing. Instantiating config class {0}", [config]);
-				processClass(config as Class);
+				processClass(cast(config, Class<Dynamic>));
 			}
 			else
 			{
@@ -162,59 +164,39 @@ class ConfigManager
 				processObject(config);
 			}
 		}
-		_queue.length = 0;
+		_queue = [];
 	}
 
-	private function processClass(type:Class):Void
+	private function processClass(type:Class<Dynamic>):Void
 	{
-		var config:IConfig = _injector.getOrCreateNewInstance(type) as IConfig;
-		config && config.configure();
+		//var config = cast(_injector.getOrCreateNewInstance(type), IConfig);
+		// CHECK
+		//config && config.configure();
+		//if (config != null) config.configure();
+		
+		
+		var object = _injector.getOrCreateNewInstance(type);
+		if (object != null){
+			var hasFeild = Reflect.hasField(object, "configure");
+			if (hasFeild) {
+				var func = Reflect.getProperty(object, "configure");
+				if (func != null) func();
+			}
+		}
 	}
 
 	private function processObject(object:Dynamic):Void
 	{
 		_injector.injectInto(object);
-		var config:IConfig = object as IConfig;
-		config && config.configure();
-	}
-}
-
-import robotlegs.bender.framework.api.IMatcher;
-
-/**
- * @private
- */
-class ClassMatcher implements IMatcher
-{
-
-	/*============================================================================*/
-	/* Public Functions                                                           */
-	/*============================================================================*/
-
-	/**
-	 * @private
-	 */
-	public function matches(item:Dynamic):Bool
-	{
-		return item is Class;
-	}
-}
-
-/**
- * @private
- */
-class ObjectMatcher implements IMatcher
-{
-
-	/*============================================================================*/
-	/* Public Functions                                                           */
-	/*============================================================================*/
-
-	/**
-	 * @private
-	 */
-	public function matches(item:Dynamic):Bool
-	{
-		return item is Class == false;
+		//var config = cast(object, IConfig);
+		
+		//config && config.configure();
+		//if (config != null) config.configure();
+		// CHECK
+		var hasFeild = Reflect.hasField(object, "configure");
+		if (hasFeild) {
+			var func = Reflect.getProperty(object, "configure");
+			if (func != null) func();
+		}
 	}
 }

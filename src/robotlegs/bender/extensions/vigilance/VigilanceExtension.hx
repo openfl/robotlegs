@@ -15,12 +15,17 @@ import robotlegs.bender.framework.api.IExtension;
 import robotlegs.bender.framework.api.ILogTarget;
 import robotlegs.bender.framework.api.LogLevel;
 
+import robotlegs.bender.extensions.vigilance.VigilantError;
+
 /**
  * The Vigilance Extension throws Errors when warnings are logged.
  */
-class VigilanceExtension implements IExtension, ILogTarget
+class VigilanceExtension implements IExtension implements ILogTarget
 {
-
+	public function new()
+	{
+		
+	}
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
@@ -36,9 +41,13 @@ class VigilanceExtension implements IExtension, ILogTarget
 	 */
 	public function extend(context:IContext):Void
 	{
-		context.injector.instantiateUnmapped(MetadataChecker).check();
+		// FIX
+		var metadataChecker:MetadataChecker = context.injector.instantiateUnmapped(MetadataChecker);
+		
+		metadataChecker.check();
+		
 		context.addLogTarget(this);
-		context.injector.addEventListener(MappingEvent.MAPPING_OVERRIDE, mappingOverrideHandler)
+		context.injector.addEventListener(MappingEvent.MAPPING_OVERRIDE, mappingOverrideHandler);
 	}
 
 	/**
@@ -63,14 +72,13 @@ class VigilanceExtension implements IExtension, ILogTarget
 	}
 }
 
-import robotlegs.bender.extensions.vigilance.VigilantError;
-import robotlegs.bender.framework.api.IContext;
-
+@:rtti
 class MetadataChecker
 {
-	[Inject(optional=true)]
-	public var context:IContext;
-
+	//[Inject(optional=true)]
+	@inject("optional=true") public var context:IContext;
+	//@inject public var context:IContext;
+	
 	public function check():Void
 	{
 		if (context == null)

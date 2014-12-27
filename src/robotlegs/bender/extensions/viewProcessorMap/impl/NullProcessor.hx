@@ -20,14 +20,14 @@ class NullProcessor
 	/**
 	 * @private
 	 */
-	public function process(view:Dynamic, type:Class, injector:Dynamic):Void
+	public function process(view:Dynamic, type:Class<Dynamic>, injector:Dynamic):Void
 	{
 	}
 
 	/**
 	 * @private
 	 */
-	public function unprocess(view:Dynamic, type:Class, injector:Dynamic):Void
+	public function unprocess(view:Dynamic, type:Class<Dynamic>, injector:Dynamic):Void
 	{
 	}
 }

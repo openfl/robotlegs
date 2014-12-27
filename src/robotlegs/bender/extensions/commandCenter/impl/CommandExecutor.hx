@@ -26,9 +26,9 @@ class CommandExecutor implements ICommandExecutor
 
 	private var _injector:IInjector;
 
-	private var _removeMapping:Function;
+	private var _removeMapping:ICommandMapping->Void;
 
-	private var _handleResult:Function;
+	private var _handleResult:Dynamic;
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -40,7 +40,7 @@ class CommandExecutor implements ICommandExecutor
 	 * @param removeMapping Remove mapping handler (optional)
 	 * @param handleResult Result handler (optional)
 	 */
-	public function new(injector:IInjector, removeMapping:Function = null, handleResult:Function = null)
+	public function new(injector:IInjector, removeMapping:ICommandMapping->Void = null, handleResult:Dynamic = null)
 	{
 		_injector = injector.createChild();
 		_removeMapping = removeMapping;
@@ -57,7 +57,7 @@ class CommandExecutor implements ICommandExecutor
 	public function executeCommands(mappings:Array<ICommandMapping>, payload:CommandPayload = null):Void
 	{
 		var length:Int = mappings.length;
-		for (var i:Int = 0; i < length; i++)
+		for (i in 0...length)
 		{
 			executeCommand(mappings[i], payload);
 		}
@@ -68,34 +68,44 @@ class CommandExecutor implements ICommandExecutor
 	 */
 	public function executeCommand(mapping:ICommandMapping, payload:CommandPayload = null):Void
 	{
-		var hasPayload:Bool = payload && payload.hasPayload();
+		
+		var hasPayload:Bool = (payload != null) && payload.hasPayload();
+		
 		var injectionEnabled:Bool = hasPayload && mapping.payloadInjectionEnabled;
 		var command:Dynamic = null;
 
-		injectionEnabled && mapPayload(payload);
+		if (injectionEnabled) mapPayload(payload);
 
 		if (mapping.guards.length == 0 || GuardsApprove.call(mapping.guards, _injector))
 		{
-			var commandClass:Class = mapping.commandClass;
-			mapping.fireOnce && _removeMapping && _removeMapping(mapping);
+			var commandClass:Class<Dynamic> = mapping.commandClass;
+			if (mapping.fireOnce && (_removeMapping != null)) {
+				_removeMapping(mapping);
+			}
 			command = _injector.getOrCreateNewInstance(commandClass);
 			if (mapping.hooks.length > 0)
 			{
 				_injector.map(commandClass).toValue(command);
-				ApplyHooks(mapping.hooks, _injector);
+				ApplyHooks.call(mapping.hooks, _injector);
 				_injector.unmap(commandClass);
 			}
 		}
 
-		injectionEnabled && unmapPayload(payload);
+		if (injectionEnabled) unmapPayload(payload);
 
-		if (command && mapping.executeMethod)
+		if (command != null && mapping.executeMethod != null)
 		{
-			var executeMethod:Function = command[mapping.executeMethod];
-			var result:Dynamic = (hasPayload && executeMethod.length > 0)
-				? executeMethod.apply(null, payload.values)
-				: executeMethod();
-			_handleResult && _handleResult(result, command, mapping);
+			var executeMethod:Dynamic = Reflect.getProperty(command, mapping.executeMethod);
+			var result:Dynamic;
+			if ((hasPayload && executeMethod.length > 0)) {
+				result = Reflect.callMethod(null, executeMethod, payload.values);
+				//result = executeMethod.apply(null, payload.values);
+			}
+			else {
+				result = executeMethod();
+			}
+			//var result:Dynamic = (hasPayload && executeMethod.length > 0) ? executeMethod.apply(null, payload.values) : executeMethod();
+			if (_handleResult != null) _handleResult(result, command, mapping);
 		}
 	}
 
@@ -106,7 +116,7 @@ class CommandExecutor implements ICommandExecutor
 	private function mapPayload(payload:CommandPayload):Void
 	{
 		var i:UInt = payload.length;
-		while (i--)
+		while (i-- > 0)
 		{
 			_injector.map(payload.classes[i]).toValue(payload.values[i]);
 		}
@@ -115,7 +125,7 @@ class CommandExecutor implements ICommandExecutor
 	private function unmapPayload(payload:CommandPayload):Void
 	{
 		var i:UInt = payload.length;
-		while (i--)
+		while (i-- > 0)
 		{
 			_injector.unmap(payload.classes[i]);
 		}

@@ -17,14 +17,14 @@ interface IMediatorConfigurator
 	 * @param guards Guards
 	 * @return Self
 	 */
-	function withGuards(... guards):IMediatorConfigurator;
+	function withGuards(guards:Array<Dynamic>):IMediatorConfigurator;
 
 	/**
 	 * Hooks to run before a mediator is created
 	 * @param hooks Hooks
 	 * @return Self
 	 */
-	function withHooks(... hooks):IMediatorConfigurator;
+	function withHooks(hooks:Array<Dynamic>):IMediatorConfigurator;
 
 	/**
 	 * Should the mediator be removed when the mediated item looses scope?

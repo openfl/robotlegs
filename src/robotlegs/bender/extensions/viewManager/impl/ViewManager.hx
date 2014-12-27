@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.viewManager.impl;
 
 import openfl.display.DisplayObjectContainer;
+import openfl.errors.Error;
 import openfl.events.EventDispatcher;
 import robotlegs.bender.extensions.viewManager.api.IViewHandler;
 import robotlegs.bender.extensions.viewManager.api.IViewManager;
@@ -19,6 +20,7 @@ import robotlegs.bender.extensions.viewManager.api.IViewManager;
 /**
  * @private
  */
+@:rtti
 class ViewManager extends EventDispatcher implements IViewManager
 {
 
@@ -26,21 +28,25 @@ class ViewManager extends EventDispatcher implements IViewManager
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	private var _containers:Array<DisplayObjectContainer> = new Array<DisplayObjectContainer>;
-
-	/**
-	 * @inheritDoc
-	 */
-	public function get containers():Array<DisplayObjectContainer>
+	private var _containers = new Array<DisplayObjectContainer>();
+	public var containers(get, null):Array<DisplayObjectContainer>;
+	public function get_containers():Array<DisplayObjectContainer>
 	{
 		return _containers;
 	}
+	/**
+	 * @inheritDoc
+	 */
+	/*public function get_containers():Array<DisplayObjectContainer>
+	{
+		return _containers;
+	}*/
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _handlers:Array<IViewHandler> = new Array<IViewHandler>;
+	private var _handlers = new Array<IViewHandler>();
 
 	private var _registry:ContainerRegistry;
 
@@ -54,6 +60,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 	public function new(containerRegistry:ContainerRegistry)
 	{
 		_registry = containerRegistry;
+		super();
 	}
 
 	/*============================================================================*/
@@ -65,12 +72,12 @@ class ViewManager extends EventDispatcher implements IViewManager
 	 */
 	public function addContainer(container:DisplayObjectContainer):Void
 	{
-		if (validContainer(container) == null)
+		if (validContainer(container))
 			return;
 
 		_containers.push(container);
 
-		for each (var handler:IViewHandler in _handlers)
+		for (handler in _handlers)
 		{
 			_registry.addContainer(container).addHandler(handler);
 		}
@@ -89,7 +96,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 		_containers.splice(index, 1);
 
 		var binding:ContainerBinding = _registry.getBinding(container);
-		for each (var handler:IViewHandler in _handlers)
+		for (handler in _handlers)
 		{
 			binding.removeHandler(handler);
 		}
@@ -106,7 +113,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 
 		_handlers.push(handler);
 
-		for each (var container:DisplayObjectContainer in _containers)
+		for (container in _containers)
 		{
 			_registry.addContainer(container).addHandler(handler);
 		}
@@ -124,7 +131,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 
 		_handlers.splice(index, 1);
 
-		for each (var container:DisplayObjectContainer in _containers)
+		for (container in _containers)
 		{
 			_registry.getBinding(container).removeHandler(handler);
 		}
@@ -136,10 +143,10 @@ class ViewManager extends EventDispatcher implements IViewManager
 	 */
 	public function removeAllHandlers():Void
 	{
-		for each (var container:DisplayObjectContainer in _containers)
+		for (container in _containers)
 		{
 			var binding:ContainerBinding = _registry.getBinding(container);
-			for each (var handler:IViewHandler in _handlers)
+			for (handler in _handlers)
 			{
 				binding.removeHandler(handler);
 			}
@@ -152,7 +159,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 
 	private function validContainer(container:DisplayObjectContainer):Bool
 	{
-		for each (var registeredContainer:DisplayObjectContainer in _containers)
+		for (registeredContainer in _containers)
 		{
 			if (container == registeredContainer)
 				return false;

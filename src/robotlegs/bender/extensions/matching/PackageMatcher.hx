@@ -36,7 +36,11 @@ class PackageMatcher implements ITypeMatcher
 	 */
 	public function createTypeFilter():ITypeFilter
 	{
-		return _typeFilter ||= buildTypeFilter();
+		// CHECK
+		if (_typeFilter == null) _typeFilter = buildTypeFilter();
+		return _typeFilter;
+		
+		//return _typeFilter ||= buildTypeFilter();
 	}
 
 	/**
@@ -88,9 +92,7 @@ class PackageMatcher implements ITypeMatcher
 
 	private function buildTypeFilter():ITypeFilter
 	{
-		if (((!_requirePackage) || _requirePackage.length == 0) &&
-			(_anyOfPackages.length == 0) &&
-			(_noneOfPackages.length == 0))
+		if (((!_requirePackage) || _requirePackage.length == 0) && (_anyOfPackages.length == 0) && (_noneOfPackages.length == 0))
 		{
 			throw new TypeMatcherError(TypeMatcherError.EMPTY_MATCHER);
 		}
@@ -111,8 +113,7 @@ class PackageMatcher implements ITypeMatcher
 
 	private function pushValuesToStringVector(values:Array<Dynamic>, vector:Array<String>):Void
 	{
-		if (values.length == 1
-			&& (values[0] is Array || values[0] is Array<String>))
+		if (values.length == 1 && (values[0] is Array || values[0] is Array<String>))
 		{
 			for each (var packageName:String in values[0])
 			{

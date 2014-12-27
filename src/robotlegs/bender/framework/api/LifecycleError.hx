@@ -6,6 +6,7 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.framework.api;
+import openfl.errors.Error;
 
 /**
  * Lifecycle Error

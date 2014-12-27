@@ -32,62 +32,63 @@ interface IContext extends IEventDispatcher
 	/**
 	 * The context dependency injector
 	 */
-	function get injector():IInjector;
-
+	public var injector(get, null):IInjector;
+	public function get_injector():IInjector;
+	
 	/**
 	 * The current log level
 	 */
-	function get logLevel():UInt;
+	public var logLevel(get, set):UInt;
 
 	/**
 	 * Sets the current log level
 	 * @param value The log level. Use a constant from LogLevel
 	 */
-	function set logLevel(value:UInt):Void;
+	//function set_logLevel(value:UInt):Void;
 
 	/**
 	 * The current lifecycle state
 	 */
-	function get state():String;
+	public var state(get, null):String;
 
 	/**
 	 * Is this context uninitialized?
 	 */
-	function get uninitialized():Bool;
-
+	//public var uninitialized():Bool;
+	public var uninitialized(get, null):Bool;
 	/**
 	 * Is this context initialized?
 	 */
-	function get initialized():Bool;
+	public var initialized(get, null):Bool;
 
 	/**
 	 * Is this context active?
 	 */
-	function get active():Bool;
+	public var active(get, null):Bool;
 
 	/**
 	 * Is this context suspended?
 	 */
-	function get suspended():Bool;
+	public var suspended(get, null):Bool;
 
 	/**
 	 * Has this context been destroyed?
 	 */
-	function get destroyed():Bool;
+	public var destroyed(get, null):Bool;
 
 	/**
 	 * Installs custom extensions or bundles into the context
 	 * @param extensions Objects or classes implementing IExtension or IBundle
 	 * @return this
 	 */
-	function install(... extensions):IContext;
+	function install(extensions:Array<Dynamic>):IContext;
 
 	/**
 	 * Configures the context with custom configurations
 	 * @param configs Configuration objects or classes of any type
 	 * @return this
 	 */
-	function configure(... configs):IContext;
+	function configure(configs:Array<Dynamic>):IContext;
 
 	/**
 	 * Adds an uninitialized context as a child
@@ -133,38 +134,38 @@ interface IContext extends IEventDispatcher
 	 * @param instances Instances to pin
 	 * @return this
 	 */
-	function detain(... instances):IContext;
+	function detain(instances:Array<Dynamic>):IContext;
 
 	/**
 	 * Unpins instances from memory
 	 * @param instances Instances to unpin
 	 * @return this
 	 */
-	function release(... instances):IContext;
+	function release(instances:Array<Dynamic>):IContext;
 
 	/**
 	 * Initializes this context
 	 * @param callback Initialization callback
 	 */
-	function initialize(callback:Dynamic = null):Void;
+	function initialize(callback:Void->Void = null):Void;
 
 	/**
 	 * Suspends this context
 	 * @param callback Suspension callback
 	 */
-	function suspend(callback:Dynamic = null):Void;
+	function suspend(callback:Void->Void = null):Void;
 
 	/**
 	 * Resumes a suspended context
 	 * @param callback Resumption callback
 	 */
-	function resume(callback:Dynamic = null):Void;
+	function resume(callback:Void->Void = null):Void;
 
 	/**
 	 * Destroys an active context
 	 * @param callback Destruction callback
 	 */
-	function destroy(callback:Dynamic = null):Void;
+	function destroy(callback:Void->Void = null):Void;
 
 	/**
 	 * A handler to run before the context is initialized
@@ -174,7 +175,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Pre-initialize handler
 	 * @return this
 	 */
-	function beforeInitializing(handler:Dynamic):IContext;
+	function beforeInitializing(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run during initialization
@@ -183,7 +184,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Initialization handler
 	 * @return this
 	 */
-	function whenInitializing(handler:Dynamic):IContext;
+	function whenInitializing(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run after initialization
@@ -192,7 +193,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Post-initialize handler
 	 * @return this
 	 */
-	function afterInitializing(handler:Dynamic):IContext;
+	function afterInitializing(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run before the target object is suspended
@@ -202,7 +203,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Pre-suspend handler
 	 * @return this
 	 */
-	function beforeSuspending(handler:Dynamic):IContext;
+	function beforeSuspending(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run during suspension
@@ -211,7 +212,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Suspension handler
 	 * @return this
 	 */
-	function whenSuspending(handler:Dynamic):IContext;
+	function whenSuspending(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run after suspension
@@ -220,7 +221,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Post-suspend handler
 	 * @return this
 	 */
-	function afterSuspending(handler:Dynamic):IContext;
+	function afterSuspending(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run before the context is resumed
@@ -230,7 +231,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Pre-resume handler
 	 * @return this
 	 */
-	function beforeResuming(handler:Dynamic):IContext;
+	function beforeResuming(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run during resumption
@@ -239,7 +240,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Resumption handler
 	 * @return this
 	 */
-	function whenResuming(handler:Dynamic):IContext;
+	function whenResuming(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run after resumption
@@ -248,7 +249,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Post-resume handler
 	 * @return Self
 	 */
-	function afterResuming(handler:Dynamic):IContext;
+	function afterResuming(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run before the context is destroyed
@@ -258,7 +259,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Pre-destroy handler
 	 * @return this
 	 */
-	function beforeDestroying(handler:Dynamic):IContext;
+	function beforeDestroying(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run during destruction
@@ -267,7 +268,7 @@ interface IContext extends IEventDispatcher
 	 * @param handler Destruction handler
 	 * @return this
 	 */
-	function whenDestroying(handler:Dynamic):IContext;
+	function whenDestroying(handler:Void->Void):IContext;
 
 	/**
 	 * A handler to run after destruction
@@ -276,5 +277,5 @@ interface IContext extends IEventDispatcher
 	 * @param handler Post-destroy handler
 	 * @return this
 	 */
-	function afterDestroying(handler:Dynamic):IContext;
+	function afterDestroying(handler:Void->Void):IContext;
 }

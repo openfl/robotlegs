@@ -7,7 +7,7 @@
 
 package robotlegs.bender.extensions.mediatorMap.impl;
 
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.extensions.matching.ITypeFilter;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 import robotlegs.bender.framework.api.IInjector;
@@ -24,7 +24,7 @@ class MediatorFactory
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _mediators:Dictionary = new Dictionary();
+	private var _mediators = new Map<String,Dynamic>();
 
 	private var _injector:IInjector;
 
@@ -40,7 +40,8 @@ class MediatorFactory
 	public function new(injector:IInjector, manager:MediatorManager = null)
 	{
 		_injector = injector;
-		_manager = manager || new MediatorManager(this);
+		if (manager != null) _manager = manager;
+		else _manager = new MediatorManager(this);
 	}
 
 	/*============================================================================*/
@@ -52,17 +53,28 @@ class MediatorFactory
 	 */
 	public function getMediator(item:Dynamic, mapping:IMediatorMapping):Dynamic
 	{
-		return _mediators[item] ? _mediators[item][mapping]:null;
+		var _mediatorsItem:Map<IMediatorMapping,Dynamic>;
+		if (_mediators[UID.create(item)] != null) {
+			_mediatorsItem = _mediators[UID.create(item)];
+			return _mediatorsItem[mapping];
+		}
+		
+		/*if (_mediators[UID.create(item)] != null) {
+			return _mediators[UID.create(item)][mapping];
+		}*/
+		return null;
+		
+		//return _mediators[UID.create(item)] ? _mediators[UID.create(item)][mapping]:null;
 	}
 
 	/**
 	 * @private
 	 */
-	public function createMediators(item:Dynamic, type:Class, mappings:Array<Dynamic>):Array
+	public function createMediators(item:Dynamic, type:Class<Dynamic>, mappings:Array<Dynamic>):Array<Dynamic>
 	{
 		var createdMediators:Array<Dynamic> = [];
 		var mediator:Dynamic;
-		for each (var mapping:IMediatorMapping in mappings)
+		for (mapping in mappings)
 		{
 			mediator = getMediator(item, mapping);
 
@@ -70,7 +82,7 @@ class MediatorFactory
 			{
 				mapTypeForFilterBinding(mapping.matcher, type, item);
 				mediator = createMediator(item, mapping);
-				unmapTypeForFilterBinding(mapping.matcher, type, item)
+				unmapTypeForFilterBinding(mapping.matcher, type, item);
 			}
 
 			if (mediator)
@@ -84,16 +96,16 @@ class MediatorFactory
 	 */
 	public function removeMediators(item:Dynamic):Void
 	{
-		var mediators:Dictionary = _mediators[item];
+		var mediators:Map<String,Dynamic> = _mediators[UID.create(item)];
 		if (mediators == null)
 			return;
 
-		for (var mapping:Dynamic in mediators)
+		for (mapping in mediators)
 		{
-			_manager.removeMediator(mediators[mapping], item, mapping as IMediatorMapping);
+			_manager.removeMediator(mediators[mapping], item, cast(mapping, IMediatorMapping));
 		}
 
-		delete _mediators[item];
+		_mediators.remove(item);
 	}
 
 	/**
@@ -101,7 +113,7 @@ class MediatorFactory
 	 */
 	public function removeAllMediators():Void
 	{
-		for (var item:Dynamic in _mediators)
+		for (item in _mediators)
 		{
 			removeMediators(item);
 		}
@@ -120,12 +132,12 @@ class MediatorFactory
 
 		if (mapping.guards.length == 0 || GuardsApprove.call(mapping.guards, _injector))
 		{
-			var mediatorClass:Class = mapping.mediatorClass;
+			var mediatorClass:Class<Dynamic> = mapping.mediatorClass;
 			mediator = _injector.instantiateUnmapped(mediatorClass);
 			if (mapping.hooks.length > 0)
 			{
 				_injector.map(mediatorClass).toValue(mediator);
-				ApplyHooks(mapping.hooks, _injector);
+				ApplyHooks.call(mapping.hooks, _injector);
 				_injector.unmap(mediatorClass);
 			}
 			addMediator(mediator, item, mapping);
@@ -135,31 +147,42 @@ class MediatorFactory
 
 	private function addMediator(mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping):Void
 	{
-		_mediators[item] ||= new Dictionary();
-		_mediators[item][mapping] = mediator;
+		// CHECK
+		/*if (_mediators[UID.create(item)] == null) _mediators[UID.create(item)] = new Map<Dynamic,Dynamic>();
+		
+		//_mediators[UID.create(item)] ||= new Map<Dynamic,Dynamic>();
+		_mediators[UID.create(item)][mapping] = mediator;
+		_manager.addMediator(mediator, item, mapping);*/
+		
+		
+		
+		var _mediatorsItem:Map<IMediatorMapping,Dynamic>;
+		if (_mediators[UID.create(item)] == null) _mediatorsItem = new Map<IMediatorMapping,Dynamic>();
+		else _mediatorsItem = _mediators[UID.create(item)];
+		_mediatorsItem[mapping] = mediator;
 		_manager.addMediator(mediator, item, mapping);
 	}
 
-	private function mapTypeForFilterBinding(filter:ITypeFilter, type:Class, item:Dynamic):Void
+	private function mapTypeForFilterBinding(filter:ITypeFilter, type:Class<Dynamic>, item:Dynamic):Void
 	{
-		for each (var requiredType:Class in requiredTypesFor(filter, type))
+		for (requiredType in requiredTypesFor(filter, type))
 		{
 			_injector.map(requiredType).toValue(item);
 		}
 	}
 
-	private function unmapTypeForFilterBinding(filter:ITypeFilter, type:Class, item:Dynamic):Void
+	private function unmapTypeForFilterBinding(filter:ITypeFilter, type:Class<Dynamic>, item:Dynamic):Void
 	{
-		for each (var requiredType:Class in requiredTypesFor(filter, type))
+		for (requiredType in requiredTypesFor(filter, type))
 		{
 			if (_injector.satisfiesDirectly(requiredType))
 				_injector.unmap(requiredType);
 		}
 	}
 
-	private function requiredTypesFor(filter:ITypeFilter, type:Class):Array<Class>
+	private function requiredTypesFor(filter:ITypeFilter, type:Class<Dynamic>):Array<Class<Dynamic>>
 	{
-		var requiredTypes:Array<Class> = filter.allOfTypes.concat(filter.anyOfTypes);
+		var requiredTypes:Array<Class<Dynamic>> = filter.allOfTypes.concat(filter.anyOfTypes);
 
 		if (requiredTypes.indexOf(type) == -1)
 			requiredTypes.push(type);

@@ -7,8 +7,8 @@
 
 package robotlegs.bender.extensions.enhancedLogging.impl;
 
-import org.swiftsuspenders.InjectionEvent;
-import org.swiftsuspenders.mapping.MappingEvent;
+//import org.swiftsuspenders.InjectionEvent;
+//import org.swiftsuspenders.mapping.MappingEvent;
 import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.framework.api.ILogger;
 

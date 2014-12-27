@@ -28,14 +28,14 @@ class PinEvent extends Event
 	/*============================================================================*/
 
 	private var _instance:Dynamic;
-
+	public var instance(default, null):Dynamic;
 	/**
 	 * The instance being detained or released
 	 */
-	public function get instance():Dynamic
+	/*public function get_instance():Dynamic
 	{
 		return _instance;
-	}
+	}*/
 
 	/*============================================================================*/
 	/* Constructor                                                                */

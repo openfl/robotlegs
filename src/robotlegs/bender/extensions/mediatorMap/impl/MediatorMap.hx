@@ -8,7 +8,7 @@
 package robotlegs.bender.extensions.mediatorMap.impl;
 
 import openfl.display.DisplayObject;
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.extensions.matching.ITypeMatcher;
 import robotlegs.bender.extensions.matching.TypeMatcher;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
@@ -21,14 +21,15 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
-class MediatorMap implements IMediatorMap, IViewHandler
+@:rtti
+class MediatorMap implements IMediatorMap implements IViewHandler
 {
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _mappers:Dictionary = new Dictionary();
+	private var _mappers = new Map<String,Dynamic>();
 
 	private var _logger:ILogger;
 
@@ -36,7 +37,7 @@ class MediatorMap implements IMediatorMap, IViewHandler
 
 	private var _viewHandler:MediatorViewHandler;
 
-	private var NULL_UNMAPPER:IMediatorUnmapper = new NullMediatorUnmapper();
+	private var NULL_UNMAPPER = new NullMediatorUnmapper();
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -61,15 +62,20 @@ class MediatorMap implements IMediatorMap, IViewHandler
 	 */
 	public function mapMatcher(matcher:ITypeMatcher):IMediatorMapper
 	{
-		return _mappers[matcher.createTypeFilter().descriptor] ||= createMapper(matcher);
+		// CHECK
+		if (_mappers[matcher.createTypeFilter().descriptor] == null) {
+			_mappers[matcher.createTypeFilter().descriptor] = createMapper(matcher);
+		}
+		return _mappers[matcher.createTypeFilter().descriptor];
+		//return _mappers[matcher.createTypeFilter().descriptor] ||= createMapper(matcher);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function map(type:Class):IMediatorMapper
+	public function map(type:Class<Dynamic>):IMediatorMapper
 	{
-		return mapMatcher(new TypeMatcher().allOf(type));
+		return mapMatcher(new TypeMatcher().allOf([type]));
 	}
 
 	/**
@@ -77,21 +83,24 @@ class MediatorMap implements IMediatorMap, IViewHandler
 	 */
 	public function unmapMatcher(matcher:ITypeMatcher):IMediatorUnmapper
 	{
-		return _mappers[matcher.createTypeFilter().descriptor] || NULL_UNMAPPER;
+		var val = _mappers[matcher.createTypeFilter().descriptor];
+		if (val != null) return val;
+		else return NULL_UNMAPPER;
+		//return _mappers[matcher.createTypeFilter().descriptor] || NULL_UNMAPPER;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function unmap(type:Class):IMediatorUnmapper
+	public function unmap(type:Class<Dynamic>):IMediatorUnmapper
 	{
-		return unmapMatcher(new TypeMatcher().allOf(type));
+		return unmapMatcher(new TypeMatcher().allOf([type]));
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function handleView(view:DisplayObject, type:Class):Void
+	public function handleView(view:DisplayObject, type:Class<Dynamic>):Void
 	{
 		_viewHandler.handleView(view, type);
 	}
@@ -101,7 +110,7 @@ class MediatorMap implements IMediatorMap, IViewHandler
 	 */
 	public function mediate(item:Dynamic):Void
 	{
-		_viewHandler.handleItem(item, item['constructor'] as Class);
+		_viewHandler.handleItem(item, Type.getClass(item));
 	}
 
 	/**

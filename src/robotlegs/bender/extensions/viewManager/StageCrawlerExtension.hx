@@ -67,9 +67,9 @@ class StageCrawlerExtension implements IExtension
 	{
 		_logger.debug("ViewManager is installed. Checking for managed containers...");
 		var viewManager:IViewManager = _injector.getInstance(IViewManager);
-		for each (var container:DisplayObjectContainer in viewManager.containers)
+		for (container in viewManager.containers)
 		{
-			container.stage && scanContainer(container);
+			if (container.stage != null) scanContainer(container);
 		}
 	}
 
@@ -77,7 +77,7 @@ class StageCrawlerExtension implements IExtension
 	{
 		_logger.debug("ViewManager is not installed. Checking the ContextView...");
 		var contextView:ContextView = _injector.getInstance(ContextView);
-		contextView.view.stage && scanContainer(contextView.view);
+		if (contextView.view.stage != null) scanContainer(contextView.view);
 	}
 
 	private function scanContainer(container:DisplayObjectContainer):Void

@@ -19,62 +19,62 @@ class CommandMapping implements ICommandMapping
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	private var _commandClass:Class;
-
+	private var _commandClass:Class<Dynamic>;
+	public var commandClass(get, null):Class<Dynamic>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get commandClass():Class
+	public function get_commandClass():Class<Dynamic>
 	{
 		return _commandClass;
 	}
 
 	private var _executeMethod:String = "execute";
-
+	public var executeMethod(get, null):String;
 	/**
 	 * @inheritDoc
 	 */
-	public function get executeMethod():String
+	public function get_executeMethod():String
 	{
 		return _executeMethod;
 	}
 
 	private var _guards:Array<Dynamic> = [];
-
+	public var guards(get, null):Array<Dynamic>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get guards():Array
+	public function get_guards():Array<Dynamic>
 	{
 		return _guards;
 	}
 
 	private var _hooks:Array<Dynamic> = [];
-
+	public var hooks(get, null):Array<Dynamic>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get hooks():Array
+	public function get_hooks():Array<Dynamic>
 	{
 		return _hooks;
 	}
 
 	private var _fireOnce:Bool;
-
+	public var fireOnce(get, null):Bool;
 	/**
 	 * @inheritDoc
 	 */
-	public function get fireOnce():Bool
+	public function get_fireOnce():Bool
 	{
 		return _fireOnce;
 	}
 
 	private var _payloadInjectionEnabled:Bool = true;
-
+	public var payloadInjectionEnabled(get, null):Bool;
 	/**
 	 * @inheritDoc
 	 */
-	public function get payloadInjectionEnabled():Bool
+	public function get_payloadInjectionEnabled():Bool
 	{
 		return _payloadInjectionEnabled;
 	}
@@ -87,7 +87,7 @@ class CommandMapping implements ICommandMapping
 	 * Creates a Command Mapping
 	 * @param commandClass The concrete Command class
 	 */
-	public function new(commandClass:Class)
+	public function new(commandClass:Class<Dynamic>)
 	{
 		_commandClass = commandClass;
 	}
@@ -108,18 +108,22 @@ class CommandMapping implements ICommandMapping
 	/**
 	 * @inheritDoc
 	 */
-	public function addGuards(... guards):ICommandMapping
+	
+	public function addGuards(guards:Array<Dynamic>):ICommandMapping
 	{
-		_guards = _guards.concat.apply(null, guards);
+		//_guards = _guards.concat.apply(null, guards);
+		_guards = Reflect.callMethod(null, _guards.concat, guards);
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function addHooks(... hooks):ICommandMapping
+	
+	public function addHooks(hooks:Array<Dynamic>):ICommandMapping
 	{
-		_hooks = _hooks.concat.apply(null, hooks);
+		//_hooks = _hooks.concat.apply(null, hooks);
+		_hooks = Reflect.callMethod(null, _hooks.concat, hooks);
 		return this;
 	}
 

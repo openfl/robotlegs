@@ -20,64 +20,64 @@ class EventMapConfig
 	/*============================================================================*/
 
 	private var _dispatcher:IEventDispatcher;
-
+	public var dispatcher(default, null):IEventDispatcher;
 	/**
 	 * @private
 	 */
-	public function get dispatcher():IEventDispatcher
+	/*public function get_dispatcher():IEventDispatcher
 	{
 		return _dispatcher;
-	}
+	}*/
 
 	private var _eventString:String;
-
+	public var eventString(default, null):String;
 	/**
 	 * @private
 	 */
-	public function get eventString():String
+	/*public function get_eventString():String
 	{
 		return _eventString;
-	}
+	}*/
 
-	private var _listener:Function;
-
+	private var _listener:Void->Void;
+	public var listener(default, null):Void->Void;
 	/**
 	 * @private
 	 */
-	public function get listener():Function
+	/*public function get_listener():Void->Void
 	{
 		return _listener;
-	}
+	}*/
 
-	private var _eventClass:Class;
-
+	private var _eventClass:Class<Dynamic>;
+	public var eventClass(default, null):Class<Dynamic>;
 	/**
 	 * @private
 	 */
-	public function get eventClass():Class
+	/*public function get_eventClass():Class<Dynamic>
 	{
 		return _eventClass;
-	}
+	}*/
 
-	private var _callback:Function;
-
+	private var _callback:Dynamic->Void;
+	public var callback(default, null):Dynamic->Void;
 	/**
 	 * @private
 	 */
-	public function get callback():Function
+	/*public function get_callback():Void->Void
 	{
 		return _callback;
-	}
+	}*/
 
 	private var _useCapture:Bool;
-
+	public var useCapture(default, null):Bool;
 	/**
 	 * @private
 	 */
-	public function get useCapture():Bool
+	/*public function get_useCapture():Bool
 	{
 		return _useCapture;
-	}
+	}*/
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -86,7 +86,7 @@ class EventMapConfig
 	/**
 	 * @private
 	 */
-	public function new(dispatcher:IEventDispatcher, eventString:String, listener:Function, eventClass:Class, callback:Function, useCapture:Bool)
+	public function new(dispatcher:IEventDispatcher, eventString:String, listener:Void->Void, eventClass:Class<Dynamic>, callback:Dynamic->Void, useCapture:Bool)
 	{
 		_dispatcher = dispatcher;
 		_eventString = eventString;
@@ -96,12 +96,7 @@ class EventMapConfig
 		_useCapture = useCapture;
 	}
 
-	public function equalTo(
-		dispatcher:IEventDispatcher,
-		eventString:String,
-		listener:Function,
-		eventClass:Class,
-		useCapture:Bool):Bool
+	public function equalTo(dispatcher:IEventDispatcher, eventString:String, listener:Void->Void, eventClass:Class<Dynamic>, useCapture:Bool):Bool
 	{
 		return _eventString == eventString
 			&& _eventClass == eventClass

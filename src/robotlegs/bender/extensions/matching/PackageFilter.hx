@@ -7,8 +7,6 @@
 
 package robotlegs.bender.extensions.matching;
 
-import flash.utils.getQualifiedClassName;
-
 /**
  * A filter that describes a package matcher
  */
@@ -20,27 +18,23 @@ class PackageFilter implements ITypeFilter
 	/*============================================================================*/
 
 	private var _descriptor:String;
-
+	public var descriptor(get_descriptor, null):String;
 	/**
 	 * @inheritDoc
 	 */
-	public function get descriptor():String
+	function get_descriptor():String
 	{
-		return _descriptor ||= createDescriptor();
+		// CHECK
+		if (_descriptor == null) _descriptor = createDescriptor();
+		return _descriptor;
+		//return _descriptor ||= createDescriptor();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function get allOfTypes():Array<Class>
-	{
-		return emptyVector;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function get anyOfTypes():Array<Class>
+	public var allOfTypes(get_allOfTypes, null):Array<Class<Dynamic>>;
+	function get_allOfTypes():Array<Class<Dynamic>>
 	{
 		return emptyVector;
 	}
@@ -48,7 +42,17 @@ class PackageFilter implements ITypeFilter
 	/**
 	 * @inheritDoc
 	 */
-	public function get noneOfTypes():Array<Class>
+	public var anyOfTypes(get_anyOfTypes, null):Array<Class<Dynamic>>;
+	function get_anyOfTypes():Array<Class<Dynamic>>
+	{
+		return emptyVector;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public var noneOfTypes(get_noneOfTypes, null):Array<Class<Dynamic>>;
+	function get_noneOfTypes():Array<Class<Dynamic>>
 	{
 		return emptyVector;
 	}
@@ -57,7 +61,7 @@ class PackageFilter implements ITypeFilter
 	/* private Properties                                                       */
 	/*============================================================================*/
 
-	private var emptyVector:Array<Class> = new Array<Class>();
+	private var emptyVector:Array<Class<Dynamic>> = new Array<Class<Dynamic>>();
 
 	private var _requirePackage:String;
 
@@ -93,7 +97,7 @@ class PackageFilter implements ITypeFilter
 	 */
 	public function matches(item:Dynamic):Bool
 	{
-		var fqcn:String = getQualifiedClassName(item);
+		var fqcn:String = Type.getClassName(item);
 		var packageName:String;
 
 		if (_requirePackage && (!matchPackageInFQCN(_requirePackage, fqcn)))

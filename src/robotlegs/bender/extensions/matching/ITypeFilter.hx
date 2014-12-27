@@ -17,20 +17,24 @@ interface ITypeFilter extends IMatcher
 	/**
 	 * All types that an item must extend or implement
 	 */
-	function get allOfTypes():Array<Class>;
+	public var allOfTypes(get, null):Array<Class<Dynamic>>;
+	function get_allOfTypes():Array<Class<Dynamic>>;
 
 	/**
 	 * Any types that an item must extend or implement
 	 */
-	function get anyOfTypes():Array<Class>;
+	public var anyOfTypes(get, null):Array<Class<Dynamic>>;
+	function get_anyOfTypes():Array<Class<Dynamic>>;
 
 	/**
 	 * Types that an item must not extend or implement
 	 */
-	function get noneOfTypes():Array<Class>;
+	public var noneOfTypes(get, null):Array<Class<Dynamic>>;
+	function get_noneOfTypes():Array<Class<Dynamic>>;
 
 	/**
 	 * Unique description for this filter
 	 */
-	function get descriptor():String;
+	public var descriptor(get, null):String;
+	function get_descriptor():String;
 }

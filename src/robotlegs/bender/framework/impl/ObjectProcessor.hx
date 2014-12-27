@@ -32,7 +32,7 @@ class ObjectProcessor
 	 * @param matcher The matcher
 	 * @param handler The handler function
 	 */
-	public function addObjectHandler(matcher:IMatcher, handler:Function):Void
+	public function addObjectHandler(matcher:IMatcher, handler:Void->Void):Void
 	{
 		_handlers.push(new ObjectHandler(matcher, handler));
 	}
@@ -43,7 +43,7 @@ class ObjectProcessor
 	 */
 	public function processObject(object:Dynamic):Void
 	{
-		for each (var handler:DynamicHandler in _handlers)
+		for (handler in _handlers)
 		{
 			handler.handle(object);
 		}
@@ -54,11 +54,11 @@ class ObjectProcessor
 	 */
 	public function removeAllHandlers():Void
 	{
-		_handlers.length = 0;
+		_handlers = [];
 	}
 }
 
-import robotlegs.bender.framework.api.IMatcher;
+
 
 class ObjectHandler
 {
@@ -69,7 +69,7 @@ class ObjectHandler
 
 	private var _matcher:IMatcher;
 
-	private var _handler:Function;
+	private var _handler:Dynamic;
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -78,7 +78,7 @@ class ObjectHandler
 	/**
 	 * @private
 	 */
-	public function new(matcher:IMatcher, handler:Function)
+	public function new(matcher:IMatcher, handler:Dynamic)
 	{
 		_matcher = matcher;
 		_handler = handler;
@@ -93,6 +93,8 @@ class ObjectHandler
 	 */
 	public function handle(object:Dynamic):Void
 	{
-		_matcher.matches(object) && _handler(object);
+		if (_matcher.matches(object)) {
+			_handler(object);
+		}
 	}
 }

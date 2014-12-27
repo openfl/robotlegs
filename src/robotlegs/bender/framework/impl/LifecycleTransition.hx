@@ -7,7 +7,7 @@
 
 package robotlegs.bender.framework.impl;
 
-import openfl.Vector;
+import openfl.errors.Error;
 import robotlegs.bender.framework.api.LifecycleEvent;
 
 /**
@@ -22,7 +22,7 @@ class LifecycleTransition
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _fromStates:Array<String> = new Array<String>;
+	private var _fromStates:Array<String> = [];
 
 	private var _dispatcher:MessageDispatcher = new MessageDispatcher();
 
@@ -68,10 +68,12 @@ class LifecycleTransition
 	 * @param states Allowed states
 	 * @return Self
 	 */
-	public function fromStates(... states):LifecycleTransition
+	
+	public function fromStates(states:Array<String>):LifecycleTransition
 	{
-		for each (var state:String in states)
+		for (state in states){
 			_fromStates.push(state);
+		}
 		return this;
 	}
 
@@ -100,7 +102,11 @@ class LifecycleTransition
 		_preTransitionEvent = preTransitionEvent;
 		_transitionEvent = transitionEvent;
 		_postTransitionEvent = postTransitionEvent;
-		_reverse && _lifecycle.addReversedEventTypes(preTransitionEvent, transitionEvent, postTransitionEvent);
+		
+		if (_reverse) {
+			_lifecycle.addReversedEventTypes([preTransitionEvent, transitionEvent, postTransitionEvent]);
+		}
+		
 		return this;
 	}
 
@@ -111,7 +117,7 @@ class LifecycleTransition
 	public function inReverse():LifecycleTransition
 	{
 		_reverse = true;
-		_lifecycle.addReversedEventTypes(_preTransitionEvent, _transitionEvent, _postTransitionEvent);
+		_lifecycle.addReversedEventTypes([_preTransitionEvent, _transitionEvent, _postTransitionEvent]);
 		return this;
 	}
 
@@ -120,7 +126,7 @@ class LifecycleTransition
 	 * @param handler Possibly asynchronous before handler
 	 * @return Self
 	 */
-	public function addBeforeHandler(handler:Function):LifecycleTransition
+	public function addBeforeHandler(handler:Void->Void):LifecycleTransition
 	{
 		_dispatcher.addMessageHandler(_name, handler);
 		return this;
@@ -130,19 +136,20 @@ class LifecycleTransition
 	 * Attempts to enter the transition
 	 * @param callback Completion callback
 	 */
-	public function enter(callback:Function = null):Void
+	public function enter(callback:Dynamic = null):Void
 	{
 		// immediately call back if we have already transitioned, and exit
+		// CHECK
 		if (_lifecycle.state == _finalState)
 		{
-			callback && SafelyCallBack.call(callback, null, _name);
+			if (callback != null) SafelyCallBack.call(callback, null, _name);
 			return;
 		}
 
 		// queue this callback if we are mid transition, and exit
 		if (_lifecycle.state == _transitionState)
 		{
-			callback && _callbacks.push(callback);
+			if (callback != null) _callbacks.push(callback);
 			return;
 		}
 
@@ -157,7 +164,7 @@ class LifecycleTransition
 		var initialState:String = _lifecycle.state;
 
 		// queue the first callback
-		callback && _callbacks.push(callback);
+		if (callback != null) _callbacks.push(callback);
 
 		// put lifecycle into transition state
 		setState(_transitionState);
@@ -181,9 +188,9 @@ class LifecycleTransition
 			setState(_finalState);
 
 			// process callback queue (dup and trash for safety)
-			var callbacks:Array<Dynamic> = _callbacks.concat();
-			_callbacks.length = 0;
-			for each (var callback:Function in callbacks)
+			var callbacks:Array<Dynamic> = _callbacks.concat([]);
+			_callbacks = [];
+			for (callback in callbacks)
 				SafelyCallBack.call(callback, null, _name);
 
 			// dispatch post transition event
@@ -191,6 +198,11 @@ class LifecycleTransition
 
 		}, _reverse);
 	}
+	
+	/*private function dispatchMessageFunction(error:Dynamic):Void
+	{
+		
+	}*/
 
 	/*============================================================================*/
 	/* Private Functions                                                          */
@@ -204,20 +216,22 @@ class LifecycleTransition
 
 	private function setState(state:String):Void
 	{
-		state && _lifecycle.setCurrentState(state);
+		if (state != null && state != "") _lifecycle.setCurrentState(state);
 	}
 
 	private function dispatch(type:String):Void
 	{
-		if (type && _lifecycle.hasEventListener(type))
+		if (type != null && type != "" && _lifecycle.hasEventListener(type)) {	
 			_lifecycle.dispatchEvent(new LifecycleEvent(type));
+		}
+		
 	}
 
 	private function reportError(message:Dynamic, callbacks:Array<Dynamic> = null):Void
 	{
 		// turn message into Error
-		var error:Error = message is Error
-			? message as Error
+		var error:Error = Std.is(message, Error)
+			? cast(message, Error)
 			: new Error(message);
 
 		// dispatch error event if a listener exists, or throw
@@ -226,11 +240,12 @@ class LifecycleTransition
 			var event:LifecycleEvent = new LifecycleEvent(LifecycleEvent.ERROR, error);
 			_lifecycle.dispatchEvent(event);
 			// process callback queue
-			if (callbacks)
+			// CHECK
+			if (callbacks != null)
 			{
-				for each (var callback:Function in callbacks)
-					callback && SafelyCallBack.call(callback, error, _name);
-				callbacks.length = 0;
+				for (callback in callbacks)
+					if (callback != null) SafelyCallBack.call(callback, error, _name);
+				callbacks = [];
 			}
 		}
 		else

@@ -34,19 +34,20 @@ class GuardsApprove
 	 */
 	public static function call(guards:Array<Dynamic>, injector:IInjector = null):Bool
 	{
-		for each (var guard:Dynamic in guards)
+		for (guard in guards)
 		{
-			if (guard is Function)
+			if (Reflect.isFunction(guard))
 			{
-				if ((guard as Function)())
+				if (guard())
 					continue;
 				return false;
 			}
-			if (guard is Class)
+			
+			if (Std.is(guard, Class))
 			{
-				guard = injector
-					? injector.instantiateUnmapped(guard as Class)
-					: new (guard as Class);
+				guard = (injector != null)
+					? injector.instantiateUnmapped(cast(guard, Class<Dynamic>))
+					: Type.createInstance(guard, []);
 			}
 			if (guard.approve() == false)
 				return false;

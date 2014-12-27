@@ -7,7 +7,8 @@
 
 package robotlegs.bender.framework.impl;
 
-import openfl.utils.Dictionary;
+
+import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.ILogger;
 
@@ -23,7 +24,7 @@ class ExtensionInstaller
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _classes:Dictionary = new Dictionary(true);
+	private var _classes = new Map<String,Bool>();
 
 	private var _context:IContext;
 
@@ -52,18 +53,22 @@ class ExtensionInstaller
 	 */
 	public function install(extension:Dynamic):Void
 	{
-		if (extension is Class)
+		if (Std.is(extension, Class))
 		{
-			_classes[extension] || install(new (extension as Class));
+			
+			var extensionInstance = Type.createInstance(extension, []);
+			if (!_classes[extension]) install(extensionInstance);
 		}
 		else
 		{
-			var extensionClass:Class = extension.constructor as Class;
-			if (_classes[extensionClass])
+			var extensionClass:Class<Dynamic> = Type.getClass(extension);
+			if (_classes[UID.create(extensionClass)])
 				return;
 			_logger.debug("Installing extension {0}", [extension]);
-			_classes[extensionClass] = true;
-			extension.extend(_context);
+			_classes[UID.create(extensionClass)] = true;
+			if (Reflect.hasField(extension, "extend")){
+				extension.extend(_context);
+			}
 		}
 	}
 
@@ -72,9 +77,9 @@ class ExtensionInstaller
 	 */
 	public function destroy():Void
 	{
-		for (var extensionClass:Dynamic in _classes)
-		{
-			delete _classes[extensionClass];
+		var fields = Reflect.fields (_classes);
+		for (propertyName in fields) {
+			_classes.remove(propertyName);
 		}
 	}
 }

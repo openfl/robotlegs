@@ -89,9 +89,9 @@ class ManualStageObserver
 	{
 		// Stop that event!
 		event.stopImmediatePropagation();
-		var container:DisplayObjectContainer = event.currentTarget as DisplayObjectContainer;
-		var view:DisplayObject = event.target as DisplayObject;
-		var type:Class = view['constructor'];
+		var container:DisplayObjectContainer = cast(event.currentTarget, DisplayObjectContainer);
+		var view:DisplayObject = cast(event.target, DisplayObject);
+		var type:Class<Dynamic> = Type.getClass(view);
 		_registry.getBinding(container).handleView(view, type);
 	}
 }

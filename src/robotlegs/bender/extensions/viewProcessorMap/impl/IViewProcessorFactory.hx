@@ -15,12 +15,12 @@ interface IViewProcessorFactory
 	/**
 	 * @private
 	 */
-	function runProcessors(view:Dynamic, type:Class, processorMappings:Array<Dynamic>):Void;
+	function runProcessors(view:Dynamic, type:Class<Dynamic>, processorMappings:Array<Dynamic>):Void;
 
 	/**
 	 * @private
 	 */
-	function runUnprocessors(view:Dynamic, type:Class, processorMappings:Array<Dynamic>):Void;
+	function runUnprocessors(view:Dynamic, type:Class<Dynamic>, processorMappings:Array<Dynamic>):Void;
 
 	/**
 	 * @private

@@ -7,7 +7,7 @@
 
 package robotlegs.bender.extensions.viewProcessorMap.utils;
 
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.framework.api.IInjector;
 
 /**
@@ -22,7 +22,7 @@ class MediatorCreator
 
 	private var _mediatorClass:Class;
 
-	private var _createdMediatorsByView:Dictionary = new Dictionary(true);
+	private var _createdMediatorsByView:Map<Dynamic,Dynamic> = new Map<Dynamic,Dynamic>(true);
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -63,7 +63,7 @@ class MediatorCreator
 		if (_createdMediatorsByView[view])
 		{
 			destroyMediator(_createdMediatorsByView[view]);
-			delete _createdMediatorsByView[view];
+			_createdMediatorsByView.remove(view);
 		}
 	}
 

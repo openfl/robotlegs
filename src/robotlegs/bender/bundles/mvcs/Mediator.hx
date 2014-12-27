@@ -24,18 +24,16 @@ class Mediator implements IMediator
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	[Inject]
-	public var eventMap:IEventMap;
+	@inject public var eventMap:IEventMap;
 
-	[Inject]
-	public var eventDispatcher:IEventDispatcher;
+	@inject public var eventDispatcher:IEventDispatcher;
 
 	private var _viewComponent:Dynamic;
 
 	/**
 	 * @private
 	 */
-	public function set viewComponent(view:Dynamic):Void
+	public function set_viewComponent(view:Dynamic):Void
 	{
 		_viewComponent = view;
 	}

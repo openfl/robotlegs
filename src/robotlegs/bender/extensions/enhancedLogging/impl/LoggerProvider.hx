@@ -7,7 +7,7 @@
 
 package robotlegs.bender.extensions.enhancedLogging.impl;
 
-import openfl.utils.Dictionary;
+
 import org.swiftsuspenders.Injector;
 import org.swiftsuspenders.dependencyproviders.DependencyProvider;
 import robotlegs.bender.framework.api.IContext;
@@ -43,7 +43,7 @@ class LoggerProvider implements DependencyProvider
 	/**
 	 * @inheritDoc
 	 */
-	public function apply(targetType:Class, activeInjector:Injector, injectParameters:Dictionary):Dynamic
+	public function apply(targetType:Class<Dynamic>, activeInjector:Injector, injectParameters:Map<Dynamic,Dynamic>):Dynamic
 	{
 		return _context.getLogger(targetType);
 	}

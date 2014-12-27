@@ -8,7 +8,7 @@
 package robotlegs.bender.extensions.viewProcessorMap.impl;
 
 import openfl.display.DisplayObject;
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.extensions.matching.ITypeMatcher;
 import robotlegs.bender.extensions.matching.TypeMatcher;
 import robotlegs.bender.extensions.viewManager.api.IViewHandler;
@@ -20,18 +20,19 @@ import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorUnmapper;
  * View Processor Map implementation
  * @private
  */
-class ViewProcessorMap implements IViewProcessorMap, IViewHandler
+@:rtti
+class ViewProcessorMap implements IViewProcessorMap implements IViewHandler
 {
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _mappers:Dictionary = new Dictionary();
+	private var _mappers = new Map<String,Dynamic>();
 
 	private var _handler:IViewProcessorViewHandler;
 
-	private var NULL_UNMAPPER:IViewProcessorUnmapper = new NullViewProcessorUnmapper();
+	private var NULL_UNMAPPER = new NullViewProcessorUnmapper();
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -42,7 +43,8 @@ class ViewProcessorMap implements IViewProcessorMap, IViewHandler
 	 */
 	public function new(factory:IViewProcessorFactory, handler:IViewProcessorViewHandler = null)
 	{
-		_handler = handler || new ViewProcessorViewHandler(factory);
+		if (handler != null) _handler = handler;
+		else _handler = new ViewProcessorViewHandler(factory);
 	}
 
 	/*============================================================================*/
@@ -54,15 +56,19 @@ class ViewProcessorMap implements IViewProcessorMap, IViewHandler
 	 */
 	public function mapMatcher(matcher:ITypeMatcher):IViewProcessorMapper
 	{
-		return _mappers[matcher.createTypeFilter().descriptor] ||= createMapper(matcher);
+		// CHECK
+		if (_mappers[matcher.createTypeFilter().descriptor] == null) _mappers[matcher.createTypeFilter().descriptor] = createMapper(matcher);
+		return _mappers[matcher.createTypeFilter().descriptor];
+		
+		//return _mappers[matcher.createTypeFilter().descriptor] ||= createMapper(matcher);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function map(type:Class):IViewProcessorMapper
+	public function map(type:Class<Dynamic>):IViewProcessorMapper
 	{
-		var matcher:ITypeMatcher = new TypeMatcher().allOf(type);
+		var matcher:ITypeMatcher = new TypeMatcher().allOf([type]);
 		return mapMatcher(matcher);
 	}
 
@@ -71,15 +77,17 @@ class ViewProcessorMap implements IViewProcessorMap, IViewHandler
 	 */
 	public function unmapMatcher(matcher:ITypeMatcher):IViewProcessorUnmapper
 	{
-		return _mappers[matcher.createTypeFilter().descriptor] || NULL_UNMAPPER;
+		if (_mappers[matcher.createTypeFilter().descriptor] != null) return _mappers[matcher.createTypeFilter().descriptor];
+		else return NULL_UNMAPPER;
+		//return _mappers[matcher.createTypeFilter().descriptor] || NULL_UNMAPPER;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function unmap(type:Class):IViewProcessorUnmapper
+	public function unmap(type:Class<Dynamic>):IViewProcessorUnmapper
 	{
-		var matcher:ITypeMatcher = new TypeMatcher().allOf(type);
+		var matcher:ITypeMatcher = new TypeMatcher().allOf([type]);
 		return unmapMatcher(matcher);
 	}
 
@@ -88,7 +96,7 @@ class ViewProcessorMap implements IViewProcessorMap, IViewHandler
 	 */
 	public function process(item:Dynamic):Void
 	{
-		var type:Class = item.constructor as Class;
+		var type:Class<Dynamic> = Type.getClass(item);
 		_handler.processItem(item, type);
 	}
 
@@ -97,14 +105,14 @@ class ViewProcessorMap implements IViewProcessorMap, IViewHandler
 	 */
 	public function unprocess(item:Dynamic):Void
 	{
-		var type:Class = item.constructor as Class;
+		var type:Class<Dynamic> = Type.getClass(item);
 		_handler.unprocessItem(item, type);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function handleView(view:DisplayObject, type:Class):Void
+	public function handleView(view:DisplayObject, type:Class<Dynamic>):Void
 	{
 		_handler.processItem(view, type);
 	}

@@ -149,46 +149,54 @@ interface IInjector extends IEventDispatcher
 	 * Sets the parent <code>IInjector</code>
 	 * @param parentInjector The parent IInjector
 	 */
-	function set parent(parentInjector:IInjector):Void;
-
+	public var parent(get, set):IInjector;
+	function set_parent(parentInjector:IInjector):IInjector;
+	function get_parent():IInjector;
 	/**
 	 * Returns the <code>IInjector</code> used for dependencies the current
 	 * <code>Injector</code> can't supply
 	 */
-	function get parent():IInjector;
+	
 
 	/**
 	 * Sets the ApplicationDomain to use for type reflection
 	 * @param applicationDomain The ApplicationDomain
 	 */
-	function set applicationDomain(applicationDomain:ApplicationDomain):Void;
-
+	public var applicationDomain(get, set):ApplicationDomain;
+	function set_applicationDomain(applicationDomain:ApplicationDomain=null):ApplicationDomain;
+	function get_applicationDomain():ApplicationDomain;
 	/**
 	 * The ApplicationDomain used for type reflection
 	 */
-	function get applicationDomain():ApplicationDomain;
+	
 
 	/**
 	 * Sets the Fallback Provider
 	 * @param provider FallbackDependencyProvider
 	 */
-	function set fallbackProvider(provider:FallbackDependencyProvider):Void;
-
+	
+	public var fallbackProvider(get, set):FallbackDependencyProvider;
+	function get_fallbackProvider():FallbackDependencyProvider;
+	function set_fallbackProvider(value:FallbackDependencyProvider):FallbackDependencyProvider;
+	
 	/**
 	 * The current FallbackDependencyProvider
 	 */
-	function get fallbackProvider():FallbackDependencyProvider;
+	//public var fallbackProvider:FallbackDependencyProvider;
 
 	/**
 	 * Disables parent FallbackProvider
 	 * @param value True/false
 	 */
-	function set blockParentFallbackProvider(value:Bool):Void;
-
+	
 	/**
 	 * Is the parent FallbackProvider blocked?
 	 */
-	function get blockParentFallbackProvider():Bool;
+	public var blockParentFallbackProvider(get, set):Bool;
+	function get_blockParentFallbackProvider():Bool;
+	function set_blockParentFallbackProvider(value:Bool):Bool;
+
+	
 
 	/**
 	 * Instructs the injector to use the description for the given type when constructing or
@@ -200,7 +208,7 @@ interface IInjector extends IEventDispatcher
 	 * @param type
 	 * @param description
 	 */
-	function addTypeDescription(type:Class, description:TypeDescription):Void;
+	function addTypeDescription(type:Class<Dynamic>, description:TypeDescription):Void;
 
 	/**
 	 * Returns a description of the given type containing its constructor, injection points
@@ -209,7 +217,7 @@ interface IInjector extends IEventDispatcher
 	 * @param type The type to describe
 	 * @return The TypeDescription containing all information the injector has about the type
 	 */
-	function getTypeDescription(type:Class):TypeDescription;
+	function getTypeDescription(type:Class<Dynamic>):TypeDescription;
 
 	/**
 	 * Does this injector (or any parents) have a mapping for the given type?
@@ -217,7 +225,7 @@ interface IInjector extends IEventDispatcher
 	 * @param name Optional name
 	 * @return True if the mapping exists
 	 */
-	function hasMapping(type:Class, name:String = ''):Bool;
+	function hasMapping(type:Class<Dynamic>, name:String = ''):Bool;
 
 	/**
 	 * Does this injector have a direct mapping for the given type?
@@ -225,7 +233,7 @@ interface IInjector extends IEventDispatcher
 	 * @param name Optional name
 	 * @return True if the mapping exists
 	 */
-	function hasDirectMapping(type:Class, name:String = ''):Bool;
+	function hasDirectMapping(type:Class<Dynamic>, name:String = ''):Bool;
 
 	/**
 	 * Maps a request description, consisting of the <code>type</code> and, optionally, the
@@ -244,7 +252,7 @@ interface IInjector extends IEventDispatcher
 	 * @see #unmap()
 	 * @see org.swiftsuspenders.mapping.InjectionMapping
 	 */
-	function map(type:Class, name:String = ''):InjectionMapping;
+	function map(type:Class<Dynamic>, name:String = ''):InjectionMapping;
 
 	/**
 	 *  Removes the mapping described by the given <code>type</code> and <code>name</code>.
@@ -259,7 +267,7 @@ interface IInjector extends IEventDispatcher
 	 * @see org.swiftsuspenders.mapping.InjectionMapping
 	 * @see org.swiftsuspenders.mapping.InjectionMapping#unseal()
 	 */
-	function unmap(type:Class, name:String = ''):Void;
+	function unmap(type:Class<Dynamic>, name:String = ''):Void;
 
 	/**
 	 * Indicates whether the injector can supply a response for the specified dependency either
@@ -270,7 +278,7 @@ interface IInjector extends IEventDispatcher
 	 *
 	 * @return <code>true</code> if the dependency can be satisfied, <code>false</code> if not
 	 */
-	function satisfies(type:Class, name:String = ''):Bool;
+	function satisfies(type:Class<Dynamic>, name:String = ''):Bool;
 
 	/**
 	 * Indicates whether the injector can directly supply a response for the specified
@@ -284,7 +292,7 @@ interface IInjector extends IEventDispatcher
 	 *
 	 * @return <code>true</code> if the dependency can be satisfied, <code>false</code> if not
 	 */
-	function satisfiesDirectly(type:Class, name:String = ''):Bool;
+	function satisfiesDirectly(type:Class<Dynamic>, name:String = ''):Bool;
 
 	/**
 	 * Returns the mapping for the specified dependency class
@@ -303,7 +311,7 @@ interface IInjector extends IEventDispatcher
 	 * @throws org.swiftsuspenders.errors.InjectorMissingMappingError when no mapping was found
 	 * for the specified dependency
 	 */
-	function getMapping(type:Class, name:String = ''):InjectionMapping;
+	function getMapping(type:Class<Dynamic>, name:String = ''):InjectionMapping;
 
 	/**
 	 * Inspects the given object and injects into all injection points configured for its class.
@@ -334,7 +342,7 @@ interface IInjector extends IEventDispatcher
 	 * @throws org.swiftsuspenders.errors.InjectorMissingMappingError if no mapping was found
 	 * for the specified dependency and no <code>fallbackProvider</code> is set.
 	 */
-	function getInstance(type:Class, name:String = '', targetType:Class = null):Dynamic;
+	function getInstance(type:Class<Dynamic>, name:String = '', targetType:Class<Dynamic> = null):Dynamic;
 
 	/**
 	 * Returns an instance of the given type. If the Injector has a mapping for the type, that
@@ -349,7 +357,7 @@ interface IInjector extends IEventDispatcher
 	 * @throws org.swiftsuspenders.errors.InjectorInterfaceConstructionError if the given type
 	 * is an interface and no mapping was found
 	 */
-	function getOrCreateNewInstance(type:Class):Dynamic;
+	function getOrCreateNewInstance(type:Class<Dynamic>):Dynamic;
 
 	/**
 	 * Creates an instance of the given type and injects into it.
@@ -360,7 +368,7 @@ interface IInjector extends IEventDispatcher
 	 * @throws org.swiftsuspenders.errors.InjectorMissingMappingError if no mapping is found
 	 * for one of the type's dependencies and no <code>fallbackProvider</code> is set
 	 */
-	function instantiateUnmapped(type:Class):Dynamic;
+	function instantiateUnmapped(type:Class<Dynamic>):Dynamic;
 
 	/**
 	 * Uses the <code>TypeDescription</code> the injector associates with the given instance's

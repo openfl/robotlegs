@@ -16,7 +16,7 @@ import robotlegs.bender.extensions.commandCenter.dsl.ICommandUnmapper;
 /**
  * @private
  */
-class CommandMapper implements ICommandMapper, ICommandUnmapper, ICommandConfigurator
+class CommandMapper implements ICommandMapper implements ICommandUnmapper implements ICommandConfigurator
 {
 
 	/*============================================================================*/
@@ -47,7 +47,7 @@ class CommandMapper implements ICommandMapper, ICommandUnmapper, ICommandConfigu
 	/**
 	 * @inheritDoc
 	 */
-	public function toCommand(commandClass:Class):ICommandConfigurator
+	public function toCommand(commandClass:Class<Dynamic>):ICommandConfigurator
 	{
 		_mapping = new CommandMapping(commandClass);
 		_mappings.addMapping(_mapping);
@@ -57,7 +57,7 @@ class CommandMapper implements ICommandMapper, ICommandUnmapper, ICommandConfigu
 	/**
 	 * @inheritDoc
 	 */
-	public function fromCommand(commandClass:Class):Void
+	public function fromCommand(commandClass:Class<Dynamic>):Void
 	{
 		_mappings.removeMappingFor(commandClass);
 	}
@@ -82,18 +82,20 @@ class CommandMapper implements ICommandMapper, ICommandUnmapper, ICommandConfigu
 	/**
 	 * @inheritDoc
 	 */
-	public function withGuards(... guards):ICommandConfigurator
+	public function withGuards(guards:Array<Dynamic>):ICommandConfigurator
 	{
-		_mapping.addGuards.apply(null, guards);
+		Reflect.callMethod (null, _mapping.addGuards, guards);
+		//_mapping.addGuards.apply(null, guards);
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function withHooks(... hooks):ICommandConfigurator
+	public function withHooks(hooks:Array<Dynamic>):ICommandConfigurator
 	{
-		_mapping.addHooks.apply(null, hooks);
+		Reflect.callMethod (null, _mapping.addHooks, hooks);
+		//_mapping.addHooks.apply(null, hooks);
 		return this;
 	}
 

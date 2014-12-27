@@ -22,7 +22,7 @@ class TraceLogTarget implements ILogTarget
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _messageParser:LogMessageParser = new LogMessageParser();
+	private var _messageParser = new LogMessageParser();
 
 	private var _context:IContext;
 

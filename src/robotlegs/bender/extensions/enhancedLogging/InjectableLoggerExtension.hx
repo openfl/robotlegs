@@ -13,10 +13,10 @@ import robotlegs.bender.framework.api.IExtension;
 import robotlegs.bender.framework.api.ILogger;
 
 /**
- * Allows you to [Inject] unique loggers into your objects.
+ * Allows you to @inject unique loggers into your objects.
  *
  * <code>
- *     [Inject]
+ *     @inject
  *     public var logger:ILogger;
  * </code>
  */

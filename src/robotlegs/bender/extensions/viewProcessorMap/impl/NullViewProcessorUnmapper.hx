@@ -14,7 +14,10 @@ import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorUnmapper;
  */
 class NullViewProcessorUnmapper implements IViewProcessorUnmapper
 {
-
+	public function new()
+	{
+		
+	}
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/

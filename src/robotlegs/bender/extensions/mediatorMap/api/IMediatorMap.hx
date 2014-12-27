@@ -29,7 +29,7 @@ interface IMediatorMap
 	 * @param type The class or interface to be matched against.
 	 * @return the mapper so that you can continue the mapping.
 	 */
-	function map(type:Class):IMediatorMapper;
+	function map(type:Class<Dynamic>):IMediatorMapper;
 
 	/**
 	 * Removes a mapping that was made against a matcher.
@@ -45,7 +45,7 @@ interface IMediatorMap
 	 * @param type The class or interface to be matched against.
 	 * @return the unmapper so that you can continue the unmapping.
 	 */
-	function unmap(type:Class):IMediatorUnmapper;
+	function unmap(type:Class<Dynamic>):IMediatorUnmapper;
 
 	/**
 	 * Mediates an item directly. If the item matches any mapped matchers or types then it will be mediated according to those mappings.
@@ -62,5 +62,5 @@ interface IMediatorMap
 	/**
 	 * Removes all mediators
 	 */
-	function unmediateAll():Void
+	function unmediateAll():Void;
 }

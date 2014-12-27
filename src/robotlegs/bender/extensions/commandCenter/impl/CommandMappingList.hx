@@ -7,7 +7,7 @@
 
 package robotlegs.bender.extensions.commandCenter.impl;
 
-import openfl.utils.Dictionary;
+
 import robotlegs.bender.extensions.commandCenter.api.ICommandMapping;
 import robotlegs.bender.extensions.commandCenter.api.ICommandMappingList;
 import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
@@ -23,9 +23,9 @@ class CommandMappingList implements ICommandMappingList
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _mappingsByCommand:Dictionary = new Dictionary();
+	private var _mappingsByCommand = new Map<String,Dynamic>();
 
-	private var _mappings:Array<ICommandMapping> = new Array<ICommandMapping>;
+	private var _mappings = new Array<ICommandMapping>();
 
 	private var _trigger:ICommandTrigger;
 
@@ -33,7 +33,7 @@ class CommandMappingList implements ICommandMappingList
 
 	private var _logger:ILogger;
 
-	private var _compareFunction:Function;
+	private var _compareFunction:Dynamic;
 
 	private var _sorted:Bool;
 
@@ -63,14 +63,14 @@ class CommandMappingList implements ICommandMappingList
 	 */
 	public function getList():Array<ICommandMapping>
 	{
-		_sorted || sortMappings();
-		return _mappings.concat();
+		if (!_sorted) sortMappings();
+		return _mappings.concat([]);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function withSortFunction(sorter:Function):ICommandMappingList
+	public function withSortFunction(sorter:Dynamic):ICommandMappingList
 	{
 		_sorted = false;
 		_compareFunction = sorter;
@@ -84,15 +84,15 @@ class CommandMappingList implements ICommandMappingList
 	{
 		_sorted = false;
 		applyProcessors(mapping);
-		var oldMapping:ICommandMapping = _mappingsByCommand[mapping.commandClass];
-		if (oldMapping)
+		var oldMapping:ICommandMapping = _mappingsByCommand[UID.create(mapping.commandClass)];
+		if (oldMapping != null)
 		{
 			overwriteMapping(oldMapping, mapping);
 		}
 		else
 		{
 			storeMapping(mapping);
-			_mappings.length == 1 && _trigger.activate();
+			if (_mappings.length == 1) _trigger.activate();
 		}
 	}
 
@@ -101,20 +101,20 @@ class CommandMappingList implements ICommandMappingList
 	 */
 	public function removeMapping(mapping:ICommandMapping):Void
 	{
-		if (_mappingsByCommand[mapping.commandClass])
+		if (_mappingsByCommand[UID.create(mapping.commandClass)])
 		{
 			deleteMapping(mapping);
-			_mappings.length == 0 && _trigger.deactivate();
+			if (_mappings.length == 0) _trigger.deactivate();
 		}
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function removeMappingFor(commandClass:Class):Void
+	public function removeMappingFor(commandClass:Class<Dynamic>):Void
 	{
-		var mapping:ICommandMapping = _mappingsByCommand[commandClass];
-		mapping && removeMapping(mapping);
+		var mapping:ICommandMapping = _mappingsByCommand[UID.create(commandClass)];
+		if (mapping != null) removeMapping(mapping);
 	}
 
 	/**
@@ -124,9 +124,9 @@ class CommandMappingList implements ICommandMappingList
 	{
 		if (_mappings.length > 0)
 		{
-			var list:Array<ICommandMapping> = _mappings.concat();
+			var list:Array<ICommandMapping> = _mappings.concat([]);
 			var length:Int = list.length;
-			while (length--)
+			while (length-- > 0)
 			{
 				deleteMapping(list[length]);
 			}
@@ -140,40 +140,40 @@ class CommandMappingList implements ICommandMappingList
 
 	private function storeMapping(mapping:ICommandMapping):Void
 	{
-		_mappingsByCommand[mapping.commandClass] = mapping;
+		_mappingsByCommand[UID.create(mapping.commandClass)] = mapping;
 		_mappings.push(mapping);
-		_logger && _logger.debug('{0} mapped to {1}', [_trigger, mapping]);
+		if (_logger != null) _logger.debug('{0} mapped to {1}', [_trigger, mapping]);
 	}
 
 	private function deleteMapping(mapping:ICommandMapping):Void
 	{
-		delete _mappingsByCommand[mapping.commandClass];
+		_mappingsByCommand.remove(UID.create(mapping.commandClass));
 		_mappings.splice(_mappings.indexOf(mapping), 1);
-		_logger && _logger.debug('{0} unmapped from {1}', [_trigger, mapping]);
+		if (_logger != null) _logger.debug('{0} unmapped from {1}', [_trigger, mapping]);
 	}
 
 	private function overwriteMapping(oldMapping:ICommandMapping, newMapping:ICommandMapping):Void
 	{
-		_logger && _logger.warn('{0} already mapped to {1}\n' +
-			'If you have overridden this mapping intentionally you can use "unmap()" ' +
-			'prior to your replacement mapping in order to avoid seeing this message.\n',
-			[_trigger, oldMapping]);
+		if (_logger != null) {
+			_logger.warn('{0} already mapped to {1}\n' + 'If you have overridden this mapping intentionally you can use "unmap()" ' + 'prior to your replacement mapping in order to avoid seeing this message.\n', [_trigger, oldMapping]);
+		}
 		deleteMapping(oldMapping);
 		storeMapping(newMapping);
 	}
 
 	private function sortMappings():Void
 	{
-		if (_compareFunction != null)
+		// FIX
+		/*if (_compareFunction != null)
 		{
 			_mappings = _mappings.sort(_compareFunction);
-		}
+		}*/
 		_sorted = true;
 	}
 
 	private function applyProcessors(mapping:ICommandMapping):Void
 	{
-		for each (var processor:Function in _processors)
+		for (processor in _processors)
 		{
 			processor(mapping);
 		}

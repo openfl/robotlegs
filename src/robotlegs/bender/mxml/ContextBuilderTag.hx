@@ -25,11 +25,11 @@ class ContextBuilderTag implements IMXMLObject
 	/*============================================================================*/
 
 	private var _configs:Array<Dynamic> = [];
-
+	public var configs(get, set):Array<Dynamic>;
 	/**
 	 * Configs, extensions or bundles
 	 */
-	public function get configs():Array
+	public function get_configs():Array<Dynamic>;
 	{
 		return _configs;
 	}
@@ -37,28 +37,31 @@ class ContextBuilderTag implements IMXMLObject
 	/**
 	 * Configs, extensions or bundles
 	 */
-	public function set configs(value:Array<Dynamic>):Void
+	
+	public function set_configs(value:Array<Dynamic>):Array<Dynamic>
 	{
 		_configs = value;
+		return _configs;
 	}
 
 	private var _contextView:DisplayObjectContainer;
-
+	public var contextView(null, set):Array<Dynamic>;
 	/**
 	 * The context view
 	 * @param value
 	 */
-	public function set contextView(value:DisplayObjectContainer):Void
+	public function set_contextView(value:DisplayObjectContainer):DisplayObjectContainer
 	{
 		_contextView = value;
+		return _contextView;
 	}
 
 	private var _context:IContext = new Context();
-
+	public var context(get, null):Array<Dynamic>;
 	/**
 	 * The context associated with this builder
 	 */
-	public function get context():IContext
+	public function get_context():IContext
 	{
 		return _context;
 	}
@@ -78,7 +81,10 @@ class ContextBuilderTag implements IMXMLObject
 	 */
 	public function initialized(document:Dynamic, id:String):Void
 	{
-		_contextView ||= document as DisplayObjectContainer;
+		// CHECK
+		if (_contextView == null) _contextView = cast(document, DisplayObjectContainer);
+		
+		//_contextView ||= cast(document, DisplayObjectContainer);
 		// if the contextView is bound it will only be set a frame later
 		setTimeout(configureBuilder, 1);
 	}
@@ -102,6 +108,21 @@ class ContextBuilderTag implements IMXMLObject
 
 	private function isExtension(object:Dynamic):Bool
 	{
-		return (object is IExtension) || (object is Class && _reflector.typeImplements(object as Class, IExtension));
+		var isIExtension = Std.is(object, IExtension);
+		var isClass = Std.is(object, Class);
+		var implementsIExtension = _reflector.typeImplements(cast(object, Class), IExtension);
+		
+		if (!isIExtension) {
+			if (isClass) {
+				return implementsIExtension;
+			}
+			else {
+				return isClass;
+			}
+		}
+		else {
+			return isIExtension;
+		}
+		//return (Std.is(object, IExtension)) || (Std.is(object, Class) && _reflector.typeImplements(cast(object, Class), IExtension));
 	}
 }

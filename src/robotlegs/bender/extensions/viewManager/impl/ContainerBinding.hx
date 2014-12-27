@@ -24,11 +24,11 @@ class ContainerBinding extends EventDispatcher
 	/*============================================================================*/
 
 	private var _parent:ContainerBinding;
-
+	public var parent(get, set):ContainerBinding;
 	/**
 	 * @private
 	 */
-	public function get parent():ContainerBinding
+	public function get_parent():ContainerBinding
 	{
 		return _parent;
 	}
@@ -36,17 +36,18 @@ class ContainerBinding extends EventDispatcher
 	/**
 	 * @private
 	 */
-	public function set parent(value:ContainerBinding):Void
+	public function set_parent(value:ContainerBinding):ContainerBinding
 	{
 		_parent = value;
+		return _parent;
 	}
 
 	private var _container:DisplayObjectContainer;
-
+	public var container(get, null):DisplayObjectContainer;
 	/**
 	 * @private
 	 */
-	public function get container():DisplayObjectContainer
+	public function get_container():DisplayObjectContainer
 	{
 		return _container;
 	}
@@ -55,7 +56,7 @@ class ContainerBinding extends EventDispatcher
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _handlers:Array<IViewHandler> = new Array<IViewHandler>;
+	private var _handlers = new Array<IViewHandler>();
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -67,6 +68,7 @@ class ContainerBinding extends EventDispatcher
 	public function new(container:DisplayObjectContainer)
 	{
 		_container = container;
+		super(null);
 	}
 
 	/*============================================================================*/
@@ -102,12 +104,12 @@ class ContainerBinding extends EventDispatcher
 	/**
 	 * @private
 	 */
-	public function handleView(view:DisplayObject, type:Class):Void
+	public function handleView(view:DisplayObject, type:Class<Dynamic>):Void
 	{
 		var length:UInt = _handlers.length;
-		for (var i:Int = 0; i < length; i++)
+		for (i in 0...length)
 		{
-			var handler:IViewHandler = _handlers[i] as IViewHandler;
+			var handler:IViewHandler = cast(_handlers[i], IViewHandler);
 			handler.handleView(view, type);
 		}
 	}

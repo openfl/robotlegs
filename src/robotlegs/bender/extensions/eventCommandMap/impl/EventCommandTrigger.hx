@@ -33,7 +33,7 @@ class EventCommandTrigger implements ICommandTrigger
 
 	private var _type:String;
 
-	private var _eventClass:Class;
+	private var _eventClass:Class<Dynamic>;
 
 	private var _mappings:ICommandMappingList;
 
@@ -46,7 +46,7 @@ class EventCommandTrigger implements ICommandTrigger
 	/**
 	 * @private
 	 */
-	public function new(injector:IInjector, dispatcher:IEventDispatcher, type:String, eventClass:Class = null, processors:Array<Dynamic> = null, logger:ILogger = null)
+	public function new(injector:IInjector, dispatcher:IEventDispatcher, type:String, eventClass:Class<Dynamic> = null, processors:Array<Dynamic> = null, logger:ILogger = null)
 	{
 		_dispatcher = dispatcher;
 		_type = type;
@@ -94,10 +94,11 @@ class EventCommandTrigger implements ICommandTrigger
 
 	private function eventHandler(event:Event):Void
 	{
-		var eventConstructor:Class = event["constructor"] as Class;
-		var payloadEventClass:Class;
+		
+		var eventConstructor:Class<Dynamic> = Type.getClass(event);
+		var payloadEventClass:Class<Dynamic>;
 		//not pretty, but optimized to avoid duplicate checks and shortest paths
-		if (eventConstructor == _eventClass || (!_eventClass))
+		if (eventConstructor == _eventClass || (_eventClass == null))
 		{
 			payloadEventClass = eventConstructor;
 		}

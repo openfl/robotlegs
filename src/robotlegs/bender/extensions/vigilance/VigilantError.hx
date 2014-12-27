@@ -6,6 +6,7 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.extensions.vigilance;
+import openfl.errors.Error;
 
 /**
  * Vigilant Error

@@ -86,14 +86,14 @@ class ModularityExtension implements IExtension
 
 	private function beforeInitializing():Void
 	{
-		_contextView || _logger.error("Context has no ContextView, and ModularityExtension doesn't allow this.");
+		if (_contextView == null) _logger.error("Context has no ContextView, and ModularityExtension doesn't allow this.");
 	}
 
 	private function handleContextView(contextView:ContextView):Void
 	{
 		_contextView = contextView.view;
-		_expose && configureExistenceWatcher();
-		_inherit && configureExistenceBroadcaster();
+		if (_expose) configureExistenceWatcher();
+		if (_inherit) configureExistenceBroadcaster();
 	}
 
 	private function configureExistenceWatcher():Void
@@ -101,7 +101,7 @@ class ModularityExtension implements IExtension
 		if (_injector.hasDirectMapping(IViewManager))
 		{
 			_logger.debug("Context has a ViewManager. Configuring view manager based context existence watcher...");
-			var viewManager:IViewManager = _injector.getInstance(IViewManager);
+			var viewManager = _injector.getInstance(IViewManager);
 			new ViewManagerBasedExistenceWatcher(_context, viewManager);
 		}
 		else
@@ -113,7 +113,7 @@ class ModularityExtension implements IExtension
 
 	private function configureExistenceBroadcaster():Void
 	{
-		if (_contextView.stage)
+		if (_contextView.stage != null)
 		{
 			broadcastContextExistence();
 		}

@@ -61,7 +61,7 @@ class DirectCommandMap implements IDirectCommandMap
 	/**
 	 * @inheritDoc
 	 */
-	public function map(commandClass:Class):IDirectCommandConfigurator
+	public function map(commandClass:Class<Dynamic>):IDirectCommandConfigurator
 	{
 		return new DirectCommandMapper(_executor, _mappings, commandClass);
 	}
@@ -93,7 +93,7 @@ class DirectCommandMap implements IDirectCommandMap
 	/**
 	 * @inheritDoc
 	 */
-	public function addMappingProcessor(handler:Function):IDirectCommandMap
+	public function addMappingProcessor(handler:Void->Void):IDirectCommandMap
 	{
 		if (_mappingProcessors.indexOf(handler) == -1)
 			_mappingProcessors.push(handler);

@@ -27,10 +27,10 @@ interface IViewProcessorViewHandler
 	/**
 	 * @private
 	 */
-	function processItem(item:Dynamic, type:Class):Void;
+	function processItem(item:Dynamic, type:Class<Dynamic>):Void;
 
 	/**
 	 * @private
 	 */
-	function unprocessItem(item:Dynamic, type:Class):Void;
+	function unprocessItem(item:Dynamic, type:Class<Dynamic>):Void;
 }

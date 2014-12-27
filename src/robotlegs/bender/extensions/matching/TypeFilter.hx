@@ -6,8 +6,7 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.extensions.matching;
-
-import flash.utils.getQualifiedClassName;
+import openfl.errors.ArgumentError;
 
 /**
  * @private
@@ -19,44 +18,48 @@ class TypeFilter implements ITypeFilter
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	private var _allOfTypes:Array<Class>;
-
+	private var _allOfTypes:Array<Class<Dynamic>>;
+	public var allOfTypes(get, null):Array<Class<Dynamic>>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get allOfTypes():Array<Class>
+	public function get_allOfTypes():Array<Class<Dynamic>>
 	{
 		return _allOfTypes;
 	}
 
-	private var _anyOfTypes:Array<Class>;
-
+	private var _anyOfTypes:Array<Class<Dynamic>>;
+	public var anyOfTypes(get, null):Array<Class<Dynamic>>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get anyOfTypes():Array<Class>
+	public function get_anyOfTypes():Array<Class<Dynamic>>
 	{
 		return _anyOfTypes;
 	}
 
-	private var _noneOfTypes:Array<Class>;
-
+	private var _noneOfTypes:Array<Class<Dynamic>>;
+	public var noneOfTypes(get, null):Array<Class<Dynamic>>;
 	/**
 	 * @inheritDoc
 	 */
-	public function get noneOfTypes():Array<Class>
+	public function get_noneOfTypes():Array<Class<Dynamic>>
 	{
 		return _noneOfTypes;
 	}
 
 	private var _descriptor:String;
-
+	public var descriptor(get, null):String;
 	/**
 	 * @inheritDoc
 	 */
-	public function get descriptor():String
+	public function get_descriptor():String
 	{
-		return _descriptor ||= createDescriptor();
+		// CHECK
+		if (_descriptor == null) _descriptor = createDescriptor();
+		return _descriptor;
+		
+		//return _descriptor ||= createDescriptor();
 	}
 
 	/*============================================================================*/
@@ -66,10 +69,10 @@ class TypeFilter implements ITypeFilter
 	/**
 	 * @private
 	 */
-	public function new(allOf:Array<Class>, anyOf:Array<Class>, noneOf:Array<Class>)
+	public function new(allOf:Array<Class<Dynamic>>, anyOf:Array<Class<Dynamic>>, noneOf:Array<Class<Dynamic>>)
 	{
 		if (allOf == null || anyOf == null || noneOf == null)
-			throw ArgumentError('TypeFilter parameters can not be null');
+			throw new ArgumentError('TypeFilter parameters can not be null');
 		_allOfTypes = allOf;
 		_anyOfTypes = anyOf;
 		_noneOfTypes = noneOf;
@@ -85,18 +88,18 @@ class TypeFilter implements ITypeFilter
 	public function matches(item:Dynamic):Bool
 	{
 		var i:UInt = _allOfTypes.length;
-		while (i--)
+		while (i-- > 0)
 		{
-			if (!(item is _allOfTypes[i]))
+			if (!(Std.is(item, _allOfTypes[i])))
 			{
 				return false;
 			}
 		}
 
 		i = _noneOfTypes.length;
-		while (i--)
+		while (i-- > 0)
 		{
-			if (item is _noneOfTypes[i])
+			if (Std.is(item, _noneOfTypes[i]))
 			{
 				return false;
 			}
@@ -108,9 +111,9 @@ class TypeFilter implements ITypeFilter
 		}
 
 		i = _anyOfTypes.length;
-		while (i--)
+		while (i-- > 0)
 		{
-			if (item is _anyOfTypes[i])
+			if (Std.is(item, _anyOfTypes[i]))
 			{
 				return true;
 			}
@@ -123,15 +126,15 @@ class TypeFilter implements ITypeFilter
 	/* private Functions                                                        */
 	/*============================================================================*/
 
-	private function alphabetiseCaseInsensitiveFCQNs(classVector:Array<Class>):Array<String>
+	private function alphabetiseCaseInsensitiveFCQNs(classVector:Array<Class<Dynamic>>):Array<String>
 	{
 		var fqcn:String;
-		var allFCQNs:Array<String> = new <String>[];
+		var allFCQNs = new Array<String>();
 
 		var iLength:UInt = classVector.length;
-		for (var i:UInt = 0; i < iLength; i++)
+		for (i in 0...iLength)
 		{
-			fqcn = getQualifiedClassName(classVector[i]);
+			fqcn = Type.getClassName(classVector[i]);
 			allFCQNs[allFCQNs.length] = fqcn;
 		}
 
@@ -141,9 +144,9 @@ class TypeFilter implements ITypeFilter
 
 	private function createDescriptor():String
 	{
-		var allOf_FCQNs:Array<String> = alphabetiseCaseInsensitiveFCQNs(allOfTypes);
-		var anyOf_FCQNs:Array<String> = alphabetiseCaseInsensitiveFCQNs(anyOfTypes);
-		var noneOf_FQCNs:Array<String> = alphabetiseCaseInsensitiveFCQNs(noneOfTypes);
+		var allOf_FCQNs = alphabetiseCaseInsensitiveFCQNs(allOfTypes);
+		var anyOf_FCQNs = alphabetiseCaseInsensitiveFCQNs(anyOfTypes);
+		var noneOf_FQCNs = alphabetiseCaseInsensitiveFCQNs(noneOfTypes);
 		return "all of: " + allOf_FCQNs.toString()
 			+ ", any of: " + anyOf_FCQNs.toString()
 			+ ", none of: " + noneOf_FQCNs.toString();

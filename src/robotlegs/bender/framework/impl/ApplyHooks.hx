@@ -7,10 +7,10 @@
 
 package robotlegs.bender.framework.impl;
 
+import robotlegs.bender.framework.api.IInjector;
+
 class ApplyHooks
 {
-	import robotlegs.bender.framework.api.IInjector;
-
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
@@ -29,18 +29,20 @@ class ApplyHooks
 	 */
 	public static function call(hooks:Array<Dynamic>, injector:IInjector = null):Void
 	{
-		for each (var hook:Dynamic in hooks)
+		for (hook in hooks)
 		{
-			if (hook is Function)
+			
+			if (Reflect.isFunction(hook))
 			{
-				(hook as Function)();
+				hook();
 				continue;
 			}
-			if (hook is Class)
+			
+			if (Std.is(hook, Class))
 			{
-				hook = injector
-					? injector.instantiateUnmapped(hook as Class)
-					: new (hook as Class);
+				hook = (injector != null)
+					? injector.instantiateUnmapped(cast(hook, Class<Dynamic>))
+					: Type.createInstance(hook, []);
 			}
 			hook.hook();
 		}

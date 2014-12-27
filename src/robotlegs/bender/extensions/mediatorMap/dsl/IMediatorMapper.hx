@@ -17,5 +17,5 @@ interface IMediatorMapper
 	 * @param mediatorClass The concrete mediator class
 	 * @return Mapping configurator
 	 */
-	function toMediator(mediatorClass:Class):IMediatorConfigurator;
+	function toMediator(mediatorClass:Class<Dynamic>):IMediatorConfigurator;
 }

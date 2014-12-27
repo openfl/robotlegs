@@ -28,14 +28,14 @@ class ConfigureViewEvent extends Event
 	/*============================================================================*/
 
 	private var _view:DisplayObject;
-
+	public var view(default, null):DisplayObject;
 	/**
 	 * The view instance associated with this event
 	 */
-	public function get view():DisplayObject
+	/*public function get_view():DisplayObject
 	{
 		return _view;
-	}
+	}*/
 
 	/*============================================================================*/
 	/* Constructor                                                                */

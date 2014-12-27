@@ -54,17 +54,17 @@ class StageCrawler
 	{
 		processView(container);
 		var numChildren:Int = container.numChildren;
-		for (var i:Int = 0; i < numChildren; i++)
+		for (i in 0...numChildren)
 		{
 			var child:DisplayObject = container.getChildAt(i);
-			child is DisplayObjectContainer
-				? scanContainer(child as DisplayObjectContainer)
+			Std.is(child, DisplayObjectContainer)
+				? scanContainer(cast(child, DisplayObjectContainer))
 				: processView(child);
 		}
 	}
 
 	private function processView(view:DisplayObject):Void
 	{
-		_binding.handleView(view, view['constructor']);
+		_binding.handleView(view, Type.getClass(view));
 	}
 }

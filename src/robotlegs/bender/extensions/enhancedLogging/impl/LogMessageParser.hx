@@ -13,6 +13,10 @@ package robotlegs.bender.extensions.enhancedLogging.impl;
 class LogMessageParser
 {
 
+	public function new()
+	{
+		
+	}
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
@@ -25,10 +29,10 @@ class LogMessageParser
 	 */
 	public function parseMessage(message:String, params:Array<Dynamic>):String
 	{
-		if (params)
+		if (params != null)
 		{
 			var numParams:Int = params.length;
-			for (var i:Int = 0; i < numParams; ++i)
+			for (i in 0...numParams)
 			{
 				message = message.split("{" + i + "}").join(params[i]);
 			}

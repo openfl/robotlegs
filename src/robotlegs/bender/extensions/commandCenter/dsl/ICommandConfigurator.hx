@@ -24,14 +24,14 @@ interface ICommandConfigurator
 	 * @param guards Guards
 	 * @return Self
 	 */
-	function withGuards(... guards):ICommandConfigurator;
+	function withGuards(guards:Array<Dynamic>):ICommandConfigurator;
 
 	/**
 	 * Hooks to run before command execution
 	 * @param hooks Hooks
 	 * @return Self
 	 */
-	function withHooks(... hooks):ICommandConfigurator;
+	function withHooks(hooks:Array<Dynamic>):ICommandConfigurator;
 
 	/**
 	 * Should this command only run once?

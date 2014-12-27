@@ -39,7 +39,8 @@ class EventDispatcherExtension implements IExtension
 	 */
 	public function new(eventDispatcher:IEventDispatcher = null)
 	{
-		_eventDispatcher = eventDispatcher || new EventDispatcher();
+		if (eventDispatcher != null) _eventDispatcher = eventDispatcher;
+		else _eventDispatcher = new EventDispatcher();
 	}
 
 	/*============================================================================*/

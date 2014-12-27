@@ -34,14 +34,14 @@ class ContainerRegistryEvent extends Event
 	/*============================================================================*/
 
 	private var _container:DisplayObjectContainer;
-
+	public var container(default, null):DisplayObjectContainer;
 	/**
 	 * The container associated with this event
 	 */
-	public function get container():DisplayObjectContainer
+	/*public function get_container():DisplayObjectContainer
 	{
 		return _container;
-	}
+	}*/
 
 	/*============================================================================*/
 	/* Constructor                                                                */

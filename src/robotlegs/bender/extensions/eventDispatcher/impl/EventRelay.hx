@@ -25,7 +25,7 @@ class EventRelay
 
 	private var _types:Array<Dynamic>;
 
-	private var _active:Bool;
+	private var _active:Bool = false;
 
 	/*============================================================================*/
 	/* Constructor                                                                */

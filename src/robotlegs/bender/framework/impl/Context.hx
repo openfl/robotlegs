@@ -323,6 +323,9 @@ class Context extends EventDispatcher implements IContext
 	{
 		for (config in configs)
 		{
+			#if js
+				if (!Std.is(config, Class)) Reflect.setProperty(config, "constructor", Type.getClass(config));
+			#end
 			_configManager.addConfig(config);
 		}
 		return this;

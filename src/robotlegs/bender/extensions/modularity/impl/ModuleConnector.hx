@@ -9,6 +9,7 @@ package robotlegs.bender.extensions.modularity.impl;
 
 import openfl.events.EventDispatcher;
 import openfl.events.IEventDispatcher;
+import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.extensions.modularity.api.IModuleConnector;
 import robotlegs.bender.extensions.modularity.dsl.IModuleConnectionAction;
 import robotlegs.bender.framework.api.IContext;
@@ -87,7 +88,7 @@ class ModuleConnector implements IModuleConnector
 	private function getOrCreateConfigurator(channelId:String):ModuleConnectionConfigurator
 	{
 		// CHECK
-		if (!Reflect.hasField(_configuratorsByChannel, channelId)) {
+		if (!CallProxy.hasField(_configuratorsByChannel, channelId)) {
 		//if (_configuratorsByChannel[channelId] == null) {
 			Reflect.setField(_configuratorsByChannel, channelId, createConfigurator(channelId));
 			//_configuratorsByChannel[channelId] = createConfigurator(channelId);

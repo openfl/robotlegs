@@ -9,6 +9,7 @@ package robotlegs.bender.extensions.mediatorMap.impl;
 
 import openfl.display.DisplayObject;
 import openfl.events.Event;
+import org.swiftsuspenders.utils.CallProxy;
 //import flash.utils.getDefinitionByName;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 
@@ -113,38 +114,38 @@ class MediatorManager
 
 	private function itemInitialized(item:Dynamic):Bool
 	{
-		if (flexAvailable && (Std.is(item, UIComponentClass)) && !Reflect.hasField(item, 'initialized'))
+		if (flexAvailable && (Std.is(item, UIComponentClass)) && !CallProxy.hasField(item, 'initialized'))
 			return false;
 		return true;
 	}
 
 	private function initializeMediator(mediator:Dynamic, mediatedItem:Dynamic):Void
 	{
-		if (Reflect.hasField(mediator, 'preInitialize'))
+		if (CallProxy.hasField(mediator, 'preInitialize'))
 			mediator.preInitialize();
 
-		if (Reflect.hasField(mediator, 'viewComponent'))
+		if (CallProxy.hasField(mediator, 'viewComponent'))
 			mediator.viewComponent = mediatedItem;
 
-		if (Reflect.hasField(mediator, 'initialize'))
+		if (CallProxy.hasField(mediator, 'initialize'))
 			mediator.initialize();
 
-		if (Reflect.hasField(mediator, 'postInitialize'))
+		if (CallProxy.hasField(mediator, 'postInitialize'))
 			mediator.postInitialize();
 	}
 
 	private function destroyMediator(mediator:Dynamic):Void
 	{
-		if (Reflect.hasField(mediator, 'preDestroy'))
+		if (CallProxy.hasField(mediator, 'preDestroy'))
 			mediator.preDestroy();
 
-		if (Reflect.hasField(mediator, 'destroy'))
+		if (CallProxy.hasField(mediator, 'destroy'))
 			mediator.destroy();
 
-		if (Reflect.hasField(mediator, 'viewComponent'))
+		if (CallProxy.hasField(mediator, 'viewComponent'))
 			mediator.viewComponent = null;
 
-		if (Reflect.hasField(mediator, 'postDestroy'))
+		if (CallProxy.hasField(mediator, 'postDestroy'))
 			mediator.postDestroy();
 	}
 }

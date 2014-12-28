@@ -28,11 +28,11 @@ class ViewManager extends EventDispatcher implements IViewManager
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	private var _containers = new Array<DisplayObjectContainer>();
-	public var containers(get, null):Array<DisplayObjectContainer>;
+	//private var _containers = new Array<DisplayObjectContainer>();
+	public var containers(get, null):Array<DisplayObjectContainer> = new Array<DisplayObjectContainer>();
 	public function get_containers():Array<DisplayObjectContainer>
 	{
-		return _containers;
+		return this.containers;
 	}
 	/**
 	 * @inheritDoc
@@ -75,7 +75,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 		if (validContainer(container) == false)
 			return;
 
-		_containers.push(container);
+		this.containers.push(container);
 
 		for (handler in _handlers)
 		{
@@ -89,11 +89,11 @@ class ViewManager extends EventDispatcher implements IViewManager
 	 */
 	public function removeContainer(container:DisplayObjectContainer):Void
 	{
-		var index:Int = _containers.indexOf(container);
+		var index:Int = this.containers.indexOf(container);
 		if (index == -1)
 			return;
 
-		_containers.splice(index, 1);
+		this.containers.splice(index, 1);
 
 		var binding:ContainerBinding = _registry.getBinding(container);
 		for (handler in _handlers)
@@ -113,7 +113,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 
 		_handlers.push(handler);
 
-		for (container in _containers)
+		for (container in this.containers)
 		{
 			_registry.addContainer(container).addHandler(handler);
 		}
@@ -131,7 +131,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 
 		_handlers.splice(index, 1);
 
-		for (container in _containers)
+		for (container in this.containers)
 		{
 			_registry.getBinding(container).removeHandler(handler);
 		}
@@ -143,7 +143,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 	 */
 	public function removeAllHandlers():Void
 	{
-		for (container in _containers)
+		for (container in this.containers)
 		{
 			var binding:ContainerBinding = _registry.getBinding(container);
 			for (handler in _handlers)
@@ -159,7 +159,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 
 	private function validContainer(container:DisplayObjectContainer):Bool
 	{
-		for (registeredContainer in _containers)
+		for (registeredContainer in this.containers)
 		{
 			if (container == registeredContainer)
 				return false;

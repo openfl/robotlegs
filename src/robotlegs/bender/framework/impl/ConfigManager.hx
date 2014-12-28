@@ -8,6 +8,7 @@
 package robotlegs.bender.framework.impl;
 
 
+import org.swiftsuspenders.utils.CallProxy;
 import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IConfig;
 import robotlegs.bender.framework.api.IContext;
@@ -41,7 +42,7 @@ class ConfigManager
 
 	private var _logger:ILogger;
 
-	private var _initialized:Bool;
+	private var _initialized:Bool = false;
 
 	private var _context:IContext;
 
@@ -156,12 +157,22 @@ class ConfigManager
 		{
 			if (Std.is(config, Class))
 			{
-				_logger.debug("Now initializing. Instantiating config class {0}", [config]);
+				#if js
+					_logger.debug("Now initializing. Instantiating config class {0}", [Type.getClassName(config)]);
+				#else 
+					_logger.debug("Now initializing. Instantiating config class {0}", [config]);
+				#end
+				
 				processClass(cast(config, Class<Dynamic>));
 			}
 			else
 			{
-				_logger.debug("Now initializing. Injecting into config object {0}", [config]);
+				#if js
+					_logger.debug("Now initializing. Injecting into config object {0}", [Type.getClassName(Type.getClass(config))]);
+				#else 
+					_logger.debug("Now initializing. Injecting into config object {0}", [config]);
+				#end
+				
 				processObject(config);
 			}
 		}
@@ -174,14 +185,17 @@ class ConfigManager
 		// CHECK
 		//config && config.configure();
 		//if (config != null) config.configure();
-		
-		
-		var object = _injector.getOrCreateNewInstance(type);
-		if (object != null){
-			var hasFeild = Reflect.hasField(object, "configure");
+		var object = cast(_injector.getOrCreateNewInstance(type), IConfig);
+		if (object != null) {
+			var className = Type.getClassName(type);
+			var hasFeild = CallProxy.hasField(object, "configure");
 			if (hasFeild) {
-				var func = Reflect.getProperty(object, "configure");
-				if (func != null) func();
+				#if js
+					untyped __js__("object['configure']();");
+				#else 
+					var func = Reflect.getProperty(object, "configure");
+					if (func != null) func();
+				#end
 			}
 		}
 	}
@@ -194,10 +208,16 @@ class ConfigManager
 		//config && config.configure();
 		//if (config != null) config.configure();
 		// CHECK
-		var hasFeild = Reflect.hasField(object, "configure");
+		var hasFeild = CallProxy.hasField(object, "configure");
 		if (hasFeild) {
-			var func = Reflect.getProperty(object, "configure");
-			if (func != null) func();
+			#if js
+				
+				untyped __js__("object['configure']();");
+			#else 
+				var func = Reflect.getProperty(object, "configure");
+				if (func != null) func();
+			#end
 		}
+		
 	}
 }

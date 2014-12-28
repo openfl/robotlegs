@@ -59,7 +59,7 @@ class CommandMapping implements ICommandMapping
 		return _hooks;
 	}
 
-	private var _fireOnce:Bool;
+	private var _fireOnce:Bool = false;
 	public var fireOnce(get, null):Bool;
 	/**
 	 * @inheritDoc

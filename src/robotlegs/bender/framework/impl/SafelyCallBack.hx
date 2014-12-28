@@ -50,7 +50,7 @@ class SafelyCallBack
 						callback();
 					}
 					catch( error3 : Error ) {
-						trace("Error calling CallBack : " + error3 );
+						//trace("Error calling CallBack : " + error3 );
 					}
 				}
 			}
@@ -64,7 +64,7 @@ class SafelyCallBack
 					callback();
 				}
 				catch( error3 : Error ) {
-					trace("Error calling CallBack : " + error3 );
+					//trace("Error calling CallBack : " + error3 );
 				}
 			}
 		}
@@ -81,7 +81,7 @@ class SafelyCallBack
 					callback();
 				}
 				catch( error3 : Error ) {
-					trace("Error calling CallBack : " + error3 );
+					//trace("Error calling CallBack : " + error3 );
 				}
 			}
 		}

@@ -7,6 +7,7 @@
 
 package robotlegs.bender.extensions.matching;
 import openfl.errors.ArgumentError;
+import org.swiftsuspenders.utils.CallProxy;
 
 /**
  * @private
@@ -134,7 +135,7 @@ class TypeFilter implements ITypeFilter
 		var iLength:UInt = classVector.length;
 		for (i in 0...iLength)
 		{
-			fqcn = Type.getClassName(classVector[i]);
+			fqcn = CallProxy.getClassName(classVector[i]);
 			allFCQNs[allFCQNs.length] = fqcn;
 		}
 

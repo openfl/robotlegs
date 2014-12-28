@@ -48,7 +48,7 @@ class MVCSBundle implements IBundle
 	 */
 	public function extend(context:IContext):Void
 	{
-		context.logLevel = LogLevel.DEBUG;
+		context.logLevel = LogLevel.INFO;
 		
 		context.install([
 			TraceLoggingExtension,

@@ -36,7 +36,7 @@ class CommandMappingList implements ICommandMappingList
 
 	private var _compareFunction:Dynamic;
 
-	private var _sorted:Bool;
+	private var _sorted:Bool = false;
 
 	/*============================================================================*/
 	/* Constructor                                                                */

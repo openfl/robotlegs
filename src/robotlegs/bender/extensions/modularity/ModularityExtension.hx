@@ -41,9 +41,9 @@ class ModularityExtension implements IExtension
 
 	private var _logger:ILogger;
 
-	private var _inherit:Bool;
+	private var _inherit:Bool = false;
 
-	private var _expose:Bool;
+	private var _expose:Bool = false;
 
 	private var _contextView:DisplayObjectContainer;
 

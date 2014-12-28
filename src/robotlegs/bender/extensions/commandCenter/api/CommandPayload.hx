@@ -17,33 +17,33 @@ class CommandPayload
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	private var _values:Array<Dynamic>;
-	public var values(default, null):Array<Dynamic>;
+	//private var _values:Array<Dynamic>;
+	public var values(get, null):Array<Dynamic>;
 	/**
 	 * Ordered list of values
 	 */
-	/*public function get_values():Array
+	function get_values():Array<Dynamic>
 	{
-		return _values;
-	}*/
+		return this.values;
+	}
 
-	private var _classes:Array<Dynamic>;
-	public var classes(default, null):Array<Dynamic>;
+	//private var _classes:Array<Dynamic>;
+	public var classes(get, null):Array<Dynamic>;
 	/**
 	 * Ordered list of value classes
 	 */
-	/*public function get_classes():Array
+	function get_classes():Array<Dynamic>
 	{
-		return _classes;
-	}*/
+		return this.classes;
+	}
 
-	public var length(get_length, null):UInt;
+	public var length(get, null):UInt;
 	/**
 	 * The number of payload items
 	 */
-	public function get_length():UInt
+	function get_length():UInt
 	{
-		if (_classes != null) return _classes.length;
+		if (this.classes != null) return this.classes.length;
 		else return 0;
 	}
 
@@ -58,8 +58,8 @@ class CommandPayload
 	 */
 	public function new(values:Array<Dynamic> = null, classes:Array<Dynamic> = null)
 	{
-		_values = values;
-		_classes = classes;
+		this.values = values;
+		this.classes = classes;
 	}
 
 	/*============================================================================*/
@@ -74,21 +74,21 @@ class CommandPayload
 	 */
 	public function addPayload(payloadValue:Dynamic, payloadClass:Class<Dynamic>):CommandPayload
 	{
-		if (_values != null)
+		if (this.values != null)
 		{
-			_values.push(payloadValue);
+			this.values.push(payloadValue);
 		}
 		else
 		{
-			_values = [payloadValue];
+			this.values = [payloadValue];
 		}
-		if (_classes != null)
+		if (this.classes != null)
 		{
-			_classes.push(payloadClass);
+			this.classes.push(payloadClass);
 		}
 		else
 		{
-			_classes = [payloadClass];
+			this.classes = [payloadClass];
 		}
 
 		return this;
@@ -103,8 +103,8 @@ class CommandPayload
 		// todo: the final clause will make this fail silently
 		// todo: rethink
 		// CHECK
-		if (_values != null && _classes != null) {
-			if (_values.length > 0 && _classes.length == _values.length) {
+		if (this.values != null && this.classes != null) {
+			if (this.values.length > 0 && this.classes.length == this.values.length) {
 				return true;
 			}
 			else {
@@ -114,6 +114,6 @@ class CommandPayload
 		else {
 			return false;
 		}
-		//return _values && _values.length > 0 && _classes && _classes.length == _values.length;
+		//return this.values && this.values.length > 0 && this.classes && this.classes.length == this.values.length;
 	}
 }

@@ -42,7 +42,7 @@ class LifecycleTransition
 
 	private var _postTransitionEvent:String;
 
-	private var _reverse:Bool;
+	private var _reverse:Bool = false;
 
 	/*============================================================================*/
 	/* Constructor                                                                */

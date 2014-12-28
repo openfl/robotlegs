@@ -10,6 +10,7 @@ package robotlegs.bender.extensions.viewManager.impl;
 import openfl.display.DisplayObject;
 import openfl.display.DisplayObjectContainer;
 import openfl.events.Event;
+import org.swiftsuspenders.utils.CallProxy;
 
 /**
  * @private
@@ -94,8 +95,8 @@ class StageObserver
 	{
 		var view:DisplayObject = cast(event.target, DisplayObject);
 		// Question: would it be worth caching QCNs by view in a weak Map<Dynamic,Dynamic>,
-		// to avoid Type.getClassName() cost?
-		var qcn:String = Type.getClassName(Type.getClass(view));
+		// to avoid CallProxy.getClassName() cost?
+		var qcn:String = CallProxy.getClassName(Type.getClass(view));
 		// CHECK
 		//var filtered:Bool = _filter.test(qcn);
 		var filtered:Bool = _filter.match(qcn);

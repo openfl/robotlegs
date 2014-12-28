@@ -69,7 +69,7 @@ class EventMapConfig
 		return _callback;
 	}*/
 
-	private var _useCapture:Bool;
+	private var _useCapture:Bool = false;
 	public var useCapture(default, null):Bool;
 	/**
 	 * @private

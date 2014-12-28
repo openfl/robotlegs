@@ -29,7 +29,7 @@ class LogManager implements ILogTarget
 	 * The current log level
 	 */
 	public var logLevel(get, set):UInt;
-	public function get_logLevel():UInt
+	function get_logLevel():UInt
 	{
 		return _logLevel;
 	}
@@ -37,7 +37,7 @@ class LogManager implements ILogTarget
 	/**
 	 * Sets the current log level
 	 */
-	public function set_logLevel(value:UInt):UInt
+	function set_logLevel(value:UInt):UInt
 	{
 		_logLevel = value;
 		return _logLevel;

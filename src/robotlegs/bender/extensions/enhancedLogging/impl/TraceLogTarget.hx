@@ -48,10 +48,22 @@ class TraceLogTarget implements ILogTarget
 	 */
 	public function log(source:Dynamic, level:UInt, timestamp:Int, message:String, params:Array<Dynamic> = null):Void
 	{
-		trace(timestamp // (START + timestamp)
-			+ ' ' + LogLevel.NAME[level]
-			+ ' ' + _context
-			+ ' ' + source
-			+ ' ' + _messageParser.parseMessage(message, params));
+		#if js
+			var sourceName = Type.getClassName(Type.getClass(source));
+			var split = sourceName.split(".");
+			sourceName = split[split.length - 1];
+			
+			trace(timestamp
+				+ ' ' + LogLevel.NAME[level]
+				+ ' ' + sourceName + ": "
+				+ ' ' + _messageParser.parseMessage(message, params));
+		#else 
+			trace(timestamp /* (START + timestamp) */
+				+ ' ' + LogLevel.NAME[level]
+				+ ' ' + _context
+				+ ' ' + source
+				+ ' ' + _messageParser.parseMessage(message, params));
+		#end
+		
 	}
 }

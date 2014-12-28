@@ -22,7 +22,7 @@ interface IEventMap
 	 * @param dispatcher The <code>IEventDispatcher</code> to listen to
 	 * @param type The <code>Event</code> type to listen for
 	 * @param listener The <code>Event</code> handler
-	 * @param eventClass Optional Event class for a stronger mapping. Defaults to <code>flash.events.Event</code>.
+	 * @param eventClass Optional Event class for a stronger mapping. Defaults to <code>openfl.events.Event</code>.
 	 * @param useCapture
 	 * @param priority
 	 * @param useWeakReference
@@ -36,7 +36,7 @@ interface IEventMap
 	 * @param dispatcher The <code>IEventDispatcher</code>
 	 * @param type The <code>Event</code> type
 	 * @param listener The <code>Event</code> handler
-	 * @param eventClass Optional Event class for a stronger mapping. Defaults to <code>flash.events.Event</code>.
+	 * @param eventClass Optional Event class for a stronger mapping. Defaults to <code>openfl.events.Event</code>.
 	 * @param useCapture
 	 */
 	function unmapListener(dispatcher:IEventDispatcher, type:String, listener:Void->Void, eventClass:Class<Dynamic> = null, useCapture:Bool = false):Void;

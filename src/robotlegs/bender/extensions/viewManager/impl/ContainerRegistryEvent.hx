@@ -33,8 +33,8 @@ class ContainerRegistryEvent extends Event
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	private var _container:DisplayObjectContainer;
-	public var container(default, null):DisplayObjectContainer;
+	public var container:DisplayObjectContainer;
+	//public var container(default, null):DisplayObjectContainer;
 	/**
 	 * The container associated with this event
 	 */
@@ -55,7 +55,7 @@ class ContainerRegistryEvent extends Event
 	public function new(type:String, container:DisplayObjectContainer)
 	{
 		super(type);
-		_container = container;
+		this.container = container;
 	}
 
 	/*============================================================================*/
@@ -67,6 +67,6 @@ class ContainerRegistryEvent extends Event
 	 */
 	override public function clone():Event
 	{
-		return new ContainerRegistryEvent(type, _container);
+		return new ContainerRegistryEvent(type, container);
 	}
 }

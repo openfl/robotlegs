@@ -107,7 +107,7 @@ class TypeMatcher implements ITypeMatcher implements ITypeMatcherFactory
 
 	private function pushAddedTypesTo(types:Array<Dynamic>, targetSet:Array<Class<Dynamic>>):Void
 	{
-		if (_typeFilter == null) throwSealedMatcherError();
+		if (_typeFilter != null) throwSealedMatcherError();
 
 		pushValuesToClassVector(types, targetSet);
 	}

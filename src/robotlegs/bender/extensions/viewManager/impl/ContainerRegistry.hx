@@ -27,25 +27,25 @@ class ContainerRegistry extends EventDispatcher
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	private var _bindings = new Array<ContainerBinding>();
-	public var bindings(get, null):Array<ContainerBinding>;
+	//public var bindings = new Array<ContainerBinding>();
+	public var bindings(get, null):Array<ContainerBinding> = new Array<ContainerBinding>();
 	/**
 	 * @private
 	 */
 	public function get_bindings():Array<ContainerBinding>
 	{
-		return _bindings;
+		return this.bindings;
 	}
 
-	private var _rootBindings = new Array<ContainerBinding>();
-	public var rootBindings(get, null):Array<ContainerBinding>;
+	//public var rootBindings = new Array<ContainerBinding>();
+	public var rootBindings(get, null):Array<ContainerBinding> = new Array<ContainerBinding>();
 	/**
 	 * @private
 	 */
 	
 	public function get_rootBindings():Array<ContainerBinding>
 	{
-		return _rootBindings;
+		return this.rootBindings;
 	}
 
 	/*============================================================================*/
@@ -116,7 +116,7 @@ class ContainerRegistry extends EventDispatcher
 	private function createBinding(container:DisplayObjectContainer):ContainerBinding
 	{
 		var binding:ContainerBinding = new ContainerBinding(container);
-		_bindings.push(binding);
+		this.bindings.push(binding);
 
 		// Add a listener so that we can remove this binding when it has no handlers
 		binding.addEventListener(ContainerBindingEvent.BINDING_EMPTY, onBindingEmpty);
@@ -156,8 +156,8 @@ class ContainerRegistry extends EventDispatcher
 	{
 		// Remove the binding itself
 		_bindingByContainer.remove(binding.container);
-		var index:Int = _bindings.indexOf(binding);
-		_bindings.splice(index, 1);
+		var index:Int = this.bindings.indexOf(binding);
+		this.bindings.splice(index, 1);
 
 		// Drop the empty binding listener
 		binding.removeEventListener(ContainerBindingEvent.BINDING_EMPTY, onBindingEmpty);
@@ -189,14 +189,14 @@ class ContainerRegistry extends EventDispatcher
 
 	private function addRootBinding(binding:ContainerBinding):Void
 	{
-		_rootBindings.push(binding);
+		this.rootBindings.push(binding);
 		dispatchEvent(new ContainerRegistryEvent(ContainerRegistryEvent.ROOT_CONTAINER_ADD, binding.container));
 	}
 
 	private function removeRootBinding(binding:ContainerBinding):Void
 	{
-		var index:Int = _rootBindings.indexOf(binding);
-		_rootBindings.splice(index, 1);
+		var index:Int = this.rootBindings.indexOf(binding);
+		this.rootBindings.splice(index, 1);
 		dispatchEvent(new ContainerRegistryEvent(ContainerRegistryEvent.ROOT_CONTAINER_REMOVE, binding.container));
 	}
 

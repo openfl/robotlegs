@@ -41,11 +41,7 @@ class VigilanceExtension implements IExtension implements ILogTarget
 	 */
 	public function extend(context:IContext):Void
 	{
-		// FIX
-		var metadataChecker:MetadataChecker = context.injector.instantiateUnmapped(MetadataChecker);
-		
-		metadataChecker.check();
-		
+		context.injector.instantiateUnmapped(MetadataChecker).check();
 		context.addLogTarget(this);
 		context.injector.addEventListener(MappingEvent.MAPPING_OVERRIDE, mappingOverrideHandler);
 	}

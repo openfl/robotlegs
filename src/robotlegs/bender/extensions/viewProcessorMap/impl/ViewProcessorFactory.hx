@@ -10,6 +10,7 @@ package robotlegs.bender.extensions.viewProcessorMap.impl;
 import openfl.display.DisplayObject;
 import openfl.events.Event;
 import org.swiftsuspenders.errors.InjectorInterfaceConstructionError;
+import org.swiftsuspenders.utils.UID;
 
 //import org.swiftsuspenders.errors.InjectorInterfaceConstructionError;
 import robotlegs.bender.extensions.matching.ITypeFilter;
@@ -181,13 +182,13 @@ class ViewProcessorFactory implements IViewProcessorFactory
 
 	private function removeHandlerFromView(view:Dynamic, handler:Void->Void):Void
 	{
-		if (_listenersByView[UID.create(view)] && (_listenersByView[UID.create(view)].length > 0))
+		if (_listenersByView[UID.instanceID(view)] && (_listenersByView[UID.instanceID(view)].length > 0))
 		{
-			var handlerIndex:UInt = _listenersByView[UID.create(view)].indexOf(handler);
-			_listenersByView[UID.create(view)].splice(handlerIndex, 1);
-			if (_listenersByView[UID.create(view)].length == 0)
+			var handlerIndex:UInt = _listenersByView[UID.instanceID(view)].indexOf(handler);
+			_listenersByView[UID.instanceID(view)].splice(handlerIndex, 1);
+			if (_listenersByView[UID.instanceID(view)].length == 0)
 			{
-				_listenersByView.remove(UID.create(view));
+				_listenersByView.remove(UID.instanceID(view));
 			}
 		}
 	}
@@ -219,10 +220,10 @@ class ViewProcessorFactoryCreateRemovedListener
 		if (Std.is(view, DisplayObject))
 		{
 			// CHECK
-			if (_listenersByView[UID.create(view)] == null) _listenersByView[UID.create(view)] = [];
+			if (_listenersByView[UID.instanceID(view)] == null) _listenersByView[UID.instanceID(view)] = [];
 			//_listenersByView[view] ||= [];
 			
-			_listenersByView[UID.create(view)].push(handler);
+			_listenersByView[UID.instanceID(view)].push(handler);
 			cast(view, DisplayObject).addEventListener(Event.REMOVED_FROM_STAGE, handler, false, 0, true);
 		}
 	}

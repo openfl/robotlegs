@@ -150,8 +150,6 @@ interface IInjector extends IEventDispatcher
 	 * @param parentInjector The parent IInjector
 	 */
 	public var parent(get, set):IInjector;
-	function set_parent(parentInjector:IInjector):IInjector;
-	function get_parent():IInjector;
 	/**
 	 * Returns the <code>IInjector</code> used for dependencies the current
 	 * <code>Injector</code> can't supply
@@ -163,8 +161,6 @@ interface IInjector extends IEventDispatcher
 	 * @param applicationDomain The ApplicationDomain
 	 */
 	public var applicationDomain(get, set):ApplicationDomain;
-	function set_applicationDomain(applicationDomain:ApplicationDomain=null):ApplicationDomain;
-	function get_applicationDomain():ApplicationDomain;
 	/**
 	 * The ApplicationDomain used for type reflection
 	 */
@@ -176,8 +172,6 @@ interface IInjector extends IEventDispatcher
 	 */
 	
 	public var fallbackProvider(get, set):FallbackDependencyProvider;
-	function get_fallbackProvider():FallbackDependencyProvider;
-	function set_fallbackProvider(value:FallbackDependencyProvider):FallbackDependencyProvider;
 	
 	/**
 	 * The current FallbackDependencyProvider
@@ -193,9 +187,7 @@ interface IInjector extends IEventDispatcher
 	 * Is the parent FallbackProvider blocked?
 	 */
 	public var blockParentFallbackProvider(get, set):Bool;
-	function get_blockParentFallbackProvider():Bool;
-	function set_blockParentFallbackProvider(value:Bool):Bool;
-
+	
 	
 
 	/**

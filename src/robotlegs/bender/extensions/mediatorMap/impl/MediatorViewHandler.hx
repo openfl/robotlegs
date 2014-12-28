@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.mediatorMap.impl;
 
 import openfl.display.DisplayObject;
+import org.swiftsuspenders.utils.UID;
 
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 import robotlegs.bender.extensions.viewManager.api.IViewHandler;
@@ -100,34 +101,33 @@ class MediatorViewHandler implements IViewHandler
 	private function getInterestedMappingsFor(item:Dynamic, type:Class<Dynamic>):Array<Dynamic>
 	{
 		var mapping:IMediatorMapping;
-
+		var typeID = UID.classID(type);
+		
 		// we've seen this type before and nobody was interested
-		if (_knownMappings[UID.create(type)] == false)
+		if (_knownMappings[typeID] == false)
 			return null;
 
 		// we haven't seen this type before
-		// CHECK null
-		//if (_knownMappings[UID.create(type)] == undefined)
-		if (_knownMappings[UID.create(type)] == null)
+		if (_knownMappings[typeID] == null)
 		{
-			_knownMappings[UID.create(type)] = false;
-			for (mapping in _mappings)
+			_knownMappings[typeID] = false;
+			for (i in 0..._mappings.length)
 			{
+				mapping = _mappings[i];
 				if (mapping.matcher.matches(item))
 				{
-					// CHECK
-					if (_knownMappings[UID.create(type)] == null) _knownMappings[UID.create(type)] = [];
-					
-					//_knownMappings[UID.create(type)] ||= [];
-					_knownMappings[UID.create(type)].push(mapping);
+					if (_knownMappings[typeID] == false) {
+						_knownMappings[typeID] = [];
+					}
+					_knownMappings[typeID].push(mapping);
 				}
 			}
 			// nobody cares, let's get out of here
-			if (_knownMappings[UID.create(type)] == false)
+			if (_knownMappings[typeID] == false)
 				return null;
 		}
 
 		// these mappings really do care
-		return cast(_knownMappings[UID.create(type)], Array<Dynamic>);
+		return cast(_knownMappings[typeID], Array<Dynamic>);
 	}
 }

@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.mediatorMap.impl;
 
 
+import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.extensions.matching.ITypeFilter;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 import robotlegs.bender.framework.api.IInjector;
@@ -53,18 +54,29 @@ class MediatorFactory
 	 */
 	public function getMediator(item:Dynamic, mapping:IMediatorMapping):Dynamic
 	{
+		var id = UID.classID(item);
 		var _mediatorsItem:Map<IMediatorMapping,Dynamic>;
-		if (_mediators[UID.create(item)] != null) {
-			_mediatorsItem = _mediators[UID.create(item)];
-			return _mediatorsItem[mapping];
+		if (_mediators[id] != null) {
+			_mediators[id] = new Map<String,Dynamic>();
+			
 		}
 		
-		/*if (_mediators[UID.create(item)] != null) {
-			return _mediators[UID.create(item)][mapping];
+		return _mediators[id];
+		
+		/////////////////////
+		
+		if (_mediators[id] != null) {
+			_mediatorsItem = _mediators[id];
+			return _mediatorsItem[mapping];
+		}
+		/////////////////////
+		
+		/*if (_mediators[UID.classID(item)] != null) {
+			return _mediators[UID.classID(item)][mapping];
 		}*/
 		return null;
 		
-		//return _mediators[UID.create(item)] ? _mediators[UID.create(item)][mapping]:null;
+		//return _mediators[UID.classID(item)] ? _mediators[UID.classID(item)][mapping]:null;
 	}
 
 	/**
@@ -96,7 +108,7 @@ class MediatorFactory
 	 */
 	public function removeMediators(item:Dynamic):Void
 	{
-		var mediators:Map<String,Dynamic> = _mediators[UID.create(item)];
+		var mediators:Map<String,Dynamic> = _mediators[UID.classID(item)];
 		if (mediators == null)
 			return;
 
@@ -148,18 +160,20 @@ class MediatorFactory
 	private function addMediator(mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping):Void
 	{
 		// CHECK
-		/*if (_mediators[UID.create(item)] == null) _mediators[UID.create(item)] = new Map<Dynamic,Dynamic>();
+		/*if (_mediators[UID.classID(item)] == null) _mediators[UID.classID(item)] = new Map<Dynamic,Dynamic>();
 		
-		//_mediators[UID.create(item)] ||= new Map<Dynamic,Dynamic>();
-		_mediators[UID.create(item)][mapping] = mediator;
+		//_mediators[UID.classID(item)] ||= new Map<Dynamic,Dynamic>();
+		_mediators[UID.classID(item)][mapping] = mediator;
 		_manager.addMediator(mediator, item, mapping);*/
 		
-		
-		
+		var id = UID.classID(item);
 		var _mediatorsItem:Map<IMediatorMapping,Dynamic>;
-		if (_mediators[UID.create(item)] == null) _mediatorsItem = new Map<IMediatorMapping,Dynamic>();
-		else _mediatorsItem = _mediators[UID.create(item)];
+		if (_mediators[id] == null) _mediatorsItem = new Map<IMediatorMapping,Dynamic>();
+		else _mediatorsItem = _mediators[id];
 		_mediatorsItem[mapping] = mediator;
+		
+		_mediators[id] = _mediatorsItem[mapping];
+		
 		_manager.addMediator(mediator, item, mapping);
 	}
 

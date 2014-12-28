@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.viewProcessorMap.impl;
 
 
+import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IInjector;
 
 /**
@@ -32,7 +33,7 @@ class ViewInjectionProcessor
 	 */
 	public function process(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
 	{
-		if (!_injectedObjects[UID.create(view)]) injectAndRemember(view, injector);
+		if (!_injectedObjects[UID.instanceID(view)]) injectAndRemember(view, injector);
 	}
 
 	/**
@@ -51,6 +52,6 @@ class ViewInjectionProcessor
 	private function injectAndRemember(view:Dynamic, injector:IInjector):Void
 	{
 		injector.injectInto(view);
-		_injectedObjects[UID.create(view)] = view;
+		_injectedObjects[UID.instanceID(view)] = view;
 	}
 }

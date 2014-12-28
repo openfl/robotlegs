@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.viewProcessorMap.impl;
 
 
+import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorMapping;
 
 /**
@@ -98,34 +99,35 @@ class ViewProcessorViewHandler implements IViewProcessorViewHandler
 	private function getInterestedMappingsFor(view:Dynamic, type:Class<Dynamic>):Array<Dynamic>
 	{
 		var mapping:IViewProcessorMapping;
-
+		
+		var id = UID.classID(type);
 		// we've seen this type before and nobody was interested
-		if (_knownMappings[UID.create(type)] == false)
+		if (_knownMappings[id] == false)
 			return null;
 
 		// we haven't seen this type before
 		// CHECK
-		//if (_knownMappings[UID.create(type)] == undefined)
-		if (_knownMappings[UID.create(type)] == null)
+		//if (_knownMappings[id] == undefined)
+		if (_knownMappings[id] == null)
 		{
-			_knownMappings[UID.create(type)] = false;
+			_knownMappings[id] = false;
 			for (mapping in _mappings)
 			{
 				if (mapping.matcher.matches(view))
 				{
 					// CHECK
-					if (_knownMappings[UID.create(type)] == null) _knownMappings[UID.create(type)] = [];
+					if (_knownMappings[id] == null) _knownMappings[id] = [];
 					
-					//_knownMappings[UID.create(type)] ||= [];
-					_knownMappings[UID.create(type)].push(mapping);
+					//_knownMappings[id] ||= [];
+					_knownMappings[id].push(mapping);
 				}
 			}
 			// nobody cares, let's get out of here
-			if (_knownMappings[UID.create(type)] == false)
+			if (_knownMappings[id] == false)
 				return null;
 		}
 
 		// these mappings really do care
-		return cast(_knownMappings[UID.create(type)], Array<Dynamic>);
+		return cast(_knownMappings[id], Array<Dynamic>);
 	}
 }

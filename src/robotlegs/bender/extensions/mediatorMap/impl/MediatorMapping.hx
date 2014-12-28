@@ -20,55 +20,33 @@ class MediatorMapping implements IMediatorMapping implements IMediatorConfigurat
 	/*============================================================================*/
 	/* Public Properties                                                          */
 	/*============================================================================*/
-
-	private var _matcher:ITypeFilter;
 	public var matcher(get, null):ITypeFilter;
-	/**
-	 * @inheritDoc
-	 */
-	public function get_matcher():ITypeFilter
-	{
-		return _matcher;
+	function get_matcher():ITypeFilter { 
+	   return matcher;
 	}
-
-	private var _mediatorClass:Class<Dynamic>;
+	
 	public var mediatorClass(get, null):Class<Dynamic>;
-	/**
-	 * @inheritDoc
-	 */
-	public function get_mediatorClass():Class<Dynamic>
+	function get_mediatorClass():Class<Dynamic>
 	{
-		return _mediatorClass;
+		return mediatorClass;
 	}
 
-	private var _guards:Array<Dynamic> = [];
-	public var guards(get, null):Array<Dynamic>;
-	/**
-	 * @inheritDoc
-	 */
-	public function get_guards():Array<Dynamic>
+	public var guards(get, null):Array<Dynamic> = new Array<Dynamic>();
+	function get_guards():Array<Dynamic>
 	{
-		return _guards;
+		return guards;
 	}
 
-	private var _hooks:Array<Dynamic> = [];
-	public var hooks(get, null):Array<Dynamic>;
-	/**
-	 * @inheritDoc
-	 */
-	public function get_hooks():Array<Dynamic>
+	public var hooks(get, null):Array<Dynamic> = new Array<Dynamic>();
+	function get_hooks():Array<Dynamic>
 	{
-		return _hooks;
+		return hooks;
 	}
 
-	private var _autoRemoveEnabled:Bool = true;
 	public var autoRemoveEnabled(get, null):Bool;
-	/**
-	 * @inheritDoc
-	 */
-	public function get_autoRemoveEnabled():Bool
+	function get_autoRemoveEnabled():Bool
 	{
-		return _autoRemoveEnabled;
+		return autoRemoveEnabled;
 	}
 
 	/*============================================================================*/
@@ -80,8 +58,8 @@ class MediatorMapping implements IMediatorMapping implements IMediatorConfigurat
 	 */
 	public function new(matcher:ITypeFilter, mediatorClass:Class<Dynamic>)
 	{
-		_matcher = matcher;
-		_mediatorClass = mediatorClass;
+		this.matcher = matcher;
+		this.mediatorClass = mediatorClass;
 	}
 
 	/*============================================================================*/
@@ -95,7 +73,7 @@ class MediatorMapping implements IMediatorMapping implements IMediatorConfigurat
 	{
 		for (i in 0...guards.length) 
 		{
-			_guards.push(guards[i]);
+			this.guards.push(guards[i]);
 		}
 		//_guards = _guards.concat.apply(null, guards);
 		return this;
@@ -108,7 +86,7 @@ class MediatorMapping implements IMediatorMapping implements IMediatorConfigurat
 	{
 		for (i in 0...hooks.length) 
 		{
-			_hooks.push(hooks[i]);
+			this.hooks.push(hooks[i]);
 		}
 		//_hooks = _hooks.concat.apply(null, hooks);
 		return this;
@@ -119,7 +97,7 @@ class MediatorMapping implements IMediatorMapping implements IMediatorConfigurat
 	 */
 	public function autoRemove(value:Bool = true):IMediatorConfigurator
 	{
-		_autoRemoveEnabled = value;
+		this.autoRemoveEnabled = value;
 		return this;
 	}
 }

@@ -18,23 +18,19 @@ interface ITypeFilter extends IMatcher
 	 * All types that an item must extend or implement
 	 */
 	public var allOfTypes(get, null):Array<Class<Dynamic>>;
-	function get_allOfTypes():Array<Class<Dynamic>>;
-
+	
 	/**
 	 * Any types that an item must extend or implement
 	 */
 	public var anyOfTypes(get, null):Array<Class<Dynamic>>;
-	function get_anyOfTypes():Array<Class<Dynamic>>;
-
+	
 	/**
 	 * Types that an item must not extend or implement
 	 */
 	public var noneOfTypes(get, null):Array<Class<Dynamic>>;
-	function get_noneOfTypes():Array<Class<Dynamic>>;
-
+	
 	/**
 	 * Unique description for this filter
 	 */
 	public var descriptor(get, null):String;
-	function get_descriptor():String;
 }

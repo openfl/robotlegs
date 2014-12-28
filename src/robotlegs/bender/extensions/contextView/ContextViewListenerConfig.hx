@@ -38,6 +38,8 @@ class ContextViewListenerConfig implements IConfig
 	public function configure():Void
 	{
 		// Adds the Context View to the View Manager at startup
+		
 		viewManager.addContainer(contextView.view);
+		
 	}
 }

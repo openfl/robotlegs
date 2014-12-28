@@ -24,8 +24,7 @@ interface IViewManager extends IEventDispatcher
 	 * A list of currently registered container
 	 */
 	public var containers(get, null):Array<DisplayObjectContainer>;
-	function get_containers():Array<DisplayObjectContainer>;
-
+	
 	/**
 	 * Adds a container as a "view root" into the context
 	 * @param container

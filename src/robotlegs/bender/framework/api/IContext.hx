@@ -33,7 +33,6 @@ interface IContext extends IEventDispatcher
 	 * The context dependency injector
 	 */
 	public var injector(get, null):IInjector;
-	public function get_injector():IInjector;
 	
 	/**
 	 * The current log level

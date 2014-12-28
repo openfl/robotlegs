@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.commandCenter.impl;
 
 
+import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.extensions.commandCenter.api.ICommandMapping;
 import robotlegs.bender.extensions.commandCenter.api.ICommandMappingList;
 import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
@@ -84,7 +85,7 @@ class CommandMappingList implements ICommandMappingList
 	{
 		_sorted = false;
 		applyProcessors(mapping);
-		var oldMapping:ICommandMapping = _mappingsByCommand[UID.create(mapping.commandClass)];
+		var oldMapping:ICommandMapping = _mappingsByCommand[UID.instanceID(mapping.commandClass)];
 		if (oldMapping != null)
 		{
 			overwriteMapping(oldMapping, mapping);
@@ -101,7 +102,7 @@ class CommandMappingList implements ICommandMappingList
 	 */
 	public function removeMapping(mapping:ICommandMapping):Void
 	{
-		if (_mappingsByCommand[UID.create(mapping.commandClass)])
+		if (_mappingsByCommand[UID.clearInstanceID(mapping.commandClass)])
 		{
 			deleteMapping(mapping);
 			if (_mappings.length == 0) _trigger.deactivate();
@@ -113,7 +114,7 @@ class CommandMappingList implements ICommandMappingList
 	 */
 	public function removeMappingFor(commandClass:Class<Dynamic>):Void
 	{
-		var mapping:ICommandMapping = _mappingsByCommand[UID.create(commandClass)];
+		var mapping:ICommandMapping = _mappingsByCommand[UID.instanceID(commandClass)];
 		if (mapping != null) removeMapping(mapping);
 	}
 
@@ -140,14 +141,14 @@ class CommandMappingList implements ICommandMappingList
 
 	private function storeMapping(mapping:ICommandMapping):Void
 	{
-		_mappingsByCommand[UID.create(mapping.commandClass)] = mapping;
+		_mappingsByCommand[UID.instanceID(mapping.commandClass)] = mapping;
 		_mappings.push(mapping);
 		if (_logger != null) _logger.debug('{0} mapped to {1}', [_trigger, mapping]);
 	}
 
 	private function deleteMapping(mapping:ICommandMapping):Void
 	{
-		_mappingsByCommand.remove(UID.create(mapping.commandClass));
+		_mappingsByCommand.remove(UID.clearInstanceID(mapping.commandClass));
 		_mappings.splice(_mappings.indexOf(mapping), 1);
 		if (_logger != null) _logger.debug('{0} unmapped from {1}', [_trigger, mapping]);
 	}

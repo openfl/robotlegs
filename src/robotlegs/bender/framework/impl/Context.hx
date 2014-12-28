@@ -8,6 +8,7 @@
 package robotlegs.bender.framework.impl;
 
 import openfl.events.EventDispatcher;
+import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.framework.api.ILogTarget;

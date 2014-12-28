@@ -34,8 +34,8 @@ class ViewManagerEvent extends Event
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	private var _container:DisplayObjectContainer;
-	public var container(default, null):DisplayObjectContainer;
+	public var container:DisplayObjectContainer;
+	//public var container(default, null):DisplayObjectContainer;
 	/**
 	 * The container associated with this event
 	 */
@@ -44,8 +44,8 @@ class ViewManagerEvent extends Event
 		return _container;
 	}*/
 
-	private var _handler:IViewHandler;
-	public var handler(default, null):IViewHandler;
+	public var handler:IViewHandler;
+	//public var handler(default, null):IViewHandler;
 	/**
 	 * The view handler associated with this event
 	 */
@@ -67,8 +67,8 @@ class ViewManagerEvent extends Event
 	public function new(type:String, container:DisplayObjectContainer = null, handler:IViewHandler = null)
 	{
 		super(type);
-		_container = container;
-		_handler = handler;
+		this.container = container;
+		this.handler = handler;
 	}
 
 	/*============================================================================*/
@@ -80,6 +80,6 @@ class ViewManagerEvent extends Event
 	 */
 	override public function clone():Event
 	{
-		return new ViewManagerEvent(type, _container, _handler);
+		return new ViewManagerEvent(type, container, handler);
 	}
 }

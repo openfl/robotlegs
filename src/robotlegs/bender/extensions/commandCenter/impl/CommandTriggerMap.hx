@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.commandCenter.impl;
 
 
+import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
 import robotlegs.bender.extensions.eventCommandMap.impl.EventCommandTrigger;
 
@@ -54,12 +55,12 @@ class CommandTriggerMap
 	{
 		//CHECK
 		var key:Dynamic = getKey(params);
-		if (_triggers[UID.create(key)] == null) {
-			_triggers[UID.create(key)] = createTrigger(params);
+		if (_triggers[UID.instanceID(key)] == null) {
+			_triggers[UID.instanceID(key)] = createTrigger(params);
 		}
-		return _triggers[UID.create(key)];
+		return _triggers[UID.instanceID(key)];
 		
-		//return _triggers[UID.create(key)] ||= createTrigger(params);
+		//return _triggers[UID.instanceID(key)] ||= createTrigger(params);
 	}
 
 	/**
@@ -88,11 +89,12 @@ class CommandTriggerMap
 
 	private function destroyTrigger(key:Dynamic):ICommandTrigger
 	{
-		var trigger:ICommandTrigger = _triggers[UID.create(key)];
+		var id:String = UID.clearInstanceID(key);
+		var trigger:ICommandTrigger = _triggers[id];
 		if (trigger != null)
 		{
 			trigger.deactivate();
-			_triggers.remove(UID.create(key));
+			_triggers.remove(id);
 		}
 		return trigger;
 	}

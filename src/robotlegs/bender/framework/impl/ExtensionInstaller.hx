@@ -8,6 +8,7 @@
 package robotlegs.bender.framework.impl;
 
 
+import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.ILogger;
@@ -61,11 +62,12 @@ class ExtensionInstaller
 		}
 		else
 		{
+			var id = UID.instanceID(extension);
 			var extensionClass:Class<Dynamic> = Type.getClass(extension);
-			if (_classes[UID.create(extensionClass)])
+			if (_classes[id])
 				return;
 			_logger.debug("Installing extension {0}", [extension]);
-			_classes[UID.create(extensionClass)] = true;
+			_classes[id] = true;
 			if (Reflect.hasField(extension, "extend")){
 				extension.extend(_context);
 			}

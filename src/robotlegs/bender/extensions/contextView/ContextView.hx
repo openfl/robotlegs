@@ -20,15 +20,15 @@ class ContextView
 	/* Public Properties                                                          */
 	/*============================================================================*/
 
-	private var _view:DisplayObjectContainer;
-	public var view(get, null):DisplayObjectContainer;
+	public var view:DisplayObjectContainer;
+	//public var view(get, null):DisplayObjectContainer;
 	/**
 	 * The root DisplayObjectContainer for this Context
 	 */
-	public function get_view():DisplayObjectContainer
-	{
-		return _view;
-	}
+	//public function get_view():DisplayObjectContainer
+	//{
+		//return _view;
+	//}
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -40,6 +40,6 @@ class ContextView
 	 */
 	public function new(view:DisplayObjectContainer)
 	{
-		_view = view;
+		this.view = view;
 	}
 }

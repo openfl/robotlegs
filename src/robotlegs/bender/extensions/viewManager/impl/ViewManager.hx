@@ -72,7 +72,7 @@ class ViewManager extends EventDispatcher implements IViewManager
 	 */
 	public function addContainer(container:DisplayObjectContainer):Void
 	{
-		if (validContainer(container))
+		if (validContainer(container) == false)
 			return;
 
 		_containers.push(container);

@@ -71,7 +71,7 @@ class Mediator implements IMediator
 
 	private function addViewListener(eventString:String, listener:Dynamic, eventClass:Class<Dynamic> = null):Void
 	{
-		eventMap.mapListener(IEventDispatcher(_viewComponent), eventString, listener, eventClass);
+		eventMap.mapListener(cast(_viewComponent, IEventDispatcher), eventString, listener, eventClass);
 	}
 
 	private function addContextListener(eventString:String, listener:Dynamic, eventClass:Class<Dynamic> = null):Void
@@ -81,7 +81,7 @@ class Mediator implements IMediator
 
 	private function removeViewListener(eventString:String, listener:Dynamic, eventClass:Class<Dynamic> = null):Void
 	{
-		eventMap.unmapListener(IEventDispatcher(_viewComponent), eventString, listener, eventClass);
+		eventMap.unmapListener(cast(_viewComponent, IEventDispatcher), eventString, listener, eventClass);
 	}
 
 	private function removeContextListener(eventString:String, listener:Dynamic, eventClass:Class<Dynamic> = null):Void

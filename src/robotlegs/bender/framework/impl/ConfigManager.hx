@@ -8,6 +8,7 @@
 package robotlegs.bender.framework.impl;
 
 
+import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IConfig;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.IInjector;
@@ -76,10 +77,10 @@ class ConfigManager
 	 */
 	public function addConfig(config:Dynamic):Void
 	{
-		
-		if (_configs[UID.create(config)] == null)
+		var id = UID.instanceID(config);
+		if (_configs[id] == null)
 		{
-			_configs[UID.create(config)] = true;
+			_configs[id] = true;
 			_objectProcessor.processObject(config);
 		}
 	}
@@ -104,7 +105,7 @@ class ConfigManager
 		_queue = [];
 		for (config in _configs)
 		{
-			_configs.remove(UID.create(config));
+			_configs.remove(UID.clearInstanceID(config));
 		}
 	}
 

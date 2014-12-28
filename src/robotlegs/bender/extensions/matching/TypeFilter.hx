@@ -17,49 +17,49 @@ class TypeFilter implements ITypeFilter
 	/*============================================================================*/
 	/* Public Properties                                                          */
 	/*============================================================================*/
-
-	private var _allOfTypes:Array<Class<Dynamic>>;
-	public var allOfTypes(get, null):Array<Class<Dynamic>>;
+	
 	/**
 	 * @inheritDoc
 	 */
+	//private var _allOfTypes:Array<Class<Dynamic>>;
+	public var allOfTypes(get, null):Array<Class<Dynamic>>;
 	public function get_allOfTypes():Array<Class<Dynamic>>
 	{
-		return _allOfTypes;
+		return this.allOfTypes;
 	}
-
-	private var _anyOfTypes:Array<Class<Dynamic>>;
-	public var anyOfTypes(get, null):Array<Class<Dynamic>>;
+	
 	/**
 	 * @inheritDoc
 	 */
+	//private var _anyOfTypes:Array<Class<Dynamic>>;
+	public var anyOfTypes(get, null):Array<Class<Dynamic>>;
 	public function get_anyOfTypes():Array<Class<Dynamic>>
 	{
-		return _anyOfTypes;
+		return this.anyOfTypes;
 	}
 
-	private var _noneOfTypes:Array<Class<Dynamic>>;
-	public var noneOfTypes(get, null):Array<Class<Dynamic>>;
 	/**
 	 * @inheritDoc
 	 */
+	//private var _noneOfTypes:Array<Class<Dynamic>>;
+	public var noneOfTypes(get, null):Array<Class<Dynamic>>;
 	public function get_noneOfTypes():Array<Class<Dynamic>>
 	{
-		return _noneOfTypes;
+		return this.noneOfTypes;
 	}
 
-	private var _descriptor:String;
-	public var descriptor(get, null):String;
 	/**
 	 * @inheritDoc
 	 */
+	//private var _descriptor:String;
+	public var descriptor(get, null):String;
 	public function get_descriptor():String
 	{
 		// CHECK
-		if (_descriptor == null) _descriptor = createDescriptor();
-		return _descriptor;
+		if (this.descriptor == null) this.descriptor = createDescriptor();
+		return this.descriptor;
 		
-		//return _descriptor ||= createDescriptor();
+		//return this.descriptor ||= createDescriptor();
 	}
 
 	/*============================================================================*/
@@ -73,9 +73,9 @@ class TypeFilter implements ITypeFilter
 	{
 		if (allOf == null || anyOf == null || noneOf == null)
 			throw new ArgumentError('TypeFilter parameters can not be null');
-		_allOfTypes = allOf;
-		_anyOfTypes = anyOf;
-		_noneOfTypes = noneOf;
+		this.allOfTypes = allOf;
+		this.anyOfTypes = anyOf;
+		this.noneOfTypes = noneOf;
 	}
 
 	/*============================================================================*/
@@ -87,33 +87,33 @@ class TypeFilter implements ITypeFilter
 	 */
 	public function matches(item:Dynamic):Bool
 	{
-		var i:UInt = _allOfTypes.length;
+		var i:UInt = this.allOfTypes.length;
 		while (i-- > 0)
 		{
-			if (!(Std.is(item, _allOfTypes[i])))
+			if (!(Std.is(item, this.allOfTypes[i])))
 			{
 				return false;
 			}
 		}
 
-		i = _noneOfTypes.length;
+		i = this.noneOfTypes.length;
 		while (i-- > 0)
 		{
-			if (Std.is(item, _noneOfTypes[i]))
+			if (Std.is(item, this.noneOfTypes[i]))
 			{
 				return false;
 			}
 		}
 
-		if (_anyOfTypes.length == 0 && (_allOfTypes.length > 0 || _noneOfTypes.length > 0))
+		if (this.anyOfTypes.length == 0 && (this.allOfTypes.length > 0 || this.noneOfTypes.length > 0))
 		{
 			return true;
 		}
 
-		i = _anyOfTypes.length;
+		i = this.anyOfTypes.length;
 		while (i-- > 0)
 		{
-			if (Std.is(item, _anyOfTypes[i]))
+			if (Std.is(item, this.anyOfTypes[i]))
 			{
 				return true;
 			}

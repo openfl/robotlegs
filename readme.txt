@@ -1,33 +1,28 @@
-Robotlegs AS3 Micro-Architecture v2.2.1 
-http://www.robotlegs.org
-built on 05/26/2014 02:22 PM
+This is an OpenFL 2.x/Haxe port of the popular AS3 Micro-Architecture framework Robotlegs v2.2.1
+built on 2014/12/29
 
+For more information on Robotlegs I suggest viewing the official as3 library repo
+https://github.com/robotlegs/robotlegs-framework
 
-INSTALLATION
+DIFFERENCES BETWEEN AS3 AND HAXE VERSIONS
 
-This distribution of Robotlegs AS3 Micro-Architecture provides a production ready binary SWC file (robotlegs-framework-v2.2.1.swc).
+metadata syntax is slightly different in haxe compared to AS3.
+AS3: [Inject]
+Haxe: @inject
 
-The SWC file should be enough to get started. Simply drop it in your projects libs folder (or wherever you keep external libraries) and you will have access to the fully functioning framework. 
+AS3: [Inject(optional=true)]
+Haxe: @inject("optional=true")
 
+The curernt haxe robotlegs implementation relies on the use of Runtime Type Information meta tag (@:rtti) on any classes that require injection.
+eg:
+@:rtti
+class ClassName
+{
+	...
+}
 
-BUILDING
-
-In addition to the SWC file in this distribution package, the Robotlegs AS3 Micro-Architecture vv2.2.1 source code is also provided.
-
-The source code is dependent on the Swiftsuspenders v2.1.0 library which can be found at: https://github.com/tschneidereit/SwiftSuspenders
-
-If you would prefer to build from the source, it is highly recommended that you download the Robotlegs AS3 Micro-Architecture project in its entirety. This project contains all of the required libraries and ANT build scripts to generate SWC files of the framework. This project can be found at: https://github.com/robotlegs/robotlegs-framework
-
-
-USAGE
-
-Please refer to the Best Practices documentation for an introduction to using the Robotlegs AS3 Micro-Architecture.
-
-Additionally there is a knowledge base/FAQ where you can ask questions and receive support.
-
-Best Practices: https://github.com/robotlegs/robotlegs-framework/wiki/Best-Practices
-Knowledge Base/FAQ: http://knowledge.robotlegs.org
-
+KNOWN ISSUES
+robotlegs replies on Swiftsuspenders for injections. Swiftsuspenders has also been ported to Haxe, however is missing some advance.. not because thet're not possible, but more just because I haven't got around to implementing them.
 
 LICENSE
 

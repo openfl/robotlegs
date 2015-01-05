@@ -36,7 +36,7 @@ class ManualStageObserver
 		_registry.addEventListener(ContainerRegistryEvent.CONTAINER_ADD, onContainerAdd);
 		_registry.addEventListener(ContainerRegistryEvent.CONTAINER_REMOVE, onContainerRemove);
 		// We might have arrived late on the scene
-		for each (var binding:ContainerBinding in _registry.bindings)
+		for (binding in _registry.bindings)
 		{
 			addContainerListener(binding.container);
 		}
@@ -53,7 +53,7 @@ class ManualStageObserver
 	{
 		_registry.removeEventListener(ContainerRegistryEvent.CONTAINER_ADD, onContainerAdd);
 		_registry.removeEventListener(ContainerRegistryEvent.CONTAINER_REMOVE, onContainerRemove);
-		for each (var binding:ContainerBinding in _registry.bindings)
+		for (binding in _registry.bindings)
 		{
 			removeContainerListener(binding.container);
 		}

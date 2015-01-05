@@ -116,6 +116,7 @@ class ConfigManager
 
 	private function initialize(event:LifecycleEvent):Void
 	{
+		trace("initialize");
 		if (_initialized == false)
 		{
 			_initialized = true;

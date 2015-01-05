@@ -55,7 +55,6 @@ class ExtensionInstaller
 	 */
 	public function install(extension:Dynamic):Void
 	{
-		
 		if (Std.is(extension, Class))
 		{
 			var extensionInstance = Type.createInstance(extension, []);

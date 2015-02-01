@@ -95,8 +95,8 @@ class StageObserver
 	{
 		var view:DisplayObject = cast(event.target, DisplayObject);
 		// Question: would it be worth caching QCNs by view in a weak Map<Dynamic,Dynamic>,
-		// to avoid CallProxy.getClassName() cost?
-		var qcn:String = CallProxy.getClassName(Type.getClass(view));
+		// to avoid CallProxy.replaceClassName() cost?
+		var qcn:String = CallProxy.replaceClassName(Type.getClass(view));
 		// CHECK
 		//var filtered:Bool = _filter.test(qcn);
 		var filtered:Bool = _filter.match(qcn);

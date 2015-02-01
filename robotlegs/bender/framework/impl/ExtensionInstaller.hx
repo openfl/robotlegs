@@ -57,7 +57,8 @@ class ExtensionInstaller
 	{
 		if (Std.is(extension, Class))
 		{
-			var extensionInstance = Type.createInstance(extension, []);
+			//var extensionInstance = Type.createInstance(extension, []);
+			var extensionInstance = CallProxy.createInstance(extension, []);
 			install(extensionInstance);
 		}
 		else

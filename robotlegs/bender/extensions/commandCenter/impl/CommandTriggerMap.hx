@@ -37,7 +37,7 @@ class CommandTriggerMap
 	 * @param keyFactory Factory function to creates keys
 	 * @param triggerFactory Factory function to create triggers
 	 */
-	public function new(keyFactory:String -> Class<Dynamic> -> String, triggerFactory:String -> Class<Dynamic> -> EventCommandTrigger)
+	public function new(keyFactory:Dynamic, triggerFactory:Dynamic)
 	{
 		_keyFactory = keyFactory;
 		_triggerFactory = triggerFactory;

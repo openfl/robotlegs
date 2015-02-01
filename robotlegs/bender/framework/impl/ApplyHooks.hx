@@ -7,6 +7,7 @@
 
 package robotlegs.bender.framework.impl;
 
+import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.framework.api.IInjector;
 
 class ApplyHooks
@@ -42,9 +43,12 @@ class ApplyHooks
 			{
 				hook = (injector != null)
 					? injector.instantiateUnmapped(cast(hook, Class<Dynamic>))
-					: Type.createInstance(hook, []);
+					/*: Type.createInstance(hook, []);*/
+					: CallProxy.createInstance(hook, []);
 			}
 			hook.hook();
+			
+			
 		}
 	}
 }

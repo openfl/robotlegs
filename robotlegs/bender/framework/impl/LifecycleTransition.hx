@@ -188,6 +188,7 @@ class LifecycleTransition
 			setState(_finalState);
 
 			// process callback queue (dup and trash for safety)
+			
 			var callbacks:Array<Dynamic> = _callbacks.concat([]);
 			_callbacks = [];
 			for (callback in callbacks)

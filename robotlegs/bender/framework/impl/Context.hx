@@ -7,6 +7,7 @@
 
 package robotlegs.bender.framework.impl;
 
+import haxe.io.Error;
 import openfl.events.EventDispatcher;
 import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IContext;
@@ -324,7 +325,19 @@ class Context extends EventDispatcher implements IContext
 		for (config in configs)
 		{
 			#if js
-				if (!Std.is(config, Class)) Reflect.setProperty(config, "constructor", Type.getClass(config));
+				if (!Std.is(config, Class)) {
+					Reflect.setProperty(config, "constructor", Type.getClass(config));
+				}
+				/*else if (!Reflect.hasField(config, "constructor")) {
+					trace(config);
+					var clas = Type.resolveClass('robotlegs.bender.extensions.contextView.ContextViewListenerConfig');
+					trace(clas);
+					if (!Std.is(clas, Class)) {
+						
+					}
+					throw config.__name__ + " missing constructor field!";
+					//trace("has Constructor Field = " + Reflect.hasField(config, "constructor"));
+				}*/
 			#end
 			_configManager.addConfig(config);
 		}

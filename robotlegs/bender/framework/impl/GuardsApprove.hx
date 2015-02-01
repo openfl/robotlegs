@@ -7,6 +7,7 @@
 
 package robotlegs.bender.framework.impl;
 
+import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.framework.api.IInjector;
 
 class GuardsApprove
@@ -47,7 +48,8 @@ class GuardsApprove
 			{
 				guard = (injector != null)
 					? injector.instantiateUnmapped(cast(guard, Class<Dynamic>))
-					: Type.createInstance(guard, []);
+					//: Type.createInstance(guard, []);
+					: CallProxy.createInstance(guard, []);
 			}
 			if (guard.approve() == false)
 				return false;

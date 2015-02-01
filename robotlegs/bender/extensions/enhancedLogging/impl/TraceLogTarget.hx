@@ -7,6 +7,7 @@
 
 package robotlegs.bender.extensions.enhancedLogging.impl;
 
+import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.ILogTarget;
 import robotlegs.bender.framework.api.LogLevel;
@@ -49,7 +50,7 @@ class TraceLogTarget implements ILogTarget
 	public function log(source:Dynamic, level:UInt, timestamp:Int, message:String, params:Array<Dynamic> = null):Void
 	{
 		#if js
-			var sourceName = Type.getClassName(Type.getClass(source));
+			var sourceName = CallProxy.getClassName(Type.getClass(source));
 			var split = sourceName.split(".");
 			sourceName = split[split.length - 1];
 			

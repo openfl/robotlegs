@@ -6,6 +6,7 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.framework.impl;
+import org.swiftsuspenders.utils.CallProxy;
 
 /**
  * Utility for generating unique object IDs
@@ -41,7 +42,7 @@ class UID
 	{
 		var className = "";
 		if (Type.getClass(source) != null) {
-			className = Type.getClassName(Type.getClass(source)); 
+			className = CallProxy.getClassName(Type.getClass(source)); 
 		}
 		return className;
 	}

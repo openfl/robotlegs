@@ -8,6 +8,7 @@
 package robotlegs.bender.framework.impl;
 
 
+import com.imag.core.view.BaseViewConfig;
 import org.swiftsuspenders.utils.CallProxy;
 import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IConfig;
@@ -159,7 +160,7 @@ class ConfigManager
 			if (Std.is(config, Class))
 			{
 				#if js
-					_logger.debug("Now initializing. Instantiating config class {0}", [Type.getClassName(config)]);
+					_logger.debug("Now initializing. Instantiating config class {0}", [CallProxy.getClassName(config)]);
 				#else 
 					_logger.debug("Now initializing. Instantiating config class {0}", [config]);
 				#end
@@ -169,7 +170,7 @@ class ConfigManager
 			else
 			{
 				#if js
-					_logger.debug("Now initializing. Injecting into config object {0}", [Type.getClassName(Type.getClass(config))]);
+					_logger.debug("Now initializing. Injecting into config object {0}", [CallProxy.getClassName(Type.getClass(config))]);
 				#else 
 					_logger.debug("Now initializing. Injecting into config object {0}", [config]);
 				#end
@@ -187,8 +188,15 @@ class ConfigManager
 		//config && config.configure();
 		//if (config != null) config.configure();
 		var object = cast(_injector.getOrCreateNewInstance(type), IConfig);
+		
+		if (type == BaseViewConfig) {
+			trace(type);
+		}
+		
 		if (object != null) {
-			var className = Type.getClassName(type);
+			
+			
+			var className = CallProxy.getClassName(type);
 			var hasFeild = CallProxy.hasField(object, "configure");
 			if (hasFeild) {
 				#if js

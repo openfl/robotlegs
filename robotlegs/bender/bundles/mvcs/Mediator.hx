@@ -17,6 +17,7 @@ import robotlegs.bender.extensions.mediatorMap.api.IMediator;
  *
  * <p>Override initialize and destroy to hook into the mediator lifecycle.</p>
  */
+@:rtti
 class Mediator implements IMediator
 {
 

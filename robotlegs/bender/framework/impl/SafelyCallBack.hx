@@ -38,9 +38,9 @@ class SafelyCallBack
 	public static function call(callback:Dynamic, errorMsg:Dynamic = null, message:Dynamic = null)
 	{
 		if (message != null) {
-			try {
+			//try {
 				callback(errorMsg, message);
-			}
+			/*}
 			catch( error : Error ) {
 				try {
 					callback(errorMsg);
@@ -50,10 +50,10 @@ class SafelyCallBack
 						callback();
 					}
 					catch( error3 : Error ) {
-						//trace("Error calling CallBack : " + error3 );
+						trace("Error calling CallBack : " + error3 );
 					}
 				}
-			}
+			}*/
 		}
 		else if (errorMsg != null) {
 			try {
@@ -64,7 +64,7 @@ class SafelyCallBack
 					callback();
 				}
 				catch( error3 : Error ) {
-					//trace("Error calling CallBack : " + error3 );
+					trace("Error calling CallBack : " + error3 );
 				}
 			}
 		}
@@ -81,7 +81,7 @@ class SafelyCallBack
 					callback();
 				}
 				catch( error3 : Error ) {
-					//trace("Error calling CallBack : " + error3 );
+					trace("Error calling CallBack : " + error3 );
 				}
 			}
 		}

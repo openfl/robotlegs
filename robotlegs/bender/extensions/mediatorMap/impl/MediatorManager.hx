@@ -73,8 +73,11 @@ class MediatorManager
 	 */
 	public function addMediator(mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping):Void
 	{
-		var displayObject:DisplayObject = cast(item, DisplayObject);
-
+		var displayObject:DisplayObject = null;
+		if (Std.is(item, DisplayObject)) {
+			displayObject = cast(item, DisplayObject);
+		}
+		
 		// Watch Display Dynamic for removal
 		if (displayObject != null && mapping.autoRemoveEnabled)
 			displayObject.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);

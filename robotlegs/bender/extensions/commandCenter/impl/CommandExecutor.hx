@@ -7,6 +7,7 @@
 
 package robotlegs.bender.extensions.commandCenter.impl;
 
+import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.extensions.commandCenter.api.ICommandExecutor;
 import robotlegs.bender.extensions.commandCenter.api.ICommandMapping;
 import robotlegs.bender.framework.api.IInjector;
@@ -102,7 +103,8 @@ class CommandExecutor implements ICommandExecutor
 				//result = executeMethod.apply(null, payload.values);
 			}
 			else {
-				result = executeMethod();
+				result = Reflect.callMethod(command, executeMethod, []);
+				//result = executeMethod();
 			}
 			//var result:Dynamic = (hasPayload && executeMethod.length > 0) ? executeMethod.apply(null, payload.values) : executeMethod();
 			if (_handleResult != null) _handleResult(result, command, mapping);

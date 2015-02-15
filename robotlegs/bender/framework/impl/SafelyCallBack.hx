@@ -37,10 +37,12 @@ class SafelyCallBack
 
 	public static function call(callback:Dynamic, errorMsg:Dynamic = null, message:Dynamic = null)
 	{
+		//callback(errorMsg, message);
+		
 		if (message != null) {
-			//try {
+			try {
 				callback(errorMsg, message);
-			/*}
+			}
 			catch( error : Error ) {
 				try {
 					callback(errorMsg);
@@ -53,7 +55,7 @@ class SafelyCallBack
 						trace("Error calling CallBack : " + error3 );
 					}
 				}
-			}*/
+			}
 		}
 		else if (errorMsg != null) {
 			try {

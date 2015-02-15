@@ -94,6 +94,7 @@ class StageObserver
 	private function onViewAddedToStage(event:Event):Void
 	{
 		var view:DisplayObject = cast(event.target, DisplayObject);
+		
 		// Question: would it be worth caching QCNs by view in a weak Map<Dynamic,Dynamic>,
 		// to avoid CallProxy.replaceClassName() cost?
 		var qcn:String = CallProxy.replaceClassName(Type.getClass(view));

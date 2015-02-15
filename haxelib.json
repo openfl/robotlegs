@@ -8,7 +8,7 @@
 	"releasenote": "Alpha release: Limited to property and constructor injection. requires @:rtti Meta tag. Currently Limited to Flash & HTML5 targets.",
 	"contributors": [ "p.j.shand" ],
 	"dependencies": {
-		"openfl": "2.1.8",
+		"openfl": "2.2.4",
 		"swiftsuspenders": "0.0.1-alpha"
 	}
 }

@@ -7,8 +7,6 @@
 
 package robotlegs.bender.framework.impl;
 
-
-import com.imag.core.view.BaseViewConfig;
 import org.swiftsuspenders.utils.CallProxy;
 import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IConfig;
@@ -117,7 +115,6 @@ class ConfigManager
 
 	private function initialize(event:LifecycleEvent):Void
 	{
-		trace("initialize");
 		if (_initialized == false)
 		{
 			_initialized = true;
@@ -188,10 +185,6 @@ class ConfigManager
 		//config && config.configure();
 		//if (config != null) config.configure();
 		var object = cast(_injector.getOrCreateNewInstance(type), IConfig);
-		
-		if (type == BaseViewConfig) {
-			trace(type);
-		}
 		
 		if (object != null) {
 			

@@ -54,7 +54,7 @@ class MediatorFactory
 	 */
 	public function getMediator(item:Dynamic, mapping:IMediatorMapping):Dynamic
 	{
-		var id = UID.classID(item);
+		var id = UID.instanceID(item);
 		var _mediatorsItem:Map<IMediatorMapping,Dynamic>;
 		if (_mediators[id] != null) {
 			_mediators[id] = new Map<String,Dynamic>();
@@ -89,7 +89,6 @@ class MediatorFactory
 		for (mapping in mappings)
 		{
 			mediator = getMediator(item, mapping);
-
 			if (mediator == null)
 			{
 				mapTypeForFilterBinding(mapping.matcher, type, item);
@@ -97,8 +96,9 @@ class MediatorFactory
 				unmapTypeForFilterBinding(mapping.matcher, type, item);
 			}
 
-			if (mediator)
+			if (mediator) {
 				createdMediators.push(mediator);
+			}
 		}
 		return createdMediators;
 	}
@@ -166,7 +166,7 @@ class MediatorFactory
 		_mediators[UID.classID(item)][mapping] = mediator;
 		_manager.addMediator(mediator, item, mapping);*/
 		
-		var id = UID.classID(item);
+		var id = UID.instanceID(item);
 		var _mediatorsItem:Map<IMediatorMapping,Dynamic>;
 		if (_mediators[id] == null) _mediatorsItem = new Map<IMediatorMapping,Dynamic>();
 		else _mediatorsItem = _mediators[id];

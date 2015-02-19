@@ -73,6 +73,7 @@ class MediatorManager
 	 */
 	public function addMediator(mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping):Void
 	{
+		trace("addMediator");
 		var displayObject:DisplayObject = null;
 		if (Std.is(item, DisplayObject)) {
 			displayObject = cast(item, DisplayObject);
@@ -124,6 +125,9 @@ class MediatorManager
 
 	private function initializeMediator(mediator:Dynamic, mediatedItem:Dynamic):Void
 	{
+		trace("initializeMediator");
+		
+		
 		if (CallProxy.hasField(mediator, 'preInitialize'))
 			mediator.preInitialize();
 

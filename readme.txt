@@ -21,9 +21,6 @@ class ClassName
 	...
 }
 
-KNOWN ISSUES
-robotlegs replies on Swiftsuspenders for injections. Swiftsuspenders has also been ported to Haxe, however is missing some advance.. not because thet're not possible, but more just because I haven't got around to implementing them.
-
 LICENSE
 
 The MIT License

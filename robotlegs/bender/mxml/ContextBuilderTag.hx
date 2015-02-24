@@ -10,7 +10,7 @@ package robotlegs.bender.mxml;
 import openfl.display.DisplayObjectContainer;
 import flash.utils.setTimeout;
 import mx.core.IMXMLObject;
-import org.swiftsuspenders.reflection.DescribeTypeReflector;
+import org.swiftsuspenders.reflection.DescribeTypeRTTIReflector;
 import org.swiftsuspenders.reflection.Reflector;
 import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.framework.api.IContext;
@@ -70,7 +70,7 @@ class ContextBuilderTag implements IMXMLObject
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _reflector:Reflector = new DescribeTypeReflector();
+	private var _reflector:Reflector = new DescribeTypeRTTIReflector();
 
 	/*============================================================================*/
 	/* Public Functions                                                           */

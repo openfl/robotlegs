@@ -14,6 +14,8 @@ import robotlegs.bender.framework.api.IContext;
  * Module Context Event
  * @private
  */
+
+@:keepSub
 class ModularContextEvent extends Event
 {
 

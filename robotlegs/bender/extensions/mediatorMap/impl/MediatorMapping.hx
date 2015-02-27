@@ -14,6 +14,8 @@ import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorConfigurator;
 /**
  * @private
  */
+
+@:keepSub
 class MediatorMapping implements IMediatorMapping implements IMediatorConfigurator
 {
 

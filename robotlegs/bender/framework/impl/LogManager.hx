@@ -16,6 +16,7 @@ import robotlegs.bender.framework.api.LogLevel;
  *
  * @private
  */
+@:keepSub
 class LogManager implements ILogTarget
 {
 

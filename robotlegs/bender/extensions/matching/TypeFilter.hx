@@ -12,6 +12,8 @@ import org.swiftsuspenders.utils.CallProxy;
 /**
  * @private
  */
+
+@:keepSub
 class TypeFilter implements ITypeFilter
 {
 

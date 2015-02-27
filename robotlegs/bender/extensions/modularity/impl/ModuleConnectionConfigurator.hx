@@ -14,6 +14,8 @@ import robotlegs.bender.extensions.modularity.dsl.IModuleConnectionAction;
 /**
  * @private
  */
+
+@:keepSub
 class ModuleConnectionConfigurator implements IModuleConnectionAction
 {
 

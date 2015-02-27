@@ -10,6 +10,7 @@ package robotlegs.bender.framework.api;
 /**
  * Robotlegs object lifecycle state
  */
+@:keepSub
 class LifecycleState
 {
 

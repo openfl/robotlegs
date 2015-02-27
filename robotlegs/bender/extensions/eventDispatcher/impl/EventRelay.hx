@@ -12,6 +12,8 @@ import openfl.events.IEventDispatcher;
 /**
  * Relays events from a source to a destination
  */
+
+@:keepSub
 class EventRelay
 {
 

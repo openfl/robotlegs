@@ -11,6 +11,7 @@ import openfl.errors.Error;
 /**
  * View Processor Map Error
  */
+@:keepSub
 class ViewProcessorMapError extends Error
 {
 

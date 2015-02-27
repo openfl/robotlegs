@@ -13,6 +13,7 @@ import robotlegs.bender.framework.api.IInjector;
  * Avoids view reflection by using a provided map
  * of property names to dependency values
  */
+@:keepSub
 class PropertyValueInjector
 {
 

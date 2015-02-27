@@ -6,6 +6,7 @@ import robotlegs.bender.framework.api.IMatcher;
  * ...
  * @author P.J.Shand
  */
+@:keepSub
 class ObjectMatcher implements IMatcher
 {
 	

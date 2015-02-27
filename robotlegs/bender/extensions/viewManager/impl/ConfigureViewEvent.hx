@@ -14,6 +14,8 @@ import openfl.events.Event;
  * View Configuration Event
  * @private
  */
+
+@:keepSub
 class ConfigureViewEvent extends Event
 {
 

@@ -15,6 +15,8 @@ import robotlegs.bender.extensions.commandCenter.api.ICommand;
  * <p>Please note: you do not have to extend this class.
  * Any class with an execute method can be used.</p>
  */
+
+@:keepSub
 @:rtti
 class Command implements ICommand
 {

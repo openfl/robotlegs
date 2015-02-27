@@ -14,6 +14,7 @@ import robotlegs.bender.framework.api.IMatcher;
  *
  * @private
  */
+@:keepSub
 class ObjectProcessor
 {
 
@@ -59,7 +60,7 @@ class ObjectProcessor
 }
 
 
-
+@:keepSub
 class ObjectHandler
 {
 

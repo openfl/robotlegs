@@ -4,6 +4,7 @@ package robotlegs.bender.framework.impl;
  * ...
  * @author P.J.Shand
  */
+@:keepSub
 class ObjectHandler
 {
 	/*============================================================================*/

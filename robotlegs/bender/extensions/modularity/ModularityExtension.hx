@@ -28,6 +28,8 @@ import robotlegs.bender.framework.api.ILogger;
  *
  * <p>It must be installed before context initialization.</p>
  */
+
+@:keepSub
 class ModularityExtension implements IExtension
 {
 

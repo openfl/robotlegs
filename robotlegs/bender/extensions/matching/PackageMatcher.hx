@@ -12,6 +12,8 @@ import openfl.errors.IllegalOperationError;
 /**
  * A Package Matcher matches types in a given package
  */
+
+@:keepSub
 class PackageMatcher implements ITypeMatcher
 {
 

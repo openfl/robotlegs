@@ -33,6 +33,8 @@ import robotlegs.bender.framework.api.LogLevel;
  * <p>This bundle installs a number of extensions commonly used
  * in typical Robotlegs applications and modules.</p>
  */
+
+@:keepSub
 class MVCSBundle implements IBundle
 {
 	public function new() 

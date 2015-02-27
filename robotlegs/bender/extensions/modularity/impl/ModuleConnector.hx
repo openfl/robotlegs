@@ -18,6 +18,8 @@ import robotlegs.bender.framework.api.IInjector;
 /**
  * @private
  */
+
+@:keepSub
 class ModuleConnector implements IModuleConnector
 {
 

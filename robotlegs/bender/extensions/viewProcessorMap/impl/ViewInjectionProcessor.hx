@@ -15,6 +15,7 @@ import robotlegs.bender.framework.api.IInjector;
  * Default View Injection Processor implementation
  * @private
  */
+@:keepSub
 class ViewInjectionProcessor
 {
 

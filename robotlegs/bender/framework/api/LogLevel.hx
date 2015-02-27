@@ -10,6 +10,7 @@ package robotlegs.bender.framework.api;
 /**
  * Robotlegs log level
  */
+@:keepSub
 class LogLevel
 {
 

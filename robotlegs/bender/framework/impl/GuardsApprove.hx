@@ -10,6 +10,7 @@ package robotlegs.bender.framework.impl;
 import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.framework.api.IInjector;
 
+@:keepSub
 class GuardsApprove
 {
 	/*============================================================================*/

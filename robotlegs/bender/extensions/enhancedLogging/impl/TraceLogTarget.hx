@@ -16,6 +16,8 @@ import robotlegs.bender.framework.api.LogLevel;
  * A simple trace logger
  * @private
  */
+
+@:keepSub
 class TraceLogTarget implements ILogTarget
 {
 

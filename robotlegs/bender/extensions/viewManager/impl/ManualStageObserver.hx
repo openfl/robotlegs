@@ -13,6 +13,8 @@ import openfl.display.DisplayObjectContainer;
 /**
  * @private
  */
+
+@:keepSub
 class ManualStageObserver
 {
 

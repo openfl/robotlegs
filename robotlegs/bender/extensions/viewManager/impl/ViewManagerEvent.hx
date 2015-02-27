@@ -15,6 +15,7 @@ import robotlegs.bender.extensions.viewManager.api.IViewHandler;
  * Container existence event
  * @private
  */
+@:keepSub
 class ViewManagerEvent extends Event
 {
 

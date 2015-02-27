@@ -22,6 +22,8 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
+
+@:keepSub
 class EventCommandTrigger implements ICommandTrigger
 {
 

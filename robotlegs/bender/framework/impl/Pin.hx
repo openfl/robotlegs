@@ -15,6 +15,7 @@ import robotlegs.bender.framework.api.PinEvent;
  *
  * @private
  */
+@:keepSub
 class Pin
 {
 

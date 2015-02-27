@@ -12,6 +12,8 @@ import openfl.events.IEventDispatcher;
 /**
  * @private
  */
+
+@:keepSub
 class EventMapConfig
 {
 

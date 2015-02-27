@@ -10,6 +10,7 @@ package robotlegs.bender.extensions.viewProcessorMap.impl;
 /**
  * @private
  */
+@:keepSub
 class NullProcessor
 {
 

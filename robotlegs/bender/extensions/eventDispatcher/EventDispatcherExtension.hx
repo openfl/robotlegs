@@ -16,6 +16,8 @@ import robotlegs.bender.framework.api.IExtension;
 /**
  * This extension maps an IEventDispatcher into a context's injector.
  */
+
+@:keepSub
 class EventDispatcherExtension implements IExtension
 {
 

@@ -17,6 +17,8 @@ import robotlegs.bender.extensions.directCommandMap.dsl.IDirectCommandConfigurat
 /**
  * @private
  */
+
+@:keepSub
 class DirectCommandMapper implements IDirectCommandConfigurator
 {
 

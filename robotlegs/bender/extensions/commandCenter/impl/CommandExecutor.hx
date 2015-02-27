@@ -18,6 +18,8 @@ import robotlegs.bender.extensions.commandCenter.api.CommandPayload;
 /**
  * @private
  */
+
+@:keepSub
 class CommandExecutor implements ICommandExecutor
 {
 

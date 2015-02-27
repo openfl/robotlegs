@@ -12,6 +12,8 @@ import openfl.events.Event;
 /**
  * @private
  */
+
+@:keepSub
 class ContainerBindingEvent extends Event
 {
 

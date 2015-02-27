@@ -12,6 +12,8 @@ import openfl.errors.Error;
 /**
  * Type Matcher Error
  */
+
+@:keepSub
 class TypeMatcherError extends Error
 {
 

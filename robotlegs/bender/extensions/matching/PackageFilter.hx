@@ -10,6 +10,8 @@ package robotlegs.bender.extensions.matching;
 /**
  * A filter that describes a package matcher
  */
+
+@:keepSub
 class PackageFilter implements ITypeFilter
 {
 

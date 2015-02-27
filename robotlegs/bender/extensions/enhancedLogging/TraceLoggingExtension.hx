@@ -14,6 +14,8 @@ import robotlegs.bender.framework.api.IExtension;
 /**
  * Adds a TraceLogTarget to the context
  */
+
+@:keepSub
 class TraceLoggingExtension implements IExtension
 {
 

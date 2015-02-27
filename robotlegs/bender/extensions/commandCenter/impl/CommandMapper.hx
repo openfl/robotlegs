@@ -16,6 +16,8 @@ import robotlegs.bender.extensions.commandCenter.dsl.ICommandUnmapper;
 /**
  * @private
  */
+
+@:keepSub
 class CommandMapper implements ICommandMapper implements ICommandUnmapper implements ICommandConfigurator
 {
 

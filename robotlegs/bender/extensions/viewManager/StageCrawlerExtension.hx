@@ -24,6 +24,8 @@ import robotlegs.bender.framework.api.ILogger;
  * This extension checks for views that might already be on the stage
  * after context initialization and ensures that those views are handled.
  */
+
+@:keepSub
 class StageCrawlerExtension implements IExtension
 {
 

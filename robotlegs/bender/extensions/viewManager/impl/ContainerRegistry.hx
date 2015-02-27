@@ -20,6 +20,7 @@ import openfl.events.EventDispatcher;
  * @private
  */
 @:rtti
+@:keepSub
 class ContainerRegistry extends EventDispatcher
 {
 

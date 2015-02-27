@@ -10,6 +10,8 @@ package robotlegs.bender.extensions.enhancedLogging.impl;
 /**
  * @private
  */
+
+@:keepSub
 class LogMessageParser
 {
 

@@ -17,6 +17,8 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
+
+@:keepSub
 class CommandMappingList implements ICommandMappingList
 {
 

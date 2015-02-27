@@ -15,6 +15,8 @@ import robotlegs.bender.extensions.eventCommandMap.impl.EventCommandTrigger;
 /**
  * @private
  */
+
+@:keepSub
 class CommandTriggerMap
 {
 

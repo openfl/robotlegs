@@ -35,6 +35,7 @@ import robotlegs.bender.framework.api.LifecycleEvent;
 /**
  * The core Robotlegs Context implementation
  */
+@:keepSub
 class Context extends EventDispatcher implements IContext
 {
 
@@ -328,16 +329,6 @@ class Context extends EventDispatcher implements IContext
 				if (!Std.is(config, Class)) {
 					Reflect.setProperty(config, "constructor", Type.getClass(config));
 				}
-				/*else if (!Reflect.hasField(config, "constructor")) {
-					trace(config);
-					var clas = Type.resolveClass('robotlegs.bender.extensions.contextView.ContextViewListenerConfig');
-					trace(clas);
-					if (!Std.is(clas, Class)) {
-						
-					}
-					throw config.__name__ + " missing constructor field!";
-					//trace("has Constructor Field = " + Reflect.hasField(config, "constructor"));
-				}*/
 			#end
 			_configManager.addConfig(config);
 		}

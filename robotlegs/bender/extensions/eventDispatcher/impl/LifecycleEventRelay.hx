@@ -13,6 +13,8 @@ import robotlegs.bender.framework.api.LifecycleEvent;
 /**
  * @private
  */
+
+@:keepSub
 class LifecycleEventRelay
 {
 

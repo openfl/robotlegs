@@ -23,6 +23,7 @@ import robotlegs.bender.framework.impl.GuardsApprove;
 /**
  * @private
  */
+@:keepSub
 class ViewProcessorFactory implements IViewProcessorFactory
 {
 
@@ -194,6 +195,7 @@ class ViewProcessorFactory implements IViewProcessorFactory
 	}
 }
 
+@:keepSub
 class ViewProcessorFactoryCreateRemovedListener
 {
 	var _listenersByView:Map<String, Dynamic>;

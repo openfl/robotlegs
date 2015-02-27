@@ -11,6 +11,7 @@ import org.swiftsuspenders.utils.CallProxy;
 /**
  * Utility for generating unique object IDs
  */
+@:keepSub
 class UID
 {
 

@@ -13,6 +13,7 @@ import openfl.events.Event;
 /**
  * Robotlegs object lifecycle event
  */
+@:keepSub
 class LifecycleEvent extends Event
 {
 

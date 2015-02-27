@@ -11,6 +11,7 @@ import openfl.errors.Error;
 /**
  * Vigilant Error
  */
+@:keepSub
 class VigilantError extends Error
 {
 

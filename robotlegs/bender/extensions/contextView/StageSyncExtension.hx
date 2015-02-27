@@ -20,6 +20,8 @@ import robotlegs.bender.framework.api.ILogger;
  *
  * <p>It should be installed before context initialization.</p>
  */
+
+@:keepSub
 class StageSyncExtension implements IExtension
 {
 

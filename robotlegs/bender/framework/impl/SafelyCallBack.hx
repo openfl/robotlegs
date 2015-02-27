@@ -8,6 +8,7 @@
 package robotlegs.bender.framework.impl;
 import openfl.errors.Error;
 
+@:keepSub
 class SafelyCallBack 
 {
 	/*============================================================================*/

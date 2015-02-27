@@ -14,6 +14,8 @@ import openfl.events.Event;
  * Container existence event
  * @private
  */
+
+@:keepSub
 class ContainerRegistryEvent extends Event
 {
 

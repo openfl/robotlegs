@@ -19,6 +19,8 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
+
+@:keepSub
 class MediatorMapper implements IMediatorMapper implements IMediatorUnmapper
 {
 

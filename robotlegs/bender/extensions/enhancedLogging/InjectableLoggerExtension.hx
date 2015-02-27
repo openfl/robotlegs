@@ -20,6 +20,8 @@ import robotlegs.bender.framework.api.ILogger;
  *     public var logger:ILogger;
  * </code>
  */
+
+@:keepSub
 class InjectableLoggerExtension implements IExtension
 {
 

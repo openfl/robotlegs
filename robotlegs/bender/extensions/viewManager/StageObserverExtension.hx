@@ -17,6 +17,8 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * This extension install an automatic Stage Observer
  */
+
+@:keepSub
 class StageObserverExtension implements IExtension
 {
 

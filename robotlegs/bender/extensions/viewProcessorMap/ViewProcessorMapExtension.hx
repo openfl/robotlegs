@@ -20,6 +20,7 @@ import robotlegs.bender.framework.api.IInjector;
 /**
  * This extension install a View Processor Map into a context
  */
+@:keepSub
 class ViewProcessorMapExtension implements IExtension
 {
 

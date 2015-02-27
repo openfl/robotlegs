@@ -16,6 +16,8 @@ import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 /**
 * @private
 */
+
+@:keepSub
 class MediatorManager
 {
 
@@ -153,6 +155,7 @@ class MediatorManager
 	}
 }
 
+@:keepSub
 class MediatorManagerAddMediator
 {
 	var displayObject:DisplayObject;

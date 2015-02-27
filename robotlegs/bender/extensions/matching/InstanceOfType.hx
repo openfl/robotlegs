@@ -9,6 +9,7 @@ package robotlegs.bender.extensions.matching;
 
 import robotlegs.bender.framework.api.IMatcher;
 
+@:keepSub
 class InstanceOfType
 {
 	/*============================================================================*/
@@ -31,6 +32,7 @@ class InstanceOfType
 /**
  * @private
  */
+@:keepSub
 class InstanceOfMatcher implements IMatcher
 {
 

@@ -18,6 +18,7 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
+@:keepSub
 class ViewProcessorMapper implements IViewProcessorMapper implements IViewProcessorUnmapper
 {
 

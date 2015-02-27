@@ -16,6 +16,8 @@ import robotlegs.bender.framework.api.IExtension;
  * An Event Map keeps track of listeners and provides the ability
  * to unregister all listeners with a single method call.
  */
+
+@:keepSub
 class LocalEventMapExtension implements IExtension
 {
 

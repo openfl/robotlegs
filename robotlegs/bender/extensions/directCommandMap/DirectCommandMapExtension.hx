@@ -15,6 +15,8 @@ import robotlegs.bender.framework.api.IExtension;
 /**
  * Maps commands for direct (manual) execution
  */
+
+@:keepSub
 class DirectCommandMapExtension implements IExtension
 {
 

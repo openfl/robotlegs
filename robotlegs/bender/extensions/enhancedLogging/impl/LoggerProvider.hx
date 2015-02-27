@@ -15,6 +15,8 @@ import robotlegs.bender.framework.api.IContext;
 /**
  * @private
  */
+
+@:keepSub
 class LoggerProvider implements DependencyProvider
 {
 

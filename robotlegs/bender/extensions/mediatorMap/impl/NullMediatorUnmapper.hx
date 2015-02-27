@@ -12,6 +12,8 @@ import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorUnmapper;
 /**
  * @private
  */
+
+@:keepSub
 class NullMediatorUnmapper implements IMediatorUnmapper
 {
 	public function new()

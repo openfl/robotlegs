@@ -35,6 +35,7 @@ import robotlegs.bender.framework.api.LifecycleState;
  *
  * @private
  */
+@:keepSub
 class Lifecycle implements ILifecycle
 {
 
@@ -439,6 +440,7 @@ class Lifecycle implements ILifecycle
 	}
 }
 
+@:keepSub
 class SyncLifecycleListener
 {
 	private var once:Bool;

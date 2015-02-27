@@ -14,6 +14,7 @@ import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorMapping;
 /**
  * @private
  */
+@:keepSub
 class ViewProcessorViewHandler implements IViewProcessorViewHandler
 {
 

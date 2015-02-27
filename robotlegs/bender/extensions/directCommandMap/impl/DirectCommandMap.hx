@@ -20,6 +20,8 @@ import robotlegs.bender.framework.api.IInjector;
 /**
  * Maps commands for direct (manual) execution
  */
+
+@:keepSub
 class DirectCommandMap implements IDirectCommandMap
 {
 

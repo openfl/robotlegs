@@ -17,6 +17,8 @@ import robotlegs.bender.framework.api.IInjector;
 /**
  * This extension installs a shared IMediatorMap into the context
  */
+
+@:keepSub
 class MediatorMapExtension implements IExtension
 {
 

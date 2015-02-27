@@ -13,6 +13,7 @@ import robotlegs.bender.framework.api.IInjector;
 /**
  * Simple Mediator creation processor
  */
+@:keepSub
 class MediatorCreator
 {
 

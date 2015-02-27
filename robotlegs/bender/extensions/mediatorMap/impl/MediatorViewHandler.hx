@@ -16,6 +16,8 @@ import robotlegs.bender.extensions.viewManager.api.IViewHandler;
 /**
  * @private
  */
+
+@:keepSub
 class MediatorViewHandler implements IViewHandler
 {
 

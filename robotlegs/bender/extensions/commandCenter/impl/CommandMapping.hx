@@ -12,6 +12,8 @@ import robotlegs.bender.extensions.commandCenter.api.ICommandMapping;
 /**
  * @private
  */
+
+@:keepSub
 class CommandMapping implements ICommandMapping
 {
 

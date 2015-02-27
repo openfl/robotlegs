@@ -10,6 +10,8 @@ package robotlegs.bender.extensions.matching;
 /**
  * A Type Matcher matches objects that satisfy type matching rules
  */
+
+@:keepSub
 class TypeMatcher implements ITypeMatcher implements ITypeMatcherFactory
 {
 

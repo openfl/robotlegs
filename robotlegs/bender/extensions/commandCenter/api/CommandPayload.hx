@@ -10,6 +10,8 @@ package robotlegs.bender.extensions.commandCenter.api;
 /**
  * @private
  */
+
+@:keepSub
 class CommandPayload
 {
 

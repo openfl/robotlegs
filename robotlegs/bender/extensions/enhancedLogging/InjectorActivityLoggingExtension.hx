@@ -16,6 +16,8 @@ import robotlegs.bender.framework.api.IExtension;
  *
  * Warning: this extension will degrade the performance of your application.
  */
+
+@:keepSub
 class InjectorActivityLoggingExtension implements IExtension
 {
 

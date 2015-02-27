@@ -12,6 +12,8 @@ import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
 /**
  * @private
  */
+
+@:keepSub
 class NullCommandTrigger implements ICommandTrigger
 {
 	public function new()

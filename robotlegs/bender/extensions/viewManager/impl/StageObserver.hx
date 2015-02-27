@@ -15,6 +15,8 @@ import org.swiftsuspenders.utils.CallProxy;
 /**
  * @private
  */
+
+@:keepSub
 class StageObserver
 {
 

@@ -20,6 +20,7 @@ import robotlegs.bender.extensions.vigilance.VigilantError;
 /**
  * The Vigilance Extension throws Errors when warnings are logged.
  */
+@:keepSub
 class VigilanceExtension implements IExtension implements ILogTarget
 {
 	public function new()
@@ -67,7 +68,7 @@ class VigilanceExtension implements IExtension implements ILogTarget
 			event.mappedType + " with name " + event.mappedName);
 	}
 }
-
+@:keepSub
 @:rtti
 class MetadataChecker
 {

@@ -11,6 +11,7 @@ import openfl.errors.Error;
 /**
  * Lifecycle Error
  */
+@:keepSub
 class LifecycleError extends Error
 {
 

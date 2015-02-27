@@ -14,6 +14,7 @@ import robotlegs.bender.framework.impl.SafelyCallBack;
 /**
  * Message Dispatcher implementation.
  */
+@:keepSub
 class MessageDispatcher
 {
 
@@ -96,8 +97,7 @@ class MessageDispatcher
 	}
 }
 
-
-
+@:keepSub
 class MessageRunner
 {
 

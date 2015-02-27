@@ -12,6 +12,8 @@ import openfl.display.DisplayObjectContainer;
 /**
  * The Context View represents the root DisplayObjectContainer for a Context
  */
+
+@:keepSub
 @:rtti
 class ContextView
 {

@@ -18,6 +18,8 @@ import robotlegs.bender.framework.impl.GuardsApprove;
 /**
  * @private
  */
+
+@:keepSub
 class MediatorFactory
 {
 

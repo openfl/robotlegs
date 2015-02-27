@@ -14,6 +14,7 @@ import robotlegs.bender.framework.api.IInjector;
 /**
  * Robotlegs IInjector Adapter
  */
+@:keepSub
 class RobotlegsInjector extends Injector implements IInjector
 {
 

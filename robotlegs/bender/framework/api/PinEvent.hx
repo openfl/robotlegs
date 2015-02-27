@@ -12,6 +12,7 @@ import openfl.events.Event;
 /**
  * Detain/release pin Event
  */
+@:keepSub
 class PinEvent extends Event
 {
 

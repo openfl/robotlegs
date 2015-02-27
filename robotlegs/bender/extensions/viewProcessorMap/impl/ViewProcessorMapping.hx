@@ -14,6 +14,7 @@ import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorMappingCon
 /**
  * @private
  */
+@:keepSub
 class ViewProcessorMapping implements IViewProcessorMapping implements IViewProcessorMappingConfig
 {
 

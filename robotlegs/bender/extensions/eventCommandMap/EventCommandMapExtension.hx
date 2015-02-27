@@ -15,6 +15,8 @@ import robotlegs.bender.framework.api.IExtension;
 /**
  * The Event Command Map allows you to bind Events to Commands
  */
+
+@:keepSub
 class EventCommandMapExtension implements IExtension
 {
 

@@ -17,6 +17,8 @@ import robotlegs.bender.framework.api.IInjector;
 /**
  * This extension install a View Manager into the context
  */
+
+@:keepSub
 class ViewManagerExtension implements IExtension
 {
 

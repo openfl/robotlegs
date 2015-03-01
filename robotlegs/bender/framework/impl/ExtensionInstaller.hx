@@ -56,7 +56,6 @@ class ExtensionInstaller
 	 */
 	public function install(extension:Dynamic):Void
 	{
-		trace("install 1");
 		if (Std.is(extension, Class))
 		{
 			//var extensionInstance = Type.createInstance(extension, []);
@@ -73,15 +72,7 @@ class ExtensionInstaller
 			_logger.debug("Installing extension {0}", [id]);
 			_classes[id] = true;
 			
-			trace("extension = " + extension);
-			if (extension == null) {
-				trace("1");
-			}
-			else {
-				trace("2");
-			}
 			var hasExtendField = CallProxy.hasField(extension, "extend");
-			trace("hasExtendField = " + hasExtendField);
 			if (hasExtendField == true) {
 				
 				extension.extend(_context);

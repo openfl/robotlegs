@@ -309,10 +309,17 @@ class Context extends EventDispatcher implements IContext
 	 * @inheritDoc
 	 */
 	
-	public function install(extensions:Array<Dynamic>):IContext
+	public function install(extensions:Dynamic):IContext
 	{
-		for (extension in extensions)
-		{
+		if (Std.is(extensions, Array)) {
+			var extensionsArray:Array<Dynamic> = cast(extensions);
+			for (extension in extensionsArray)
+			{
+				_extensionInstaller.install(extension);
+			}
+		}
+		else {
+			var extension = extensions;
 			_extensionInstaller.install(extension);
 		}
 		return this;
@@ -321,10 +328,22 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function configure(configs:Array<Dynamic>):IContext
+	public function configure(configs:Dynamic):IContext
 	{
-		for (config in configs)
-		{
+		if (Std.is(configs, Array)) {
+			var configsArray:Array<Dynamic> = cast(configs);
+			for (config in configsArray)
+			{
+				#if js
+					if (!Std.is(config, Class)) {
+						Reflect.setProperty(config, "constructor", Type.getClass(config));
+					}
+				#end
+				_configManager.addConfig(config);
+			}
+		}
+		else {
+			var config = configs;
 			#if js
 				if (!Std.is(config, Class)) {
 					Reflect.setProperty(config, "constructor", Type.getClass(config));

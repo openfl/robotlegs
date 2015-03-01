@@ -38,9 +38,41 @@ class SafelyCallBack
 
 	public static function call(callback:Dynamic, errorMsg:Dynamic = null, message:Dynamic = null)
 	{
-		//callback(errorMsg, message);
-		
-		if (message != null) {
+		#if js
+			callback(errorMsg, message);
+		#else 
+			if (message != null) {
+				try {
+					callback(errorMsg, message);
+				}
+				catch( error : Error ) {
+					try {
+						callback(errorMsg);
+					}
+					catch( error2 : Error ) {
+						try {
+							callback();
+						}
+						catch( error3 : Error ) {
+							trace("Error calling CallBack : " + error3 );
+						}
+					}
+				}
+			}
+			else if (errorMsg != null) {
+				try {
+					callback(errorMsg);
+				}
+				catch( error2 : Error ) {
+					try {
+						callback();
+					}
+					catch( error3 : Error ) {
+						trace("Error calling CallBack : " + error3 );
+					}
+				}
+			}
+			
 			try {
 				callback(errorMsg, message);
 			}
@@ -57,36 +89,6 @@ class SafelyCallBack
 					}
 				}
 			}
-		}
-		else if (errorMsg != null) {
-			try {
-				callback(errorMsg);
-			}
-			catch( error2 : Error ) {
-				try {
-					callback();
-				}
-				catch( error3 : Error ) {
-					trace("Error calling CallBack : " + error3 );
-				}
-			}
-		}
-		
-		try {
-			callback(errorMsg, message);
-		}
-		catch( error : Error ) {
-			try {
-				callback(errorMsg);
-			}
-			catch( error2 : Error ) {
-				try {
-					callback();
-				}
-				catch( error3 : Error ) {
-					trace("Error calling CallBack : " + error3 );
-				}
-			}
-		}
+		#end
 	}
 }

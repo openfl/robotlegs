@@ -80,14 +80,14 @@ interface IContext extends IEventDispatcher
 	 * @param extensions Objects or classes implementing IExtension or IBundle
 	 * @return this
 	 */
-	function install(extensions:Array<Dynamic>):IContext;
+	function install(extensions:Dynamic):IContext;
 
 	/**
 	 * Configures the context with custom configurations
 	 * @param configs Configuration objects or classes of any type
 	 * @return this
 	 */
-	function configure(configs:Array<Dynamic>):IContext;
+	function configure(configs:Dynamic):IContext;
 
 	/**
 	 * Adds an uninitialized context as a child

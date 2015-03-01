@@ -7,6 +7,7 @@
 
 package robotlegs.bender.framework.impl;
 
+import openfl.errors.Error;
 import org.swiftsuspenders.utils.CallProxy;
 import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IConfig;
@@ -185,7 +186,14 @@ class ConfigManager
 		// CHECK
 		//config && config.configure();
 		//if (config != null) config.configure();
-		var object = cast(_injector.getOrCreateNewInstance(type), IConfig);
+		
+		var object;
+		try {
+			object = cast(_injector.getOrCreateNewInstance(type), IConfig);
+		}
+		catch (e:Error) {
+			throw new Error("Can't cast to IConfig, check you are using the @:keepSub meta tag");
+		}
 		
 		if (object != null) {
 			

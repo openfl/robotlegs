@@ -2,6 +2,15 @@
 
 ## Robotlegs 2
 
+### OpenFL v0.0.2 alpha
+
+bug fixes and code maintenance
+
+### OpenFL v0.0.1 alpha
+
+Port to Haxe begins
+Most basic functionality working in flash target
+
 ### v2.2.1
 
 Updates Swiftsuspenders to v2.1.0

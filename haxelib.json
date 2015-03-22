@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"tags": [ "mvc", "robotlegs", "openfl","flash", "js", "web" ],
 	"description": "This is an OpenFL 2.x/Haxe port of the popular AS3 Micro-Architecture framework Robotlegs v2.2.1",
-	"version": "0.0.2-alpha",
+	"version": "0.0.3-alpha",
 	"releasenote": "Alpha release: Limited to property and constructor injection. requires @:rtti Meta tag. Currently Limited to Flash & HTML5 targets.",
 	"contributors": [ "p.j.shand" ],
 	"dependencies": {

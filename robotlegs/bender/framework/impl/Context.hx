@@ -334,24 +334,23 @@ class Context extends EventDispatcher implements IContext
 			var configsArray:Array<Dynamic> = cast(configs);
 			for (config in configsArray)
 			{
-				#if js
-					if (!Std.is(config, Class)) {
-						Reflect.setProperty(config, "constructor", Type.getClass(config));
-					}
-				#end
-				_configManager.addConfig(config);
+				configureObject(config);
 			}
 		}
 		else {
-			var config = configs;
-			#if js
-				if (!Std.is(config, Class)) {
-					Reflect.setProperty(config, "constructor", Type.getClass(config));
-				}
-			#end
-			_configManager.addConfig(config);
+			configureObject(configs);
 		}
 		return this;
+	}
+	
+	private function configureObject(config:Dynamic):Void
+	{
+		#if (js)
+			if (!Std.is(config, Class)) {
+				Reflect.setProperty(config, "constructor", Type.getClass(config));
+			}
+		#end
+		_configManager.addConfig(config);
 	}
 
 	/**

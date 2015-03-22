@@ -157,7 +157,7 @@ class LifecycleTransition
 		// report invalid transition, and exit
 		if (invalidTransition())
 		{
-			reportError("Invalid transition", [callback]);
+			if (callback != null) reportError("Invalid transition", [callback]);
 			return;
 		}
 
@@ -171,6 +171,8 @@ class LifecycleTransition
 		setState(_transitionState);
 
 		// run before handlers
+		
+		
 		_dispatcher.dispatchMessage(_name, function(error:Dynamic):Void
 		{
 			// revert state, report error, and exit

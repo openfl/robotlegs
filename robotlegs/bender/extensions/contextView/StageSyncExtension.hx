@@ -9,6 +9,7 @@ package robotlegs.bender.extensions.contextView;
 
 import openfl.display.DisplayObjectContainer;
 import openfl.events.Event;
+import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.extensions.matching.InstanceOfType;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.IExtension;
@@ -81,6 +82,7 @@ class StageSyncExtension implements IExtension
 	private function initializeContext():Void
 	{
 		_logger.debug("Context view is now on stage. Initializing context...");
+		
 		_context.initialize();
 		_contextView.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 	}

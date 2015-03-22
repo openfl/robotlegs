@@ -65,11 +65,12 @@ class ContainerRegistry extends EventDispatcher
 	public function addContainer(container:DisplayObjectContainer):ContainerBinding
 	{
 		// CHECK
+		
+		trace("addContainer = " + container);
 		if (_bindingByContainer[container] == null) {
 			_bindingByContainer[container] = createBinding(container);
 		}
 		return _bindingByContainer[container];
-		//return _bindingByContainer[container] ||= createBinding(container);
 	}
 
 	/**

@@ -68,7 +68,7 @@ class ContextViewBasedExistenceWatcher
 		{
 			event.stopImmediatePropagation();
 			_logger.debug("Context existence event caught. Configuring child context {0}", [event.context]);
-			_context.addChild(event.context);
+			if (event.context != null) _context.addChild(event.context);
 		}
 	}
 }

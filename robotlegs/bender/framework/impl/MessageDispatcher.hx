@@ -88,7 +88,8 @@ class MessageDispatcher
 		{
 			handlers = handlers.concat([]);
 			if (!reverse) handlers.reverse();
-			new MessageRunner(message, handlers, callback).run();
+			var messageRunner = new MessageRunner(message, handlers, callback);
+			messageRunner.run();
 		}
 		else
 		{
@@ -123,6 +124,8 @@ class MessageRunner
 		_message = message;
 		_handlers = handlers;
 		_callback = callback;
+		
+		trace("_handlers = " + _handlers);
 	}
 
 	/*============================================================================*/
@@ -148,9 +151,13 @@ class MessageRunner
 		// We do this to avoid increasing the stack depth unnecessarily.
 		var handler:Dynamic;
 		// CHECK
+		
 		while ((handler = _handlers.pop()) != null)
 		{
-			if (handler.length == 0) // sync handler: ()
+			if (handler.length == null) { // cpp can't read .length (will need to create a FIX for this)
+				handler();
+			}
+			else if (handler.length == 0) // sync handler: ()
 			{
 				handler();
 			}
@@ -181,7 +188,11 @@ class MessageRunner
 			}
 			else // ERROR: this should NEVER happen
 			{
-				throw new Error("Bad handler signature");
+				//#if cpp
+					trace("Bad handler signature");
+				//#else
+				//	throw new Error("Bad handler signature");
+				//#end
 			}
 		}
 		// If we got here then this loop finished synchronously.

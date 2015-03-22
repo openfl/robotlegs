@@ -38,8 +38,13 @@ class SafelyCallBack
 
 	public static function call(callback:Dynamic, errorMsg:Dynamic = null, message:Dynamic = null)
 	{
-		#if js
+		#if (js || cpp)
 			callback(errorMsg, message);
+		/*#elseif cpp
+			trace("callback = " + callback);
+			trace("errorMsg = " + errorMsg);
+			trace("message = " + message);
+			callback(errorMsg, message);*/
 		#else 
 			if (message != null) {
 				try {

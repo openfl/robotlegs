@@ -73,6 +73,7 @@ class ExtensionInstaller
 			_classes[id] = true;
 			
 			var hasExtendField = CallProxy.hasField(extension, "extend");
+			
 			if (hasExtendField == true) {
 				
 				extension.extend(_context);

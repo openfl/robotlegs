@@ -61,7 +61,8 @@ class TraceLogTarget implements ILogTarget
 				+ ' ' + sourceName + ": "
 				+ ' ' + _messageParser.parseMessage(message, params));
 		#else 
-			trace(timestamp /* (START + timestamp) */
+			trace(
+				timestamp /* (START + timestamp) */
 				+ ' ' + LogLevel.NAME[level]
 				+ ' ' + _context
 				+ ' ' + source

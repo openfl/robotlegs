@@ -154,6 +154,7 @@ class MediatorFactory
 				ApplyHooks.call(mapping.hooks, _injector);
 				_injector.unmap(mediatorClass);
 			}
+			trace("3");
 			addMediator(mediator, item, mapping);
 		}
 		return mediator;

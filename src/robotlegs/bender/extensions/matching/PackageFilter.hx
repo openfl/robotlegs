@@ -6,6 +6,7 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.extensions.matching;
+import org.swiftsuspenders.utils.CallProxy;
 
 /**
  * A filter that describes a package matcher
@@ -102,16 +103,16 @@ class PackageFilter implements ITypeFilter
 		var fqcn:String = CallProxy.replaceClassName(item);
 		var packageName:String;
 
-		if (_requirePackage && (!matchPackageInFQCN(_requirePackage, fqcn)))
+		if (_requirePackage != null && (!matchPackageInFQCN(_requirePackage, fqcn)))
 			return false;
 
-		for each (packageName in _noneOfPackages)
+		for (packageName in _noneOfPackages)
 		{
 			if (matchPackageInFQCN(packageName, fqcn))
 				return false;
 		}
 
-		for each (packageName in _anyOfPackages)
+		for (packageName in _anyOfPackages)
 		{
 			if (matchPackageInFQCN(packageName, fqcn))
 				return true;
@@ -119,7 +120,7 @@ class PackageFilter implements ITypeFilter
 		if (_anyOfPackages.length > 0)
 			return false;
 
-		if (_requirePackage)
+		if (_requirePackage != null)
 			return true;
 
 		if (_noneOfPackages.length > 0)
@@ -154,6 +155,6 @@ class PackageFilter implements ITypeFilter
 
 	private function matchPackageInFQCN(packageName:String, fqcn:String):Bool
 	{
-		return (fqcn.indexOf(packageName) == 0)
+		return (fqcn.indexOf(packageName) == 0);
 	}
 }

@@ -7,8 +7,8 @@
 
 package robotlegs.bender.extensions.enhancedLogging.impl;
 
-//import org.swiftsuspenders.InjectionEvent;
-//import org.swiftsuspenders.mapping.MappingEvent;
+import org.swiftsuspenders.InjectionEvent;
+import org.swiftsuspenders.mapping.MappingEvent;
 import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.framework.api.ILogger;
 
@@ -71,11 +71,11 @@ class InjectorListener
 	public function destroy():Void
 	{
 		var type:String;
-		for each (type in INJECTION_TYPES)
+		for (type in INJECTION_TYPES)
 		{
 			_injector.removeEventListener(type, onInjectionEvent);
 		}
-		for each (type in MAPPING_TYPES)
+		for (type in MAPPING_TYPES)
 		{
 			_injector.removeEventListener(type, onMappingEvent);
 		}
@@ -88,11 +88,11 @@ class InjectorListener
 	private function addListeners():Void
 	{
 		var type:String;
-		for each (type in INJECTION_TYPES)
+		for (type in INJECTION_TYPES)
 		{
 			_injector.addEventListener(type, onInjectionEvent);
 		}
-		for each (type in MAPPING_TYPES)
+		for (type in MAPPING_TYPES)
 		{
 			_injector.addEventListener(type, onMappingEvent);
 		}

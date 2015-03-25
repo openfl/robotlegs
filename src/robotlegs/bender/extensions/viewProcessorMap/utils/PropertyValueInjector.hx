@@ -11,37 +11,37 @@ import robotlegs.bender.framework.api.IInjector;
 
 /**
  * Avoids view reflection by using a provided map
- * of property names to dependency types
+ * of property names to dependency values
  */
 @:keepSub
-class FastPropertyInjector
+class PropertyValueInjector
 {
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _propertyTypesByName:Dynamic;
+	private var _valuesByPropertyName:Dynamic;
 
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
 
 	/**
-	 * Creates a Fast Property Injection Processor
+	 * Creates a Value Property Injection Processor
 	 *
 	 * <code>
-	 *     new FastPropertyInjector({
-	 *         userService: IUserService,
-	 *         userPM: UserPM
+	 *     new PropertyValueInjector({
+	 *         userService: myUserService,
+	 *         userPM: myUserPM
 	 *     })
 	 * </code>
 	 *
-	 * @param propertyTypesByName A map of property names to dependency types
+	 * @param valuesByPropertyName A map of property names to dependency values
 	 */
-	public function new(propertyTypesByName:Dynamic)
+	public function new(valuesByPropertyName:Dynamic)
 	{
-		_propertyTypesByName = propertyTypesByName;
+		_valuesByPropertyName = valuesByPropertyName;
 	}
 
 	/*============================================================================*/
@@ -51,18 +51,18 @@ class FastPropertyInjector
 	/**
 	 * @private
 	 */
-	public function process(view:Dynamic, type:Class, injector:IInjector):Void
+	public function process(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
 	{
-		for (var propName:String in _propertyTypesByName)
+		for (propName in _valuesByPropertyName)
 		{
-			view[propName] = injector.getInstance(_propertyTypesByName[propName]);
+			view[propName] = _valuesByPropertyName[propName];
 		}
 	}
 
 	/**
 	 * @private
 	 */
-	public function unprocess(view:Dynamic, type:Class, injector:IInjector):Void
+	public function unprocess(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
 	{
 	}
 }

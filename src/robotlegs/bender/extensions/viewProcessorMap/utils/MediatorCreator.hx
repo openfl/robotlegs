@@ -8,6 +8,8 @@
 package robotlegs.bender.extensions.viewProcessorMap.utils;
 
 
+import org.swiftsuspenders.utils.CallProxy;
+import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IInjector;
 
 /**
@@ -21,9 +23,9 @@ class MediatorCreator
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _mediatorClass:Class;
+	private var _mediatorClass:Class<Dynamic>;
 
-	private var _createdMediatorsByView:Map<Dynamic,Dynamic> = new Map<Dynamic,Dynamic>(true);
+	private var _createdMediatorsByView = new Map<String,Dynamic>();
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -33,7 +35,7 @@ class MediatorCreator
 	 * Mediator Creator Processor
 	 * @param mediatorClass The mediator class to create
 	 */
-	public function new(mediatorClass:Class)
+	public function new(mediatorClass:Class<Dynamic>)
 	{
 		_mediatorClass = mediatorClass;
 	}
@@ -45,26 +47,27 @@ class MediatorCreator
 	/**
 	 * @private
 	 */
-	public function process(view:Dynamic, type:Class, injector:IInjector):Void
+	public function process(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
 	{
-		if (_createdMediatorsByView[view])
+		trace("view = " + view);
+		if (_createdMediatorsByView[UID.classID(view)])
 		{
 			return;
 		}
 		var mediator:Dynamic = injector.instantiateUnmapped(_mediatorClass);
-		_createdMediatorsByView[view] = mediator;
+		_createdMediatorsByView[UID.classID(view)] = mediator;
 		initializeMediator(view, mediator);
 	}
 
 	/**
 	 * @private
 	 */
-	public function unprocess(view:Dynamic, type:Class, injector:IInjector):Void
+	public function unprocess(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
 	{
-		if (_createdMediatorsByView[view])
+		if (_createdMediatorsByView[UID.classID(view)])
 		{
-			destroyMediator(_createdMediatorsByView[view]);
-			_createdMediatorsByView.remove(view);
+			destroyMediator(_createdMediatorsByView[UID.classID(view)]);
+			_createdMediatorsByView.remove(UID.classID(view));
 		}
 	}
 
@@ -74,31 +77,42 @@ class MediatorCreator
 
 	private function initializeMediator(view:Dynamic, mediator:Dynamic):Void
 	{
-		if ('preInitialize' in mediator)
-			mediator.preInitialize();
-
-		if ('viewComponent' in mediator)
+		//if ('preInitialize' in mediator)
+		if (CallProxy.hasField(mediator, 'preInitialize')) {
+			//mediator.preInitialize();
+			var preInitialize = Reflect.getProperty(mediator, 'preInitialize');
+			if (preInitialize != null) preInitialize();
+		}
+			
+		//if ('viewComponent' in mediator)
+		if (CallProxy.hasField(mediator, 'viewComponent'))
 			mediator.viewComponent = view;
 
-		if ('initialize' in mediator)
+		//if ('initialize' in mediator)
+		if (CallProxy.hasField(mediator, 'initialize'))
 			mediator.initialize();
 
-		if ('postInitialize' in mediator)
+		//if ('postInitialize' in mediator)
+		if (CallProxy.hasField(mediator, 'postInitialize'))
 			mediator.postInitialize();
 	}
 
 	private function destroyMediator(mediator:Dynamic):Void
 	{
-		if ('preDestroy' in mediator)
+		//if ('preDestroy' in mediator)
+		if (CallProxy.hasField(mediator, 'preDestroy'))
 			mediator.preDestroy();
 
-		if ('destroy' in mediator)
+		//if ('destroy' in mediator)
+		if (CallProxy.hasField(mediator, 'destroy'))
 			mediator.destroy();
-
-		if ('viewComponent' in mediator)
+		
+		//if ('viewComponent' in mediator)
+		if (CallProxy.hasField(mediator, 'viewComponent'))
 			mediator.viewComponent = null;
 
-		if ('postDestroy' in mediator)
+		//if ('postDestroy' in mediator)
+		if (CallProxy.hasField(mediator, 'postDestroy'))
 			mediator.postDestroy();
 	}
 }

@@ -52,10 +52,10 @@ class PackageMatcher implements ITypeMatcher
 	 */
 	public function require(fullPackage:String):PackageMatcher
 	{
-		if (_typeFilter)
+		if (_typeFilter != null)
 			throwSealedMatcherError();
 
-		if (_requirePackage)
+		if (_requirePackage != null)
 			throw new IllegalOperationError('You can only set one required package on this PackageMatcher (two non-nested packages cannot both be required, and nested packages are redundant.)');
 
 		_requirePackage = fullPackage;
@@ -65,7 +65,7 @@ class PackageMatcher implements ITypeMatcher
 	/**
 	 * Any packages that an item might be declared
 	 */
-	public function anyOf(... packages):PackageMatcher
+	public function anyOf(packages:Array<Dynamic>):PackageMatcher
 	{
 		pushAddedPackagesTo(packages, _anyOfPackages);
 		return this;
@@ -74,7 +74,7 @@ class PackageMatcher implements ITypeMatcher
 	/**
 	 * Packages that an item must not live in
 	 */
-	public function noneOf(... packages):PackageMatcher
+	public function noneOf(packages:Array<Dynamic>):PackageMatcher
 	{
 		pushAddedPackagesTo(packages, _noneOfPackages);
 		return this;
@@ -94,7 +94,7 @@ class PackageMatcher implements ITypeMatcher
 
 	private function buildTypeFilter():ITypeFilter
 	{
-		if (((!_requirePackage) || _requirePackage.length == 0) && (_anyOfPackages.length == 0) && (_noneOfPackages.length == 0))
+		if (((_requirePackage == null) || _requirePackage.length == 0) && (_anyOfPackages.length == 0) && (_noneOfPackages.length == 0))
 		{
 			throw new TypeMatcherError(TypeMatcherError.EMPTY_MATCHER);
 		}
@@ -104,7 +104,7 @@ class PackageMatcher implements ITypeMatcher
 	private function pushAddedPackagesTo(packages:Array<Dynamic>, targetSet:Array<String>):Void
 	{
 		_typeFilter && throwSealedMatcherError();
-
+		
 		pushValuesToStringVector(packages, targetSet);
 	}
 
@@ -115,19 +115,27 @@ class PackageMatcher implements ITypeMatcher
 
 	private function pushValuesToStringVector(values:Array<Dynamic>, vector:Array<String>):Void
 	{
-		if (values.length == 1 && (values[0] is Array || values[0] is Array<String>))
+		if (values.length == 1 && (Std.is(values[0], Array)))
 		{
-			for each (var packageName:String in values[0])
+			var flieds = Reflect.fields(values[0]);
+			for (i in 0...flieds.length) {
+				vector.push(flieds[i]);
+			}
+			/*for (packageName in values[0])
 			{
 				vector.push(packageName);
-			}
+			}*/
 		}
 		else
 		{
-			for each (packageName in values)
+			var flieds2 = Reflect.fields(values);
+			for (j in 0...flieds2.length) {
+				vector.push(flieds2[j]);
+			}
+			/*for (packageName in values)
 			{
 				vector.push(packageName);
-			}
+			}*/
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package robotlegs.bender.framework.impl;
 
+import robotlegs.bender.framework.api.IMatcher;
+
 /**
  * ...
  * @author P.J.Shand
@@ -12,7 +14,6 @@ class ObjectHandler
 	/*============================================================================*/
 
 	private var _matcher:IMatcher;
-
 	private var _handler:Dynamic;
 
 	/*============================================================================*/

@@ -32,6 +32,7 @@ interface IContext extends IEventDispatcher
 	/**
 	 * The context dependency injector
 	 */
+	//@:getter(injector) function get_injector():String;
 	public var injector(get, null):IInjector;
 	
 	/**

@@ -53,10 +53,14 @@ class PropertyValueInjector
 	 */
 	public function process(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
 	{
-		for (propName in _valuesByPropertyName)
+		var fields = Reflect.fields(_valuesByPropertyName);
+		for (propName in fields) {
+			Reflect.setProperty(view, propName, Reflect.getProperty(_valuesByPropertyName, propName));
+		}
+		/*for (propName in _valuesByPropertyName)
 		{
 			view[propName] = _valuesByPropertyName[propName];
-		}
+		}*/
 	}
 
 	/**

@@ -103,7 +103,7 @@ class PackageMatcher implements ITypeMatcher
 
 	private function pushAddedPackagesTo(packages:Array<Dynamic>, targetSet:Array<String>):Void
 	{
-		_typeFilter && throwSealedMatcherError();
+		if (_typeFilter != null) throwSealedMatcherError();
 		
 		pushValuesToStringVector(packages, targetSet);
 	}

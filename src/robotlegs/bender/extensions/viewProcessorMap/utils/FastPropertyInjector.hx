@@ -53,10 +53,14 @@ class FastPropertyInjector
 	 */
 	public function process(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
 	{
-		for (propName in _propertyTypesByName)
+		var fields = Reflect.fields(_propertyTypesByName);
+		for (propName in fields) {
+			Reflect.setProperty(view, propName, injector.getInstance(Reflect.getProperty(_propertyTypesByName, propName)));
+		}
+		/*for (propName in _propertyTypesByName)
 		{
 			view[propName] = injector.getInstance(_propertyTypesByName[propName]);
-		}
+		}*/
 	}
 
 	/**

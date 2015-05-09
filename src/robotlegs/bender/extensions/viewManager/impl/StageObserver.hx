@@ -104,7 +104,6 @@ class StageObserver
 	#if flash
 		private function onViewAddedToStage(event:Event):Void
 		{
-			trace("onViewAddedToStage");
 			var view:DisplayObject = cast(event.target, DisplayObject);
 			addView(view);
 		}
@@ -115,16 +114,11 @@ class StageObserver
 			container.removeEventListener(Event.ADDED_TO_STAGE, onContainerRootAddedToStage);
 			var type:Class<Dynamic> = Type.getClass(container);
 			var binding:ContainerBinding = _registry.getBinding(container);
-			trace("container = " + container);
-			trace("type = " + type);
-			trace("binding = " + binding);
 			if (binding != null) binding.handleView(container, type);
-			trace("5");
 		}
 	#else
 		private function OnChildAdded(display:DisplayObject):Void
 		{
-			trace("add: " + display);
 			addView(display);
 		}
 		
@@ -151,18 +145,14 @@ class StageObserver
 		// Question: would it be worth caching QCNs by view in a weak Map<Dynamic,Dynamic>,
 		// to avoid CallProxy.replaceClassName() cost?
 		var qcn:String = CallProxy.replaceClassName(Type.getClass(view));
-		trace("qcn = " + qcn);
 		// CHECK
 		//var filtered:Bool = _filter.test(qcn);
 		var filtered:Bool = _filter.match(qcn);
 		if (filtered)
 			return;
 		var type:Class<Dynamic> = Type.getClass(view);
-		trace("type = " + type);
 		// Walk upwards from the nearest binding
 		var binding:ContainerBinding = _registry.findParentBinding(view);
-		trace("binding.container = " + binding.container);
-		trace("binding = " + binding);
 		while (binding != null)
 		{
 			binding.handleView(view, type);

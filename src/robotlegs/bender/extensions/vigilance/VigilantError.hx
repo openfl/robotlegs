@@ -12,7 +12,8 @@ import openfl.errors.Error;
  * Vigilant Error
  */
 @:keepSub
-class VigilantError extends Error
+//class VigilantError extends Error
+class VigilantError
 {
 
 	/*============================================================================*/
@@ -25,6 +26,7 @@ class VigilantError extends Error
 	 */
 	public function new(message:String)
 	{
-		super(message);
+		//super(message);
+		trace(message);
 	}
 }

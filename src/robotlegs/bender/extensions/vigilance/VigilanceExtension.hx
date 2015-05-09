@@ -54,7 +54,7 @@ class VigilanceExtension implements IExtension implements ILogTarget
 	{
 		if (level <= LogLevel.WARN)
 		{
-			throw new VigilantError(_messageParser.parseMessage(message, params));
+			/*throw */new VigilantError(_messageParser.parseMessage(message, params));
 		}
 	}
 
@@ -64,7 +64,7 @@ class VigilanceExtension implements IExtension implements ILogTarget
 
 	private function mappingOverrideHandler(event:MappingEvent):Void
 	{
-		throw new InjectorError("Injector mapping override for type " +
+		/*throw */new InjectorError("Injector mapping override for type " +
 			event.mappedType + " with name " + event.mappedName);
 	}
 }

@@ -1,1 +1,5 @@
 /openfl-robotlegs-framework.zip
+
+# Intellij project files
+/.idea
+/*.iml

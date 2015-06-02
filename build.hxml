@@ -1,0 +1,10 @@
+-swf bin/openfl-robotlegs.swc
+-cp src
+-lib openfl
+-lib lime
+-lib msignal
+-lib swiftsuspenders
+-dce no
+-swf-version 12
+-D stage3Donly
+--macro include('robotlegs')

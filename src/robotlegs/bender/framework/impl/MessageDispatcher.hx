@@ -28,6 +28,10 @@ class MessageDispatcher
 	/* Public Functions                                                           */
 	/*============================================================================*/
 
+	public function new()
+	{
+	}
+
 	/**
 	 * Registers a message handler with a MessageDispatcher.
 	 * @param message The interesting message

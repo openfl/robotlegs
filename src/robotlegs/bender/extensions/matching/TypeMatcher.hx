@@ -31,6 +31,10 @@ class TypeMatcher implements ITypeMatcher implements ITypeMatcherFactory
 	/* Public Functions                                                           */
 	/*============================================================================*/
 
+	public function new()
+	{
+	}
+
 	/**
 	 * All types that an item must extend or implement
 	 */

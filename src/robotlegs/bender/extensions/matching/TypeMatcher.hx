@@ -26,7 +26,12 @@ class TypeMatcher implements ITypeMatcher implements ITypeMatcherFactory
 	private var _noneOfTypes = new Array<Class<Dynamic>>();
 
 	private var _typeFilter:ITypeFilter;
-
+	
+	public function new()
+	{
+		
+	}
+	
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/

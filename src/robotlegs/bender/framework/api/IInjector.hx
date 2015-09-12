@@ -160,7 +160,7 @@ interface IInjector extends IEventDispatcher
 	 * Sets the ApplicationDomain to use for type reflection
 	 * @param applicationDomain The ApplicationDomain
 	 */
-	public var applicationDomain(get, set):ApplicationDomain;
+	@:isVar public var applicationDomain(get, set):Null<ApplicationDomain>;
 	/**
 	 * The ApplicationDomain used for type reflection
 	 */

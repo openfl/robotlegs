@@ -50,11 +50,6 @@ class LogManager implements ILogTarget
 
 	private var _targets:Array<ILogTarget> = [];
 	
-	public function new()
-	{
-		
-	}
-	
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/

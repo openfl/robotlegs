@@ -62,7 +62,10 @@ class DisplaylistTraverser
 			}
 			
 			if (!alreadyAdded) {
-				var traverser = new DisplaylistTraverser(cast(display.getChildAt(i)));
+				var child:DisplayObject = display.getChildAt(i);
+				if (!Std.is(child, DisplayObjectContainer)) continue;
+				
+				var traverser = new DisplaylistTraverser(cast(child));
 				traverser.childAdded.add(OnChildrenAdded);
 				traverser.childRemoved.add(OnChildrenRemove);
 				

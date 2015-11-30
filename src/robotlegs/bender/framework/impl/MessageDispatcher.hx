@@ -24,11 +24,6 @@ class MessageDispatcher
 
 	private var _handlers = new Map<String,Dynamic>();
 	
-	public function new()
-	{
-		
-	}
-	
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/

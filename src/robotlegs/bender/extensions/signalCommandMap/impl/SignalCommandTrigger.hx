@@ -74,8 +74,23 @@ class SignalCommandTrigger implements ICommandTrigger
 		if (!_injector.hasMapping(_signalClass))
 			_injector.map(_signalClass).asSingleton();
 		_signal = _injector.getInstance(_signalClass);
-		// FIX
-		_signal.add(routePayloadToCommands);
+		if (Std.is(_signal, Signal0)) {
+			_signal.add(function() {
+				routePayloadToCommands([]);
+			});
+		}
+		else if (Std.is(_signal, Signal1)) {
+			var signal1:Signal1<Dynamic> = cast _signal;
+			signal1.add(function(arg1:Dynamic) {
+				Reflect.makeVarArgs(routePayloadToCommands)(arg1);
+			});
+		}
+		else if (Std.is(_signal, Signal2)) {
+			var signal2:Signal2<Dynamic, Dynamic> = cast _signal;
+			signal2.add(function(arg1:Dynamic, arg2:Dynamic):Void {
+				Reflect.makeVarArgs(routePayloadToCommands)(arg1, arg2);
+			});
+		}
 	}
 
 	/**
@@ -97,15 +112,9 @@ class SignalCommandTrigger implements ICommandTrigger
 	/* Private Functions                                                          */
 	/*============================================================================*/
 
-	/*private function routePayloadToCommands(valueObjects:Array<Dynamic>):Void
+	private function routePayloadToCommands(valueObjects:Array<Dynamic>):Void
 	{
 		var payload:CommandPayload = new CommandPayload(valueObjects, _signal.valueClasses);
-		_executor.executeCommands(_mappings.getList(), payload);
-	}*/
-	
-	private function routePayloadToCommands():Void
-	{
-		var payload:CommandPayload = new CommandPayload(null, _signal.valueClasses);
 		_executor.executeCommands(_mappings.getList(), payload);
 	}
 }

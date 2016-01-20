@@ -4,8 +4,8 @@
 	"license": "MIT",
 	"tags": [ "mvc", "robotlegs", "openfl","flash", "js", "web", "starling", "away3D" ],
 	"description": "This is an OpenFL 2.x/Haxe port of the popular AS3 Micro-Architecture framework Robotlegs v2.2.1",
-	"version": "0.2.1",
-	"releasenote": "add Signal and Stage3D/Away3D/Starling support, DisplaylistTraverser fix",
+	"version": "0.2.2",
+	"releasenote": "Stage3D profile added, CallProxy.hasField fix, allow mapping Signal1 or Signal2, not just Signal0",
 	"contributors": [ "p.j.shand" ],
 	"dependencies": {
 		"openfl": "",

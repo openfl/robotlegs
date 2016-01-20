@@ -72,7 +72,7 @@ class Renderer implements IRenderer
 		var renderMode:Context3DRenderMode = Context3DRenderMode.AUTO;
         
 		#if flash
-			stage3D.requestContext3D(renderMode);
+			stage3D.requestContext3D(renderMode, _profile);
 		#else
 			stage3D.requestContext3D(Std.string(renderMode));
 		#end

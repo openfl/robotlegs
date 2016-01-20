@@ -7,7 +7,7 @@
 
 package robotlegs.bender.extensions.signalCommandMap.impl;
 
-import msignal.Signal.Signal0;
+import msignal.Signal;
 import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.extensions.commandCenter.api.ICommandExecutor;
 import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
@@ -30,7 +30,7 @@ class SignalCommandTrigger implements ICommandTrigger
 
 	private var _signalClass:Class<Dynamic>;
 
-	private var _signal:Signal0;
+	private var _signal:AnySignal;
 
 	private var _injector:IInjector;
 

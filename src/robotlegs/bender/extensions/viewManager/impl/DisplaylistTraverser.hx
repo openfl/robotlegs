@@ -42,7 +42,7 @@ class DisplaylistTraverser
 		}
 	}
 	
-	function Update() 
+	private function Update() 
 	{
 		for (k in 0...childTraversers.length) 
 		{
@@ -76,7 +76,10 @@ class DisplaylistTraverser
 		var l:Int = 0;
 		while(l < childTraversers.length) 
 		{
-			if (!childTraversers[l].active) {
+			if (childTraversers[l] == null) {
+				childTraversers.splice(l, 1);
+			}
+			else if (!childTraversers[l].active) {
 				var traverserToRemove = childTraversers[l];
 				traverserToRemove.childAdded.remove(OnChildrenAdded);
 				traverserToRemove.childRemoved.remove(OnChildrenRemove);

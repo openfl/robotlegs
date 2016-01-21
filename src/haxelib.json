@@ -2,10 +2,10 @@
 	"name": "robotlegs",
 	"url": "http://blog.peteshand.net/robotlegs-for-haxe",
 	"license": "MIT",
-	"tags": [ "mvc", "robotlegs", "openfl","flash", "js", "web" ],
+	"tags": [ "mvc", "robotlegs", "openfl","flash", "js", "web", "starling", "away3D" ],
 	"description": "This is an OpenFL 2.x/Haxe port of the popular AS3 Micro-Architecture framework Robotlegs v2.2.1",
-	"version": "0.0.4-alpha",
-	"releasenote": "Alpha release: Limited to property and constructor injection. requires @:rtti Meta tag. Currently Limited to Flash & HTML5 targets.",
+	"version": "0.2.4",
+	"releasenote": "add ability to set stage3d background colour on IViewport, fixes signal payload injection for Signal1 and Signal2",
 	"contributors": [ "p.j.shand" ],
 	"dependencies": {
 		"openfl": "",

@@ -128,8 +128,6 @@ class MessageRunner
 		_message = message;
 		_handlers = handlers;
 		_callback = callback;
-		
-		trace("_handlers = " + _handlers);
 	}
 
 	/*============================================================================*/

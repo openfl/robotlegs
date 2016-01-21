@@ -11,11 +11,13 @@ interface IViewport
 {
 	function init():Void;
 	
+	
+	
 	var rect(get, set):Rectangle;
-	//function get rect():Rectangle;
-	//function set rect(value:Rectangle):Void;
-	
 	var onChange(get, null):Signal0;
-	//function get onChange():Signal;
+	var colour(get, set):UInt;
 	
+	var red(get, null):UInt;
+	var green(get, null):UInt;
+	var blue(get, null):UInt;
 }

@@ -32,6 +32,17 @@ class Viewport implements IViewport
 	public var rect(get, set):Rectangle;
 	public var onChange(get, null):Signal0;
 	
+	private var _colour:UInt = 0x0;
+	public var colour(get, set):UInt;
+	
+	private var _red:UInt = 0x0;
+	private var _green:UInt = 0x0;
+	private var _blue:UInt = 0x0;
+	
+	public var red(get, null):UInt;
+	public var green(get, null):UInt;
+	public var blue(get, null):UInt;
+	
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
@@ -56,19 +67,49 @@ class Viewport implements IViewport
 		lastRect.setTo(_rect.x, _rect.y, _rect.width, _rect.height);
 	}
 	
-	public function get_rect():Rectangle 
+	private function get_rect():Rectangle 
 	{
 		return _rect;
 	}
 	
-	public function set_rect(value:Rectangle):Rectangle 
+	private function set_rect(value:Rectangle):Rectangle 
 	{
 		_rect = value;
 		return value;
 	}
 	
-	public function get_onChange():Signal0 
+	private function get_onChange():Signal0 
 	{
 		return _onChange;
+	}
+	
+	private function get_colour():UInt
+	{
+		return _colour;
+	}
+	
+	private function set_colour(value:UInt):UInt
+	{
+		if (_colour == value) return value;
+		_colour = value;
+		_red = (( _colour >> 16 ) & 0xFF);
+		_green = ( (_colour >> 8) & 0xFF );
+		_blue = ( _colour & 0xFF );
+		return value;
+	}
+	
+	private function get_red():UInt
+	{
+		return _red;
+	}
+	
+	private function get_green():UInt
+	{
+		return _green;
+	}
+	
+	private function get_blue():UInt
+	{
+		return _blue;
 	}
 }

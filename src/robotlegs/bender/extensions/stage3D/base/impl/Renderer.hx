@@ -189,7 +189,7 @@ class Renderer implements IRenderer
 		if (layers.length == 0) return;
 		if (_stage3D == null) return;
 		if (context3D == null) return;
-		context3D.clear();
+		context3D.clear(viewport.red / 255, viewport.green / 255, viewport.blue / 255);
 		for (i in 0...layers.length) 
 		{
 			layers[i].process();

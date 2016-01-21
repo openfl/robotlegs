@@ -18,6 +18,7 @@ import robotlegs.bender.extensions.eventDispatcher.EventDispatcherExtension;
 import robotlegs.bender.extensions.localEventMap.LocalEventMapExtension;
 import robotlegs.bender.extensions.mediatorMap.MediatorMapExtension;
 import robotlegs.bender.extensions.modularity.ModularityExtension;
+import robotlegs.bender.extensions.signalCommandMap.SignalCommandMapExtension;
 import robotlegs.bender.extensions.viewManager.StageCrawlerExtension;
 import robotlegs.bender.extensions.viewManager.StageObserverExtension;
 import robotlegs.bender.extensions.viewManager.ViewManagerExtension;
@@ -61,6 +62,7 @@ class MVCSBundle implements IBundle
 			ModularityExtension,
 			DirectCommandMapExtension,
 			EventCommandMapExtension,
+			SignalCommandMapExtension,
 			LocalEventMapExtension,
 			ViewManagerExtension,
 			StageObserverExtension,

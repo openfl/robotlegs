@@ -22,6 +22,8 @@ interface IRenderer
 	function getLayerIndex(layer:ILayer):Int;
 	
 	var onReady(get, null):Signal0;
+	var active(get, set):Bool;
+	var onActiveChange(get, null):Signal0;
 	var stage3D(get, null):Stage3D;
 	var context3D(get, null):Context3D;
 	var profile(get, null):String;

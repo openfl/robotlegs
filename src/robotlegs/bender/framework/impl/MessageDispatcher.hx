@@ -88,7 +88,7 @@ class MessageDispatcher
 	{
 		var handlers:Array<Dynamic> = _handlers[message];
 		// CHECK
-		if (handlers.length > 0)
+		if (handlers != null && handlers.length > 0)
 		{
 			handlers = handlers.concat([]);
 			if (!reverse) handlers.reverse();

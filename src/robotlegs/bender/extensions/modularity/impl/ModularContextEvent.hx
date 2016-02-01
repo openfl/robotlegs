@@ -30,7 +30,12 @@ class ModularContextEvent extends Event
 	/*============================================================================*/
 
 	private var _context:IContext;
-	public var context(default, null):IContext;
+	public var context(get, null):IContext;
+	
+	private function get_context():IContext
+	{
+		return _context;
+	}
 	
 	/**
 	 * The context associated with this event

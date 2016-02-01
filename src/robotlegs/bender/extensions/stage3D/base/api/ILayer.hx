@@ -9,6 +9,6 @@ interface ILayer
 {
 	function process():Void;
 	
-	var iRenderer(null, set):IRenderer;
+	var iRenderer(get, set):IRenderer;
 	var rect(null, set):Rectangle;
 }

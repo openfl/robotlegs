@@ -122,7 +122,6 @@ class Renderer implements IRenderer
 			if (width < 32) width = 32;
 			var height:Int = cast viewport.rect.height;
 			if (height < 32) height = 32;
-			trace("context3D = " + context3D);
 			try {
 				context3D.configureBackBuffer(width, height, antiAlias, true);
 			}

@@ -7,6 +7,7 @@ import openfl.display3D.Context3DCompareMode;
 import openfl.display3D.Context3DRenderMode;
 import openfl.display3D.Context3DStencilAction;
 import openfl.display3D.Context3DTriangleFace;
+import openfl.errors.Error;
 import openfl.events.Event;
 import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.stage3D.base.api.ILayer;
@@ -31,6 +32,7 @@ class Renderer implements IRenderer
 	private var _injector:IInjector;
 	private var _logger:ILogger;
 	private var _onReady:Signal0 = new Signal0();
+	private var _onActiveChange:Signal0 = new Signal0();
 	
 	@inject public var contextView:ContextView;
 	@inject public var viewport:IViewport;
@@ -46,6 +48,11 @@ class Renderer implements IRenderer
 	private var _context3D:Context3D;
 	public var antiAlias:Int;
 	
+	private var _active:Bool = true;
+	public var active(get, set):Bool;
+	
+	public var onActiveChange(get, null):Signal0;
+	
 	public var onReady(get, null):Signal0;
 	public var stage3D(get, null):Stage3D;
 	public var context3D(get, null):Context3D;
@@ -53,11 +60,19 @@ class Renderer implements IRenderer
 	public var profile(get, null):String;
 	public var numLayers(get, null):Int;
 	
+	private static var count:Int = -1;
+	private var index:Int = 0;
+	
+	private var random:Int;
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
 	public function new(context:IContext)
 	{
+		count++;
+		index = count;
+		random = Math.round(Math.random() * 10000);
+		
 		_injector = context.injector;
 		_logger = context.getLogger(this);
 	}
@@ -109,8 +124,13 @@ class Renderer implements IRenderer
 			if (width < 32) width = 32;
 			var height:Int = cast viewport.rect.height;
 			if (height < 32) height = 32;
-			
+			trace("context3D = " + context3D);
+			try {
 			context3D.configureBackBuffer(width, height, antiAlias, true);
+		}
+			catch (e:Error) {
+				trace("e = " + e);
+			}
 		}
 		
 		for (i in 0...layers.length)
@@ -121,6 +141,7 @@ class Renderer implements IRenderer
 	
 	public function start():Void
 	{
+		trace("start" + " : " + random);
 		contextView.view.stage.addEventListener(Event.ENTER_FRAME, Update);
 	}
 	
@@ -131,11 +152,13 @@ class Renderer implements IRenderer
 	
 	public function addLayer(layer:ILayer):Void
 	{
+		layer.iRenderer = this;
 		layers.push(layer);
 	}
 	
 	public function addLayerAt(layer:ILayer, index:Int):Void
 	{
+		layer.iRenderer = this;
 		if (layers.length < index) {
 			trace("[Renderer, addLayerAt], index outside bounds, reverting to addLayer");
 			addLayer(layer);
@@ -162,6 +185,7 @@ class Renderer implements IRenderer
 	
 	public function removeLayer(layer:ILayer):Void
 	{
+		layer.iRenderer = null;
 		for (i in 0...layers.length) 
 		{
 			if (layers[i] == layer) {
@@ -188,15 +212,24 @@ class Renderer implements IRenderer
 	
 	private function Update(e:Event):Void 
 	{
-		if (layers.length == 0) return;
+		//if (layers.length == 0) return;
 		if (_stage3D == null) return;
 		if (context3D == null) return;
-		context3D.clear(viewport.red / 255, viewport.green / 255, viewport.blue / 255);
+		
+		if (index == count) context3D.clear(viewport.red / 255, viewport.green / 255, viewport.blue / 255);
+		if (active){
 		for (i in 0...layers.length) 
 		{
 			layers[i].process();
 		}
-		context3D.present();
+	}
+		if (index == 0) context3D.present();
+	}
+	
+	
+	public function get_onActiveChange():Signal0
+	{
+		return _onActiveChange;
 	}
 	
 	public function get_onReady():Signal0
@@ -227,5 +260,20 @@ class Renderer implements IRenderer
 	function get_addedLayers():Iterator<ILayer> 
 	{
 		return layers.iterator();
+	}
+	
+	function get_active():Bool 
+	{
+		return _active;
+	}
+	
+	function set_active(value:Bool):Bool 
+	{
+		if (_active == value) return value;
+		_active = value;
+		_onActiveChange.dispatch();
+		if (_active) count++;
+		else count--;
+		return _active;
 	}
 }

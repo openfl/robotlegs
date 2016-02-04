@@ -35,6 +35,8 @@ class Renderer implements IRenderer
 	@inject public var contextView:ContextView;
 	@inject public var viewport:IViewport;
 	
+	@:isVar public var addedLayers(get, null):Iterator<ILayer>;
+	
 	private var layers = new Array<ILayer>();
 	//private var stage3DManager:Stage3DManager;
 	//private var _stage3DProxy:Stage3DProxy;
@@ -220,5 +222,10 @@ class Renderer implements IRenderer
 	public function get_numLayers():Int 
 	{
 		return layers.length;
+	}
+	
+	function get_addedLayers():Iterator<ILayer> 
+	{
+		return layers.iterator();
 	}
 }

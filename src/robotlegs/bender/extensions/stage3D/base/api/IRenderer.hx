@@ -21,6 +21,8 @@ interface IRenderer
 	function removeLayer(layer:ILayer):Void;
 	function getLayerIndex(layer:ILayer):Int;
 	
+	var addedLayers(get, null):Iterator<ILayer>;
+	
 	var onReady(get, null):Signal0;
 	var stage3D(get, null):Stage3D;
 	var context3D(get, null):Context3D;

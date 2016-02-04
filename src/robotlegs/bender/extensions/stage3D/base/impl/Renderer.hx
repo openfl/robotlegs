@@ -37,6 +37,8 @@ class Renderer implements IRenderer
 	@inject public var contextView:ContextView;
 	@inject public var viewport:IViewport;
 	
+	@:isVar public var addedLayers(get, null):Iterator<ILayer>;
+	
 	private var layers = new Array<ILayer>();
 	//private var stage3DManager:Stage3DManager;
 	//private var _stage3DProxy:Stage3DProxy;
@@ -124,8 +126,8 @@ class Renderer implements IRenderer
 			if (height < 32) height = 32;
 			trace("context3D = " + context3D);
 			try {
-				context3D.configureBackBuffer(width, height, antiAlias, true);
-			}
+			context3D.configureBackBuffer(width, height, antiAlias, true);
+		}
 			catch (e:Error) {
 				trace("e = " + e);
 			}
@@ -216,11 +218,11 @@ class Renderer implements IRenderer
 		
 		if (index == count) context3D.clear(viewport.red / 255, viewport.green / 255, viewport.blue / 255);
 		if (active){
-			for (i in 0...layers.length) 
-			{
-				layers[i].process();
-			}
+		for (i in 0...layers.length) 
+		{
+			layers[i].process();
 		}
+	}
 		if (index == 0) context3D.present();
 	}
 	
@@ -253,6 +255,11 @@ class Renderer implements IRenderer
 	public function get_numLayers():Int 
 	{
 		return layers.length;
+	}
+	
+	function get_addedLayers():Iterator<ILayer> 
+	{
+		return layers.iterator();
 	}
 	
 	function get_active():Bool 

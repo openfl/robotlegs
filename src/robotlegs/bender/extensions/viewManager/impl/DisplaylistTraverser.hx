@@ -73,7 +73,8 @@ class DisplaylistTraverser
 				childAdded.dispatch(display.getChildAt(i));
 			}
 		}
-		for (l in 0...childTraversers.length) 
+		var l:Int = 0;
+		while(l < childTraversers.length) 
 		{
 			if (childTraversers[l] == null) {
 				childTraversers.splice(l, 1);
@@ -85,6 +86,8 @@ class DisplaylistTraverser
 				childTraversers.splice(l, 1);
 				childRemoved.dispatch(traverserToRemove.display);
 				traverserToRemove.dispose();
+			}else {
+				l++;
 			}
 		}
 	}

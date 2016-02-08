@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.stage3D.starling.impl;
 
+import flash.display3D.Context3DRenderMode;
 import openfl.geom.Rectangle;
 import robotlegs.bender.extensions.stage3D.base.impl.BaseInitializer;
 import robotlegs.bender.extensions.stage3D.base.impl.Viewport;
@@ -35,7 +36,7 @@ class StarlingInitializer extends BaseInitializer
 			renderer.stage3D.context3D = renderer.context3D;
 		}*/
 		
-		var starling:Starling = new Starling(ViewClass, contextView.view.stage, viewRectangle, renderer.stage3D, "auto", renderer.profile);
+		var starling:Starling = new Starling(ViewClass, contextView.view.stage, viewRectangle, renderer.stage3D, Context3DRenderMode.AUTO, renderer.profile);
 		starling.simulateMultitouch = true;
 		//starling.enableErrorChecking = Capabilities.isDebugger;
 		starling.shareContext = true;

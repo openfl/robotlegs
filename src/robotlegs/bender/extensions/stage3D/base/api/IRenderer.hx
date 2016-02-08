@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.stage3D.base.api;
 
+import flash.display3D.Context3DProfile;
 import msignal.Signal.Signal0;
 import openfl.display.Stage3D;
 import openfl.display3D.Context3D;
@@ -28,6 +29,6 @@ interface IRenderer
 	var onActiveChange(get, null):Signal0;
 	var stage3D(get, null):Stage3D;
 	var context3D(get, null):Context3D;
-	var profile(get, null):String;
+	var profile(get, null):Context3DProfile;
 	var numLayers(get, null):Int;
 }

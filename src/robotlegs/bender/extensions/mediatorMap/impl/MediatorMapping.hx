@@ -45,7 +45,7 @@ class MediatorMapping implements IMediatorMapping implements IMediatorConfigurat
 		return hooks;
 	}
 
-	public var autoRemoveEnabled(get, null):Bool;
+	public var autoRemoveEnabled(get, null):Bool = true;
 	function get_autoRemoveEnabled():Bool
 	{
 		return autoRemoveEnabled;

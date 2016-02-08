@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.stage3D.base.impl;
 
+import openfl.display3D.Context3DProfile;
 import msignal.Signal.Signal0;
 import openfl.display.Stage3D;
 import openfl.display3D.Context3D;
@@ -42,7 +43,7 @@ class Renderer implements IRenderer
 	private var layers = new Array<ILayer>();
 	//private var stage3DManager:Stage3DManager;
 	//private var _stage3DProxy:Stage3DProxy;
-	private var _profile:Dynamic;
+	private var _profile:Context3DProfile;
 	private var freeFreeStage3DIndex:Int = 0;
 	private var _stage3D:Stage3D;
 	private var _context3D:Context3D;
@@ -57,7 +58,7 @@ class Renderer implements IRenderer
 	public var stage3D(get, null):Stage3D;
 	public var context3D(get, null):Context3D;
 	
-	public var profile(get, null):String;
+	public var profile(get, null):Context3DProfile;
 	public var numLayers(get, null):Int;
 	
 	private static var count:Int = -1;
@@ -77,7 +78,7 @@ class Renderer implements IRenderer
 		_logger = context.getLogger(this);
 	}
 	
-	public function init(profile:Dynamic, antiAlias:Int=0):Void
+	public function init(profile:Context3DProfile, antiAlias:Int=0):Void
 	{
 		this.antiAlias = antiAlias;
 		_profile = profile;
@@ -246,7 +247,7 @@ class Renderer implements IRenderer
 		return _context3D;
 	}
 	
-	public function get_profile():String 
+	public function get_profile():Context3DProfile 
 	{
 		return _profile;
 	}

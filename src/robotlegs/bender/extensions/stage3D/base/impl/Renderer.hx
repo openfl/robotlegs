@@ -108,26 +108,25 @@ class Renderer implements IRenderer
 			cast Context3DStencilAction.DECREMENT_SATURATE
 		);
 		
-		viewport.init();
 		viewport.onChange.add(OnViewportChange);
-		viewport.rect.setTo(0, 0, contextView.view.stage.stageWidth, contextView.view.stage.stageHeight);
+		viewport.setTo(0, 0, contextView.view.stage.stageWidth, contextView.view.stage.stageHeight);
 		
 		_onReady.dispatch();
 	}
 	
 	private function OnViewportChange():Void 
 	{
-		stage3D.x = viewport.rect.x;
-		stage3D.y = viewport.rect.y;
+		stage3D.x = viewport.x;
+		stage3D.y = viewport.y;
 		
 		if (context3D != null) {
-			var width:Int = cast viewport.rect.width;
+			var width:Int = cast viewport.width;
 			if (width < 32) width = 32;
-			var height:Int = cast viewport.rect.height;
+			var height:Int = cast viewport.height;
 			if (height < 32) height = 32;
 			try {
-			context3D.configureBackBuffer(width, height, antiAlias, true);
-		}
+				context3D.configureBackBuffer(width, height, antiAlias, true);
+			}
 			catch (e:Error) {
 				trace("e = " + e);
 			}
@@ -135,7 +134,7 @@ class Renderer implements IRenderer
 		
 		for (i in 0...layers.length)
 		{
-			layers[i].rect = viewport.rect;
+			layers[i].setTo(viewport.x, viewport.y, viewport.width, viewport.height);
 		}
 	}
 	

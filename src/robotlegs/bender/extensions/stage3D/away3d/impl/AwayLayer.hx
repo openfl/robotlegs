@@ -21,7 +21,7 @@ class AwayLayer extends View3D implements ILayer
 	private var _iRenderer:IRenderer;
 	
 	public var iRenderer(get, set):IRenderer;
-	public var rect(null, set):Rectangle;
+	//public var rect(null, set):Rectangle;
 	
 	private var stage3DManager:Stage3DManager;
 	private var profile:String;
@@ -72,16 +72,14 @@ class AwayLayer extends View3D implements ILayer
 		if (_iRenderer.active) this.render();
 	}
 	
-	public function set_rect(r:Rectangle):Rectangle
+	public function setTo(x:Float, y:Float, width:Float, height:Float):Void
 	{
-		this.x = stage3DProxy.x = r.x;
-		this.y = stage3DProxy.y = r.y;
-		this.width = r.width;
-		this.height = r.height;
-		stage3DProxy.width = cast(r.width);
-		stage3DProxy.height = cast(r.height);
-		
-		return rect;
+		this.x = stage3DProxy.x = x;
+		this.y = stage3DProxy.y = y;
+		this.width = width;
+		this.height = height;
+		stage3DProxy.width = cast width;
+		stage3DProxy.height = cast height;
 	}
 	
 	public function set_iRenderer(value:IRenderer):IRenderer 

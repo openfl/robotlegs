@@ -1,13 +1,7 @@
 package robotlegs.bender.extensions.stage3D.base.impl;
 
 import msignal.Signal.Signal0;
-import openfl.events.Event;
-import openfl.geom.Rectangle;
-import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.stage3D.base.api.IViewport;
-import robotlegs.bender.framework.api.IContext;
-import robotlegs.bender.framework.api.IInjector;
-import robotlegs.bender.framework.api.ILogger;
 /**
  * ...
  * @author P.J.Shand
@@ -16,28 +10,28 @@ import robotlegs.bender.framework.api.ILogger;
 @:keepSub
 class Viewport implements IViewport
 {
-	
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-	private var _injector:IInjector;
-	private var _logger:ILogger;
-	@inject public var contextView:ContextView;
-	
-	private var _rect = new Rectangle();
-	private var lastRect = new Rectangle();
-	
+	private var _x:Float = 0;
+	private var _y:Float = 0;
+	private var _width:Float = 0;
+	private var _height:Float = 0;
 	private var _onChange = new Signal0();
-	
-	public var rect(get, set):Rectangle;
-	public var onChange(get, null):Signal0;
-	
 	private var _colour:UInt = 0x0;
-	public var colour(get, set):UInt;
-	
 	private var _red:UInt = 0x0;
 	private var _green:UInt = 0x0;
 	private var _blue:UInt = 0x0;
+	
+	/*============================================================================*/
+	/* Public Properties                                                         */
+	/*============================================================================*/
+	public var x(get, set):Float;
+	public var y(get, set):Float;
+	public var width(get, set):Float;
+	public var height(get, set):Float;
+	public var onChange(get, null):Signal0;
+	public var colour(get, set):UInt;
 	
 	public var red(get, null):UInt;
 	public var green(get, null):UInt;
@@ -46,36 +40,53 @@ class Viewport implements IViewport
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-	public function Viewport(context:IContext)
+	private var count:Int = 0;
+	
+	public function new()
 	{
 		
-		_injector = context.injector;
-		_logger = context.getLogger(this);
 	}
 	
-	public function init():Void
+	public function setTo(x:Float, y:Float, width:Float, height:Float):Void
 	{
-		contextView.view.stage.addEventListener(Event.ENTER_FRAME, CheckForChange);
+		_x = x;
+		_y = y;
+		_width = width;
+		_height = height;
+		count++;
+		onChange.dispatch();
 	}
 	
-	private function CheckForChange(e:Event):Void 
+	private function get_x():Float { return _x; }
+	private function set_x(value:Float):Float 
 	{
-		if (_rect.x != lastRect.x) onChange.dispatch();
-		else if (_rect.y != lastRect.y) onChange.dispatch();
-		else if (_rect.width != lastRect.width) onChange.dispatch();
-		else if (_rect.height != lastRect.height) onChange.dispatch();
-		lastRect.setTo(_rect.x, _rect.y, _rect.width, _rect.height);
+		_x = value;
+		onChange.dispatch();
+		return _x;
 	}
 	
-	private function get_rect():Rectangle 
+	private function get_y():Float { return _y; }
+	private function set_y(value:Float):Float 
 	{
-		return _rect;
+		_y = value;
+		onChange.dispatch();
+		return _y;
 	}
 	
-	private function set_rect(value:Rectangle):Rectangle 
+	private function get_width():Float { return _width; }
+	private function set_width(value:Float):Float 
 	{
-		_rect = value;
-		return value;
+		_width = value;
+		onChange.dispatch();
+		return _width;
+	}
+	
+	private function get_height():Float { return _height; }
+	private function set_height(value:Float):Float 
+	{
+		_height = value;
+		onChange.dispatch();
+		return _height;
 	}
 	
 	private function get_onChange():Signal0 

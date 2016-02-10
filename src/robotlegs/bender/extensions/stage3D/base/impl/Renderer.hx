@@ -1,6 +1,5 @@
 package robotlegs.bender.extensions.stage3D.base.impl;
 
-import com.imagination.delay.EnterFrame;
 import openfl.display3D.Context3DProfile;
 import msignal.Signal.Signal0;
 import openfl.display.Stage3D;
@@ -142,14 +141,12 @@ class Renderer implements IRenderer
 	public function start():Void
 	{
 		trace("start" + " : " + random);
-		//contextView.view.stage.addEventListener(Event.ENTER_FRAME, Update);
-		EnterFrame.add(Update);
+		contextView.view.stage.addEventListener(Event.ENTER_FRAME, Update);
 	}
 	
 	public function stop():Void
 	{
-		//contextView.view.stage.removeEventListener(Event.ENTER_FRAME, Update);
-		EnterFrame.remove(Update);
+		contextView.view.stage.removeEventListener(Event.ENTER_FRAME, Update);
 	}
 	
 	public function addLayer(layer:ILayer):Void
@@ -209,10 +206,10 @@ class Renderer implements IRenderer
 	
 	public function render():Void
 	{
-		Update(0);
+		Update(null);
 	}
 	
-	private function Update(delta:Int):Void 
+	private function Update(e:Event):Void 
 	{
 		//if (layers.length == 0) return;
 		if (_stage3D == null) return;

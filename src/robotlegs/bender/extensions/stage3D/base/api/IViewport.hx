@@ -1,6 +1,5 @@
 package robotlegs.bender.extensions.stage3D.base.api; 
 
-import flash.geom.Rectangle;
 import msignal.Signal.Signal0;
 
 /**
@@ -9,11 +8,13 @@ import msignal.Signal.Signal0;
  */
 interface IViewport 
 {
-	function init():Void;
+	function setTo(x:Float, y:Float, width:Float, height:Float):Void;
 	
+	var x(get, set):Float;
+	var y(get, set):Float;
+	var width(get, set):Float;
+	var height(get, set):Float;
 	
-	
-	var rect(get, set):Rectangle;
 	var onChange(get, null):Signal0;
 	var colour(get, set):UInt;
 	

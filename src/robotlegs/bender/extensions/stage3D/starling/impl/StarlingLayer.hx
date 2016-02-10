@@ -16,7 +16,6 @@ class StarlingLayer extends Sprite implements ILayer
 	private var _iRenderer:IRenderer;
 	private var starling:Starling;
 	
-	public var rect(null, set):Rectangle;
 	public var iRenderer(get, set):IRenderer;
 	
 	public function new() 
@@ -34,12 +33,11 @@ class StarlingLayer extends Sprite implements ILayer
 		this.starling = starling;
 	}
 	
-	public function set_rect(rect:Rectangle):Rectangle
+	public function setTo(x:Float, y:Float, width:Float, height:Float):Void
 	{
-		starling.viewPort.setTo(rect.x, rect.y, rect.width, rect.height);
-		starling.stage.stageWidth = cast rect.width;
-		starling.stage.stageHeight = cast rect.height;
-		return rect;
+		starling.viewPort.setTo(x, y, width, height);
+		starling.stage.stageWidth = cast width;
+		starling.stage.stageHeight = cast height;
 	}
 	
 	public function set_iRenderer(value:IRenderer):IRenderer 

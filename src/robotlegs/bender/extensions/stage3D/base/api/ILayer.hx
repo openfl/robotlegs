@@ -10,5 +10,5 @@ interface ILayer
 	function process():Void;
 	
 	var iRenderer(get, set):IRenderer;
-	var rect(null, set):Rectangle;
+	function setTo(x:Float, y:Float, width:Float, height:Float):Void;
 }

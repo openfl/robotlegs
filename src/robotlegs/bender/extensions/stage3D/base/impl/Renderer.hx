@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.stage3D.base.impl;
 
+import com.imagination.delay.EnterFrame;
 import openfl.display3D.Context3DProfile;
 import msignal.Signal.Signal0;
 import openfl.display.Stage3D;
@@ -108,26 +109,25 @@ class Renderer implements IRenderer
 			cast Context3DStencilAction.DECREMENT_SATURATE
 		);
 		
-		viewport.init();
 		viewport.onChange.add(OnViewportChange);
-		viewport.rect.setTo(0, 0, contextView.view.stage.stageWidth, contextView.view.stage.stageHeight);
+		viewport.setTo(0, 0, contextView.view.stage.stageWidth, contextView.view.stage.stageHeight);
 		
 		_onReady.dispatch();
 	}
 	
 	private function OnViewportChange():Void 
 	{
-		stage3D.x = viewport.rect.x;
-		stage3D.y = viewport.rect.y;
+		stage3D.x = viewport.x;
+		stage3D.y = viewport.y;
 		
 		if (context3D != null) {
-			var width:Int = cast viewport.rect.width;
+			var width:Int = cast viewport.width;
 			if (width < 32) width = 32;
-			var height:Int = cast viewport.rect.height;
+			var height:Int = cast viewport.height;
 			if (height < 32) height = 32;
 			try {
-			context3D.configureBackBuffer(width, height, antiAlias, true);
-		}
+				context3D.configureBackBuffer(width, height, antiAlias, true);
+			}
 			catch (e:Error) {
 				trace("e = " + e);
 			}
@@ -135,19 +135,21 @@ class Renderer implements IRenderer
 		
 		for (i in 0...layers.length)
 		{
-			layers[i].rect = viewport.rect;
+			layers[i].setTo(viewport.x, viewport.y, viewport.width, viewport.height);
 		}
 	}
 	
 	public function start():Void
 	{
 		trace("start" + " : " + random);
-		contextView.view.stage.addEventListener(Event.ENTER_FRAME, Update);
+		//contextView.view.stage.addEventListener(Event.ENTER_FRAME, Update);
+		EnterFrame.add(Update);
 	}
 	
 	public function stop():Void
 	{
-		contextView.view.stage.removeEventListener(Event.ENTER_FRAME, Update);
+		//contextView.view.stage.removeEventListener(Event.ENTER_FRAME, Update);
+		EnterFrame.remove(Update);
 	}
 	
 	public function addLayer(layer:ILayer):Void
@@ -207,10 +209,10 @@ class Renderer implements IRenderer
 	
 	public function render():Void
 	{
-		Update(null);
+		Update(0);
 	}
 	
-	private function Update(e:Event):Void 
+	private function Update(delta:Int):Void 
 	{
 		//if (layers.length == 0) return;
 		if (_stage3D == null) return;

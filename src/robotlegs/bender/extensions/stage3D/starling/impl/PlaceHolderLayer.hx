@@ -14,8 +14,6 @@ class PlaceHolderLayer implements ILayer
 	private var _iRenderer:IRenderer;
 	private var starling:Starling;
 	
-	public var _rect:Rectangle;
-	public var rect(null, set):Rectangle;
 	public var iRenderer(get, set):IRenderer;
 	
 	public function new() 
@@ -33,14 +31,9 @@ class PlaceHolderLayer implements ILayer
 		return _iRenderer = value;
 	}
 	
-	public function get_rect():Rectangle 
+	public function setTo(x:Float, y:Float, width:Float, height:Float):Void
 	{
-		return _rect;
-	}
-	
-	public function set_rect(value:Rectangle):Rectangle 
-	{
-		return _rect = value;
+		
 	}
 	
 	public function process():Void 

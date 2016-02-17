@@ -95,6 +95,7 @@ class Renderer implements IRenderer
 			stage3D.requestContext3D(Std.string(renderMode));
 		#end
 		freeFreeStage3DIndex++;
+		checkVisability();
 	}
 	
 	private function contextCreatedHandler(e:Event):Void 
@@ -153,6 +154,7 @@ class Renderer implements IRenderer
 	{
 		layer.iRenderer = this;
 		layers.push(layer);
+		checkVisability();
 	}
 	
 	public function addLayerAt(layer:ILayer, index:Int):Void
@@ -191,6 +193,7 @@ class Renderer implements IRenderer
 				layers.splice(i, 1);
 			}
 		}
+		checkVisability();
 	}
 	
 	public function getLayerIndex(layer:ILayer):Int
@@ -256,17 +259,17 @@ class Renderer implements IRenderer
 		return layers.length;
 	}
 	
-	function get_addedLayers():Iterator<ILayer> 
+	private function get_addedLayers():Iterator<ILayer> 
 	{
 		return layers.iterator();
 	}
 	
-	function get_active():Bool 
+	private function get_active():Bool 
 	{
 		return _active;
 	}
 	
-	function set_active(value:Bool):Bool 
+	private function set_active(value:Bool):Bool 
 	{
 		if (_active == value) return value;
 		_active = value;
@@ -275,4 +278,11 @@ class Renderer implements IRenderer
 		else count--;
 		return _active;
 	}
+	
+	private function checkVisability():Void
+	{
+		if (layers.length == 0) stage3D.visible = false;
+		else stage3D.visible = true;
+	}
+	
 }

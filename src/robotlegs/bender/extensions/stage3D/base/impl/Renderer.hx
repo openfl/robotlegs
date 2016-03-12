@@ -64,7 +64,6 @@ class Renderer implements IRenderer
 	private static var count:Int = -1;
 	private var index:Int = 0;
 	
-	private var random:Int;
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
@@ -72,7 +71,6 @@ class Renderer implements IRenderer
 	{
 		count++;
 		index = count;
-		random = Math.round(Math.random() * 10000);
 		
 		_injector = context.injector;
 		_logger = context.getLogger(this);
@@ -84,7 +82,6 @@ class Renderer implements IRenderer
 		_profile = profile;
 		
 		_stage3D = contextView.view.stage.stage3Ds[freeFreeStage3DIndex];
-		_stage3D.x = Math.random() * 2000;
 		stage3D.addEventListener(Event.CONTEXT3D_CREATE, contextCreatedHandler);
 		
 		var renderMode:Context3DRenderMode = Context3DRenderMode.AUTO;
@@ -141,7 +138,6 @@ class Renderer implements IRenderer
 	
 	public function start():Void
 	{
-		trace("start" + " : " + random);
 		contextView.view.stage.addEventListener(Event.ENTER_FRAME, Update);
 	}
 	
@@ -160,19 +156,12 @@ class Renderer implements IRenderer
 	public function addLayerAt(layer:ILayer, index:Int):Void
 	{
 		layer.iRenderer = this;
-		if (layers.length < index) {
-			trace("[Renderer, addLayerAt], index outside bounds, reverting to addLayer");
+		if (layers.length <= index) {
+			if (layers.length < index) trace("[Renderer, addLayerAt], index outside bounds, reverting to addLayer");
 			addLayer(layer);
 			return;
 		}
 		
-		//layers.splice(index, 0, layer);
-		
-		if (index == layers.length) {
-			layers.push(layer);
-			return;
-		}
-		// CHECK
 		var copyLayers = layers.copy();
 		layers = new Array<ILayer>();
 		for (i in 0...copyLayers.length) 
@@ -182,6 +171,7 @@ class Renderer implements IRenderer
 			}
 			layers.push(copyLayers[i]);
 		}
+		checkVisability();
 	}
 	
 	public function removeLayer(layer:ILayer):Void
@@ -214,17 +204,16 @@ class Renderer implements IRenderer
 	
 	private function Update(e:Event):Void 
 	{
-		//if (layers.length == 0) return;
 		if (_stage3D == null) return;
 		if (context3D == null) return;
 		
 		if (index == count) context3D.clear(viewport.red / 255, viewport.green / 255, viewport.blue / 255);
 		if (active){
-		for (i in 0...layers.length) 
-		{
-			layers[i].process();
+			for (i in 0...layers.length) 
+			{
+				layers[i].process();
+			}
 		}
-	}
 		if (index == 0) context3D.present();
 	}
 	

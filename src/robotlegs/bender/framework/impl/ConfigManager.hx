@@ -187,13 +187,11 @@ class ConfigManager
 		//config && config.configure();
 		//if (config != null) config.configure();
 		
-		var object;
-		try {
-			object = _injector.getOrCreateNewInstance(type);
-		}
-		catch (e:Error) {
-			throw new Error("Can't cast " + type + " to IConfig, check you are using the @:keepSub meta tag");
-		}
+		var object = _injector.getOrCreateNewInstance(type);
+		
+		//catch (e:Error) {
+		//	throw new Error("Can't cast " + type + " to IConfig, check you are using the @:keepSub meta tag");
+		//}
 		
 		if (object != null) {
 			

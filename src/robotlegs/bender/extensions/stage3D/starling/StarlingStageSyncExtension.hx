@@ -97,10 +97,10 @@ class StarlingStageSyncExtension implements IExtension
 	 */
 	private function handleStarlingCollection(collection:StarlingCollection):Void
 	{
-		if (_starlingCollection != null)
+		/*if (_starlingCollection != null)
 		{
 			_logger.warn('A Starling collection has already been set, ignoring {0}', [collection]);
-		}
+		}*/
 		_starlingCollection = collection;
 		_numStarlingsInQueue = collection.length;
 		

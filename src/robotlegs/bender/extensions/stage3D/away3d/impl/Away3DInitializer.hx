@@ -22,7 +22,6 @@ class Away3DInitializer extends BaseInitializer
 	{
 		if (id == "") id = autoID(ViewClass);
 		var awayLayer:AwayLayer = CallProxy.createInstance(ViewClass, [renderer.profile]);
-		//var awayLayer:AwayLayer = new ViewClass(renderer.profile);
 		awayLayer.iRenderer = renderer;
 		
 		var awayCollection = new AwayCollection([awayLayer, id]);

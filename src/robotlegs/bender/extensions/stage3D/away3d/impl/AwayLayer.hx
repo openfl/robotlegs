@@ -34,42 +34,15 @@ class AwayLayer extends View3D implements ILayer
 		this.camera.lens.far = 20000;
 		this.backgroundColor = 0x555555;
 		this.shareContext = true;
-		//addEventListener(Event.ADDED_TO_STAGE, OnAdd);
-		
-		
 	}
-	
-	
-	
-	/*private function OnAdd(e:Event):Void 
-	{
-		removeEventListener(Event.ADDED_TO_STAGE, OnAdd);
-		
-		stage3DManager = Stage3DManager.getInstance(this.stage);
-		_stage3DProxy = stage3DManager.getStage3DProxy(0, false, profile);
-		_stage3DProxy.enableDepthAndStencil = true;
-		_stage3DProxy.addEventListener(Stage3DEvent.CONTEXT3D_CREATED, onContextCreated);
-		
-		trace("_stage3DProxy = " + _stage3DProxy.stage3D);
-		trace(_stage3DProxy.stage3D == _iRenderer.stage3D);
-		
-		this.backgroundColor = 0xFF00FF;
-		//_stage3DProxy.antiAlias = antiAlias;
-	}*/
-	
-	//private function onContextCreated(e:Event):Void 
-	//{
-		//iRenderer.stage3D.context3D.
-		//trace("onContextCreated");
-		//trace(_iRenderer.stage3D.context3D);
-		//trace(_stage3DProxy.context3D);
-		//trace(_iRenderer.stage3D.context3D == _stage3DProxy.context3D);
-		
-	//}
 	
 	public function process():Void
 	{
-		if (_iRenderer.active) this.render();
+		if (_iRenderer.active) {
+			this.render();
+			_mouse3DManager.fireMouseEvents();
+			_touch3DManager.fireTouchEvents();
+		}
 	}
 	
 	public function setTo(x:Float, y:Float, width:Float, height:Float):Void
@@ -85,7 +58,14 @@ class AwayLayer extends View3D implements ILayer
 	public function set_iRenderer(value:IRenderer):IRenderer 
 	{
 		_iRenderer = value;
+		if (stage3DProxy != null) stage3DProxy.antiAlias = value.antiAlias;
 		return value;
+	}
+	
+	override private function set_stage3DProxy(stage3DProxy:Stage3DProxy) : Stage3DProxy
+    {
+		if (iRenderer != null) stage3DProxy.antiAlias = iRenderer.antiAlias;
+		return super.set_stage3DProxy(stage3DProxy);
 	}
 	
 	public function get_iRenderer():IRenderer 

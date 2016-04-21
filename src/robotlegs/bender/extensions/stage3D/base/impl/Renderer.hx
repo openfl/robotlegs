@@ -41,8 +41,6 @@ class Renderer implements IRenderer
 	@:isVar public var addedLayers(get, null):Iterator<ILayer>;
 	
 	private var layers = new Array<ILayer>();
-	//private var stage3DManager:Stage3DManager;
-	//private var _stage3DProxy:Stage3DProxy;
 	private var _profile:Context3DProfile;
 	private var freeFreeStage3DIndex:Int = 0;
 	private var _stage3D:Stage3D;

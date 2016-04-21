@@ -10,6 +10,8 @@ import robotlegs.bender.extensions.stage3D.starling.impl.PlaceHolderLayer;
  * @author P.J.Shand
  * 
  */
+@:rtti
+@:keepSub
 interface IRenderer
 {
 	function init(profile:Dynamic, antiAlias:Int=0):Void;
@@ -24,6 +26,7 @@ interface IRenderer
 	
 	var addedLayers(get, null):Iterator<ILayer>;
 	
+	var antiAlias:Int;
 	var onReady(get, null):Signal0;
 	var active(get, set):Bool;
 	var onActiveChange(get, null):Signal0;

@@ -16,6 +16,8 @@ import starling.events.Event;
 @:keepSub
 class StarlingInitializer extends BaseInitializer
 {
+	//private static var starlingCollection:StarlingCollection;
+	
 	public function new() 
 	{
 		
@@ -44,7 +46,13 @@ class StarlingInitializer extends BaseInitializer
 		
 		if (debug) starling.showStats = true;
 		
-		context.configure(new StarlingCollection([starling, id]));
+		//if (starlingCollection == null) {
+			var starlingCollection:StarlingCollection = new StarlingCollection([starling, id]);
+			context.configure(starlingCollection);
+		//}
+		//else {
+		//	starlingCollection.addItem(starling, id);
+		//}
 		
 		var placeHolderLayer:PlaceHolderLayer = new PlaceHolderLayer();
 		if (index == -1) renderer.addLayer(placeHolderLayer);

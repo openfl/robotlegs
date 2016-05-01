@@ -4,8 +4,8 @@
 	"license": "MIT",
 	"tags": [ "mvc", "robotlegs", "openfl","flash", "js", "web", "starling", "away3D" ],
 	"description": "This is an OpenFL 2.x/Haxe port of the popular AS3 Micro-Architecture framework Robotlegs v2.2.1",
-	"version": "0.3.1",
-	"releasenote": "amend stage3d rendering and 3d mouse manager extensions",
+	"version": "0.3.2",
+	"releasenote": "multiple away3d layers are now added to the same contextIndex by default",
 	"contributors": [ "p.j.shand" ],
 	"dependencies": {
 		"openfl": "",

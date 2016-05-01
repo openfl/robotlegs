@@ -26,9 +26,9 @@ class AwayLayer extends View3D implements ILayer
 	private var stage3DManager:Stage3DManager;
 	private var profile:String;
 	
-	public function new(profile:String = "baseline") 
+	public function new(profile:String = "baseline", contextIndex:Int=0) 
 	{
-		super(null, null, null, false, profile);
+		super(null, null, null, false, profile, contextIndex);
 		this.profile = profile;
 		
 		this.camera.lens.far = 20000;

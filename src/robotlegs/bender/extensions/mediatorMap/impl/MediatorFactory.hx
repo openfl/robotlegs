@@ -95,7 +95,7 @@ class MediatorFactory
 	 */
 	public function removeMediators(item:Dynamic):Void
 	{
-		var id = UID.instanceID(item);
+		var id = UID.clearInstanceID(item);
 		_removeMediators(id);
 	}
 

@@ -7,8 +7,13 @@
 
 package robotlegs.bender.bundles.mvcs;
 
+#if flash
+import flash.events.Event;
+import flash.events.IEventDispatcher;
+#else
 import openfl.events.Event;
 import openfl.events.IEventDispatcher;
+#end
 import robotlegs.bender.extensions.localEventMap.api.IEventMap;
 import robotlegs.bender.extensions.mediatorMap.api.IMediator;
 

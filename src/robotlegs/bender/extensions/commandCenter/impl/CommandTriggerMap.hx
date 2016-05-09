@@ -55,12 +55,12 @@ class CommandTriggerMap
 	
 	public function getTrigger(params:Array<Dynamic>):ICommandTrigger
 	{
-		//CHECK
 		var key:Dynamic = getKey(params);
-		if (_triggers[UID.instanceID(key)] == null) {
-			_triggers[UID.instanceID(key)] = createTrigger(params);
+		if (Std.is(key, String) == false) key = UID.instanceID(key);
+		if (_triggers[key] == null) {
+			_triggers[key] = createTrigger(params);
 		}
-		return _triggers[UID.instanceID(key)];
+		return _triggers[key];
 		
 		//return _triggers[UID.instanceID(key)] ||= createTrigger(params);
 	}
@@ -79,13 +79,13 @@ class CommandTriggerMap
 
 	private function getKey(mapperArgs:Array<Dynamic>):Dynamic
 	{
-		return Reflect.callMethod (null, _keyFactory, mapperArgs);
+		return Reflect.callMethod(null, _keyFactory, mapperArgs);
 		//return _keyFactory.apply(null, mapperArgs);
 	}
 
 	private function createTrigger(mapperArgs:Array<Dynamic>):ICommandTrigger
 	{
-		return Reflect.callMethod (null, _triggerFactory, mapperArgs);
+		return Reflect.callMethod(null, _triggerFactory, mapperArgs);
 		//return _triggerFactory.apply(null, mapperArgs);
 	}
 

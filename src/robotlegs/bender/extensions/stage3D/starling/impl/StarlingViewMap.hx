@@ -6,6 +6,7 @@ import robotlegs.bender.extensions.stage3D.starling.api.IStarlingViewMap;
 import robotlegs.bender.extensions.stage3D.starling.impl.StarlingCollection;
 import starling.core.Starling;
 import starling.display.DisplayObject;
+import starling.display.DisplayObjectContainer;
 import starling.events.Event;
 
 /**
@@ -58,9 +59,17 @@ class StarlingViewMap implements IStarlingViewMap
 	/** @inheritDoc **/		
 	public function addStarlingView(view:DisplayObject):Void
 	{
-		var isIDisplay:Bool = Std.is(view, IDisplayObject);
-		if (isIDisplay) {
-			cast(view, IDisplayObject).init();
+		mediateChildren(view);
+	}
+	
+	function mediateChildren(view:DisplayObject) 
+	{
+		if (Std.is(view, DisplayObjectContainer)) {
+			var v:DisplayObjectContainer = untyped view;
+			for (i in 0...v.numChildren) 
+			{
+				mediateChildren(v.getChildAt(i));
+			}
 		}
 		mediatorMap.mediate(view);
 	}
@@ -68,8 +77,18 @@ class StarlingViewMap implements IStarlingViewMap
 	/** @inheritDoc **/		
 	public function removeStarlingView(view:DisplayObject):Void
 	{
-		if (Std.is(view, IDisplayObject))
-			cast(view, IDisplayObject).destroy();
+		unmediateChildren(view);
+	}
+	
+	function unmediateChildren(view:DisplayObject) 
+	{
+		if (Std.is(view, DisplayObjectContainer)) {
+			var v:DisplayObjectContainer = untyped view;
+			for (i in 0...v.numChildren) 
+			{
+				unmediateChildren(v.getChildAt(i));
+			}
+		}
 		mediatorMap.unmediate(view);
 	}
 	

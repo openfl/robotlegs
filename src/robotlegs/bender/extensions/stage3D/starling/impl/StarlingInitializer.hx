@@ -17,6 +17,7 @@ import starling.events.Event;
 class StarlingInitializer extends BaseInitializer
 {
 	//private static var starlingCollection:StarlingCollection;
+	public static var multitouchEnabled:Bool = true;
 	
 	public function new() 
 	{
@@ -30,7 +31,7 @@ class StarlingInitializer extends BaseInitializer
 		if (id == "") id = autoID(ViewClass);
 		
 		if (Starling.current == null){
-			Starling.multitouchEnabled = true;// DeviceInfo.isMobile ? true:false; // for Multitouch Scene
+			Starling.multitouchEnabled = multitouchEnabled;// true;// DeviceInfo.isMobile ? true:false; // for Multitouch Scene
 			Starling.handleLostContext = true; // recommended everwhere when using AssetManager
 		}
 		

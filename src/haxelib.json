@@ -4,8 +4,8 @@
 	"license": "MIT",
 	"tags": [ "mvc", "robotlegs", "openfl","flash", "js", "web", "starling", "away3D" ],
 	"description": "This is an OpenFL 2.x/Haxe port of the popular AS3 Micro-Architecture framework Robotlegs v2.2.1",
-	"version": "0.3.3",
-	"releasenote": "mediator map/unmap checks children actions",
+	"version": "0.3.4",
+	"releasenote": "stop CommandTriggerMap using String in ObjectMap",
 	"contributors": [ "p.j.shand" ],
 	"dependencies": {
 		"openfl": "",

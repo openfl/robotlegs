@@ -116,16 +116,17 @@ class Renderer implements IRenderer
 		stage3D.y = viewport.y;
 		
 		if (context3D != null) {
+			if (context3D.driverInfo == "Disposed") return;
 			var width:Int = cast viewport.width;
 			if (width < 32) width = 32;
 			var height:Int = cast viewport.height;
 			if (height < 32) height = 32;
-			try {
-				context3D.configureBackBuffer(width, height, antiAlias, true);
-			}
-			catch (e:Error) {
-				trace("e = " + e);
-			}
+			//try {
+			context3D.configureBackBuffer(width, height, antiAlias, true);
+			//}
+			//catch (e:Error) {
+			//	trace("e = " + e);
+			//}
 		}
 		
 		for (i in 0...layers.length)

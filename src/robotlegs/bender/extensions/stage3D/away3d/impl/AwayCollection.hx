@@ -65,7 +65,6 @@ class AwayCollection extends BaseCollection
 		var result:View3D = getItem(name);
 		
 		for (i in 0...view3Ds.length) 
-		//for (var i:Int = 0; i < view3Ds.length; i++) 
 		{
 			if (view3Ds[i] == result) view3Ds.splice(i, 1);
 		}

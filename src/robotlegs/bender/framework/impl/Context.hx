@@ -399,7 +399,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function addConfigHandler(matcher:IMatcher, handler:Void->Void):IContext
+	public function addConfigHandler(matcher:IMatcher, handler:Dynamic):IContext
 	{
 		_configManager.addConfigHandler(matcher, handler);
 		return this;

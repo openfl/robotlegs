@@ -14,7 +14,7 @@ import robotlegs.bender.extensions.stage3D.starling.impl.PlaceHolderLayer;
 @:keepSub
 interface IRenderer
 {
-	function init(profile:Dynamic, antiAlias:Int=0):Void;
+	function init(profile:Context3DProfile, antiAlias:Int=0):Void;
 	function start():Void;
 	function stop():Void;
 	function render():Void;

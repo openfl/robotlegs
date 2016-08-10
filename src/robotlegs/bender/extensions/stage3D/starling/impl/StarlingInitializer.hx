@@ -32,14 +32,14 @@ class StarlingInitializer extends BaseInitializer
 		
 		if (Starling.current == null){
 			Starling.multitouchEnabled = multitouchEnabled;// true;// DeviceInfo.isMobile ? true:false; // for Multitouch Scene
-			Starling.handleLostContext = true; // recommended everwhere when using AssetManager
+			//Starling.handleLostContext = true; // recommended everwhere when using AssetManager
 		}
 		
 		/*if (renderer.stage3D.context3D == null && renderer.context3D != null) {
 			renderer.stage3D.context3D = renderer.context3D;
 		}*/
 		
-		var starling:Starling = new Starling(ViewClass, contextView.view.stage, viewRectangle, renderer.stage3D, Context3DRenderMode.AUTO, renderer.profile);
+		var starling:Starling = new Starling(cast ViewClass, contextView.view.stage, viewRectangle, renderer.stage3D, Context3DRenderMode.AUTO, renderer.profile);
 		starling.simulateMultitouch = true;
 		//starling.enableErrorChecking = Capabilities.isDebugger;
 		starling.shareContext = true;

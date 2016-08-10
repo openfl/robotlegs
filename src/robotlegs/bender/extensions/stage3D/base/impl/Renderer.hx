@@ -74,12 +74,18 @@ class Renderer implements IRenderer
 		_logger = context.getLogger(this);
 	}
 	
-	public function init(profile:Context3DProfile, antiAlias:Int=0):Void
+	public function init(profile:Context3DProfile, antiAlias:Int=0, stage3DIndex:Null<Int>=null):Void
 	{
 		this.antiAlias = antiAlias;
 		_profile = profile;
 		
-		_stage3D = contextView.view.stage.stage3Ds[freeFreeStage3DIndex];
+		if (stage3DIndex != null) {
+			_stage3D = contextView.view.stage.stage3Ds[stage3DIndex];
+		}
+		else {
+			_stage3D = contextView.view.stage.stage3Ds[freeFreeStage3DIndex];
+		}
+		
 		stage3D.addEventListener(Event.CONTEXT3D_CREATE, contextCreatedHandler);
 		
 		var renderMode:Context3DRenderMode = Context3DRenderMode.AUTO;
@@ -112,21 +118,25 @@ class Renderer implements IRenderer
 	
 	private function OnViewportChange():Void 
 	{
+		if (viewport.width < 64) viewport.width = 64;
+		if (viewport.height < 64) viewport.height = 64;
+		
 		stage3D.x = viewport.x;
 		stage3D.y = viewport.y;
 		
 		if (context3D != null) {
 			if (context3D.driverInfo == "Disposed") return;
 			var width:Int = cast viewport.width;
-			if (width < 32) width = 32;
+			if (width < 64) width = 64;
 			var height:Int = cast viewport.height;
-			if (height < 32) height = 32;
-			//try {
-			context3D.configureBackBuffer(width, height, antiAlias, true);
-			//}
-			//catch (e:Error) {
-			//	trace("e = " + e);
-			//}
+			if (height < 64) height = 64;
+			try {
+				context3D.configureBackBuffer(width, height, antiAlias, true);
+			}
+			catch (e:Error) {
+				trace("e = " + e);
+				return;
+			}
 		}
 		
 		for (i in 0...layers.length)
@@ -205,11 +215,16 @@ class Renderer implements IRenderer
 	{
 		if (_stage3D == null) return;
 		if (context3D == null) return;
+		if (context3D.driverInfo == "Disposed") return;
 		
 		if (index == count) context3D.clear(viewport.red / 255, viewport.green / 255, viewport.blue / 255);
 		if (active){
 			for (i in 0...layers.length) 
 			{
+				// in some instances context3D is set to null in this loop
+				if (context3D == null) return;
+				if (context3D.driverInfo == "Disposed") return;
+		
 				layers[i].process();
 			}
 		}

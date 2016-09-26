@@ -1,5 +1,7 @@
 package robotlegs.bender.extensions.stage3D.base.impl;
 
+import com.imagination.core.type.Notifier;
+import openfl.Lib;
 import openfl.display3D.Context3DProfile;
 import msignal.Signal.Signal0;
 import openfl.display.Stage3D;
@@ -47,6 +49,7 @@ class Renderer implements IRenderer
 	private var _context3D:Context3D;
 	public var antiAlias:Int;
 	
+	public var frameRate:Null<Int>;
 	private var _active:Bool = true;
 	public var active(get, set):Bool;
 	
@@ -56,12 +59,19 @@ class Renderer implements IRenderer
 	public var stage3D(get, null):Stage3D;
 	public var context3D(get, null):Context3D;
 	
+	public var prePresent = new Signal0();
+	public var postPresent = new Signal0();
+	
 	public var profile(get, null):Context3DProfile;
 	public var numLayers(get, null):Int;
 	
 	private static var count:Int = -1;
 	private var index:Int = 0;
+	var skip:Int = 1;
+	var renderCount:Int = 0;
+	var renderMod:Int = 0;
 	
+	public var contextDisposed = new Notifier<Null<Bool>>(null);
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
@@ -72,6 +82,13 @@ class Renderer implements IRenderer
 		
 		_injector = context.injector;
 		_logger = context.getLogger(this);
+		
+		contextDisposed.change.add(OnContextDisposedChange);
+	}
+	
+	function OnContextDisposedChange() 
+	{
+		
 	}
 	
 	public function init(profile:Context3DProfile, antiAlias:Int=0, stage3DIndex:Null<Int>=null):Void
@@ -103,6 +120,7 @@ class Renderer implements IRenderer
 	{
 		_context3D = stage3D.context3D;
 		context3D.configureBackBuffer(contextView.view.stage.stageWidth, contextView.view.stage.stageHeight, antiAlias, true);
+		trace("context3D.driverInfo = " + context3D.driverInfo);
 		
 		context3D.setStencilActions(
 			cast Context3DTriangleFace.FRONT_AND_BACK,
@@ -215,20 +233,42 @@ class Renderer implements IRenderer
 	{
 		if (_stage3D == null) return;
 		if (context3D == null) return;
-		if (context3D.driverInfo == "Disposed") return;
-		
-		if (index == count) context3D.clear(viewport.red / 255, viewport.green / 255, viewport.blue / 255);
-		if (active){
-			for (i in 0...layers.length) 
-			{
-				// in some instances context3D is set to null in this loop
-				if (context3D == null) return;
-				if (context3D.driverInfo == "Disposed") return;
-		
-				layers[i].process();
-			}
+		if (context3D.driverInfo == "Disposed") {
+			contextDisposed.value = true;
+			return;
 		}
-		if (index == 0) context3D.present();
+		
+		if (frameRate != null){
+			skip = Math.floor(Lib.current.stage.frameRate / frameRate);
+			renderMod = renderCount % skip;
+		}
+		
+		if (renderCount % skip == 0){
+			if (index == count) context3D.clear(viewport.red / 255, viewport.green / 255, viewport.blue / 255);
+			if (active){
+				for (i in 0...layers.length) 
+				{
+					// in some instances context3D is set to null in this loop
+					if (context3D == null) return;
+					if (context3D.driverInfo == "Disposed") {
+						contextDisposed.value = true;
+						return;
+					}
+					layers[i].process();
+				}
+			}
+			prePresent.dispatch();
+			if (index == 0) {
+				
+				context3D.present();
+			}
+			postPresent.dispatch();
+		}
+		
+		if (index == 0) {
+			renderCount++;
+		}
+		contextDisposed.value = false;
 	}
 	
 	

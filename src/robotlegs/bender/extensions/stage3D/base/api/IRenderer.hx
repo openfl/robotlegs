@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.stage3D.base.api;
 
+import com.imagination.core.type.Notifier;
 import flash.display3D.Context3DProfile;
 import msignal.Signal.Signal0;
 import openfl.display.Stage3D;
@@ -24,6 +25,8 @@ interface IRenderer
 	function removeLayer(layer:ILayer):Void;
 	function getLayerIndex(layer:ILayer):Int;
 	
+	var frameRate:Null<Int>;
+	
 	var addedLayers(get, null):Iterator<ILayer>;
 	
 	var antiAlias:Int;
@@ -34,4 +37,8 @@ interface IRenderer
 	var context3D(get, null):Context3D;
 	var profile(get, null):Context3DProfile;
 	var numLayers(get, null):Int;
+	var contextDisposed:Notifier<Null<Bool>>;
+	
+	var prePresent:Signal0;
+	var postPresent:Signal0;
 }

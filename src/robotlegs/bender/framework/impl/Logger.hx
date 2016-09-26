@@ -7,7 +7,7 @@
 
 package robotlegs.bender.framework.impl;
 
-import openfl.Lib;
+import haxe.Timer;
 import robotlegs.bender.framework.api.ILogTarget;
 import robotlegs.bender.framework.api.ILogger;
 
@@ -52,7 +52,8 @@ class Logger implements ILogger
 	 */
 	public function debug(message:Dynamic, params:Array<Dynamic> = null):Void
 	{
-		_target.log(_source, 32, Lib.getTimer(), message, params);
+		
+		_target.log(_source, 32, Timer.stamp(), message, params);
 	}
 
 	/**
@@ -60,7 +61,7 @@ class Logger implements ILogger
 	 */
 	public function info(message:Dynamic, params:Array<Dynamic> = null):Void
 	{
-		_target.log(_source, 16, Lib.getTimer(), message, params);
+		_target.log(_source, 16, Timer.stamp(), message, params);
 	}
 
 	/**
@@ -68,7 +69,7 @@ class Logger implements ILogger
 	 */
 	public function warn(message:Dynamic, params:Array<Dynamic> = null):Void
 	{
-		_target.log(_source, 8, Lib.getTimer(), message, params);
+		_target.log(_source, 8, Timer.stamp(), message, params);
 	}
 
 	/**
@@ -76,7 +77,7 @@ class Logger implements ILogger
 	 */
 	public function error(message:Dynamic, params:Array<Dynamic> = null):Void
 	{
-		_target.log(_source, 4, Lib.getTimer(), message, params);
+		_target.log(_source, 4, Timer.stamp(), message, params);
 	}
 
 	/**
@@ -84,6 +85,6 @@ class Logger implements ILogger
 	 */
 	public function fatal(message:Dynamic, params:Array<Dynamic> = null):Void
 	{
-		_target.log(_source, 2, Lib.getTimer(), message, params);
+		_target.log(_source, 2, Timer.stamp(), message, params);
 	}
 }

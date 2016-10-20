@@ -2,7 +2,7 @@ package robotlegs.bender.bundles.stage3D;
 
 import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
-import robotlegs.bender.extensions.stage3D.base.Stage3DStackExtension;
+import robotlegs.bender.extensions.display.stage3D.Stage3DStackExtension;
 
 /**
  * ...
@@ -19,12 +19,6 @@ class Stage3DBundle implements IBundle
 	public function extend(context:IContext):Void
 	{
 		context.install([
-			//ManualStageObserverExtension, 
-			//SignalCommandMapExtension, 
-			//ImagSignalExtension,
-			//ImagModelExtension,
-			//ImagServiceExtension,
-			//ImagCommandExtension,
 			Stage3DStackExtension
 		]);
 	}

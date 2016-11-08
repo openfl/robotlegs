@@ -19,10 +19,7 @@ import robotlegs.bender.extensions.display.base.api.IRenderer;
 @:keepSub
 class AwayLayer extends View3D implements ILayer implements IAwayLayer
 {
-	//private var _iRenderer:IRenderer;
 	@:isVar public var renderContext(get, set):IRenderContext;
-	//public var iRenderer(get, set):IRenderer;
-	//public var rect(null, set):Rectangle;
 	
 	private var stage3DManager:Stage3DManager;
 	private var profile:String;

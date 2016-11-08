@@ -56,7 +56,7 @@ class Stack implements IStack
 		_logger = context.getLogger(this);
 		
 		classIDs = new Array<Array<Dynamic>>();
-		classIDs.push(["away3d.stereo", "AwayStereoLayer", addAway3DAt]);
+		classIDs.push(["robotlegs.bender.extensions.display.stage3D.away3d.impl", "AwayStereoLayer", addAway3DAt]);
 		classIDs.push(["robotlegs.bender.extensions.display.stage3D.away3d.impl", "AwayLayer", addAway3DAt]);
 		classIDs.push(["robotlegs.bender.extensions.display.stage3D.starling.impl", "StarlingLayer", addStarlingAt]);
 		classIDs.push(["robotlegs.bender.extensions.display.webGL.threejs.impl", "ThreeJsLayer", addThreeJsAt]);
@@ -71,7 +71,7 @@ class Stack implements IStack
 		//away3DInitializer = createInitializer("robotlegs.bender.extensions.stage3D.away3d.impl.Away3DInitializer");
 		//trace(classIDs[0][0] + ".Away3DInitializer");
 		trace(classIDs[1][0] + ".Away3DInitializer");
-		//away3DInitializer = createInitializer(classIDs[0][0] + ".Away3DInitializer");
+		away3DInitializer = createInitializer(classIDs[0][0] + ".Away3DInitializer");
 		away3DInitializer = createInitializer(classIDs[1][0] + ".Away3DInitializer");
 		
 		starlingInitializer = createInitializer(classIDs[2][0] + ".StarlingInitializer");

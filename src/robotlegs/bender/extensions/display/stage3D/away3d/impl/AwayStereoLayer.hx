@@ -1,6 +1,7 @@
 package robotlegs.bender.extensions.display.stage3D.away3d.impl; 
 
 import away3d.cameras.Camera3D;
+import away3d.cameras.lenses.PerspectiveLens;
 import away3d.containers.View3D;
 import away3d.core.managers.Stage3DManager;
 import away3d.core.managers.Stage3DProxy;
@@ -42,15 +43,12 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 		super(null, null, null, null, false, profile, contextIndex);
 		this.profile = profile;
 		
-		stereoCamera3D = new StereoCamera3D();
-		stereoCamera3D.stereoOffset = 10;
-		stereoCamera3D.position = new Vector3D();
 		
-		this.shareContext = true;
+		
 		
 		this.antiAlias = 0;
-		this.camera = stereoCamera3D;
 		
+		this.shareContext = true;
 		this.stereoEnabled = true;
 		
 		addEventListener(Event.ADDED_TO_STAGE, OnAdd);
@@ -122,6 +120,7 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 	
 	override private function set_stereoEnabled(val:Bool):Bool {
         _stereoEnabled = val;
+		trace("rect = " + rect);
 		if (stage3DProxy != null) {
 			setTo(rect.x, rect.y, rect.width, rect.height);
 		}
@@ -135,9 +134,9 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 		if (stereoEnabled == true){
 			width = PowerOf2.next(cast width);
 			height = PowerOf2.next(cast height);
+			if (width > 1024) width = 1024;
+			if (height > 1024) height = 1024;
 		}
-		if (width > 1024) width = 1024;
-		if (height > 1024) height = 1024;
 		
 		this.x = stage3DProxy.x = x;
 		this.y = stage3DProxy.y = y;

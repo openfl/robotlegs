@@ -18,7 +18,7 @@ class ThreeJsLayer extends Sprite implements ILayer
 	@:isVar public var renderContext(get, set):IRenderContext;
 	
 	public var scene = new Scene();
-	private var renderer = new WebGLRenderer();
+	private var renderer = new WebGLRenderer( { alpha:true, antialias: true } );
 	
 	public var camera:PerspectiveCamera;
 	
@@ -26,11 +26,15 @@ class ThreeJsLayer extends Sprite implements ILayer
 	var _height:Float = 0;
 	
 	
-	public function new(useWebVR:Bool=true)
+	public function new()
 	{
 		super();
 		
-		camera = new PerspectiveCamera(90, 1, 0.001, 700);
+		renderer.setPixelRatio( js.Browser.window.devicePixelRatio==null ? 1 : js.Browser.window.devicePixelRatio );
+		renderer.setClearColor ( 0, 1.0 );
+		renderer.sortObjects = true;
+		
+		camera = new PerspectiveCamera(60, 1, 0.001, 700);
 		camera.position.set(0, 10, 0);
 		scene.add(camera);
 	}

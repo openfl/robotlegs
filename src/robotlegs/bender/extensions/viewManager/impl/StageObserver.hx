@@ -27,7 +27,7 @@ class StageObserver
 	private var _filter = ~/^mx\.|^spark\.|^flash\./;
 	
 	private var _registry:ContainerRegistry;
-	var traver:DisplaylistTraverser;
+	//var traver:DisplaylistTraverser;
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -82,12 +82,17 @@ class StageObserver
 
 	private function addRootListener(container:DisplayObjectContainer):Void
 	{
+		//#if flash
 		#if flash
-			// The magical, but extremely expensive, capture-phase ADDED_TO_STAGE listener
-			container.addEventListener(Event.ADDED_TO_STAGE, onViewAddedToStage, true);
+		var useCapture:Bool = true;
+		#else
+		var useCapture:Bool = false;
+		#end
+			// The magical, but extremely expensive, capture-phase ADDED listener
+			container.addEventListener(Event.ADDED, onViewAddedToStage, useCapture);
 			// Watch the root container itself - nobody else is going to pick it up!
 			container.addEventListener(Event.ADDED_TO_STAGE, onContainerRootAddedToStage);
-		#else
+		/*#else
 			// Unfortunately OpenFL's event system doesn't support event useCapture, which is a feature 
 			// that robotlegs heavily depends upon. To resolve this a brute force enter frame displaylist traver 
 			// is used for all non-flash targets. This is not ideal, however it is currently our only option.
@@ -98,10 +103,10 @@ class StageObserver
 			traver = new DisplaylistTraverser(container);
 			traver.childAdded.add(OnChildAdded);
 			//traver.childRemoved.add(OnChildRemoved);
-		#end
+		#end*/
 	}
 	
-	#if flash
+	//#if flash
 		private function onViewAddedToStage(event:Event):Void
 		{
 			var view:DisplayObject = cast(event.target, DisplayObject);
@@ -116,7 +121,7 @@ class StageObserver
 			var binding:ContainerBinding = _registry.getBinding(container);
 			if (binding != null) binding.handleView(container, type);
 		}
-	#else
+	/*#else
 		private function OnChildAdded(display:DisplayObject):Void
 		{
 			addView(display);
@@ -126,16 +131,21 @@ class StageObserver
 		//{
 			//trace("remove: " + display);
 		//}
-	#end
+	#end*/
 	
 	private function removeRootListener(container:DisplayObjectContainer):Void
 	{
+		//#if flash
 		#if flash
-			container.removeEventListener(Event.ADDED_TO_STAGE, onViewAddedToStage, true);
-			container.removeEventListener(Event.ADDED_TO_STAGE, onContainerRootAddedToStage);
+		var useCapture:Bool = true;
 		#else
-			if (traver != null) traver.childAdded.remove(OnChildAdded);
+		var useCapture:Bool = false;
 		#end
+			container.removeEventListener(Event.ADDED, onViewAddedToStage, useCapture);
+			container.removeEventListener(Event.ADDED_TO_STAGE, onContainerRootAddedToStage);
+		/*#else
+			if (traver != null) traver.childAdded.remove(OnChildAdded);
+		#end*/
 	}
 
 	

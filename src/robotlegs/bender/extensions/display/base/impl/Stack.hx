@@ -49,8 +49,6 @@ class Stack implements IStack
 	/*============================================================================*/
 	public function new(context:IContext)
 	{
-		trace("Stack");
-		
 		this.context = context;
 		_injector = context.injector;
 		_logger = context.getLogger(this);

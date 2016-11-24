@@ -17,6 +17,8 @@ class Event {
 	public static inline var CONTEXT3D_CREATE = "context3DCreate";
 	public static inline var DEACTIVATE = "deactivate";
 	public static inline var ENTER_FRAME = "enterFrame";
+	public static inline var EXIT_FRAME = "exitFrame";
+	public static inline var FRAME_CONSTRUCTED = "frameConstructed";
 	public static inline var ID3 = "id3";
 	public static inline var INIT = "init";
 	public static inline var MOUSE_LEAVE = "mouseLeave";
@@ -31,6 +33,7 @@ class Event {
 	public static inline var TAB_CHILDREN_CHANGE = "tabChildrenChange";
 	public static inline var TAB_ENABLED_CHANGE = "tabEnabledChange";
 	public static inline var TAB_INDEX_CHANGE = "tabIndexChange";
+	public static inline var TEXTURE_READY = "textureReady";
 	public static inline var UNLOAD = "unload";
 	
 	public var bubbles (default, null):Bool;

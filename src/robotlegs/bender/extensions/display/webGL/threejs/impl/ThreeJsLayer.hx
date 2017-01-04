@@ -26,12 +26,12 @@ class ThreeJsLayer extends Sprite implements ILayer
 	var _height:Float = 0;
 	
 	
-	public function new()
+	public function new(clearColor:UInt=0x00000)
 	{
 		super();
 		
 		renderer.setPixelRatio( js.Browser.window.devicePixelRatio==null ? 1 : js.Browser.window.devicePixelRatio );
-		renderer.setClearColor ( 0, 1.0 );
+		renderer.setClearColor ( clearColor, 1.0 );
 		renderer.sortObjects = true;
 		
 		camera = new PerspectiveCamera(60, 1, 0.001, 700);

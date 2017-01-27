@@ -21,5 +21,5 @@ interface ILogTarget
 	 * @param message The log message
 	 * @param params Message parameters
 	 */
-	function log(source:Dynamic, level:UInt, timestamp:Int, message:String, params:Array<Dynamic> = null):Void;
+	function log(source:Dynamic, level:UInt, timestamp:Float, message:String, params:Array<Dynamic> = null):Void;
 }

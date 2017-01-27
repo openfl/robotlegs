@@ -49,7 +49,7 @@ class TraceLogTarget implements ILogTarget
 	/**
 	 * @inheritDoc
 	 */
-	public function log(source:Dynamic, level:UInt, timestamp:Int, message:String, params:Array<Dynamic> = null):Void
+	public function log(source:Dynamic, level:UInt, timestamp:Float, message:String, params:Array<Dynamic> = null):Void
 	{
 		#if js
 			var sourceName = CallProxy.getClassName(Type.getClass(source));

@@ -105,7 +105,7 @@ class SignalCommandTrigger implements ICommandTrigger
 
 	public function toString():String
 	{
-		return cast(_signalClass, String);
+		return Type.getClassName(_signalClass);
 	}
 
 	/*============================================================================*/

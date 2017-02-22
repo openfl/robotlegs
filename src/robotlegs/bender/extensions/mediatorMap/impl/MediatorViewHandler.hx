@@ -20,7 +20,6 @@ import robotlegs.bender.extensions.viewManager.api.IViewHandler;
 @:keepSub
 class MediatorViewHandler implements IViewHandler
 {
-	private static var _skippedMappings:Array<Dynamic> = [];
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
@@ -28,7 +27,7 @@ class MediatorViewHandler implements IViewHandler
 
 	private var _mappings:Array<Dynamic> = [];
 
-	private var _knownMappings = new Map<String,Dynamic>();
+	private var _knownMappings = new Map<String,Array<IMediatorMapping>>();
 
 	private var _factory:MediatorFactory;
 
@@ -98,39 +97,36 @@ class MediatorViewHandler implements IViewHandler
 
 	private function flushCache():Void
 	{
-		_knownMappings = new Map<String,Dynamic>();
+		_knownMappings = new Map<String,Array<IMediatorMapping>>();
 	}
 
-	private function getInterestedMappingsFor(item:Dynamic, type:Class<Dynamic>):Array<Dynamic>
+	private function getInterestedMappingsFor(item:Dynamic, type:Class<Dynamic>):Array<IMediatorMapping>
 	{
 		var mapping:IMediatorMapping;
 		var typeID = UID.classID(type);
 		
 		// we've seen this type before and nobody was interested
-		if (_knownMappings[typeID] == _skippedMappings)
+		if (_knownMappings.exists(typeID) && _knownMappings.get(typeID).length == 0)
 			return null;
 
 		// we haven't seen this type before
-		if (_knownMappings[typeID] == null)
+		if (!_knownMappings.exists(typeID))
 		{
-			_knownMappings[typeID] = _skippedMappings;
+			_knownMappings.set(typeID, []);
 			for (i in 0..._mappings.length)
 			{
 				mapping = _mappings[i];
 				if (mapping.matcher.matches(item))
 				{
-					if (_knownMappings[typeID] == _skippedMappings) {
-						_knownMappings[typeID] = [];
-					}
-					_knownMappings[typeID].push(mapping);
+					_knownMappings.get(typeID).push(mapping);
 				}
 			}
 			// nobody cares, let's get out of here
-			if (_knownMappings[typeID] == _skippedMappings)
+			if (_knownMappings.get(typeID).length == 0)
 				return null;
 		}
 
 		// these mappings really do care
-		return cast(_knownMappings[typeID], Array<Dynamic>);
+		return _knownMappings.get(typeID);
 	}
 }

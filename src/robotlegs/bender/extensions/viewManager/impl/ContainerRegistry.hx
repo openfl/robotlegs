@@ -115,9 +115,7 @@ class ContainerRegistry extends EventDispatcher
 
 	private function createBinding(container:DisplayObjectContainer):ContainerBinding
 	{
-		trace("create: " + container);
 		var binding:ContainerBinding = new ContainerBinding(container);
-		trace("binding.container = " + binding.container);
 		
 		this.bindings.push(binding);
 
@@ -136,10 +134,6 @@ class ContainerRegistry extends EventDispatcher
 		// B. Have a parent that is not contained within the new binding
 		for (childBinding in _bindingByContainer)
 		{
-			trace("container = " + container);
-			trace(childBinding);
-			trace(childBinding.container);
-			
 			if (childBinding.container != null && container.contains(childBinding.container))
 			{
 				if (childBinding.parent == null)

@@ -64,11 +64,11 @@ class ContainerRegistry extends EventDispatcher
 	 */
 	public function addContainer(container:DisplayObjectContainer):ContainerBinding
 	{
-		// CHECK
-		if (_bindingByContainer[container] == null) {
-			_bindingByContainer[container] = createBinding(container);
+		if (!_bindingByContainer.exists(container)) {
+			_bindingByContainer.set(container, createBinding(container));
 		}
-		return _bindingByContainer[container];
+		
+		return _bindingByContainer.get(container);
 	}
 
 	/**
@@ -76,7 +76,7 @@ class ContainerRegistry extends EventDispatcher
 	 */
 	public function removeContainer(container:DisplayObjectContainer):ContainerBinding
 	{
-		var binding:ContainerBinding = _bindingByContainer[container];
+		var binding:ContainerBinding = _bindingByContainer.get(container);
 		if (binding != null) removeBinding(binding);
 		return binding;
 	}
@@ -91,7 +91,7 @@ class ContainerRegistry extends EventDispatcher
 		var parent:DisplayObjectContainer = target.parent;
 		while (parent != null)
 		{
-			var binding:ContainerBinding = _bindingByContainer[parent];
+			var binding:ContainerBinding = _bindingByContainer.get(parent);
 			if (binding != null)
 			{
 				return binding;
@@ -106,7 +106,7 @@ class ContainerRegistry extends EventDispatcher
 	 */
 	public function getBinding(container:DisplayObjectContainer):ContainerBinding
 	{
-		return _bindingByContainer[container];
+		return _bindingByContainer.get(container);
 	}
 
 	/*============================================================================*/
@@ -115,7 +115,10 @@ class ContainerRegistry extends EventDispatcher
 
 	private function createBinding(container:DisplayObjectContainer):ContainerBinding
 	{
+		trace("create: " + container);
 		var binding:ContainerBinding = new ContainerBinding(container);
+		trace("binding.container = " + binding.container);
+		
 		this.bindings.push(binding);
 
 		// Add a listener so that we can remove this binding when it has no handlers
@@ -133,7 +136,11 @@ class ContainerRegistry extends EventDispatcher
 		// B. Have a parent that is not contained within the new binding
 		for (childBinding in _bindingByContainer)
 		{
-			if (container.contains(childBinding.container))
+			trace("container = " + container);
+			trace(childBinding);
+			trace(childBinding.container);
+			
+			if (childBinding.container != null && container.contains(childBinding.container))
 			{
 				if (childBinding.parent == null)
 				{

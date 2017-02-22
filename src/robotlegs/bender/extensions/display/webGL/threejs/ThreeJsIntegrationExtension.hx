@@ -11,7 +11,6 @@ import robotlegs.bender.extensions.matching.InstanceOfType;
 import robotlegs.bender.extensions.display.webGL.threejs.api.IThreeJsViewMap;
 import robotlegs.bender.extensions.display.webGL.threejs.impl.ThreeJsCollection;
 import robotlegs.bender.extensions.display.webGL.threejs.impl.ThreeJsInitializer;
-import robotlegs.bender.extensions.display.webGL.threejs.impl.ThreeJsInitializerAvailable;
 import robotlegs.bender.extensions.display.webGL.threejs.impl.ThreeJsViewMap;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.IExtension;
@@ -55,7 +54,6 @@ class ThreeJsIntegrationExtension implements IExtension
 		_logger = context.getLogger(this);
 		
 		
-		_context.injector.map(ThreeJsInitializerAvailable).asSingleton();
 		_context.addConfigHandler(InstanceOfType.call(ThreeJsCollection), handleThreeJsCollection);
 	}
 

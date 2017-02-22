@@ -11,7 +11,6 @@ import robotlegs.bender.extensions.matching.InstanceOfType;
 import robotlegs.bender.extensions.display.stage3D.starling.api.IStarlingViewMap;
 import robotlegs.bender.extensions.display.stage3D.starling.impl.StarlingCollection;
 import robotlegs.bender.extensions.display.stage3D.starling.impl.StarlingInitializer;
-import robotlegs.bender.extensions.display.stage3D.starling.impl.StarlingInitializerAvailable;
 import robotlegs.bender.extensions.display.stage3D.starling.impl.StarlingViewMap;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.IExtension;
@@ -57,9 +56,6 @@ class StarlingIntegrationExtension implements IExtension
 		_logger = context.getLogger(this);
 		
 		
-		//FIX
-		//registerClassAlias("StarlingInitializer", StarlingInitializer);
-		_context.injector.map(StarlingInitializerAvailable).asSingleton();
 		_context.addConfigHandler(InstanceOfType.call(StarlingCollection), handleStarlingCollection);
 	}
 

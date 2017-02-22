@@ -14,7 +14,6 @@ import robotlegs.bender.extensions.matching.InstanceOfType;
 import robotlegs.bender.extensions.display.stage3D.away3d.impl.AwayCollection;
 import robotlegs.bender.extensions.display.stage3D.away3d.api.IAway3DViewMap;
 import robotlegs.bender.extensions.display.stage3D.away3d.impl.Away3DInitializer;
-import robotlegs.bender.extensions.display.stage3D.away3d.impl.Away3DInitializerAvailable;
 import robotlegs.bender.extensions.display.stage3D.away3d.impl.Away3DViewMap;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.IExtension;
@@ -57,10 +56,6 @@ class AwayIntegrationExtension implements IExtension
 		_context = context;
 		_logger = context.getLogger(this);
 		
-		//FIX
-		//registerClassAlias("Away3DInitializer", Away3DInitializer);
-		Away3DInitializer;
-		_context.injector.map(Away3DInitializerAvailable).asSingleton();
 		_context.addConfigHandler(InstanceOfType.call(AwayCollection), handleAwayCollection);
 	}
 

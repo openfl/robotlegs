@@ -53,7 +53,7 @@ class ContainerRegistry extends EventDispatcher
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _bindingByContainer = new Map<DisplayObject,Dynamic>();
+	private var _bindingByContainer = new Map<DisplayObject, ContainerBinding>();
 
 	/*============================================================================*/
 	/* Public Functions                                                           */

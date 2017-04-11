@@ -161,12 +161,6 @@ class Stack implements IStack
 	
 	function CheckClass(layerClass:Class<Dynamic>, _Class:Class<Dynamic>):Bool
 	{
-		trace(layerClass);
-		trace(_Class);
-		
-		trace(layerClass == _Class);
-		
-		
 		if (layerClass == _Class) return true;
 		else {
 			var superClass:Class<Dynamic> = Type.getSuperClass(layerClass);

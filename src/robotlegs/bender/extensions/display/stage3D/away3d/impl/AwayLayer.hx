@@ -19,6 +19,7 @@ import robotlegs.bender.extensions.display.base.api.IRenderer;
 @:keepSub
 class AwayLayer extends View3D implements ILayer implements IAwayLayer
 {
+	public var active:Bool = true;
 	@:isVar public var renderContext(get, set):IRenderContext;
 	
 	private var stage3DManager:Stage3DManager;
@@ -37,8 +38,8 @@ class AwayLayer extends View3D implements ILayer implements IAwayLayer
 	public function process():Void
 	{
 		this.render();
-		_mouse3DManager.fireMouseEvents();
-		_touch3DManager.fireTouchEvents();
+		if (_mouse3DManager != null) _mouse3DManager.fireMouseEvents();
+		if (_touch3DManager != null) _touch3DManager.fireTouchEvents();
 	}
 	
 	public function setTo(x:Float, y:Float, width:Float, height:Float):Void
@@ -54,7 +55,9 @@ class AwayLayer extends View3D implements ILayer implements IAwayLayer
 	private function set_renderContext(value:IRenderContext):IRenderContext 
 	{
 		renderContext = value;
-		if (stage3DProxy != null) stage3DProxy.antiAlias = value.antiAlias;
+		if (stage3DProxy != null) {
+			stage3DProxy.antiAlias = value.antiAlias;
+		}
 		return value;
 	}
 	
@@ -65,7 +68,9 @@ class AwayLayer extends View3D implements ILayer implements IAwayLayer
 	
 	override private function set_stage3DProxy(stage3DProxy:Stage3DProxy) : Stage3DProxy
     {
-		if (renderContext != null) stage3DProxy.antiAlias = renderContext.antiAlias;
+		if (renderContext != null) {
+			stage3DProxy.antiAlias = renderContext.antiAlias;
+		}
 		return super.set_stage3DProxy(stage3DProxy);
 	}
 }

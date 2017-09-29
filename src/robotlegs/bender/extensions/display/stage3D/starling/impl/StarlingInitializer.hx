@@ -21,7 +21,9 @@ class StarlingInitializer extends BaseInitializer
 	
 	public function new() 
 	{
-		
+		if (Starling.current == null){
+			Starling.multitouchEnabled = multitouchEnabled;
+		}
 	}
 	
 	override public function addLayer(ViewClass:Class<Dynamic>, index:Int, id:String):Void 

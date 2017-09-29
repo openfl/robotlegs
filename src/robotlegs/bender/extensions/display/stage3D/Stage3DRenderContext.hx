@@ -105,7 +105,7 @@ class Stage3DRenderContext implements IRenderContext
 	
 	private function contextCreatedErrorHandler(e:ErrorEvent):Void 
 	{
-		trace("Can't Create Context3D");
+		trace("Can't Create Context3D: " + e.toString());
 		#if html5
 		trace('make sure <haxedef if="html5" name="dom"/> is set');
 		#end
@@ -123,6 +123,7 @@ class Stage3DRenderContext implements IRenderContext
 			var height:Int = cast viewport.height;
 			if (height < 64) height = 64;
 			try {
+				//trace(["RESIZE", width, height]);
 				context3D.configureBackBuffer(width, height, antiAlias, true);
 			}
 			catch (e:Error) {
@@ -161,5 +162,10 @@ class Stage3DRenderContext implements IRenderContext
 			if (layers.numLayers == 0) stage3D.visible = false;
 			else stage3D.visible = true;
 		#end
+	}
+	
+	public function killContext():Void
+	{
+		context3D.dispose();
 	}
 }

@@ -1,22 +1,21 @@
-package robotlegs.bender.extensions.display.stage3D.starling.impl;
+package robotlegs.bender.extensions.display.stage3D.fuse.impl;
 
-import openfl.display3D.Context3DBlendFactor;
+import fuse.Fuse;
+import fuse.display.Sprite;
 import openfl.geom.Rectangle;
 import robotlegs.bender.extensions.display.base.api.ILayer;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
 import robotlegs.bender.extensions.display.base.api.IRenderer;
-import starling.core.Starling;
-import starling.display.Sprite;
 /**
  * ...
  * @author P.J.Shand
  */
 @:rtti
 @:keepSub
-class StarlingLayer extends Sprite implements ILayer
+class FuseLayer extends Sprite implements ILayer
 {
 	public var active:Bool = true;
-	private var starling:Starling;
+	private var fuse:Fuse;
 	@:isVar public var renderContext(get, set):IRenderContext;
 	
 	public function new() 
@@ -26,19 +25,22 @@ class StarlingLayer extends Sprite implements ILayer
 	
 	public function process():Void
 	{
-		if (starling != null /*&& renderContext.active*/) starling.nextFrame();
+		if (fuse != null /*&& renderContext.active*/) {
+			fuse.process();
+		}
 	}
 	
-	public function setStarling(starling:Starling):Void
+	public function setFuse(fuse:Fuse):Void
 	{
-		this.starling = starling;
+		this.fuse = fuse;
 	}
 	
 	public function setTo(x:Float, y:Float, width:Float, height:Float):Void
 	{
-		starling.viewPort.setTo(x, y, width, height);
-		starling.stage.stageWidth = cast width;
-		starling.stage.stageHeight = cast height;
+		//trace([x, y, width, height]);
+		//fuse.viewPort.setTo(x, y, width, height);
+		fuse.stage.stageWidth = Math.floor(width);
+		fuse.stage.stageHeight = Math.floor(height);
 	}
 	
 	public function set_renderContext(value:IRenderContext):IRenderContext 

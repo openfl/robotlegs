@@ -1,9 +1,9 @@
-package robotlegs.bender.extensions.display.stage3D.starling.impl;
+package robotlegs.bender.extensions.display.stage3D.fuse.impl;
 
+import fuse.Fuse;
 import robotlegs.bender.extensions.display.base.api.ILayer;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
 import robotlegs.bender.extensions.display.base.api.IRenderer;
-import starling.core.Starling;
 
 /**
  * ...
@@ -12,7 +12,7 @@ import starling.core.Starling;
 class PlaceHolderLayer implements ILayer
 {
 	public var active:Bool = true;
-	private var starling:Starling;
+	private var fuse:Fuse;
 	@:isVar public var renderContext(get, set):IRenderContext;
 	
 	public function new() { }

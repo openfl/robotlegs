@@ -68,11 +68,11 @@ class VigilanceExtension implements IExtension implements ILogTarget
 			event.mappedType + " with name " + event.mappedName);
 	}
 }
-@:keepSub
+
 @:rtti
+@:keep
 class MetadataChecker
 {
-	//[Inject(optional=true)]
 	@inject("optional=true") public var context:IContext;
 	//@inject public var context:IContext;
 	

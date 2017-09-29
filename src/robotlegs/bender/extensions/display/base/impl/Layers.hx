@@ -36,7 +36,9 @@ class Layers implements ILayers
 	{
 		for (i in 0...layers.length)
 		{
-			layers[i].setTo(viewport.x, viewport.y, viewport.width, viewport.height);
+			if (layers[i].active){
+				layers[i].setTo(viewport.x, viewport.y, viewport.width, viewport.height);
+			}
 		}
 	}
 	

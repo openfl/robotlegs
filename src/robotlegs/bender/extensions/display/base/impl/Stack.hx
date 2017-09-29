@@ -1,10 +1,7 @@
 package robotlegs.bender.extensions.display.base.impl;
 
-import openfl.errors.Error;
-import org.swiftsuspenders.utils.CallProxy;
-//import robotlegs.bender.extensions.contextView.ContextView;
+
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
-//import robotlegs.bender.extensions.display.base.api.IRenderer;
 import robotlegs.bender.extensions.display.base.api.IStack;
 import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.framework.api.IContext;
@@ -19,6 +16,12 @@ import robotlegs.bender.framework.api.ILogger;
 #if starling
 	import robotlegs.bender.extensions.display.stage3D.starling.impl.StarlingInitializer;
 	import robotlegs.bender.extensions.display.stage3D.starling.impl.StarlingLayer;
+#end
+
+#if fuse
+	import fuse.Fuse;
+	import robotlegs.bender.extensions.display.stage3D.fuse.impl.FuseInitializer;
+	import robotlegs.bender.extensions.display.stage3D.fuse.impl.FuseLayer;
 #end
 
 #if threejs
@@ -41,23 +44,15 @@ class Stack implements IStack
 	private var _injector:IInjector;
 	private var _logger:ILogger;
 	private var context:IContext;
-	//private var _debug:Bool = false;
-	//private var classIDs:Array<Array<Dynamic>>;
-	//private var initialized:Bool = false;
 	
-	//public var debug(get, set):Bool;
-	
-	//@inject public var contextView:ContextView;
-	//@inject public var renderer:IRenderer;
 	@inject public var renderContext:IRenderContext;
-	
-	//@inject("optional=true") public var away3DInitializerAvailable:Away3DInitializerAvailable;
-	//@inject("optional=true") public var starlingInitializerAvailable:StarlingInitializerAvailable;
-	//@inject("optional=true") public var threeJsInitializerAvailable:ThreeJsInitializerAvailable;
 	
 	public var away3DInitializer:BaseInitializer;
 	public var starlingInitializer:BaseInitializer;
 	public var threeJsInitializer:BaseInitializer;
+	public var fuseInitializer:BaseInitializer;
+	
+	public var layerCount:Int = 0;
 	
 	//private var preContextLayers:Array<LayerInfo> = [];
 	
@@ -80,48 +75,17 @@ class Stack implements IStack
 			starlingInitializer = _injector.getInstance(StarlingInitializer);
 		#end
 		
+		#if fuse
+			_injector.map(FuseInitializer);
+			fuseInitializer = _injector.getInstance(FuseInitializer);
+		#end
+		
 		#if threejs
 			_injector.map(ThreeJsInitializer);
 			threeJsInitializer = _injector.getInstance(ThreeJsInitializer);
 		#end
-		
-		/*classIDs = new Array<Array<Dynamic>>();
-		classIDs.push(["robotlegs.bender.extensions.display.stage3D.away3d.impl", "AwayStereoLayer", addAway3DAt]);
-		classIDs.push(["robotlegs.bender.extensions.display.stage3D.away3d.impl", "AwayLayer", addAway3DAt]);
-		classIDs.push(["robotlegs.bender.extensions.display.stage3D.starling.impl", "StarlingLayer", addStarlingAt]);
-		classIDs.push(["robotlegs.bender.extensions.display.webGL.threejs.impl", "ThreeJsLayer", addThreeJsAt]);*/
-		
 	}
 	
-	//private function initialize():Void 
-	//{
-		//if (initialized) return;
-		//initialized = true;
-		//
-		//
-		////away3DInitializer = createInitializer("robotlegs.bender.extensions.stage3D.away3d.impl.Away3DInitializer");
-		////trace(classIDs[0][0] + ".Away3DInitializer");
-		///*trace(classIDs[1][0] + ".Away3DInitializer");
-		//away3DInitializer = createInitializer(classIDs[0][0] + ".Away3DInitializer");
-		//away3DInitializer = createInitializer(classIDs[1][0] + ".Away3DInitializer");
-		//
-		//starlingInitializer = createInitializer(classIDs[2][0] + ".StarlingInitializer");
-		//threeJsInitializer = createInitializer(classIDs[3][0] + ".ThreeJsInitializer");*/
-	//}
-	
-	/*private function createInitializer(classAlias:String):BaseInitializer 
-	{
-		var initializer:BaseInitializer;
-		var InitializerClass:Class<Dynamic> = Type.resolveClass(classAlias);
-		if (InitializerClass != null) {
-			
-			_injector.map(InitializerClass);
-			initializer = _injector.getInstance(InitializerClass);
-			return initializer;
-		}
-		return null;
-	}*/
-
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
@@ -133,12 +97,15 @@ class Stack implements IStack
 	
 	public function addLayerAt(LayerClass:Class<Dynamic>, index:Int, id:String=""):Void
 	{
-		//preContextLayers.push( { LayerClass:LayerClass, index:index, id:id } );
-		
 		var addFunc = getAddFunc(LayerClass);
 		if (addFunc != null) {
 			addFunc(LayerClass, index, id);
 		}
+		layerCount++;
+		#if fuse
+			if (layerCount > 1) Fuse.cleanContext = true;
+			else Fuse.cleanContext = false;
+		#end
 	}
 	
 	function getAddFunc(layerClass:Class<Dynamic>):Class<Dynamic> -> Int -> String -> Void 
@@ -150,6 +117,10 @@ class Stack implements IStack
 		
 		#if starling
 			if (CheckClass(layerClass, StarlingLayer)) return addStarlingAt;
+		#end
+		
+		#if fuse
+			if (CheckClass(layerClass, FuseLayer)) return addFuseAt;
 		#end
 		
 		#if threejs
@@ -172,41 +143,33 @@ class Stack implements IStack
 	/*============================================================================*/
 	/* Private Functions                                                           */
 	/*============================================================================*/
-	
+	#if away3d
 	private function addAway3DAt(AwayClass:Class<Dynamic>, index:Int, id:String=""):Void
 	{
 		away3DInitializer.addLayer(AwayClass, index, id);
 	}
+	#end
 	
-	private function addThreeJsAt(ThreeJSClass:Class<Dynamic>, index:Int, id:String=""):Void
-	{
-		threeJsInitializer.addLayer(ThreeJSClass, index, id);
-	}
-	
+	#if starling
 	private function addStarlingAt(StarlingLayerClass:Class<Dynamic>, index:Int, id:String=""):Void
 	{
 		starlingInitializer.addLayer(StarlingLayerClass, index, id);
 	}
+	#end
 	
-	////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////
+	#if fuse
+	private function addFuseAt(FuseLayerClass:Class<Dynamic>, index:Int, id:String=""):Void
+	{
+		fuseInitializer.addLayer(FuseLayerClass, index, id);
+	}
+	#end
 	
-	//public function get_debug():Bool 
-	//{
-		//return _debug;
-	//}
-	//
-	//public function set_debug(value:Bool):Bool 
-	//{
-		//_debug = value;
-		//return value;
-	//}
-	//
-	//private function errorMsg(index:Int):String 
-	//{
-		//return "errorMsg";
-		////return "[" + classIDs[index][0] + "] needs to be installed before this method can be called, eg: context.install(" + classIDs[index][1] + ");";
-	//}	
+	#if threejs
+	private function addThreeJsAt(ThreeJSClass:Class<Dynamic>, index:Int, id:String=""):Void
+	{
+		threeJsInitializer.addLayer(ThreeJSClass, index, id);
+	}
+	#end	
 }
 
 typedef LayerInfo =

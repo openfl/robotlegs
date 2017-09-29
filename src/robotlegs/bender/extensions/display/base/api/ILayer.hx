@@ -7,6 +7,7 @@ import flash.geom.Rectangle;
  */
 interface ILayer
 {
+	var active:Bool;
 	function process():Void;
 	
 	//var iRenderer(get, set):IRenderer;

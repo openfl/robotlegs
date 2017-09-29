@@ -14,6 +14,7 @@ import com.imagination.texturePacker.impl.math.PowerOf2;
 import flash.events.Event;
 import flash.geom.Rectangle;
 import flash.geom.Vector3D;
+import away3d.stereo.methods.SBSStereoRenderMethod2;
 import openfl.Vector;
 import robotlegs.bender.extensions.display.base.api.ILayer;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
@@ -25,11 +26,11 @@ import robotlegs.bender.extensions.display.base.api.IRenderer;
  */
 class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLayer
 {
+	public var active:Bool = true;
 	@:isVar public var renderContext(get, set):IRenderContext;
 	
 	private var stage3DManager:Stage3DManager;
 	private var profile:String;
-	private var sbsStereoRenderMethod:SBSStereoRenderMethod;
 	private var stereoCamera3D:StereoCamera3D;
 	private var currentRect:Rectangle;
 	
@@ -43,13 +44,16 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 		super(null, null, null, null, false, profile, contextIndex);
 		this.profile = profile;
 		
-		
-		
-		
-		this.antiAlias = 0;
+		stereoCamera3D = new StereoCamera3D();
+		stereoCamera3D.stereoOffset = 10;
+		stereoCamera3D.position = new Vector3D();
 		
 		this.shareContext = true;
-		this.stereoEnabled = true;
+		
+		this.antiAlias = 0;
+		this.camera = stereoCamera3D;
+		
+		this.stereoEnabled = false;
 		
 		addEventListener(Event.ADDED_TO_STAGE, OnAdd);
 	}
@@ -94,7 +98,8 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 		var hmdWarpParamZ:Float = dk[2];
 		var hmdWarpParamW:Float = dk[3];
 		
-		sbsStereoRenderMethod = new SBSStereoRenderMethod();
+		//sbsStereoRenderMethod = new SBSStereoRenderMethod();
+		var sbsStereoRenderMethod:SBSStereoRenderMethod2 = new SBSStereoRenderMethod2(lensCenterX, lensCenterY, scaleInX, scaleInY, scaleX, scaleY, hmdWarpParamX, hmdWarpParamY, hmdWarpParamZ, hmdWarpParamW);
 		//sbsStereoRenderMethod = new SBSStereoRenderMethod(lensCenterX, lensCenterY, scaleInX, scaleInY, scaleX, scaleY, hmdWarpParamX, hmdWarpParamY, hmdWarpParamZ, hmdWarpParamW);
 		//sbsStereoRenderMethod.enableBarrelDistortion = false;
 		
@@ -114,20 +119,38 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 	public function process():Void
 	{
 		this.render();
-		_mouse3DManager.fireMouseEvents();
-		_touch3DManager.fireTouchEvents();
+		if (_mouse3DManager != null) _mouse3DManager.fireMouseEvents();
+		if (_touch3DManager != null) _touch3DManager.fireTouchEvents();
 	}
 	
-	override private function set_stereoEnabled(val:Bool):Bool {
-        _stereoEnabled = val;
+	/*override private function set_stereoEnabled(val:Bool):Bool {
+        
+		_stereoEnabled = val;
 		trace("rect = " + rect);
 		if (stage3DProxy != null) {
 			setTo(rect.x, rect.y, rect.width, rect.height);
 		}
 		return val;
-    }
+    }*/
 	
 	public function setTo(x:Float, y:Float, width:Float, height:Float):Void
+	{
+		//if (stereoEnabled == true){
+			//width = PowerOf2.next(cast width);
+			//height = PowerOf2.next(cast height);
+			//if (width > 1024) width = 1024;
+			//if (height > 1024) height = 1024;
+		//}
+		
+		this.x = stage3DProxy.x = x;
+		this.y = stage3DProxy.y = y;
+		this.width = width;
+		this.height = height;
+		stage3DProxy.width = cast width;
+		stage3DProxy.height = cast height;
+	}
+	
+	/*public function setTo(x:Float, y:Float, width:Float, height:Float):Void
 	{
 		rect.setTo(x, y, width, height);
 		
@@ -144,7 +167,7 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 		this.height = height;
 		stage3DProxy.width = cast width;
 		stage3DProxy.height = cast height;
-	}
+	}*/
 	
 	private function onContextCreated(e:Event):Void 
 	{

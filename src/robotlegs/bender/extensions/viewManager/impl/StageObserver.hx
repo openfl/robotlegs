@@ -27,8 +27,7 @@ class StageObserver
 	private var _filter = ~/^mx\.|^spark\.|^flash\./;
 	
 	private var _registry:ContainerRegistry;
-	//var traver:DisplaylistTraverser;
-
+	
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
@@ -88,22 +87,12 @@ class StageObserver
 		#else
 		var useCapture:Bool = false;
 		#end
-			// The magical, but extremely expensive, capture-phase ADDED listener
-			container.addEventListener(Event.ADDED, onViewAddedToStage, useCapture);
-			// Watch the root container itself - nobody else is going to pick it up!
-			container.addEventListener(Event.ADDED_TO_STAGE, onContainerRootAddedToStage);
-		/*#else
-			// Unfortunately OpenFL's event system doesn't support event useCapture, which is a feature 
-			// that robotlegs heavily depends upon. To resolve this a brute force enter frame displaylist traver 
-			// is used for all non-flash targets. This is not ideal, however it is currently our only option.
-			if (traver != null) {
-				traver.childAdded.remove(OnChildAdded);
-				//traver.childRemoved.remove(OnChildRemoved);
-			}
-			traver = new DisplaylistTraverser(container);
-			traver.childAdded.add(OnChildAdded);
-			//traver.childRemoved.add(OnChildRemoved);
-		#end*/
+		
+		// The magical, but extremely expensive, capture-phase ADDED listener
+		container.addEventListener(Event.ADDED, onViewAddedToStage, useCapture);
+		// Watch the root container itself - nobody else is going to pick it up!
+		container.addEventListener(Event.ADDED_TO_STAGE, onContainerRootAddedToStage);
+
 	}
 	
 	//#if flash

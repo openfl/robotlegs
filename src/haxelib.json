@@ -2,10 +2,10 @@
 	"name": "robotlegs",
 	"url": "http://blog.peteshand.net/robotlegs-for-haxe",
 	"license": "MIT",
-	"tags": [ "mvc", "robotlegs", "openfl","flash", "js", "web", "starling", "away3D" ],
-	"description": "Robotlegs v2 is a popular Micro-Architecture framework which integrates with OpenFL, Starling, Away3D and ThreeJS",
+	"tags": [ "mvc", "robotlegs", "openfl","flash", "js", "web", "starling", "away3D", "fuse" ],
+	"description": "Robotlegs v2 is a popular Micro-Architecture framework which integrates with OpenFL, Starling, Away3D, ThreeJS and Fuse",
 	"version": "0.4.3",
-	"releasenote": "bindingByContainer type fix",
+	"releasenote": "Add support for Fuse rendering engine",
 	"contributors": [ "p.j.shand" ],
 	"dependencies": {
 		"swiftsuspenders": "",

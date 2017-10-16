@@ -3,6 +3,7 @@ package robotlegs.bender.extensions.display.stage3D.fuse.impl;
 import fuse.Fuse;
 import fuse.display.DisplayObject;
 import fuse.display.DisplayObjectContainer;
+import fuse.events.FuseEvent;
 import openfl.events.Event;
 import robotlegs.bender.extensions.display.stage3D.fuse.api.IFuseViewMap;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
@@ -44,7 +45,7 @@ class FuseViewMap implements IFuseViewMap
 			// listen for display object events
 			
 			// adds stage as view to allow a Fuse Stage Mediator.
-			fuse.addEventListener( Fuse.ROOT_CREATED, onRootCreated );
+			fuse.addEventListener( FuseEvent.ROOT_CREATED, onRootCreated );
 		}
 	}
 	
@@ -130,10 +131,9 @@ class FuseViewMap implements IFuseViewMap
 	private function onRootCreated(event:Event):Void
 	{
 		var fuse:Fuse = cast(event.target, Fuse);
-		fuse.removeEventListener(Fuse.ROOT_CREATED, onRootCreated);
-		addFuseView(fuse.stage);
-		
+		fuse.removeEventListener(FuseEvent.ROOT_CREATED, onRootCreated);
 		fuse.stage.onDisplayAdded.add(OnDisplayAddedToStage);
 		fuse.stage.onDisplayRemoved.add(OnDisplayRemovedFromStage);
+		addFuseView(fuse.stage);
 	}
 }

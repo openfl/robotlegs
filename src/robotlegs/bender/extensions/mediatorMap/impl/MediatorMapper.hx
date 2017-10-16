@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.mediatorMap.impl;
 
 
+import org.swiftsuspenders.InjectorMacro;
 import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.extensions.matching.ITypeFilter;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
@@ -59,6 +60,7 @@ class MediatorMapper implements IMediatorMapper implements IMediatorUnmapper
 	 */
 	public function toMediator(mediatorClass:Class<Dynamic>):IMediatorConfigurator
 	{
+		InjectorMacro.keep(mediatorClass);
 		var mapping:IMediatorMapping = _mappings[UID.classID(mediatorClass)];
 		return (mapping != null)
 			? overwriteMapping(mapping)

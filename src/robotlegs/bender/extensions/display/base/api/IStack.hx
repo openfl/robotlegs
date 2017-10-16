@@ -5,13 +5,11 @@ package robotlegs.bender.extensions.display.base.api;
 * @author P.J.Shand
 * 
 */
+@:keepSub
 interface IStack
 {
 	function addLayer(layerClass:Class<Dynamic>, id:String = ""):Void;
 	function addLayerAt(layerClass:Class<Dynamic>, index:Int, id:String = ""):Void;
-
-	//var debug(get, set):Bool;
-
-	//function set debug(value:Bool):Void;
-	//function get debug():Bool;
+	
+	function removeLayerAt(index:Int):Void;
 }

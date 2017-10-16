@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.mediatorMap.impl;
 
 import openfl.display.DisplayObject;
+import org.swiftsuspenders.InjectorMacro;
 
 import robotlegs.bender.extensions.matching.ITypeMatcher;
 import robotlegs.bender.extensions.matching.TypeMatcher;
@@ -64,12 +65,10 @@ class MediatorMap implements IMediatorMap implements IViewHandler
 	 */
 	public function mapMatcher(matcher:ITypeMatcher):IMediatorMapper
 	{
-		// CHECK
 		if (_mappers[matcher.createTypeFilter().descriptor] == null) {
 			_mappers[matcher.createTypeFilter().descriptor] = createMapper(matcher);
 		}
 		return _mappers[matcher.createTypeFilter().descriptor];
-		//return _mappers[matcher.createTypeFilter().descriptor] ||= createMapper(matcher);
 	}
 
 	/**
@@ -77,6 +76,7 @@ class MediatorMap implements IMediatorMap implements IViewHandler
 	 */
 	public function map(type:Class<Dynamic>):IMediatorMapper
 	{
+		InjectorMacro.keep(type);
 		return mapMatcher(new TypeMatcher().allOf([type]));
 	}
 

@@ -15,6 +15,7 @@ import robotlegs.bender.framework.api.IExtension;
  * ...
  * @author P.J.Shand
  */
+@:keepSub
 class DisplayExtension implements IExtension
 {
 
@@ -25,10 +26,10 @@ class DisplayExtension implements IExtension
 	
 	public function extend(context:IContext):Void 
 	{
+		context.injector.map(ILayers).toSingleton(Layers);
 		context.injector.map(IStack).toSingleton(Stack);
 		context.injector.map(IRenderer).toSingleton(Renderer);
 		//context.injector.map(IRenderContext).toSingleton(Stage3DRenderContext);
-		context.injector.map(ILayers).toSingleton(Layers);
 		context.injector.map(IViewport).toSingleton(Viewport);
 		
 		var layers:ILayers = context.injector.getInstance(ILayers);

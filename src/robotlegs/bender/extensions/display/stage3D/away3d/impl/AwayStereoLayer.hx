@@ -6,7 +6,7 @@ import away3d.containers.View3D;
 import away3d.core.managers.Stage3DManager;
 import away3d.core.managers.Stage3DProxy;
 import away3d.events.Stage3DEvent;
-import away3d.stereo.HmdInfo;
+//import away3d.stereo.HmdInfo;
 import away3d.stereo.methods.SBSStereoRenderMethod;
 import away3d.stereo.StereoCamera3D;
 import away3d.stereo.StereoView3D;
@@ -41,7 +41,7 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 	
 	public function new(profile:String, contextIndex:Int=0) 
 	{
-		super(null, null, null, null, false, profile, contextIndex);
+		super(null, null, null, false, profile, contextIndex, null);
 		this.profile = profile;
 		
 		stereoCamera3D = new StereoCamera3D();
@@ -62,28 +62,32 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 	{
 		removeEventListener(Event.ADDED_TO_STAGE, OnAdd);
 		
-		var hmdInfo:HmdInfo = new HmdInfo();
-		hmdInfo.hScreenSize = stage.stageWidth;
-		hmdInfo.vScreenSize = stage.stageHeight;
-		hmdInfo.vScreenCenter = 0.046799998730421066; 
-		hmdInfo.eyeToScreenDistance = 0.04100000113248825;
-		hmdInfo.lensSeparationDistance = 0.06350000202655792;
-		hmdInfo.interPupillaryDistance = 0.06400000303983688;
-		hmdInfo.hResolution = 1280;
-		hmdInfo.vResolution = 800;
-		hmdInfo.distortionK = new Vector<Float>();
-		hmdInfo.distortionK.push(1);
-		hmdInfo.distortionK.push(0.2199999988079071);
-		hmdInfo.distortionK.push(0.23999999463558197);
-		hmdInfo.distortionK.push(0);
-
-		hmdInfo.chromaAbCorrection = new Vector<Float>();
-		hmdInfo.chromaAbCorrection.push(0.9959999918937683);
-		hmdInfo.chromaAbCorrection.push(-0.004000000189989805);
-		hmdInfo.chromaAbCorrection.push(1.0140000581741333);
-		hmdInfo.chromaAbCorrection.push(0);
+		//var hmdInfo:HmdInfo = new HmdInfo();
+		//hmdInfo.hScreenSize = stage.stageWidth;
+		//hmdInfo.vScreenSize = stage.stageHeight;
+		//hmdInfo.vScreenCenter = 0.046799998730421066; 
+		//hmdInfo.eyeToScreenDistance = 0.04100000113248825;
+		//hmdInfo.lensSeparationDistance = 0.06350000202655792;
+		//hmdInfo.interPupillaryDistance = 0.06400000303983688;
+		//hmdInfo.hResolution = 1280;
+		//hmdInfo.vResolution = 800;
+		//hmdInfo.distortionK = new Vector<Float>();
+		//hmdInfo.distortionK.push(1);
+		//hmdInfo.distortionK.push(0.2199999988079071);
+		//hmdInfo.distortionK.push(0.23999999463558197);
+		//hmdInfo.distortionK.push(0);
+//
+		//hmdInfo.chromaAbCorrection = new Vector<Float>();
+		//hmdInfo.chromaAbCorrection.push(0.9959999918937683);
+		//hmdInfo.chromaAbCorrection.push(-0.004000000189989805);
+		//hmdInfo.chromaAbCorrection.push(1.0140000581741333);
+		//hmdInfo.chromaAbCorrection.push(0);
 		
-		var dk:Vector<Float> = hmdInfo.distortionK;
+		var dk:Vector<Float> = new Vector<Float>();// hmdInfo.distortionK;
+		dk.push(1);
+		dk.push(0.2199999988079071);
+		dk.push(0.23999999463558197);
+		dk.push(0);
 		
 		//sbsStereoRenderMethod = new SBSStereoRenderMethod(0.5 + (_lensCenterOffsetX/2), 0.5, 3.12, 0.25, dk[0], dk[1], dk[2], dk[3]);
 		

@@ -42,6 +42,12 @@ class Layers implements ILayers
 		}
 	}
 	
+	public function removeLayerAt(index:Int):Void
+	{
+		if (index >= layers.length) return;
+		layers.splice(index, 1);
+	}
+	
 	public function addLayer(layer:ILayer):Void
 	{
 		layer.renderContext = renderContext;

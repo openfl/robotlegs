@@ -7,8 +7,7 @@
 
 package robotlegs.bender.framework.impl;
 
-import org.swiftsuspenders.utils.CallProxy;
-import org.swiftsuspenders.utils.UID;
+import org.swiftsuspenders.utils.UID as BaseUID;
 /**
  * Utility for generating unique object IDs
  */
@@ -33,21 +32,11 @@ class UID
 	 */
 	public static function create(source:Dynamic = null):String
 	{
-		return org.swiftsuspenders.utils.UID.create(source);
-		
-		/*var className = UID.classID(source);
-		var random:Int = Math.floor(Math.random() * 255);
-		return (source ? source + '-':'') + StringTools.hex(_i++, 16) + '-' + StringTools.hex(random, 16);*/
+		return BaseUID.create(source);
 	}
 	
 	public static function classID(source:Dynamic = null):String
 	{
-		/*var className = "";
-		if (Type.getClass(source) != null) {
-			className = CallProxy.getClassName(Type.getClass(source)); 
-		}
-		return className;*/
-		
-		return org.swiftsuspenders.utils.UID.classID(source);
+		return BaseUID.classID(source);
 	}
 }

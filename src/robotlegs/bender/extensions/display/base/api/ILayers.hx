@@ -11,6 +11,7 @@ interface ILayers
 	var addedLayers(get, null):Iterator<ILayer>;
 	var numLayers(get, null):Int;
 	
+	function removeLayerAt(index:Int):Void;
 	function addLayer(layer:ILayer):Void;
 	function addLayerAt(layer:ILayer, index:Int):Void;
 	function removeLayer(layer:ILayer):Void;

@@ -1,6 +1,7 @@
 package robotlegs.bender.extensions.display.base.impl;
 
 
+import robotlegs.bender.extensions.display.base.api.ILayers;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
 import robotlegs.bender.extensions.display.base.api.IStack;
 import robotlegs.bender.framework.api.IInjector;
@@ -46,6 +47,7 @@ class Stack implements IStack
 	private var context:IContext;
 	
 	@inject public var renderContext:IRenderContext;
+	@inject public var layers:ILayers;
 	
 	public var away3DInitializer:BaseInitializer;
 	public var starlingInitializer:BaseInitializer;
@@ -103,9 +105,19 @@ class Stack implements IStack
 		}
 		layerCount++;
 		#if fuse
-			if (layerCount > 1) Fuse.cleanContext = true;
-			else Fuse.cleanContext = false;
+			trace("layerCount = " + layerCount);
+			if (layerCount > 1) {
+				Fuse.current.cleanContext = true;
+			}
+			else {
+				Fuse.current.cleanContext = false;
+			}
 		#end
+	}
+	
+	public function removeLayerAt(index:Int):Void
+	{
+		layers.removeLayerAt(index);
 	}
 	
 	function getAddFunc(layerClass:Class<Dynamic>):Class<Dynamic> -> Int -> String -> Void 

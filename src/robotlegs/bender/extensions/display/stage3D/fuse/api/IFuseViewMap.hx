@@ -4,7 +4,7 @@ import fuse.display.DisplayObject;
 
 
 /**
- * The <code>IStarlingViewMap</code> interface defines methods which will enable
+ * The <code>IFuseViewMap</code> interface defines methods which will enable
  * view instance to be added or removed from mediation.
  */	
 interface IFuseViewMap

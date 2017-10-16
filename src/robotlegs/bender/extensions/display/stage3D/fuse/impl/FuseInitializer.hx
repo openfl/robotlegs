@@ -3,6 +3,7 @@ package robotlegs.bender.extensions.display.stage3D.fuse.impl;
 import flash.display3D.Context3DRenderMode;
 import fuse.Fuse;
 import fuse.core.front.FuseConfig;
+import fuse.events.FuseEvent;
 import openfl.events.Event;
 import openfl.geom.Rectangle;
 import robotlegs.bender.extensions.display.base.impl.BaseInitializer;
@@ -83,14 +84,15 @@ class FuseInitializer extends BaseInitializer
 			//#if debug
 			//	fuse.showStats = true;
 			//#end
-			var layer:FuseLayer = cast (fuse.root, FuseLayer);
+			
+			var layer:FuseLayer = cast (Fuse.current.root, FuseLayer);
 			layer.setFuse(fuse);
 			layers.removeLayer(placeHolderLayer);
 			layers.addLayerAt(layer, insertIndex);
 		}
 		
 		
-		fuse.addEventListener(Fuse.ROOT_CREATED, onFuseReady);
+		fuse.addEventListener(FuseEvent.ROOT_CREATED, onFuseReady);
 		trace("WAIT");
 		
 		fuse.init();

@@ -26,7 +26,9 @@ class StarlingLayer extends Sprite implements ILayer
 	
 	public function process():Void
 	{
-		if (starling != null /*&& renderContext.active*/) starling.nextFrame();
+		if (starling != null /*&& renderContext.active*/) {
+			starling.nextFrame();
+		}
 	}
 	
 	public function setStarling(starling:Starling):Void

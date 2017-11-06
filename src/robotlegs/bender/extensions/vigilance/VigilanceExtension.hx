@@ -74,6 +74,9 @@ class VigilanceExtension implements IExtension implements ILogTarget
 class MetadataChecker
 {
 	@inject("optional=true") public var context:IContext;
+	//@inject("name=myNamedDependency","optional=true") public var context:IContext;
+	
+	//[Inject(name="myNamedDependency")]
 	//@inject public var context:IContext;
 	
 	public function check():Void

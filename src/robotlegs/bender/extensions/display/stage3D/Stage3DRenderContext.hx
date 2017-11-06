@@ -3,6 +3,7 @@ package robotlegs.bender.extensions.display.stage3D;
 import flash.display3D.Context3DProfile;
 import flash.display3D.Context3DRenderMode;
 import msignal.Signal.Signal0;
+import openfl.display.BitmapData;
 import openfl.display.Stage3D;
 import openfl.display3D.Context3D;
 import openfl.display3D.Context3DCompareMode;
@@ -11,6 +12,7 @@ import openfl.display3D.Context3DTriangleFace;
 import openfl.errors.Error;
 import openfl.events.ErrorEvent;
 import openfl.events.Event;
+import openfl.geom.Rectangle;
 import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.display.base.api.ILayers;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
@@ -39,6 +41,7 @@ class Stage3DRenderContext implements IRenderContext
 	
 	public var antiAlias:Int;
 	private var freeFreeStage3DIndex:Int = 0;
+	var currentDimensions = new Rectangle();
 	
 	public function new() { }
 	
@@ -87,8 +90,9 @@ class Stage3DRenderContext implements IRenderContext
 	private function contextCreatedHandler(e:Event):Void 
 	{
 		context3D = stage3D.context3D;
+		
 		context3D.configureBackBuffer(contextView.view.stage.stageWidth, contextView.view.stage.stageHeight, antiAlias, true);
-		trace("context3D.driverInfo = " + context3D.driverInfo);
+		trace("context3D.driverInfo = " + context3D.driverInfo + " antiAlias = " + antiAlias);
 		
 		context3D.setStencilActions(
 			cast Context3DTriangleFace.FRONT_AND_BACK,
@@ -113,6 +117,13 @@ class Stage3DRenderContext implements IRenderContext
 	
 	private function OnViewportChange():Void 
 	{
+		if (currentDimensions.x == viewport.x &&
+		currentDimensions.y == viewport.y &&
+		currentDimensions.width == viewport.width &&
+		currentDimensions.height == viewport.height) {
+			return;
+		}
+		
 		stage3D.x = viewport.x;
 		stage3D.y = viewport.y;
 		
@@ -123,14 +134,15 @@ class Stage3DRenderContext implements IRenderContext
 			var height:Int = cast viewport.height;
 			if (height < 64) height = 64;
 			try {
-				//trace(["RESIZE", width, height]);
+				trace(["RESIZE", width, height, antiAlias]);
 				context3D.configureBackBuffer(width, height, antiAlias, true);
 			}
 			catch (e:Error) {
 				trace("e = " + e);
 				return;
-			}
+			}	
 		}
+		currentDimensions.setTo(viewport.x, viewport.y, viewport.width, viewport.height);
 	}
 	
 	public function get_available():Bool
@@ -152,6 +164,13 @@ class Stage3DRenderContext implements IRenderContext
 	public function end():Void
 	{
 		context3D.present();
+	}
+	
+	public function snap(width:Int, height:Int):BitmapData
+	{
+		var bmd:BitmapData = new BitmapData(width, height, false, 0xFF0000);
+		context3D.drawToBitmapData(bmd);
+		return bmd;
 	}
 	
 	public function checkVisability():Void

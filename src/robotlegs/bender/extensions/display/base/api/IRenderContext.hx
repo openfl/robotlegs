@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.display.base.api;
 import msignal.Signal.Signal0;
+import openfl.display.BitmapData;
 
 /**
  * @author P.J.Shand
@@ -17,5 +18,5 @@ interface IRenderContext
 	function begin():Void;
 	function end():Void;
 	function checkVisability():Void;
-	
+	function snap(width:Int, height:Int):BitmapData;
 }

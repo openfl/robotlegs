@@ -1,6 +1,7 @@
 package robotlegs.bender.extensions.display.base.impl;
 
 import openfl.Lib;
+import openfl.display.BitmapData;
 import openfl.events.Event;
 import msignal.Signal.Signal0;
 import robotlegs.bender.extensions.contextView.ContextView;
@@ -95,6 +96,31 @@ class Renderer implements IRenderer
 		if (index == 0) {
 			renderCount++;
 		}
+	}
+	
+	public function snap(width:Int, height:Int):BitmapData
+	{
+		var currentX:Float = viewport.x;
+		var currentY:Float = viewport.y;
+		var currentWidth:Float = viewport.width;
+		var currentHeight:Float = viewport.height;
+		viewport.setTo(0, 0, width, height);
+		renderContext.begin();
+		for (i in 0...layers.layers.length) 
+		{
+			// in some instances context3D is set to null in this loop
+			if (!renderContext.available) break;
+			if (layers.layers[i].active){
+				layers.layers[i].process();
+			}
+		}
+		
+		var bmd:BitmapData = renderContext.snap(width, height);
+		renderContext.end();
+		
+		viewport.setTo(viewport.x, viewport.y, currentWidth, currentHeight);
+		
+		return bmd;
 	}
 	
 	private function get_active():Bool 

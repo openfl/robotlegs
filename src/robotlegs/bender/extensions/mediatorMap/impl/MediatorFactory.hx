@@ -82,8 +82,7 @@ class MediatorFactory
 				mediator = createMediator(item, mapping);
 				unmapTypeForFilterBinding(mapping.matcher, type, item);
 			}
-
-			if (mediator) {
+			if (mediator != null) {
 				createdMediators.push(mediator);
 			}
 		}
@@ -133,9 +132,9 @@ class MediatorFactory
 	{
 		var mediator:Dynamic = getMediator(item, mapping);
 
-		if (mediator)
+		if (mediator != null)
 			return mediator;
-
+		
 		if (mapping.guards.length == 0 || GuardsApprove.call(mapping.guards, _injector))
 		{
 			var mediatorClass:Class<Dynamic> = mapping.mediatorClass;

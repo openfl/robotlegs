@@ -137,7 +137,7 @@ class TypeFilter implements ITypeFilter
 		var iLength:UInt = classVector.length;
 		for (i in 0...iLength)
 		{
-			fqcn = CallProxy.replaceClassName(classVector[i]);
+			fqcn = Type.getClassName(classVector[i]);
 			allFCQNs[allFCQNs.length] = fqcn;
 		}
 

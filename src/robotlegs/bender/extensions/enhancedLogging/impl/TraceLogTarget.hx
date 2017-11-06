@@ -52,7 +52,7 @@ class TraceLogTarget implements ILogTarget
 	public function log(source:Dynamic, level:UInt, timestamp:Float, message:String, params:Array<Dynamic> = null):Void
 	{
 		#if js
-			var sourceName = CallProxy.getClassName(Type.getClass(source));
+			var sourceName = Type.getClassName((Type.getClass(source)));
 			var split = sourceName.split(".");
 			sourceName = split[split.length - 1];
 			

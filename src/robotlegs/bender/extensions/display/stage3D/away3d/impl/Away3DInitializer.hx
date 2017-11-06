@@ -22,7 +22,7 @@ class Away3DInitializer extends BaseInitializer
 	{
 		var stage3DRenderContext:Stage3DRenderContext = cast renderContext;
 		if (id == "") id = autoID(ViewClass);
-		var awayLayer:IAwayLayer = CallProxy.createInstance(ViewClass, [stage3DRenderContext.profile]);
+		var awayLayer:IAwayLayer = Type.createInstance(ViewClass, [stage3DRenderContext.profile]);
 		awayLayer.renderContext = renderContext;
 		
 		var awayCollection = new AwayCollection([awayLayer, id]);

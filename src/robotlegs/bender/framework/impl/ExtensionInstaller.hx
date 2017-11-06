@@ -59,7 +59,7 @@ class ExtensionInstaller
 	{
 		if (Std.is(extension, Class))
 		{
-			var extensionInstance = CallProxy.createInstance(extension, []);
+			var extensionInstance = Type.createInstance(extension, []);
 			install(extensionInstance);
 			InjectorMacro.keep(extensionInstance);
 		}

@@ -100,7 +100,7 @@ class PackageFilter implements ITypeFilter
 	 */
 	public function matches(item:Dynamic):Bool
 	{
-		var fqcn:String = CallProxy.replaceClassName(item);
+		var fqcn:String = Type.getClassName(item);
 		var packageName:String;
 
 		if (_requirePackage != null && (!matchPackageInFQCN(_requirePackage, fqcn)))

@@ -159,7 +159,7 @@ class ConfigManager
 			if (Std.is(config, Class))
 			{
 				#if js
-					_logger.debug("Now initializing. Instantiating config class {0}", [CallProxy.getClassName(config)]);
+					_logger.debug("Now initializing. Instantiating config class {0}", [Type.getClassName(config)]);
 				#else 
 					_logger.debug("Now initializing. Instantiating config class {0}", [config]);
 				#end
@@ -169,7 +169,7 @@ class ConfigManager
 			else
 			{
 				#if js
-					_logger.debug("Now initializing. Injecting into config object {0}", [CallProxy.getClassName(Type.getClass(config))]);
+					_logger.debug("Now initializing. Injecting into config object {0}", [Type.getClassName((Type.getClass(config)))]);
 				#else 
 					_logger.debug("Now initializing. Injecting into config object {0}", [config]);
 				#end
@@ -196,7 +196,7 @@ class ConfigManager
 		if (object != null) {
 			
 			
-			var className = CallProxy.getClassName(type);
+			var className = Type.getClassName(type);
 			var hasFeild = CallProxy.hasField(object, "configure");
 			if (hasFeild) {
 				#if js

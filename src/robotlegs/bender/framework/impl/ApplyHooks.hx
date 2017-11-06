@@ -45,7 +45,7 @@ class ApplyHooks
 				hook = (injector != null)
 					? injector.instantiateUnmapped(cast(hook, Class<Dynamic>))
 					/*: Type.createInstance(hook, []);*/
-					: CallProxy.createInstance(hook, []);
+					: Type.createInstance(hook, []);
 			}
 			hook.hook();
 			

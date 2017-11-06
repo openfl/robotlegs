@@ -19,7 +19,7 @@ class ThreeJsInitializer extends BaseInitializer
 	override public function addLayer(ViewClass:Class<Dynamic>, index:Int, id:String):Void
 	{
 		if (id == "") id = autoID(ViewClass);
-		var threeJsLayer:ThreeJsLayer = CallProxy.createInstance(ViewClass, []);
+		var threeJsLayer:ThreeJsLayer = Type.createInstance(ViewClass, []);
 		threeJsLayer.renderContext = renderContext;
 		
 		var threeJsCollection = new ThreeJsCollection([threeJsLayer, id]);

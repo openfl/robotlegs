@@ -50,7 +50,7 @@ class GuardsApprove
 				guard = (injector != null)
 					? injector.instantiateUnmapped(cast(guard, Class<Dynamic>))
 					//: Type.createInstance(guard, []);
-					: CallProxy.createInstance(guard, []);
+					: Type.createInstance(guard, []);
 			}
 			if (guard.approve() == false)
 				return false;

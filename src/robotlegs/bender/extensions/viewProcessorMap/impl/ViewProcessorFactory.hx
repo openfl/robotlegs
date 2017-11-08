@@ -125,7 +125,7 @@ class ViewProcessorFactory implements IViewProcessorFactory
 
 	private function createProcessor(processorClass:Class<Dynamic>):Dynamic
 	{
-		if (_injector.hasMapping(processorClass))
+		if (_injector.hasMapping(processorClass) == false)
 		{
 			_injector.map(processorClass).asSingleton();
 		}

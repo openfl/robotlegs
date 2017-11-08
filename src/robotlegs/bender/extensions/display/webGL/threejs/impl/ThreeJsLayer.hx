@@ -17,6 +17,7 @@ class ThreeJsLayer extends Sprite implements ILayer
 {
 	@:isVar public var renderContext(get, set):IRenderContext;
 	
+	public var active:Bool = true;
 	public var scene = new Scene();
 	private var renderer = new WebGLRenderer( { alpha:true, antialias: true } );
 	

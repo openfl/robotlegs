@@ -1,6 +1,7 @@
 package robotlegs.bender.extensions.display.webGL;
 
 import msignal.Signal.Signal0;
+import openfl.display.BitmapData;
 import openfl.errors.Error;
 import openfl.events.ErrorEvent;
 import openfl.events.Event;
@@ -109,5 +110,11 @@ class WebGLRenderContext implements IRenderContext
 	public function checkVisability():Void
 	{
 		
+	}
+	
+	public function snap(width:Int, height:Int):BitmapData
+	{
+		trace("not implemented on in html5");
+		return null;
 	}
 }

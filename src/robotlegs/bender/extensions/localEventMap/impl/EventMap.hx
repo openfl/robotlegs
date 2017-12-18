@@ -191,4 +191,8 @@ class EventMap implements IEventMap
 			listener(event);
 		}
 	}
+
+	public function new() {
+		
+    }
 }

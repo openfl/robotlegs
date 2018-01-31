@@ -81,15 +81,8 @@ class StageObserver
 
 	private function addRootListener(container:DisplayObjectContainer):Void
 	{
-		//#if flash
-		#if flash
-		var useCapture:Bool = true;
-		#else
-		var useCapture:Bool = false;
-		#end
-		
 		// The magical, but extremely expensive, capture-phase ADDED listener
-		container.addEventListener(Event.ADDED, onViewAddedToStage, useCapture);
+		container.addEventListener(Event.ADDED_TO_STAGE, onViewAddedToStage, true);
 		// Watch the root container itself - nobody else is going to pick it up!
 		container.addEventListener(Event.ADDED_TO_STAGE, onContainerRootAddedToStage);
 
@@ -124,14 +117,8 @@ class StageObserver
 	
 	private function removeRootListener(container:DisplayObjectContainer):Void
 	{
-		//#if flash
-		#if flash
-		var useCapture:Bool = true;
-		#else
-		var useCapture:Bool = false;
-		#end
-			container.removeEventListener(Event.ADDED, onViewAddedToStage, useCapture);
-			container.removeEventListener(Event.ADDED_TO_STAGE, onContainerRootAddedToStage);
+		container.removeEventListener(Event.ADDED_TO_STAGE, onViewAddedToStage, true);
+		container.removeEventListener(Event.ADDED_TO_STAGE, onContainerRootAddedToStage);
 		/*#else
 			if (traver != null) traver.childAdded.remove(OnChildAdded);
 		#end*/

@@ -426,24 +426,36 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function detain(instance:Dynamic):IContext
+	public function detain(instances:Dynamic):IContext
 	{
-		//for each (var instance:Dynamic in instances)
-		//{
-			_pin.detain(instance);
-		//}
+		if (Std.is(instances, Array)) {
+			var instancesArray:Array<Dynamic> = cast(instances);
+			for (instance in instancesArray)
+			{
+				_pin.detain(instance);
+			}
+		}
+		else {
+			_pin.detain(instances);
+		}
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function release(instance:Dynamic):IContext
+	public function release(instances:Dynamic):IContext
 	{
-		//for each (var instance:Dynamic in instances)
-		//{
-			_pin.release(instance);
-		//}
+		if (Std.is(instances, Array)) {
+			var instancesArray:Array<Dynamic> = cast(instances);
+			for (instance in instancesArray)
+			{
+				_pin.release(instance);
+			}
+		}
+		else {
+			_pin.release(instances);
+		}
 		return this;
 	}
 

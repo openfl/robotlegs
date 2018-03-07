@@ -119,7 +119,7 @@ class FuseStageSyncExtension implements IExtension
 	 */
 	private function handleFuseContextView(currentFuse:Fuse):Void
 	{
-		trace("FIX");
+		//trace("FIX");
 		/*if (currentFuse.stage.numChildren > 0)
 		{
 			initializeContext();

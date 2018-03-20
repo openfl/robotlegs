@@ -106,12 +106,14 @@ class Stack implements IStack
 		layerCount++;
 		#if fuse
 			trace("layerCount = " + layerCount);
-			if (layerCount > 1) {
-				Fuse.current.cleanContext = true;
-			}
-			else {
-				Fuse.current.cleanContext = false;
-			}
+			//if (Fuse.current != null){
+				//if (layerCount > 1) {
+					//Fuse.current.cleanContext = true;
+				//}
+				//else {
+					//Fuse.current.cleanContext = false;
+				//}
+			//}
 		#end
 	}
 	

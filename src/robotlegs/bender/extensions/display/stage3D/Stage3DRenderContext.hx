@@ -42,6 +42,7 @@ class Stage3DRenderContext implements IRenderContext
 	public var antiAlias:Int;
 	private var freeFreeStage3DIndex:Int = 0;
 	var currentDimensions = new Rectangle();
+	var scissorRectangle = new Rectangle();
 	
 	public function new() { }
 	
@@ -92,7 +93,7 @@ class Stage3DRenderContext implements IRenderContext
 		context3D = stage3D.context3D;
 		
 		context3D.configureBackBuffer(contextView.view.stage.stageWidth, contextView.view.stage.stageHeight, antiAlias, true);
-		trace("context3D.driverInfo = " + context3D.driverInfo + " antiAlias = " + antiAlias);
+		trace("DriverInfo: " + context3D.driverInfo + " AntiAlias: " + antiAlias);
 		
 		context3D.setStencilActions(
 			cast Context3DTriangleFace.FRONT_AND_BACK,
@@ -134,13 +135,16 @@ class Stage3DRenderContext implements IRenderContext
 			var height:Int = cast viewport.height;
 			if (height < 64) height = 64;
 			try {
-				trace(["RESIZE", width, height, antiAlias]);
+				//trace(["RESIZE", width, height, antiAlias]);
 				context3D.configureBackBuffer(width, height, antiAlias, true);
 			}
 			catch (e:Error) {
 				trace("e = " + e);
 				return;
-			}	
+			}
+			
+			scissorRectangle.setTo(0, 0, width, height);
+			context3D.setScissorRectangle(scissorRectangle);
 		}
 		currentDimensions.setTo(viewport.x, viewport.y, viewport.width, viewport.height);
 	}

@@ -10,7 +10,6 @@ import away3d.events.Stage3DEvent;
 import away3d.stereo.methods.SBSStereoRenderMethod;
 import away3d.stereo.StereoCamera3D;
 import away3d.stereo.StereoView3D;
-import com.imagination.texturePacker.impl.math.PowerOf2;
 import flash.events.Event;
 import flash.geom.Rectangle;
 import flash.geom.Vector3D;
@@ -41,7 +40,7 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 	
 	public function new(profile:String, contextIndex:Int=0) 
 	{
-		super(null, null, null, false, profile, contextIndex, null);
+		super(null, null, null, null);
 		this.profile = profile;
 		
 		stereoCamera3D = new StereoCamera3D();

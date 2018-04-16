@@ -7,7 +7,10 @@ import robotlegs.bender.extensions.display.base.impl.Viewport;
 import robotlegs.bender.extensions.display.stage3D.starling.impl.StarlingCollection;
 import starling.core.Starling;
 import starling.events.Event;
+
+#if !starling_1_x
 import starling.rendering.Painter;
+#end
 
 /**
  * ...
@@ -51,7 +54,9 @@ class StarlingInitializer extends BaseInitializer
 		starling.shareContext = true;
 		starling.start();
 		
+		#if !starling_1_x
 		Painter.DEFAULT_STENCIL_VALUE = 0;
+		#end
 		
 		if (debug) starling.showStats = true;
 		

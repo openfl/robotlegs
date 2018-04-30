@@ -6,8 +6,6 @@ import msignal.Signal.Signal0;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
 class AppSetupCompleteSignal extends Signal0 
 {
 	

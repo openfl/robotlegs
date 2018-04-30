@@ -9,6 +9,7 @@ package robotlegs.bender.extensions.display.stage3D.fuse;
 
 import fuse.Fuse;
 import fuse.display.DisplayObject;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.display.stage3D.fuse.api.IFuseViewMap;
 import robotlegs.bender.extensions.display.stage3D.fuse.impl.FuseCollection;
 import robotlegs.bender.extensions.display.stage3D.fuse.impl.FuseViewMap;
@@ -23,9 +24,7 @@ import robotlegs.bender.framework.impl.UID;
  * injector as well as create view maps for automatic mediation when instances are
  * added on stage/scene.</p>
  */
-@:rtti
-@:keepSub
-class FuseIntegrationExtension implements IExtension
+class FuseIntegrationExtension extends DescribedType implements IExtension
 {
 	/*============================================================================*/
 	/* Private Properties                                                         */

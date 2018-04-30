@@ -7,6 +7,7 @@
 
 package robotlegs.bender.extensions.signalCommandMap.impl;
 
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.signalCommandMap.impl.signals.AppSetupCompleteSignal;
 import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
@@ -20,9 +21,7 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
-@:rtti
-@:keepSub
-class SignalCommandMap implements ISignalCommandMap
+class SignalCommandMap extends DescribedType implements ISignalCommandMap
 {
 
 	/*============================================================================*/

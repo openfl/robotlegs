@@ -1,14 +1,13 @@
 package robotlegs.bender.extensions.display.base.impl;
 
 import msignal.Signal.Signal0;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.display.base.api.IViewport;
 /**
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
-class Viewport implements IViewport
+class Viewport extends DescribedType implements IViewport
 {
 	/*============================================================================*/
 	/* Private Properties                                                         */

@@ -16,8 +16,6 @@ import starling.rendering.Painter;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
 class StarlingInitializer extends BaseInitializer
 {
 	//private static var starlingCollection:StarlingCollection;

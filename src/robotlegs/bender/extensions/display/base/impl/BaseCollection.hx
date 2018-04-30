@@ -6,8 +6,7 @@ import flash.utils.Dictionary;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
+@:autoBuild(org.swiftsuspenders.macros.ReflectorMacro.check())
 class BaseCollection 
 {
 	/*============================================================================*/

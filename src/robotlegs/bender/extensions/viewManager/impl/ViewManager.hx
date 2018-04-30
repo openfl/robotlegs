@@ -20,8 +20,7 @@ import robotlegs.bender.extensions.viewManager.api.IViewManager;
 /**
  * @private
  */
-@:rtti
-@:keepSub
+@:build(org.swiftsuspenders.macros.ReflectorMacro.check())
 class ViewManager extends EventDispatcher implements IViewManager
 {
 

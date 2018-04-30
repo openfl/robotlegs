@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.eventCommandMap.impl;
 
 import openfl.events.IEventDispatcher;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.commandCenter.dsl.ICommandMapper;
 import robotlegs.bender.extensions.commandCenter.dsl.ICommandUnmapper;
 import robotlegs.bender.extensions.commandCenter.impl.CommandTriggerMap;
@@ -19,10 +20,7 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
-
-@:keepSub
-@:rtti
-class EventCommandMap implements IEventCommandMap
+class EventCommandMap extends DescribedType implements IEventCommandMap
 {
 
 	/*============================================================================*/

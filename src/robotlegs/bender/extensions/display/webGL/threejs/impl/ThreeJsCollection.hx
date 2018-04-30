@@ -5,8 +5,6 @@ import robotlegs.bender.extensions.display.base.impl.BaseCollection;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
 class ThreeJsCollection extends BaseCollection
 {
 	

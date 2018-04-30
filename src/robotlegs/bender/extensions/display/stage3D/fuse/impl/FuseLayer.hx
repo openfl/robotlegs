@@ -10,8 +10,8 @@ import robotlegs.bender.extensions.display.base.api.IRenderer;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
+@:build(org.swiftsuspenders.macros.ReflectorMacro.check())
+@:autoBuild(org.swiftsuspenders.macros.ReflectorMacro.check())
 class FuseLayer extends Sprite implements ILayer
 {
 	public var active:Bool = true;

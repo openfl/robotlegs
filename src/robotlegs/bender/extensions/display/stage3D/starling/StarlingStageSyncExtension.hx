@@ -9,6 +9,7 @@
 package robotlegs.bender.extensions.display.stage3D.starling;
 
 import flash.display.DisplayObjectContainer;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.matching.InstanceOfType;
 import robotlegs.bender.extensions.display.stage3D.starling.impl.StarlingCollection;
@@ -27,9 +28,7 @@ import starling.events.Event;
  *
  * <p>It should be installed before context initialization.</p>
  */
-@:rtti
-@:keepSub
-class StarlingStageSyncExtension implements IExtension
+class StarlingStageSyncExtension extends DescribedType implements IExtension
 {
 
 	/*============================================================================*/

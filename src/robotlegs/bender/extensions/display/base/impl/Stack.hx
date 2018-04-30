@@ -1,6 +1,7 @@
 package robotlegs.bender.extensions.display.base.impl;
 
 
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.display.base.api.ILayers;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
 import robotlegs.bender.extensions.display.base.api.IStack;
@@ -35,9 +36,7 @@ import robotlegs.bender.framework.api.ILogger;
  * @author P.J.Shand
  * 
  */
-@:rtti 
-@:keepSub
-class Stack implements IStack
+class Stack extends DescribedType implements IStack
 {
 	/*============================================================================*/
 	/* Private Properties                                                         */

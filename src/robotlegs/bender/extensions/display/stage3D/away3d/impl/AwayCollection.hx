@@ -6,8 +6,6 @@ import robotlegs.bender.extensions.display.base.impl.BaseCollection;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
 class AwayCollection extends BaseCollection
 {
 	

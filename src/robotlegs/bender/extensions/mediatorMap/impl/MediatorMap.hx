@@ -9,6 +9,7 @@ package robotlegs.bender.extensions.mediatorMap.impl;
 
 import openfl.display.DisplayObject;
 import org.swiftsuspenders.InjectorMacro;
+import org.swiftsuspenders.utils.DescribedType;
 
 import robotlegs.bender.extensions.matching.ITypeMatcher;
 import robotlegs.bender.extensions.matching.TypeMatcher;
@@ -23,9 +24,7 @@ import robotlegs.bender.framework.api.ILogger;
  * @private
  */
 
-@:keepSub
-@:rtti
-class MediatorMap implements IMediatorMap implements IViewHandler
+class MediatorMap extends DescribedType implements IMediatorMap implements IViewHandler
 {
 
 	/*============================================================================*/

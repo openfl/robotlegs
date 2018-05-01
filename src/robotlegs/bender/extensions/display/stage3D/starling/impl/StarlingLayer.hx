@@ -11,8 +11,8 @@ import starling.display.Sprite;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
+@:build(org.swiftsuspenders.macros.ReflectorMacro.check())
+@:autoBuild(org.swiftsuspenders.macros.ReflectorMacro.check())
 class StarlingLayer extends Sprite implements ILayer
 {
 	public var active:Bool = true;

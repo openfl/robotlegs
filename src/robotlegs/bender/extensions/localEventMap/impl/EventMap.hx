@@ -9,15 +9,14 @@ package robotlegs.bender.extensions.localEventMap.impl;
 
 import openfl.events.Event;
 import openfl.events.IEventDispatcher;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.localEventMap.api.IEventMap;
 
 /**
  * @private
  */
 
-@:keepSub
-@:rtti
-class EventMap implements IEventMap
+class EventMap extends DescribedType implements IEventMap
 {
 
 	/*============================================================================*/

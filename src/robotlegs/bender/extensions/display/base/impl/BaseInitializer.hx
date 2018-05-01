@@ -9,8 +9,7 @@ import robotlegs.bender.framework.api.IContext;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
+@:autoBuild(org.swiftsuspenders.macros.ReflectorMacro.check())
 class BaseInitializer 
 {
 	@inject public var renderer:IRenderer;

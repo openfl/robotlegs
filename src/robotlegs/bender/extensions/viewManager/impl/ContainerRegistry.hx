@@ -19,8 +19,7 @@ import openfl.events.EventDispatcher;
 /**
  * @private
  */
-@:rtti
-@:keepSub
+@:build(org.swiftsuspenders.macros.ReflectorMacro.check())
 class ContainerRegistry extends EventDispatcher
 {
 

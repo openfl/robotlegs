@@ -5,6 +5,7 @@ import fuse.display.DisplayObject;
 import fuse.display.DisplayObjectContainer;
 import fuse.events.FuseEvent;
 import openfl.events.Event;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.display.stage3D.fuse.api.IFuseViewMap;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 
@@ -13,9 +14,7 @@ import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
  * views automatic mediation. When view is added or removed from stage, it will
  * automatically create or destroy its mediator.
  */	
-@:rtti
-@:keepSub
-class FuseViewMap implements IFuseViewMap
+class FuseViewMap extends DescribedType implements IFuseViewMap
 {
 	/*============================================================================*/
 	/* Public Properties                                                         */

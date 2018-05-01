@@ -13,9 +13,7 @@ import robotlegs.bender.extensions.display.base.impl.BaseCollection;
  * in Robotlegs application. All Fuse instances when added to collection must
  * have defined name which will actually be used as named injection of Fuse
  * view.</p>
- */	
-@:rtti
-@:keepSub
+ */
 class FuseCollection extends BaseCollection
 {
 	

@@ -4,6 +4,7 @@ import openfl.Lib;
 import openfl.display.BitmapData;
 import openfl.events.Event;
 import msignal.Signal.Signal0;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.display.base.api.ILayers;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
@@ -18,9 +19,7 @@ import robotlegs.bender.framework.api.ILogger;
  * @author P.J.Shand
  * 
  */
-@:rtti
-@:keepSub
-class Renderer implements IRenderer
+class Renderer extends DescribedType implements IRenderer
 {
 	@inject public var contextView:ContextView;
 	@inject public var viewport:IViewport;

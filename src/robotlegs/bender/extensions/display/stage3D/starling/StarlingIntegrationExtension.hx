@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 package robotlegs.bender.extensions.display.stage3D.starling;
 
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.matching.InstanceOfType;
 import robotlegs.bender.extensions.display.stage3D.starling.api.IStarlingViewMap;
 import robotlegs.bender.extensions.display.stage3D.starling.impl.StarlingCollection;
@@ -24,9 +25,7 @@ import starling.display.DisplayObjectContainer;
  * injector as well as create view maps for automatic mediation when instances are
  * added on stage/scene.</p>
  */
-@:rtti
-@:keepSub
-class StarlingIntegrationExtension implements IExtension
+class StarlingIntegrationExtension extends DescribedType implements IExtension
 {
 	/*============================================================================*/
 	/* Private Properties                                                         */

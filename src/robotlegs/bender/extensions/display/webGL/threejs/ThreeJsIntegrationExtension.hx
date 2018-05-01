@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 package robotlegs.bender.extensions.display.webGL.threejs;
 
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.matching.InstanceOfType;
 import robotlegs.bender.extensions.display.webGL.threejs.api.IThreeJsViewMap;
 import robotlegs.bender.extensions.display.webGL.threejs.impl.ThreeJsCollection;
@@ -22,9 +23,7 @@ import robotlegs.bender.framework.impl.UID;
  * injector as well as create view maps for automatic mediation when instances are
  * added on stage/scene.</p>
  */
-@:rtti
-@:keepSub
-class ThreeJsIntegrationExtension implements IExtension
+class ThreeJsIntegrationExtension implements DescribedType implements IExtension
 {
 	/*============================================================================*/
 	/* Private Properties                                                         */

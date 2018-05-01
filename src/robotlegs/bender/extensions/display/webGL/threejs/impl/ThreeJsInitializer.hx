@@ -6,8 +6,6 @@ import robotlegs.bender.extensions.display.base.impl.BaseInitializer;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
 class ThreeJsInitializer extends BaseInitializer
 {
 	

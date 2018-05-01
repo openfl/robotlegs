@@ -7,8 +7,6 @@ import openfl.display.BitmapData;
  * @author P.J.Shand
  * 
  */
-@:rtti
-@:keepSub
 interface IRenderer
 {
 	var active(get, set):Bool;

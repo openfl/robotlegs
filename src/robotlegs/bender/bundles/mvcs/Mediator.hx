@@ -14,6 +14,7 @@ import flash.events.IEventDispatcher;
 import openfl.events.Event;
 import openfl.events.IEventDispatcher;
 #end
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.localEventMap.api.IEventMap;
 import robotlegs.bender.extensions.mediatorMap.api.IMediator;
 
@@ -23,9 +24,7 @@ import robotlegs.bender.extensions.mediatorMap.api.IMediator;
  * <p>Override initialize and destroy to hook into the mediator lifecycle.</p>
  */
 
-@:keepSub
-@:rtti
-class Mediator implements IMediator
+class Mediator implements DescribedType implements IMediator
 {
 
 	/*============================================================================*/

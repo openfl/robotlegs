@@ -2,6 +2,7 @@ package robotlegs.bender.extensions.display.stage3D.starling.impl;
 
 import openfl.display3D.Context3DBlendFactor;
 import openfl.geom.Rectangle;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.display.base.api.ILayer;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
 import robotlegs.bender.extensions.display.base.api.IRenderer;
@@ -11,9 +12,7 @@ import starling.display.Sprite;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
-class StarlingLayer extends Sprite implements ILayer
+class StarlingLayer extends Sprite implements ILayer implements DescribedType
 {
 	public var active:Bool = true;
 	private var starling:Starling;

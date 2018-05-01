@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"tags": [ "mvc", "robotlegs", "openfl","flash", "js", "web", "starling", "away3D", "fuse" ],
 	"description": "Robotlegs v2 is a popular Micro-Architecture framework which integrates with OpenFL, Starling, Away3D, ThreeJS and Fuse",
-	"version": "0.4.4",
+	"version": "0.4.6",
 	"releasenote": "add stage3D snapshot, only fire resize when values have changed and code cleanup",
 	"contributors": [ "p.j.shand" ],
 	"dependencies": {

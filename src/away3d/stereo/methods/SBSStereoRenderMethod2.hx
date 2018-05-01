@@ -128,16 +128,16 @@ class SBSStereoRenderMethod2 extends StereoRenderMethodBase
 		//if (enableBarrelDistortion) code +=	barrelDistortionFragmentCode2("ft0");
 		code +=	"tex ft0, ft0, fs0 <2d,linear,nomip>\n";	// ft0 = getColorAt(texture=fs0, position=ft0)
 		
-		/*code +=	"add ft1, v1, fc1\n";						// translate: ft1.x = v1.x + -.5; ft1.yzw = v1.yzw;
+		code +=	"add ft1, v1, fc1\n";						// translate: ft1.x = v1.x + -.5; ft1.yzw = v1.yzw;
 		code +=	"mul ft1, ft1, fc0\n";						// scale: ft1.x = ft1.x * 2; ft1.yzw = ft1.yzw;
 		code +=	"add ft1.x, ft1.x, fc1.w\n";
 		//if (enableBarrelDistortion) code +=	barrelDistortionFragmentCode("ft1");
 		if (enableBarrelDistortion) code +=	barrelDistortionFragmentCode2("ft1");
 		code +=	"tex ft1, ft1, fs1 <2d,linear,nomip>\n";	// ft1 = getColorAt(texture=fs1, position=ft1)
 		
-		code +=	"add oc, ft0, ft1";	*/
+		code +=	"add oc, ft0, ft1";
 		
-		code +=	"mov oc, ft0";
+		//code +=	"mov oc, ft0";
 		
 		//code +=	"mov oc, ft1";
 		//trace("code = " + code);

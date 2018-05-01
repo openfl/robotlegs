@@ -11,6 +11,7 @@ package robotlegs.bender.extensions.display.stage3D.fuse;
 import flash.display.DisplayObjectContainer;
 import fuse.Fuse;
 import openfl.events.Event;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.matching.InstanceOfType;
 import robotlegs.bender.extensions.display.stage3D.fuse.impl.FuseCollection;
@@ -27,9 +28,7 @@ import robotlegs.bender.framework.impl.UID;
  *
  * <p>It should be installed before context initialization.</p>
  */
-@:rtti
-@:keepSub
-class FuseStageSyncExtension implements IExtension
+class FuseStageSyncExtension implements DescribedType implements IExtension
 {
 
 	/*============================================================================*/

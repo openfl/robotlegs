@@ -7,6 +7,7 @@
 
 package robotlegs.bender.extensions.contextView;
 
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.viewManager.api.IViewManager;
 import robotlegs.bender.framework.api.IConfig;
 
@@ -16,10 +17,7 @@ import robotlegs.bender.framework.api.IConfig;
  * It requires that the ViewManagerExtension, ContextViewExtension
  * and a ContextView have been installed.
  */
-
-@:keepSub
-@:rtti
-class ContextViewListenerConfig implements IConfig
+class ContextViewListenerConfig implements DescribedType implements IConfig
 {
 
 	/*============================================================================*/

@@ -7,6 +7,7 @@
 
 package robotlegs.bender.bundles.mvcs;
 
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.commandCenter.api.ICommand;
 
 /**
@@ -16,9 +17,7 @@ import robotlegs.bender.extensions.commandCenter.api.ICommand;
  * Any class with an execute method can be used.</p>
  */
 
-@:keepSub
-@:rtti
-class Command implements ICommand
+class Command implements DescribedType implements ICommand
 {
 
 	/*============================================================================*/

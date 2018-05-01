@@ -9,6 +9,7 @@ package robotlegs.bender.extensions.display.webGL.threejs.impl;
 
 import js.three.Scene;
 import openfl.errors.Error;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 import robotlegs.bender.extensions.display.base.api.IDisplayObject;
 import robotlegs.bender.extensions.display.webGL.threejs.api.IThreeJsViewMap;
@@ -21,9 +22,7 @@ import js.three.Object3D;
  * views automatic mediation. When view is added or removed from scene, it will
  * automatically create or destroy its mediator.
  */	
-@:rtti
-@:keepSub
-class ThreeJsViewMap implements IThreeJsViewMap	
+class ThreeJsViewMap implements DescribedType implements IThreeJsViewMap	
 {
 	/*============================================================================*/
 	/* Public Properties                                                         */

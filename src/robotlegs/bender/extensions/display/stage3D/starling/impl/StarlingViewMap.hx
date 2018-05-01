@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.display.stage3D.starling.impl;
 
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 import robotlegs.bender.extensions.display.base.api.IDisplayObject;
 import robotlegs.bender.extensions.display.stage3D.starling.api.IStarlingViewMap;
@@ -13,10 +14,8 @@ import starling.events.Event;
  * The <code>StarlingViewMap</code> class performs managing Starling stage and 
  * views automatic mediation. When view is added or removed from stage, it will
  * automatically create or destroy its mediator.
- */	
-@:rtti
-@:keepSub
-class StarlingViewMap implements IStarlingViewMap
+ */
+class StarlingViewMap implements DescribedType implements IStarlingViewMap
 {
 	/*============================================================================*/
 	/* Public Properties                                                         */

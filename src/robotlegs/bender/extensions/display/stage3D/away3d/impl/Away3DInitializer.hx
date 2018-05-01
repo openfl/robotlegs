@@ -8,8 +8,6 @@ import robotlegs.bender.extensions.display.base.impl.BaseInitializer;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
 class Away3DInitializer extends BaseInitializer
 {
 	

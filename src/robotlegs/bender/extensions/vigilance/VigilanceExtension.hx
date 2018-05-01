@@ -9,6 +9,7 @@ package robotlegs.bender.extensions.vigilance;
 
 import org.swiftsuspenders.errors.InjectorError;
 import org.swiftsuspenders.mapping.MappingEvent;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.enhancedLogging.impl.LogMessageParser;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.IExtension;
@@ -69,9 +70,7 @@ class VigilanceExtension implements IExtension implements ILogTarget
 	}
 }
 
-@:rtti
-@:keep
-class MetadataChecker
+class MetadataChecker implements DescribedType
 {
 	@inject("optional=true") public var context:IContext;
 	//@inject("name=myNamedDependency","optional=true") public var context:IContext;

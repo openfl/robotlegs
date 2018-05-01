@@ -27,16 +27,18 @@ class SignalCommandMapExtension implements IExtension
     /* Public Functions                                                           */
     /*============================================================================*/
 	
-	public function SignalCommandMapExtension() { }
+	public function new() { }
 	
     public function extend(context:IContext):Void
     {
-		_uid = UID.create(SignalCommandMapExtension);
-        context.injector.map(ISignalCommandMap).toSingleton(SignalCommandMap);
+		context.injector.map(ISignalCommandMap).toSingleton(SignalCommandMap);
     }
 
     public function toString():String
     {
+		if (_uid == null) {
+			_uid = UID.create(SignalCommandMapExtension);
+		}
         return _uid;
     }
 }

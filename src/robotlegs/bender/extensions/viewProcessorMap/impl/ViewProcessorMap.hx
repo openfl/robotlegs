@@ -8,6 +8,7 @@
 package robotlegs.bender.extensions.viewProcessorMap.impl;
 
 import openfl.display.DisplayObject;
+import org.swiftsuspenders.utils.DescribedType;
 
 import robotlegs.bender.extensions.matching.ITypeMatcher;
 import robotlegs.bender.extensions.matching.TypeMatcher;
@@ -20,9 +21,7 @@ import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorUnmapper;
  * View Processor Map implementation
  * @private
  */
-@:rtti
-@:keepSub
-class ViewProcessorMap implements IViewProcessorMap implements IViewHandler
+class ViewProcessorMap implements DescribedType implements IViewProcessorMap implements IViewHandler
 {
 
 	/*============================================================================*/

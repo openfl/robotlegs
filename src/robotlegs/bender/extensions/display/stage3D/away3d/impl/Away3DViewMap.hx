@@ -12,6 +12,7 @@ import away3d.containers.Scene3D;
 import away3d.containers.View3D;
 import away3d.events.Scene3DEvent;
 import openfl.errors.Error;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 import robotlegs.bender.extensions.display.stage3D.away3d.impl.AwayCollection;
 import robotlegs.bender.extensions.display.stage3D.away3d.api.IAway3DViewMap;
@@ -22,9 +23,7 @@ import robotlegs.bender.extensions.display.base.api.IDisplayObject;
  * views automatic mediation. When view is added or removed from scene, it will
  * automatically create or destroy its mediator.
  */	
-@:rtti
-@:keepSub
-class Away3DViewMap implements IAway3DViewMap	
+class Away3DViewMap implements DescribedType implements IAway3DViewMap	
 {
 	/*============================================================================*/
 	/* Public Properties                                                         */

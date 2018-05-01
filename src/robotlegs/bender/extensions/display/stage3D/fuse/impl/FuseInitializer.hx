@@ -13,8 +13,6 @@ import robotlegs.bender.extensions.display.base.impl.Viewport;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
 class FuseInitializer extends BaseInitializer
 {
 	var onFuseReady:Event->Void;

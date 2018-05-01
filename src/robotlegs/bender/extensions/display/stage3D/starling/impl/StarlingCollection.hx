@@ -13,8 +13,6 @@ import starling.core.Starling;
  * have defined name which will actually be used as named injection of Starling
  * view.</p>
  */	
-@:rtti
-@:keepSub
 class StarlingCollection extends BaseCollection
 {
 	

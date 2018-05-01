@@ -13,6 +13,7 @@ import openfl.errors.Error;
 import openfl.events.ErrorEvent;
 import openfl.events.Event;
 import openfl.geom.Rectangle;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.display.base.api.ILayers;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
@@ -22,9 +23,7 @@ import robotlegs.bender.extensions.display.base.api.IViewport;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-@:keepSub
-class Stage3DRenderContext implements IRenderContext
+class Stage3DRenderContext implements DescribedType implements IRenderContext
 {
 	@inject public var contextView:ContextView;
 	@inject public var viewport:IViewport;

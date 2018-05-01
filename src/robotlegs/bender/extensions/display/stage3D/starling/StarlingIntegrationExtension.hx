@@ -25,7 +25,7 @@ import starling.display.DisplayObjectContainer;
  * injector as well as create view maps for automatic mediation when instances are
  * added on stage/scene.</p>
  */
-class StarlingIntegrationExtension extends DescribedType implements IExtension
+class StarlingIntegrationExtension implements DescribedType implements IExtension
 {
 	/*============================================================================*/
 	/* Private Properties                                                         */

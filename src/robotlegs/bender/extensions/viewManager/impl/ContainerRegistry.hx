@@ -10,6 +10,7 @@ package robotlegs.bender.extensions.viewManager.impl;
 import openfl.display.DisplayObject;
 import openfl.display.DisplayObjectContainer;
 import openfl.events.EventDispatcher;
+import org.swiftsuspenders.utils.DescribedType;
 
 
 @:meta(Event(name="containerAdd", type="robotlegs.bender.extensions.viewManager.impl.ContainerRegistryEvent"))
@@ -19,8 +20,7 @@ import openfl.events.EventDispatcher;
 /**
  * @private
  */
-@:build(org.swiftsuspenders.macros.ReflectorMacro.check())
-class ContainerRegistry extends EventDispatcher
+class ContainerRegistry extends EventDispatcher implements DescribedType
 {
 
 	/*============================================================================*/

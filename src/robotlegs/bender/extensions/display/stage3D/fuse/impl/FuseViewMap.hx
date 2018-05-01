@@ -14,7 +14,7 @@ import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
  * views automatic mediation. When view is added or removed from stage, it will
  * automatically create or destroy its mediator.
  */	
-class FuseViewMap extends DescribedType implements IFuseViewMap
+class FuseViewMap implements DescribedType implements IFuseViewMap
 {
 	/*============================================================================*/
 	/* Public Properties                                                         */

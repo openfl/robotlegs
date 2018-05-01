@@ -24,7 +24,7 @@ import robotlegs.bender.framework.api.ILogger;
  * @private
  */
 
-class MediatorMap extends DescribedType implements IMediatorMap implements IViewHandler
+class MediatorMap implements DescribedType implements IMediatorMap implements IViewHandler
 {
 
 	/*============================================================================*/

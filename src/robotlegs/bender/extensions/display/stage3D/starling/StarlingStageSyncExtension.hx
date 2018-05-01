@@ -28,7 +28,7 @@ import starling.events.Event;
  *
  * <p>It should be installed before context initialization.</p>
  */
-class StarlingStageSyncExtension extends DescribedType implements IExtension
+class StarlingStageSyncExtension implements DescribedType implements IExtension
 {
 
 	/*============================================================================*/

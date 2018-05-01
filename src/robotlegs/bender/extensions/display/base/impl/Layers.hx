@@ -10,7 +10,7 @@ import robotlegs.bender.extensions.display.base.api.IViewport;
  * ...
  * @author P.J.Shand
  */
-class Layers extends DescribedType implements ILayers
+class Layers implements DescribedType implements ILayers
 {
 	@inject public var viewport:IViewport;
 	

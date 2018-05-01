@@ -7,7 +7,7 @@ import robotlegs.bender.extensions.display.base.api.IViewport;
  * ...
  * @author P.J.Shand
  */
-class Viewport extends DescribedType implements IViewport
+class Viewport implements DescribedType implements IViewport
 {
 	/*============================================================================*/
 	/* Private Properties                                                         */

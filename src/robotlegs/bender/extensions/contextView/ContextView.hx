@@ -13,7 +13,7 @@ import org.swiftsuspenders.utils.DescribedType;
 /**
  * The Context View represents the root DisplayObjectContainer for a Context
  */
-class ContextView extends DescribedType
+class ContextView implements DescribedType
 {
 
 	/*============================================================================*/

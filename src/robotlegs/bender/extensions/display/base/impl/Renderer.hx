@@ -19,7 +19,7 @@ import robotlegs.bender.framework.api.ILogger;
  * @author P.J.Shand
  * 
  */
-class Renderer extends DescribedType implements IRenderer
+class Renderer implements DescribedType implements IRenderer
 {
 	@inject public var contextView:ContextView;
 	@inject public var viewport:IViewport;

@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.display.base.impl; 
 
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.display.base.api.ILayers;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
@@ -9,8 +10,7 @@ import robotlegs.bender.framework.api.IContext;
  * ...
  * @author P.J.Shand
  */
-@:autoBuild(org.swiftsuspenders.macros.ReflectorMacro.check())
-class BaseInitializer 
+class BaseInitializer implements DescribedType
 {
 	@inject public var renderer:IRenderer;
 	@inject public var renderContext:IRenderContext;

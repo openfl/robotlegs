@@ -16,7 +16,7 @@ import robotlegs.bender.extensions.localEventMap.api.IEventMap;
  * @private
  */
 
-class EventMap extends DescribedType implements IEventMap
+class EventMap implements DescribedType implements IEventMap
 {
 
 	/*============================================================================*/

@@ -20,7 +20,7 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
-class EventCommandMap extends DescribedType implements IEventCommandMap
+class EventCommandMap implements DescribedType implements IEventCommandMap
 {
 
 	/*============================================================================*/

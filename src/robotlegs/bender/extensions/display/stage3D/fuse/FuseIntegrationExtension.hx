@@ -24,7 +24,7 @@ import robotlegs.bender.framework.impl.UID;
  * injector as well as create view maps for automatic mediation when instances are
  * added on stage/scene.</p>
  */
-class FuseIntegrationExtension extends DescribedType implements IExtension
+class FuseIntegrationExtension implements DescribedType implements IExtension
 {
 	/*============================================================================*/
 	/* Private Properties                                                         */

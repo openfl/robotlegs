@@ -36,7 +36,7 @@ import robotlegs.bender.framework.api.ILogger;
  * @author P.J.Shand
  * 
  */
-class Stack extends DescribedType implements IStack
+class Stack implements DescribedType implements IStack
 {
 	/*============================================================================*/
 	/* Private Properties                                                         */

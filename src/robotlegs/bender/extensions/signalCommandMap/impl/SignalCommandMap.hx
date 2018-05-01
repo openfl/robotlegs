@@ -21,7 +21,7 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
-class SignalCommandMap extends DescribedType implements ISignalCommandMap
+class SignalCommandMap implements DescribedType implements ISignalCommandMap
 {
 
 	/*============================================================================*/

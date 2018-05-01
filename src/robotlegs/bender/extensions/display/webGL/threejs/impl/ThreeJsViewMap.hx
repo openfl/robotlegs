@@ -22,7 +22,7 @@ import js.three.Object3D;
  * views automatic mediation. When view is added or removed from scene, it will
  * automatically create or destroy its mediator.
  */	
-class ThreeJsViewMap extends DescribedType implements IThreeJsViewMap	
+class ThreeJsViewMap implements DescribedType implements IThreeJsViewMap	
 {
 	/*============================================================================*/
 	/* Public Properties                                                         */

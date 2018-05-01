@@ -15,7 +15,7 @@ import starling.events.Event;
  * views automatic mediation. When view is added or removed from stage, it will
  * automatically create or destroy its mediator.
  */
-class StarlingViewMap extends DescribedType implements IStarlingViewMap
+class StarlingViewMap implements DescribedType implements IStarlingViewMap
 {
 	/*============================================================================*/
 	/* Public Properties                                                         */

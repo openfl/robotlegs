@@ -70,7 +70,7 @@ class VigilanceExtension implements IExtension implements ILogTarget
 	}
 }
 
-class MetadataChecker extends DescribedType
+class MetadataChecker implements DescribedType
 {
 	@inject("optional=true") public var context:IContext;
 	//@inject("name=myNamedDependency","optional=true") public var context:IContext;

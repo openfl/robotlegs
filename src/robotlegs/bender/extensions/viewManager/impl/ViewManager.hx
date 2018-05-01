@@ -10,6 +10,7 @@ package robotlegs.bender.extensions.viewManager.impl;
 import openfl.display.DisplayObjectContainer;
 import openfl.errors.Error;
 import openfl.events.EventDispatcher;
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.viewManager.api.IViewHandler;
 import robotlegs.bender.extensions.viewManager.api.IViewManager;
 
@@ -20,8 +21,7 @@ import robotlegs.bender.extensions.viewManager.api.IViewManager;
 /**
  * @private
  */
-@:build(org.swiftsuspenders.macros.ReflectorMacro.check())
-class ViewManager extends EventDispatcher implements IViewManager
+class ViewManager extends EventDispatcher implements IViewManager implements DescribedType
 {
 
 	/*============================================================================*/

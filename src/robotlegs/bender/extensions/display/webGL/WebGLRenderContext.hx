@@ -16,7 +16,7 @@ import robotlegs.bender.extensions.display.webGL.WebGLInitOptions;
  * ...
  * @author P.J.Shand
  */
-class WebGLRenderContext extends DescribedType implements IRenderContext
+class WebGLRenderContext implements DescribedType implements IRenderContext
 {
 	@inject public var contextView:ContextView;
 	@inject public var viewport:IViewport;

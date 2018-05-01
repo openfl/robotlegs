@@ -1,13 +1,13 @@
 package robotlegs.bender.extensions.display.base.impl;
 
 import flash.utils.Dictionary;
+import org.swiftsuspenders.utils.DescribedType;
 
 /**
  * ...
  * @author P.J.Shand
  */
-@:autoBuild(org.swiftsuspenders.macros.ReflectorMacro.check())
-class BaseCollection 
+class BaseCollection implements DescribedType
 {
 	/*============================================================================*/
 	/* private Properties

@@ -28,7 +28,7 @@ import robotlegs.bender.framework.impl.UID;
  *
  * <p>It should be installed before context initialization.</p>
  */
-class FuseStageSyncExtension extends DescribedType implements IExtension
+class FuseStageSyncExtension implements DescribedType implements IExtension
 {
 
 	/*============================================================================*/

@@ -23,7 +23,7 @@ import robotlegs.bender.extensions.display.base.api.IViewport;
  * ...
  * @author P.J.Shand
  */
-class Stage3DRenderContext extends DescribedType implements IRenderContext
+class Stage3DRenderContext implements DescribedType implements IRenderContext
 {
 	@inject public var contextView:ContextView;
 	@inject public var viewport:IViewport;

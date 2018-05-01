@@ -13,6 +13,7 @@ class PlaceHolderLayer implements ILayer
 {
 	public var active:Bool = true;
 	private var fuse:Fuse;
+	public var changeAvailable(get, null):Bool;
 	@:isVar public var renderContext(get, set):IRenderContext;
 	
 	public function new() { }
@@ -35,5 +36,10 @@ class PlaceHolderLayer implements ILayer
 	public function process():Void 
 	{
 		
+	}
+	
+	function get_changeAvailable():Bool 
+	{
+		return false;
 	}
 }

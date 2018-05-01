@@ -11,6 +11,7 @@ interface ILayer
 	function process():Void;
 	
 	//var iRenderer(get, set):IRenderer;
+	var changeAvailable(get, null):Bool;
 	var renderContext(get, set):IRenderContext;
 	function setTo(x:Float, y:Float, width:Float, height:Float):Void;
 }

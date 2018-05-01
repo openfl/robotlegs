@@ -18,13 +18,9 @@ import starling.core.Starling;
 class StarlingCollection extends BaseCollection
 {
 	
-	public function new(starlingCollectionData:Array<Dynamic>) 
+	public function new(starling:Starling, viewID:String) 
 	{
-		if (starlingCollectionData != null){
-			var starling:Starling = starlingCollectionData[0];
-			var viewID:String = starlingCollectionData[1];
-			addItem(starling, viewID);
-		}
+		addItem(starling, viewID);
 	}
 	
 	/*============================================================================*/

@@ -17,6 +17,7 @@ class StarlingLayer extends Sprite implements ILayer
 {
 	public var active:Bool = true;
 	private var starling:Starling;
+	public var changeAvailable(get, null):Bool;
 	@:isVar public var renderContext(get, set):IRenderContext;
 	
 	public function new() 
@@ -53,5 +54,8 @@ class StarlingLayer extends Sprite implements ILayer
 		return renderContext;
 	}
 	
-	
+	function get_changeAvailable():Bool 
+	{
+		return true;
+	}
 }

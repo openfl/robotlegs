@@ -71,26 +71,37 @@ class Renderer implements IRenderer
 			renderMod = renderCount % skip;
 		}
 		
-		if (renderCount % skip == 0){
-			if (index == count) {
-				renderContext.begin();
-				
-			}
-			if (active){
-				for (i in 0...layers.layers.length) 
-				{
-					// in some instances context3D is set to null in this loop
-					if (!renderContext.available) return;
-					if (layers.layers[i].active){
-						layers.layers[i].process();
-					}
+		if (renderCount % skip == 0) {
+			
+			var changeAvailable:Bool = false;
+			for (j in 0...layers.layers.length) {
+				if (layers.layers[j].changeAvailable) {
+					changeAvailable = true;
+					break;
 				}
 			}
-			prePresent.dispatch();
-			if (index == 0) {
-				renderContext.end();
+			
+			if (changeAvailable){
+				if (index == count) {
+					renderContext.begin();
+					
+				}
+				if (active){
+					for (i in 0...layers.layers.length) 
+					{
+						// in some instances context3D is set to null in this loop
+						if (!renderContext.available) return;
+						if (layers.layers[i].active){
+							layers.layers[i].process();
+						}
+					}
+				}
+				prePresent.dispatch();
+				if (index == 0) {
+					renderContext.end();
+				}
+				postPresent.dispatch();
 			}
-			postPresent.dispatch();
 		}
 		
 		if (index == 0) {

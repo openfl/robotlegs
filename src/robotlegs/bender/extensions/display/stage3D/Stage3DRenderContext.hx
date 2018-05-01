@@ -144,7 +144,7 @@ class Stage3DRenderContext implements IRenderContext
 			}
 			
 			scissorRectangle.setTo(0, 0, width, height);
-			context3D.setScissorRectangle(scissorRectangle);
+			//context3D.setScissorRectangle(scissorRectangle);
 		}
 		currentDimensions.setTo(viewport.x, viewport.y, viewport.width, viewport.height);
 	}

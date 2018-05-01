@@ -22,6 +22,7 @@ class AwayLayer extends View3D implements ILayer implements IAwayLayer
 	public var active:Bool = true;
 	@:isVar public var renderContext(get, set):IRenderContext;
 	
+	public var changeAvailable(get, null):Bool;
 	private var stage3DManager:Stage3DManager;
 	private var profile:String;
 	
@@ -72,5 +73,10 @@ class AwayLayer extends View3D implements ILayer implements IAwayLayer
 			stage3DProxy.antiAlias = renderContext.antiAlias;
 		}
 		return super.set_stage3DProxy(stage3DProxy);
+	}
+	
+	function get_changeAvailable():Bool 
+	{
+		return true;
 	}
 }

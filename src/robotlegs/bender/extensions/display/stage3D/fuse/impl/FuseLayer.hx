@@ -6,6 +6,7 @@ import openfl.geom.Rectangle;
 import robotlegs.bender.extensions.display.base.api.ILayer;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
 import robotlegs.bender.extensions.display.base.api.IRenderer;
+import robotlegs.bender.extensions.display.base.impl.Stack;
 /**
  * ...
  * @author P.J.Shand
@@ -16,6 +17,7 @@ class FuseLayer extends Sprite implements ILayer
 {
 	public var active:Bool = true;
 	private var fuse:Fuse;
+	public var changeAvailable(get, null):Bool;
 	@:isVar public var renderContext(get, set):IRenderContext;
 	
 	public function new() 
@@ -25,6 +27,9 @@ class FuseLayer extends Sprite implements ILayer
 	
 	public function process():Void
 	{
+		if (Stack.layerCount > 1) Fuse.current.cleanContext = true;
+		else Fuse.current.cleanContext = false;
+		
 		if (fuse != null /*&& renderContext.active*/) {
 			fuse.process();
 		}
@@ -53,5 +58,15 @@ class FuseLayer extends Sprite implements ILayer
 		return renderContext;
 	}
 	
-	
+	function get_changeAvailable():Bool 
+	{
+		#if air
+			if (Fuse.skipUnchangedFrames) {
+				return Fuse.current.conductorData.changeAvailable == 1;
+			}
+			else return true;
+		#else
+			return true;
+		#end
+	}
 }

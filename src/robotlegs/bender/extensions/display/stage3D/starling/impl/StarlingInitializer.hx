@@ -17,7 +17,6 @@ import starling.rendering.Painter;
 @:keepSub
 class StarlingInitializer extends BaseInitializer
 {
-	//private static var starlingCollection:StarlingCollection;
 	public static var multitouchEnabled:Bool = true;
 	
 	public function new() 
@@ -42,10 +41,18 @@ class StarlingInitializer extends BaseInitializer
 		/*if (renderer.stage3D.context3D == null && renderer.context3D != null) {
 			renderer.stage3D.context3D = renderer.context3D;
 		}*/
+		var profile:String = stage3DRenderContext.profile;
 		
-		
-		
-		var starling:Starling = new Starling(cast ViewClass, contextView.view.stage, viewRectangle, stage3DRenderContext.stage3D, Context3DRenderMode.AUTO, stage3DRenderContext.profile);
+		var starling:Starling = new Starling(
+			cast ViewClass, 
+			contextView.view.stage, 
+			viewRectangle, 
+			stage3DRenderContext.stage3D, 
+			Context3DRenderMode.AUTO, 
+			profile, 
+			true
+		);
+		starling.skipUnchangedFrames = true;
 		starling.simulateMultitouch = true;
 		//starling.enableErrorChecking = Capabilities.isDebugger;
 		starling.shareContext = true;
@@ -53,15 +60,9 @@ class StarlingInitializer extends BaseInitializer
 		
 		Painter.DEFAULT_STENCIL_VALUE = 0;
 		
-		if (debug) starling.showStats = true;
+		//if (debug) starling.showStats = true;
 		
-		//if (starlingCollection == null) {
-			var starlingCollection:StarlingCollection = new StarlingCollection([starling, id]);
-			context.configure(starlingCollection);
-		//}
-		//else {
-		//	starlingCollection.addItem(starling, id);
-		//}
+		context.configure(new StarlingCollection(starling, id));
 		
 		var placeHolderLayer:PlaceHolderLayer = new PlaceHolderLayer();
 		if (index == -1) layers.addLayer(placeHolderLayer);
@@ -72,7 +73,7 @@ class StarlingInitializer extends BaseInitializer
 		{
 			var starling:Starling = cast(e.target, Starling);
 			#if debug
-				starling.showStats = true;
+				//starling.showStats = true;
 			#end
 			var layer:StarlingLayer = cast (starling.root, StarlingLayer);
 			layer.setStarling(starling);

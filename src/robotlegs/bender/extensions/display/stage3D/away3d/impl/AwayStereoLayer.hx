@@ -37,6 +37,7 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 	private var _lensCenterOffsetY:Float = 0;
 	
 	private var rect = new Rectangle();
+	public var changeAvailable(get, null):Bool;
 	
 	public function new(profile:String, contextIndex:Int=0) 
 	{
@@ -192,5 +193,10 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
     {
 		if (renderContext != null) stage3DProxy.antiAlias = renderContext.antiAlias;
 		return super.set_stage3DProxy(stage3DProxy);
+	}
+	
+	function get_changeAvailable():Bool 
+	{
+		return true;
 	}
 }

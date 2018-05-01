@@ -54,7 +54,7 @@ class Stack implements IStack
 	public var threeJsInitializer:BaseInitializer;
 	public var fuseInitializer:BaseInitializer;
 	
-	public var layerCount:Int = 0;
+	public static var layerCount:Int = 0;
 	
 	//private var preContextLayers:Array<LayerInfo> = [];
 	
@@ -104,17 +104,6 @@ class Stack implements IStack
 			addFunc(LayerClass, index, id);
 		}
 		layerCount++;
-		#if fuse
-			trace("layerCount = " + layerCount);
-			//if (Fuse.current != null){
-				//if (layerCount > 1) {
-					//Fuse.current.cleanContext = true;
-				//}
-				//else {
-					//Fuse.current.cleanContext = false;
-				//}
-			//}
-		#end
 	}
 	
 	public function removeLayerAt(index:Int):Void

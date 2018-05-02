@@ -50,10 +50,12 @@ class StarlingInitializer extends BaseInitializer
 			viewRectangle, 
 			stage3DRenderContext.stage3D, 
 			Context3DRenderMode.AUTO, 
-			profile, 
-			true
+			profile
+		#if !starling_1_x	,true #end
 		);
+		#if !starling_1_x
 		starling.skipUnchangedFrames = true;
+		#end
 		starling.simulateMultitouch = true;
 		//starling.enableErrorChecking = Capabilities.isDebugger;
 		starling.shareContext = true;

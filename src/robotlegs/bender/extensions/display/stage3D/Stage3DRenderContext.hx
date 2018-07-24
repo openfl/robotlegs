@@ -65,7 +65,7 @@ class Stage3DRenderContext implements DescribedType implements IRenderContext
 		stage3D.addEventListener(Event.CONTEXT3D_CREATE, contextCreatedHandler);
 		stage3D.addEventListener(ErrorEvent.ERROR, contextCreatedErrorHandler);
 		
-		#if flash
+		#if (flash || haxe_ver >= 4)
 			stage3D.requestContext3D(Context3DRenderMode.AUTO, profile);
 		#else
 			stage3D.requestContext3D(Std.string(Context3DRenderMode.AUTO));

@@ -188,7 +188,7 @@ class EventDispatcher implements IEventDispatcher {
 	
 	private function __dispatchEvent (event:Event):Bool {
 		
-		if (__eventMap == null || event == null) return false;
+		if (__eventMap == null || event == null) return true;
 		
 		var type = event.type;
 		var list;
@@ -213,7 +213,7 @@ class EventDispatcher implements IEventDispatcher {
 		} else {
 			
 			list = __eventMap.get (type);
-			if (list == null) return false;
+			if (list == null) return true;
 			
 		}
 		__dispatchingCount.set (type, wasDispatchingCount + 1);

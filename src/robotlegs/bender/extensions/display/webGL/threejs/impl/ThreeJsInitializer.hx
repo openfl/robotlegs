@@ -14,7 +14,12 @@ class ThreeJsInitializer extends BaseInitializer
 		
 	}
 	
-	override public function addLayer(ViewClass:Class<Dynamic>, index:Int, id:String):Void
+	override public function checkLayerType(ViewClass:Class<Dynamic>):Bool 
+	{
+		return CheckClass(ViewClass, ThreeJsLayer);
+	}
+	
+	override public function addLayer(ViewClass:Class<Dynamic>, index:Int, total:Int, id:String):Void
 	{
 		if (id == "") id = autoID(ViewClass);
 		var threeJsLayer:ThreeJsLayer = Type.createInstance(ViewClass, []);

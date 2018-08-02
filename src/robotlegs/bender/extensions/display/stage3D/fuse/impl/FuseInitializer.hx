@@ -23,7 +23,12 @@ class FuseInitializer extends BaseInitializer
 		
 	}
 	
-	override public function addLayer(ViewClass:Class<Dynamic>, index:Int, id:String):Void 
+	override public function checkLayerType(ViewClass:Class<Dynamic>):Bool 
+	{
+		return CheckClass(ViewClass, FuseLayer);
+	}
+	
+	override public function addLayer(ViewClass:Class<Dynamic>, index:Int, total:Int, id:String):Void 
 	{
 		var fuseConfig:FuseConfig = { frameRate:60 };
 		fuseConfig.useCacheLayers = true;

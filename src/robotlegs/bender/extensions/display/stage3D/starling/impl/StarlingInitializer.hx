@@ -27,7 +27,12 @@ class StarlingInitializer extends BaseInitializer
 		}
 	}
 	
-	override public function addLayer(ViewClass:Class<Dynamic>, index:Int, id:String):Void 
+	override public function checkLayerType(ViewClass:Class<Dynamic>):Bool 
+	{
+		return CheckClass(ViewClass, StarlingLayer);
+	}
+	
+	override public function addLayer(ViewClass:Class<Dynamic>, index:Int, total:Int, id:String):Void 
 	{
 		var stage3DRenderContext:Stage3DRenderContext = cast renderContext;
 		//var viewRectangle:Rectangle = new Rectangle(0,0, Viewport.width, Viewport.height);
@@ -58,7 +63,7 @@ class StarlingInitializer extends BaseInitializer
 		#end
 		starling.simulateMultitouch = true;
 		//starling.enableErrorChecking = Capabilities.isDebugger;
-		starling.shareContext = true;
+		starling.shareContext = total > 1;
 		starling.start();
 		
 		#if !starling_1_x

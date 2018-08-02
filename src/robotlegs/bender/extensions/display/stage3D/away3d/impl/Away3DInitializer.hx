@@ -16,7 +16,12 @@ class Away3DInitializer extends BaseInitializer
 		
 	}
 	
-	override public function addLayer(ViewClass:Class<Dynamic>, index:Int, id:String):Void
+	override public function checkLayerType(ViewClass:Class<Dynamic>):Bool 
+	{
+		return CheckClass(ViewClass, AwayLayer) || CheckClass(ViewClass, AwayStereoLayer);
+	}
+	
+	override public function addLayer(ViewClass:Class<Dynamic>, index:Int, total:Int, id:String):Void
 	{
 		var stage3DRenderContext:Stage3DRenderContext = cast renderContext;
 		if (id == "") id = autoID(ViewClass);

@@ -6,7 +6,7 @@ An Event Command Map executes commands in response to events on a given Event Di
 
 ## Basic Usage
 
-```as3
+```haxe
 eventCommandMap
     .map(SignOutEvent.SIGN_OUT)
     .toCommand(SignOutCommand);
@@ -18,7 +18,7 @@ eventDispatcher.dispatchEvent(new SignOutEvent(SignOutEvent.SIGN_OUT));
 
 Optionally you can map commands to a concrete event class. This ensures that the command will only be executed if the event instance is of a specific event class.
 
-```as3
+```haxe
 eventCommandMap
     .map(FooEvent.FOO, FooEvent) //mapping the command to the concrete FooEvent class
     .toCommand(FooCommand);
@@ -33,15 +33,14 @@ Commands are automatically injected with the event instance that triggered them,
 
 ### Concrete event types
 
-```as3
+```haxe
 eventCommandMap
     .map(SignOutEvent.SIGN_OUT, SignOutEvent) //the second parameter defines the type of event instance injection
     .toCommand(SignOutCommand);
 ```
-```as3
+```haxe
 //SignOutCommand
-[Inject]
-public var event: SignOutEvent; //as mapped
+@inject public var event: SignOutEvent; //as mapped
 
 public function execute():void{
     //do something useful with event
@@ -50,15 +49,14 @@ public function execute():void{
 
 ### Abstract event types
 
-```as3
+```haxe
 eventCommandMap
     .map(SignOutEvent.SIGN_OUT, Event) //the second parameter defines the type of event instance injection
     .toCommand(SignOutCommand);
 ```
-```as3
+```haxe
 //SignOutCommand
-[Inject]
-public var event: Event; //as mapped
+@inject public var event: Event; //as mapped
 
 public function execute():void{
     //do something useful with event
@@ -73,7 +71,7 @@ In Robotlegs v1 an event instance was automatically mapped both to the concrete 
 
 If you know that you only want your command to fire once, and then be automatically unmapped:
 
-```as3
+```haxe
 eventCommandMap
     .map(SignOutEvent.SIGN_OUT, SignOutEvent)
     .toCommand(SignOutCommand)
@@ -84,7 +82,7 @@ eventCommandMap
 
 You can optionally add guards and hooks:
 
-```as3
+```haxe
 eventCommandMap
     .map(SignOutEvent.SIGN_OUT, SignOutEvent)
     .toCommand(SignOutCommand)
@@ -107,7 +105,7 @@ You can only make one mapping per event-command pair. You should do your complet
 
 So - the following will issue a warning:
 
-```as3
+```haxe
 eventCommandMap.map(SomeEvent.STARTED).toCommand(SomeCommand);
 eventCommandMap.map(SomeEvent.STARTED).toCommand(SomeCommand); // warning
 ```
@@ -124,7 +122,7 @@ This extension requires the following extensions:
 
 ## Extension Installation
 
-```as3
+```haxe
 _context = new Context().install(
     EventDispatcherExtension,
     EventCommandMapExtension);
@@ -132,7 +130,7 @@ _context = new Context().install(
 
 Or, assuming that the EventDispatcherExtension has already been installed:
 
-```as3
+```haxe
 _context.install(EventCommandMapExtension);
 ```
 
@@ -140,7 +138,6 @@ _context.install(EventCommandMapExtension);
 
 An instance of IEventCommandMap is mapped into the context during extension installation. This instance can be injected into clients and used as below.
 
-```as3
-[Inject]
-public var eventCommandMap:IEventCommandMap;
+```haxe
+@inject public var eventCommandMap:IEventCommandMap;
 ```

@@ -12,7 +12,7 @@ A bundle bundles up a selection of extensions and configurations into a single d
 
 A bundle implements the IBundle interface. When included into a context, that context is immediately passed through to the extend() method.
 
-```as3
+```haxe
 package com.organisation.project.bundles
 {
   public class SuperDuperBundle implements IBundle

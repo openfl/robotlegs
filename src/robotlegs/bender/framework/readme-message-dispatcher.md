@@ -18,7 +18,7 @@ Event Dispatchers dispatch "events" to "listeners". The dispatch is synchronous 
 
 Message Dispatchers route "messages" through "handlers". The dispatch may be synchronous or asynchronous depending on the handlers.
 
-```as3
+```haxe
 const user:User = new User("Sally");
 
 const asyncHandler:Function = function(user:User, callback:Function):void {

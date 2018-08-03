@@ -6,15 +6,14 @@ The view processor map provides automagic processing of mapped views landing on 
 
 ## Extension Installation
 
-```as3
+```haxe
 context.install( ViewProcessorMapExtension );
 ```
 
 ### Default access to the map is by injecting against the `IViewProcessorMap` interface
 
-```as3
-[Inject]
-public var viewProcessorMap:IViewProcessorMap;
+```haxe
+@inject public var viewProcessorMap:IViewProcessorMap;
 ```
 
 ## ViewMap Usage
@@ -27,7 +26,7 @@ You can create your own processor, for example to do property injection without 
 
 You map either a specific type or a TypeMatcher to the class or instance of processor you want to be used.
 
-```as3
+```haxe
 viewProcessorMap.map(SomeType).toProcessor(FastInjector);
 
 viewProcessorMap.mapMatcher(new TypeMatcher().anyOf(ISpaceShip, IRocket)).toProcessor(SpacecraftSkinner);
@@ -39,7 +38,7 @@ viewProcessorMap.map(SomeType).toProcessor( new FastPropertyInjector( { userID:U
 
 #### Shortcut method for the most common case: injection by inspection
 
-```as3
+```haxe
 viewProcessorMap.map(SomeType).toInjection();
 ```
 
@@ -53,7 +52,7 @@ We provide a TypeMatcher and PackageMatcher. TypeMatcher has `allOf`, `noneOf`, 
 
 You can optionally add guards and hooks:
 
-```as3
+```haxe
 map(SomeClass).toProcess(LocaliseText).withGuards(NotOnTuesdays).withHooks(UpdateLog);
 
 // in the situation where you just want guards and hooks, and no processing needs to be done
@@ -80,7 +79,7 @@ For more information on guards and hooks check out:
 
 Injects view by passing it to the injector, where it will be inspected and then injected. You can access this via either of the following:
 
-```as3
+```haxe
 map(SomeType).toInjection();
 map(SomeType).toProcess(ViewInjectionProcessor);
 ```
@@ -89,7 +88,7 @@ map(SomeType).toProcess(ViewInjectionProcessor);
 
 Allows injection of properties (by the injector), without describing the object type. You provide names and types of injection points in the configuration object passed to the constructor.
 
-```as3
+```haxe
 map(ViewThatIsTooExpensiveToInspect).toProcess(new FastPropertyInjector({gravity:Gravity, bounce:Bounce}));
 ```
 
@@ -97,7 +96,7 @@ map(ViewThatIsTooExpensiveToInspect).toProcess(new FastPropertyInjector({gravity
 
 Allows injection of values directly, using only property names, so that the injector is never consulted.
 
-```as3
+```haxe
 map(ViewNeedingQuickParams).toProcess(new PropertyValueInjector({gravity:9.8, bounce:4}));
 ```
 
@@ -105,7 +104,7 @@ map(ViewNeedingQuickParams).toProcess(new PropertyValueInjector({gravity:9.8, bo
 
 Allows you to use mediators via the viewProcessorMap - for example in the case where you want to minimise the size of the framework within your application.
 
-```as3
+```haxe
 map(ViewNeedingMediator).toProcess(new MediatorCreator(SomeMediator));
 ```
 
@@ -117,7 +116,7 @@ A difference between the mediatorMap and the viewProcessorMap: in the mediatorMa
 
 Processors need to implement two methods:
 
-```as3
+```haxe
 process(view:ISkinnable, class:Class, injector:IInjector):void;
 unprocess(view:ISkinnable, class:Class, injector:IInjector):void;
 ```
@@ -136,7 +135,7 @@ You may wish to use a childInjector for local mappings within the process.
 
 ### Removing mappings
 
-```as3
+```haxe
 viewProcessorMap.unmap(SomeClass).fromProcess(FastInject);
 
 viewProcessorMap.unmapMatcher(someTypeMatcher).fromProcess(processorInstance);
@@ -154,7 +153,7 @@ Assuming you're listening to your contextView, any view that lands on the contex
 
 If you don't want the overhead of listening for views landing on the stage, you'll need to implement your own strategy for deciding when views should be processed and unprocessed. Map your rules as normal, and then use:
 
-```as3
+```haxe
 viewProcessorMap.process(item);
 
 viewProcessorMap.unprocess(item);

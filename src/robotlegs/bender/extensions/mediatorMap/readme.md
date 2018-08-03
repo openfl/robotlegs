@@ -8,15 +8,14 @@ The mediator map provides automagic mediator creation for mapped views landing o
 
 This extension is already installed in the MVCS bundle, but if you're not using that:
 
-```as3
+```haxe
 context.install(MediatorMapExtension);
 ```
 
 ### Default access to the map is by injecting against the `IMediatorMap` interface
 
-```as3
-[Inject]
-public var mediatorMap:IMediatorMap;
+```haxe
+@inject public var mediatorMap:IMediatorMap;
 ```
 
 ## MediatorMap Usage
@@ -27,7 +26,7 @@ The Robotlegs 2 mediatorMap is designed to support _co-variant_ mediation. This 
 
 You map either a specific type or a TypeMatcher to the mediator class you want to be created.
 
-```as3
+```haxe
 mediatorMap.map(SomeType).toMediator(SomeMediator);
 
 mediatorMap.mapMatcher(new TypeMatcher().anyOf(ISpaceShip, IRocket)).toMediator(SpaceCraftMediator);
@@ -39,7 +38,7 @@ We provide a TypeMatcher and PackageMatcher. TypeMatcher has `allOf`, `noneOf`, 
 
 You can optionally add guards and hooks:
 
-```as3
+```haxe
 map(SomeClass).toMediator(SomeMediator)
 	.withGuards(NotOnTuesdays)
 	.withHooks(ApplySkin, UpdateLog);
@@ -56,7 +55,7 @@ For more information on guards and hooks check out:
 
 ### Removing mappings
 
-```as3
+```haxe
 mediatorMap.unmap(SomeClass).fromMediator(SomeMediator);
 
 mediatorMap.unmapMatcher(someTypeMatcher).fromMediator(SomeMediator);
@@ -74,7 +73,7 @@ Assuming you're listening to your contextView, any view that lands on the contex
 
 The mediatorMap is able to mediate non-view objects. However, you'll need to implement your own strategy for deciding when these objects should be mediated and unmediated. Map your rules as normal, and then use:
 
-```as3
+```haxe
 mediatorMap.mediate(item);
 
 mediatorMap.unmediate(item);
@@ -125,11 +124,10 @@ Mediators should observe one of the following forms:
 
 A mediator that extends the MVCS Mediator might look like this:
 
-```as3
+```haxe
 public class UserProfileMediator extends Mediator
 {
-    [Inject]
-    public var view:UserProfileView;
+    @inject public var view:UserProfileView;
 
     override public function initialize():void
     {
@@ -141,14 +139,12 @@ public class UserProfileMediator extends Mediator
 
 You do not have to extend the MVCS mediator:
 
-```as3
+```haxe
 public class UserProfileMediator
 {
-    [Inject]
-    public var view:UserProfileView;
+    @inject public var view:UserProfileView;
 
-    [Inject]
-    public var dispatcher:IEventDispatcher;
+    @inject public var dispatcher:IEventDispatcher;
 
     public function initialize():void
     {
@@ -168,7 +164,7 @@ Notice that we could not use the handy "addViewListener" sugar. Also, we now nee
 
 Mediator base class provides the following internal API, used for managing listeners and dispatching events.
 
-```as3
+```haxe
 addViewListener(eventString:String, listener:Function, eventClass:Class = null):void
 
 addContextListener(eventString:String, listener:Function, eventClass:Class = null):void

@@ -125,9 +125,9 @@ Fixed: https://github.com/openfl/robotlegs/issues/24
 
 For event-triggered commands the event is now also mapped to "Event". For example:
 
-[Inject] public var abstractEvent:Event;
+@inject public var abstractEvent:Event;
 
-[Inject] public var concreteEvent:SomeEvent;
+@inject public var concreteEvent:SomeEvent;
 
 *MVCS Mediator*
 

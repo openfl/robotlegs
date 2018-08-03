@@ -26,7 +26,7 @@ If you can't sum up what the extension is and how it can be used in a readme fil
 
 An extension implements the IExtension interface. When included into a context, that context is immediately passed through to the extend() method:
 
-```as3
+```haxe
 package robotlegs.extensions.superDuper
 {
   public class SuperDuperExtension implements IExtension
@@ -46,7 +46,7 @@ NOTE: The context instance provided to configureContext() may not be fully initi
 
 An extension might simply map a singleton:
 
-```as3
+```haxe
 public function extend(context:IContext):void
 {
   context.injector.map(ISuperDuper).toSingleton(SuperDuper);
@@ -57,7 +57,7 @@ public function extend(context:IContext):void
 
 An extension can hook into various context lifecycle phases by adding state handlers to that context when the extension is installed:
 
-```as3
+```haxe
 public function extend(context:IContext):void
 {
   if (context.initialized)

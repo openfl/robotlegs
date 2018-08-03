@@ -4,7 +4,7 @@ A lifecycle provides `initialize`, `suspend`, `resume` and `destroy` methods.
 
 A lifecycle usually refers to a specific instance. You can provide this instance when creating your lifecycle and refer to it via the read-only `target` property:
 
-```as3
+```haxe
 const lifecycle:Lifecycle = new Lifecycle(someManagedObject);
 lifecycle.target // returns someManagedObject;
 ```
@@ -162,7 +162,7 @@ When attempting a transition into a given state, a user callback may be supplied
 
 A lifecycle manages the validity of transitions - so both `initialize` and `destroy` are, via the lifecycle's internal state machine, one-time-only transitions. The only repeatable transitions are `suspend` and `resume`. If you need to 'unhook' from these transitions, we recommend you decouple your handlers and use a flag to exit-early from your handlers if the object they would deal with has been cleaned up.
 
-```as3
+```haxe
 private var _managedExtension:SomeExtension;
 
 public function set managedExtension(value:SomeExtension):void
@@ -230,7 +230,7 @@ An extension framework - for example an entity system - might have its own lifec
 
 An example usage, for an imaginary extension which provides a developer console to the application.
 
-```as3
+```haxe
 _context.beforeInitializing( checkEventDispatcherInstalled )
 		.beforeInitializing( checkEmbeddedFonts )
 		.whenInitializing( setLocalDateTime )
@@ -245,7 +245,7 @@ _context.beforeInitializing( checkEventDispatcherInstalled )
 
 ### For managing your own object's lifecycle
 
-```as3
+```haxe
 const awesomeExtension:AwesomeExtension = new AwesomeExtension();
 const awesomeLifecycle:Lifecycle = new Lifecycle(awesomeExtension);
 

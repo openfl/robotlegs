@@ -78,17 +78,13 @@ A simple application configuration file might look something like this:
 ```haxe
 public class MyAppConfig implements IConfig
 {
-    [Inject]
-    public var injector:IInjector;
+    @inject public var injector:IInjector;
 
-    [Inject]
-    public var mediatorMap:IMediatorMap;
+    @inject public var mediatorMap:IMediatorMap;
 
-    [Inject]
-    public var commandMap:IEventCommandMap;
+    @inject public var commandMap:IEventCommandMap;
 
-    [Inject]
-    public var contextView:ContextView;
+    @inject public var contextView:ContextView;
 
     public function configure():void
     {
@@ -124,8 +120,7 @@ The mediator we mapped above might look like this:
 ```haxe
 public class UserProfileMediator extends Mediator
 {
-    [Inject]
-    public var view:UserProfileView;
+    @inject public var view:UserProfileView;
 
     override public function initialize():void
     {
@@ -146,11 +141,9 @@ The command we mapped above might look like this:
 ```haxe
 public class UserSignInCommand extends Command
 {
-    [Inject]
-    public var event:UserEvent;
+    @inject public var event:UserEvent;
 
-    [Inject]
-    public var model:UserModel;
+    @inject public var model:UserModel;
 
     override public function execute():void
     {

@@ -8,7 +8,7 @@ The Direct Command Map allows you to execute commands directly and to pin and re
 
 ### Executing a single command
 
-```as3
+```haxe
 directCommandMap
 	.map(RetrieveFlashVarsCommand)
 	.execute();
@@ -16,7 +16,7 @@ directCommandMap
 
 ### Executing a sequence of commands
 
-```as3
+```haxe
 directCommandMap
 	.map(DoThisFirstCommand)
 	.map(DoThisNextCommand)
@@ -31,7 +31,7 @@ The sequence is handled synchronized, i.e. once the code in a command finishes e
 
 You can optionally add guards and hooks:
 
-```as3
+```haxe
 directCommandMap
 	.map(CalculateAnswerToLifeTheUniverseAndEverythingCommand)
 		.withGuards(DeepThoughtBuiltGuard)
@@ -51,7 +51,7 @@ For more information on guards and hooks check out:
 
 You can optionally pass a payload object to the `execute` method, its values will be injected into the commands:
 
-```as3
+```haxe
 const payload : CommandPayload = new CommandPayload();
 payload.addPayload(new Adieu('So long and thanks for all the fish!'), Adieu);
 
@@ -64,7 +64,7 @@ For each payload item you need to provide a value and a class to map the value a
 
 This **WILL OVERWRITE** the first String value:
 
-```as3
+```haxe
 const payload : CommandPayload = new CommandPayload();
 payload.addPayload('So long and thanks for all the fish!', String);
 payload.addPayload('Hope you enjoyed the tuna!', String); //overwrites the previous String value
@@ -72,9 +72,8 @@ payload.addPayload('Hope you enjoyed the tuna!', String); //overwrites the previ
 
 Your command receives the payload values as normal injections:
 
-```as3
-[Inject]
-public var adieu : Adieu;
+```haxe
+@inject public var adieu : Adieu;
 
 public function execute():void
 {
@@ -91,12 +90,10 @@ All payload values are only mapped for the duration of the execution (sequence) 
 By concept commands are short-lived, once their execution is finished they are released for garbage collection.
 However, the Direct Command Map allows commands to explicitly pin themselves into memory and release when necessary:
 
-```as3
-[Inject]
-public var directCommandMap : IDirectCommandMap;
+```haxe
+@inject public var directCommandMap : IDirectCommandMap;
 
-[Inject]
-public var importantService : IImportantService;
+@inject public var importantService : IImportantService;
 
 public function execute():void
 {
@@ -120,7 +117,7 @@ This extension requires the following extension:
 
 ## Extension Installation
 
-```as3
+```haxe
 _context = new Context()
     .install(DirectCommandMapExtension);
 ```
@@ -129,7 +126,6 @@ _context = new Context()
 
 An instance of IDirectCommandMap is mapped into the context during extension installation. This instance can be injected into clients and used as below.
 
-```as3
-[Inject]
-public var directCommandMap : IDirectCommandMap;
+```haxe
+@inject public var directCommandMap : IDirectCommandMap;
 ```

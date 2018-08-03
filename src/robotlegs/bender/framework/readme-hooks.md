@@ -14,7 +14,7 @@ A hook can exist in one of three forms:
 
 A function hook is simply invoked when the time is right:
 
-```as3
+```haxe
 function randomHook():void {
 	trace("hooked!");
 }
@@ -24,7 +24,7 @@ function randomHook():void {
 
 An object hook must expose a "hook" method:
 
-```as3
+```haxe
 public class SomeHook
 {
 	public function hook():void
@@ -40,10 +40,10 @@ The "hook" method will be called each time the hook runs. The object will not be
 
 A class reference can be used as a hook:
 
-```as3
+```haxe
 public class SomeOtherHook
 {
-	[Inject] public var someModel:SomeModel;
+	@inject public var someModel:SomeModel;
 
 	public function hook():void
 	{

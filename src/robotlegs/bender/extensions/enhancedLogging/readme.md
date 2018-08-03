@@ -10,11 +10,10 @@ Adds a TraceLogTarget to the context. This will simply `trace()` log messages.
 
 If you install the InjectableLoggerExtension (already included in the MVCS bundle), getting loggers becomes even easier - simply inject an ILogger:
 
-```as3
+```haxe
 public class MyClass
 {
-    [Inject]
-    public var logger:ILogger;
+    @inject public var logger:ILogger;
 
     public function MyClass()
     {

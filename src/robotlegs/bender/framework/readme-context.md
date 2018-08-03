@@ -38,7 +38,7 @@ Usually these extensions provide sensible default constructor arguments and can 
 
     _context.install(EventDispatcherExtension);
 
-[Extensions](https://github.com/robotlegs/robotlegs-framework/tree/master/src/robotlegs/bender/extensions)
+[Extensions](https://github.com/openfl/robotlegs/tree/master/src/robotlegs/bender/extensions)
 
 # Configuration
 

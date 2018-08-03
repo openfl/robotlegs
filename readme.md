@@ -16,7 +16,7 @@ Robotlegs is a Haxe application framework for OpenFL. It offers:
 
 The framework documentation exists as README files in the repository. The best way to read them is through GitHub:
 
-[Documentation](https://github.com/robotlegs/robotlegs-framework/tree/master/src/robotlegs/bender)
+[Documentation](https://github.com/openfl/robotlegs/tree/master/src/robotlegs/bender)
 
 ~~[Support](http://knowledge.robotlegs.org/)~~
 
@@ -210,4 +210,4 @@ See: Maven-README
 
 The source for Robotlegs 1 can be found in the version1 branch:
 
-[Robotlegs Version 1 Branch](https://github.com/robotlegs/robotlegs-framework/tree/version1)
+[Robotlegs Version 1 Branch](https://github.com/openfl/robotlegs/tree/version1)

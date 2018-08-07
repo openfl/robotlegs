@@ -10,6 +10,7 @@ import robotlegs.bender.extensions.display.base.impl.BaseInitializer;
  */
 class Away3DInitializer extends BaseInitializer
 {
+	var added:Int = 0;
 	
 	public function new() 
 	{
@@ -30,7 +31,8 @@ class Away3DInitializer extends BaseInitializer
 		
 		var awayCollection = new AwayCollection([awayLayer, id]);
 		context.configure([awayCollection]);
-		contextView.view.addChild(cast awayLayer);
+		contextView.view.addChildAt(cast awayLayer, added);
+		added++;
 		
 		if (index == -1) layers.addLayer(cast awayLayer);
 		else layers.addLayerAt(cast awayLayer, index);

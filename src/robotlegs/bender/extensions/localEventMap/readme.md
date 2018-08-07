@@ -6,7 +6,7 @@ An Event Map allows for mapping event listeners to a specific Event Dispatcher i
 
 ## Basic Usage
 
-```as3
+```haxe
 eventMap.mapListener(eventDispatcher, FooEvent.Foo, listener);
 ```
 
@@ -14,7 +14,7 @@ The Event Map keeps a list of listeners for easy removal.
 
 ## Unmapping all listeners
 
-```as3
+```haxe
 eventMap.unmapListeners();
 ```
 
@@ -22,14 +22,14 @@ Removes all listeners registered through `mapListener`.
 
 ## Unmapping a specific listener
 
-```as3
+```haxe
 eventMap.unmapListener(eventDispatcher, FooEvent.FOO, listener);
 
 ## Suspending and resuming event listening
 
 The Event Map provides methods to suspend and resume event listening.
 
-```as3
+```haxe
 eventMap.mapListener(eventDispatcher, FooEvent.Foo, listener);
 eventDispatcher.dispatchEvent(FooEvent.FOO); //listener is called
 
@@ -44,7 +44,7 @@ eventDispatcher.dispatchEvent(FooEvent.FOO); //listener is called again
 
 Optionally you can register listeners to a concrete event class. This ensures that the listener will only be called if the event is an instance of a specific event class.
 
-```as3
+```haxe
 //registers the listener to the concrete FooEvent class
 eventMap.mapListener(eventDispatcher, FooEvent.FOO, listener, FooEvent);
 
@@ -54,7 +54,7 @@ eventDispatcher.dispatchEvent(new Event(FooEvent.FOO));
 
 ## Extension Installation
 
-```as3
+```haxe
 _context = new Context()
     .install(LocalEventMapExtension);
 ```
@@ -64,7 +64,6 @@ _context = new Context()
 
 An instance of IEventDispatcher is mapped into the context during extension installation. This instance can be injected into clients.
 
-```as3
-[Inject]
-public var eventDispatcher:IEventDispatcher;
+```haxe
+@inject public var eventDispatcher:IEventDispatcher;
 ```

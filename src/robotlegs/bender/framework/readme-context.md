@@ -6,7 +6,7 @@ A context is a scope. It is core to any application or module built using Robotl
 
 To create a context simply instantiate a new Context and provide some configuration:
 
-```as3
+```haxe
 _context = new Context()
     .install(MVCSBundle)
     .configure(
@@ -38,7 +38,7 @@ Usually these extensions provide sensible default constructor arguments and can 
 
     _context.install(EventDispatcherExtension);
 
-[Extensions](https://github.com/robotlegs/robotlegs-framework/tree/master/src/robotlegs/bender/extensions)
+[Extensions](https://github.com/openfl/robotlegs/tree/master/src/robotlegs/bender/extensions)
 
 # Configuration
 
@@ -56,11 +56,10 @@ If the context is not yet initialized the class will be queued. When the context
 
 Such a config might look like this:
 
-```as3
+```haxe
 class MyModuleConfig implements IConfig
 {
-    [Inject]
-    public var mediatorMap:IMediatorMap;
+    @inject public var mediatorMap:IMediatorMap;
 
     public function configure():void
     {

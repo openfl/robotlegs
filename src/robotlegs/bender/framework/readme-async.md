@@ -10,7 +10,7 @@ Handlers and callbacks are conventions used by low level components such as the 
 
 A handler *must* have one of the following signatures:
 
-```as3
+```haxe
 function handler():void;
 function handler(message:Object):void;
 function handler(message:Object, callback:Function);
@@ -22,7 +22,7 @@ The first two forms allow for basic observing. The third form allows for asynchr
 
 By consuming a callback a handler is given the opportunity to suspend or terminate a process:
 
-```as3
+```haxe
 function handler(message:Object, callback:Function):void {
   setTimeout(callback, 100);
 }
@@ -30,7 +30,7 @@ function handler(message:Object, callback:Function):void {
 
 A handler can terminate a process by sending an error to the callback:
 
-```as3
+```haxe
 function handler(message:Object, callback:Function):void {
   if (!message) {
     callback(new Error("There was no message. Something went very wrong."));
@@ -44,7 +44,7 @@ Note: A handler *must* eventually call the callback or the processes will never 
 
 A handler should only call the callback once. The following is *naughty*:
 
-```as3
+```haxe
 function handler(message:Object, callback:Function):void {
   if (!message) {
     callback(new Error("There was no message. Something went very wrong."));
@@ -59,7 +59,7 @@ The code above will call the callback twice when the message is falsey. Librarie
 
 A callback *must* have one of the following signatures:
 
-```as3
+```haxe
 function callback():void;
 function callback(error:Object):void;
 function callback(error:Object, message:Object):void;
@@ -69,7 +69,7 @@ Note: the arguments can be typed where and when it makes sense to do so.
 
 A callback is usually supplied to some asynchronous method:
 
-```as3
+```haxe
 loadUser("borris", function():void {
   trace("I think we have a borris.");
 });
@@ -77,7 +77,7 @@ loadUser("borris", function():void {
 
 A callback should deal with errors:
 
-```as3
+```haxe
 loadUser("borris", function(error:Error):void {
   if (error) {
     throw error;
@@ -89,7 +89,7 @@ loadUser("borris", function(error:Error):void {
 
 A callback that doesn't accept an error will still be called in the case of an error:
 
-```as3
+```haxe
 doSomethingImportant(function():void {
   trace("I'm not sure if that worked, but I know we're done.");
 });

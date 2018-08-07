@@ -14,14 +14,14 @@ Note: The MVCS bundle changes these defaults. It adds a TraceLogTarget and sets 
 
 To set the log level to DEBUG and add a simple trace logging target do the following:
 
-```as3
+```haxe
 context.logLevel = LogLevel.DEBUG;
 context.addLogTarget(new TraceLogTarget(context));
 ```
 
 Or you can use the provided extension (already included in the MVCS bundle):
 
-```as3
+```haxe
 context.logLevel = LogLevel.DEBUG;
 context.install(TraceLoggingExtension);
 ```
@@ -32,14 +32,14 @@ You can make your own custom log targets by implementing the ILogTarget interfac
 
 You can pull a fresh logger out of the context like so:
 
-```as3
+```haxe
 logger = context.getLogger(this);
 logger.warn("I'm sorry {0}, I am far too well to come in to work today.", [boss]);
 ```
 
 Or, instead of passing an instance, pass a class:
 
-```as3
+```haxe
 logger = context.getLogger(MyClass);
 ```
 

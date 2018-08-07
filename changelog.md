@@ -113,11 +113,11 @@ Robotlegs 2 public beta
 
 ### v1.5.2
 
-Fixed: https://github.com/robotlegs/robotlegs-framework/issues/25
+Fixed: https://github.com/openfl/robotlegs/issues/25
 
 ### v1.5.1
 
-Fixed: https://github.com/robotlegs/robotlegs-framework/issues/24
+Fixed: https://github.com/openfl/robotlegs/issues/24
 
 ### v1.5.0
 
@@ -125,9 +125,9 @@ Fixed: https://github.com/robotlegs/robotlegs-framework/issues/24
 
 For event-triggered commands the event is now also mapped to "Event". For example:
 
-[Inject] public var abstractEvent:Event;
+@inject public var abstractEvent:Event;
 
-[Inject] public var concreteEvent:SomeEvent;
+@inject public var concreteEvent:SomeEvent;
 
 *MVCS Mediator*
 

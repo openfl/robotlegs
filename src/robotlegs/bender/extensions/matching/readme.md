@@ -12,13 +12,13 @@ This extension does not need to be installed, it is used by the MediatorMap exte
 
 You create a typeMatcher using new:
 
-```as3
+```haxe
 new TypeMatcher()
 ```
 
 Any number of calls to the following api can be chained:
 
-```as3
+```haxe
 allOf(...types)
 anyOf(...types)
 noneOf(...types)
@@ -44,7 +44,7 @@ There is no 'or' provided. Instead, use multiple matchers and map each of them t
 
 The package matcher has the following api:
 
-```as3
+```haxe
 require(fullPackage:String)
 anyOf(...packages)
 allOf(...pacakges)

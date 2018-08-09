@@ -92,7 +92,7 @@ class Stage3DRenderContext implements DescribedType implements IRenderContext
 		context3D = stage3D.context3D;
 		
 		context3D.configureBackBuffer(contextView.view.stage.stageWidth, contextView.view.stage.stageHeight, antiAlias, true);
-		trace("DriverInfo: " + context3D.driverInfo + " AntiAlias: " + antiAlias);
+		//trace("1 DriverInfo: " + context3D.driverInfo + " AntiAlias: " + antiAlias);
 		
 		context3D.setStencilActions(
 			cast Context3DTriangleFace.FRONT_AND_BACK,

@@ -7,7 +7,6 @@ import robotlegs.bender.extensions.display.base.api.ILayerInitializer;
 import robotlegs.bender.extensions.display.base.api.ILayers;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
 import robotlegs.bender.extensions.display.base.api.IStack;
-import robotlegs.bender.extensions.display.stage3D.away3d.impl.Away3DInitializer;
 import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.ILogger;

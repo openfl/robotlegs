@@ -1,6 +1,5 @@
 package robotlegs.bender.extensions.display.base.impl;
 
-import flash.utils.Dictionary;
 import org.swiftsuspenders.utils.DescribedType;
 
 /**

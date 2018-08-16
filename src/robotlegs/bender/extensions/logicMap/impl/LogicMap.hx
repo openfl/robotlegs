@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.logicMap.impl;
 
+import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.logicMap.api.ILogic;
 import robotlegs.bender.extensions.logicMap.api.ILogicMap;
 import robotlegs.bender.framework.api.IContext;
@@ -9,8 +10,7 @@ import robotlegs.bender.framework.api.IInjector;
  * ...
  * @author P.J.Shand
  */
-@:rtti
-class LogicMap implements ILogicMap
+class LogicMap implements ILogicMap implements DescribedType
 {
 	@inject public var injector:IInjector;
 	
@@ -30,5 +30,4 @@ class LogicMap implements ILogicMap
 			instance.initialize();
 		}
 	}
-	
 }

@@ -1,11 +1,7 @@
 package robotlegs.bender.extensions.display.stage3D.away3d.impl; 
 
-import away3d.cameras.Camera3D;
-import away3d.cameras.lenses.PerspectiveLens;
-import away3d.containers.View3D;
 import away3d.core.managers.Stage3DManager;
 import away3d.core.managers.Stage3DProxy;
-import away3d.events.Stage3DEvent;
 //import away3d.stereo.HmdInfo;
 import away3d.stereo.methods.SBSStereoRenderMethod;
 import away3d.stereo.StereoCamera3D;
@@ -17,7 +13,6 @@ import away3d.stereo.methods.SBSStereoRenderMethod2;
 import openfl.Vector;
 import robotlegs.bender.extensions.display.base.api.ILayer;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
-import robotlegs.bender.extensions.display.base.api.IRenderer;
 
 /**
  * ...

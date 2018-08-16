@@ -3,7 +3,6 @@ package robotlegs.bender.extensions.display.stage3D.starling.impl;
 import flash.display3D.Context3DRenderMode;
 import openfl.geom.Rectangle;
 import robotlegs.bender.extensions.display.base.impl.BaseInitializer;
-import robotlegs.bender.extensions.display.base.impl.Viewport;
 import robotlegs.bender.extensions.display.stage3D.starling.impl.StarlingCollection;
 import starling.core.Starling;
 import starling.events.Event;

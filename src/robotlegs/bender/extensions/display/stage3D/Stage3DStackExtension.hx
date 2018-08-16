@@ -4,7 +4,6 @@ import robotlegs.bender.extensions.display.base.DisplayExtension;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.IExtension;
-import robotlegs.bender.framework.impl.UID;
 /**
  * ...
  * @author P.J.Shand

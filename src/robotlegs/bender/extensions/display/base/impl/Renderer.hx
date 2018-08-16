@@ -10,9 +10,7 @@ import robotlegs.bender.extensions.display.base.api.ILayers;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
 import robotlegs.bender.extensions.display.base.api.IRenderer;
 import robotlegs.bender.extensions.display.base.api.IViewport;
-import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.framework.api.IContext;
-import robotlegs.bender.framework.api.ILogger;
 
 /**
  * ...

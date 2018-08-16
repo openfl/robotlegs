@@ -2,11 +2,9 @@ package robotlegs.bender.extensions.display.stage3D.fuse.impl;
 
 import fuse.Fuse;
 import fuse.display.Sprite;
-import openfl.geom.Rectangle;
 import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.display.base.api.ILayer;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
-import robotlegs.bender.extensions.display.base.api.IRenderer;
 import robotlegs.bender.extensions.display.base.impl.Stack;
 /**
  * ...

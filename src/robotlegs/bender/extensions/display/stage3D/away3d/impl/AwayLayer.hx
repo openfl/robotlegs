@@ -1,15 +1,10 @@
 package robotlegs.bender.extensions.display.stage3D.away3d.impl; 
 
 import away3d.containers.View3D;
-import away3d.core.managers.RTTBufferManager;
 import away3d.core.managers.Stage3DManager;
 import away3d.core.managers.Stage3DProxy;
-import away3d.events.Stage3DEvent;
-import flash.events.Event;
-import flash.geom.Rectangle;
 import robotlegs.bender.extensions.display.base.api.ILayer;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
-import robotlegs.bender.extensions.display.base.api.IRenderer;
 
 /**
  * ...

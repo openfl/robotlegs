@@ -9,7 +9,7 @@ package robotlegs.bender.bundles.kea;
 
 import robotlegs.bender.extensions.directCommandMap.DirectCommandMapExtension;
 import robotlegs.bender.extensions.enhancedLogging.InjectableLoggerExtension;
-import robotlegs.bender.extensions.enhancedLogging.TraceLoggingExtension;
+//import robotlegs.bender.extensions.enhancedLogging.TraceLoggingExtension;
 import robotlegs.bender.extensions.eventCommandMap.EventCommandMapExtension;
 import robotlegs.bender.extensions.eventDispatcher.EventDispatcherExtension;
 import robotlegs.bender.extensions.localEventMap.LocalEventMapExtension;

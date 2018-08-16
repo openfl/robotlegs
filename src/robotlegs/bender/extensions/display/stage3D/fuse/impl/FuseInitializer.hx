@@ -5,9 +5,7 @@ import fuse.Fuse;
 import fuse.core.front.FuseConfig;
 import fuse.events.FuseEvent;
 import openfl.events.Event;
-import openfl.geom.Rectangle;
 import robotlegs.bender.extensions.display.base.impl.BaseInitializer;
-import robotlegs.bender.extensions.display.base.impl.Viewport;
 
 /**
  * ...

@@ -1,7 +1,5 @@
 package robotlegs.bender.extensions.display.stage3D.away3d.impl;
 
-import openfl.events.Event;
-import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.extensions.display.stage3D.away3d.impl.AwayCollection;
 import robotlegs.bender.extensions.display.base.impl.BaseInitializer;
 /**

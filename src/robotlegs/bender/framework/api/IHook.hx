@@ -13,6 +13,7 @@ package robotlegs.bender.framework.api;
  * <p>Note: a hook does not need to implement this interface.
  * Any object that exposes a "hook" method can be used.</p>
  */
+@:keepSub
 interface IHook
 {
 	function hook():Void;

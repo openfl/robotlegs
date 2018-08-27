@@ -143,6 +143,7 @@ import org.swiftsuspenders.typedescriptions.TypeDescription;
  * The <code>Injector</code> manages the mappings and acts as the central hub from which all
  * injections are started.
  */
+@:keepSub
 interface IInjector extends IEventDispatcher
 {
 	/**

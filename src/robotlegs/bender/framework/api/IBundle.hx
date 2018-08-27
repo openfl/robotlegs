@@ -10,6 +10,7 @@ package robotlegs.bender.framework.api;
 /**
  * A bundle installs a set of Extensions and Configurations into a Context
  */
+@:keepSub
 interface IBundle extends IExtension
 {
 	

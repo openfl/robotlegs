@@ -10,6 +10,7 @@ package robotlegs.bender.framework.api;
 /**
  * Simple Dynamic Matcher
  */
+@:keepSub
 interface IMatcher
 {
 	/**

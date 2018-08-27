@@ -26,6 +26,7 @@ import openfl.events.IEventDispatcher;
 /**
  * The Robotlegs object lifecycle contract
  */
+@:keepSub
 interface ILifecycle extends IEventDispatcher
 {
 	/**

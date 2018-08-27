@@ -13,6 +13,7 @@ package robotlegs.bender.framework.api;
  * <p>Note: a guard does not need to implement this interface.
  * Any object that exposes an "approve" method can be used as a guard.</p>
  */
+@:keepSub
 interface IGuard
 {
 	/**

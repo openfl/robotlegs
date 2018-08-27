@@ -10,6 +10,7 @@ package robotlegs.bender.framework.api;
 /**
  * The Robotlegs logger contract
  */
+@:keepSub
 interface ILogger
 {
 	/**

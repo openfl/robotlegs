@@ -27,6 +27,7 @@ import openfl.events.IEventDispatcher;
 /**
  * The Robotlegs context contract
  */
+@:keepSub
 interface IContext extends IEventDispatcher
 {
 	/**

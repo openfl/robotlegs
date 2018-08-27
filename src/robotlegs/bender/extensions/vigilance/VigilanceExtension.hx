@@ -78,6 +78,7 @@ class MetadataChecker implements DescribedType
 	//[Inject(name="myNamedDependency")]
 	//@inject public var context:IContext;
 	
+	@:keep
 	public function check():Void
 	{
 		if (context == null)

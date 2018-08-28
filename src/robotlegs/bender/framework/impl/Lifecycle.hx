@@ -142,7 +142,7 @@ class Lifecycle implements ILifecycle
 	public function new(target:Dynamic)
 	{
 		_target = target;
-		if (cast(target, IEventDispatcher) != null) _dispatcher = cast(target, IEventDispatcher);
+		if (Std.is(target, IEventDispatcher)) _dispatcher = cast(target, IEventDispatcher);
 		else _dispatcher = new EventDispatcher(this);
 		configureTransitions();
 	}

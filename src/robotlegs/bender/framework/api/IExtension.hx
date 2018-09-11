@@ -10,6 +10,7 @@ package robotlegs.bender.framework.api;
 /**
  * An extension integrates a library into a Context
  */
+@:keepSub
 interface IExtension
 {
 	/**

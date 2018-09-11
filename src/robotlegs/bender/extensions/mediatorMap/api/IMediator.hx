@@ -10,6 +10,7 @@ package robotlegs.bender.extensions.mediatorMap.api;
 /**
  * Optional Mediator interface
  */
+@:keepSub
 interface IMediator
 {
 	/**

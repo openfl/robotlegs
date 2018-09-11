@@ -12,6 +12,7 @@ package robotlegs.bender.framework.api;
  *
  * <p>Note: a config does not need to implement this interface. But, it is highly recommended.</p>
  */
+@:keepSub
 interface IConfig
 {
 	/**

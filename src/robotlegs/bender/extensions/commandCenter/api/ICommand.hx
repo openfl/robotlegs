@@ -13,6 +13,7 @@ package robotlegs.bender.extensions.commandCenter.api;
  * <p>Note, you do not need to implement this interface,
  * any class with an execute method can be used.</p>
  */
+@:keepSub
 interface ICommand
 {
 	/**

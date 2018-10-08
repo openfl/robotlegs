@@ -75,7 +75,6 @@ class MediatorMap implements DescribedType implements IMediatorMap implements IV
 	 */
 	public function map(type:Class<Dynamic>):IMediatorMapper
 	{
-		InjectorMacro.keep(type);
 		return mapMatcher(new TypeMatcher().allOf([type]));
 	}
 

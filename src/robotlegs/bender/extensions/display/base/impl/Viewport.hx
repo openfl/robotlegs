@@ -21,6 +21,7 @@ class Viewport implements DescribedType implements IViewport
 	private var _red:UInt = 0x0;
 	private var _green:UInt = 0x0;
 	private var _blue:UInt = 0x0;
+	private var _alpha:Float = 1;
 	
 	/*============================================================================*/
 	/* Public Properties                                                         */
@@ -35,6 +36,8 @@ class Viewport implements DescribedType implements IViewport
 	public var red(get, null):UInt;
 	public var green(get, null):UInt;
 	public var blue(get, null):UInt;
+	
+	public var alpha(get, set):Float;
 	
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -125,5 +128,15 @@ class Viewport implements DescribedType implements IViewport
 	private function get_blue():UInt
 	{
 		return _blue;
+	}
+	
+	private function get_alpha():Float
+	{
+		return _alpha;
+	}
+	
+	private function set_alpha(value:Float):Float
+	{
+		return _alpha = value;
 	}
 }

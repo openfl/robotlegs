@@ -161,7 +161,7 @@ class Stage3DRenderContext implements DescribedType implements IRenderContext
 	
 	public function begin():Void
 	{
-		context3D.clear(viewport.red / 255, viewport.green / 255, viewport.blue / 255);
+		context3D.clear(viewport.red / 255, viewport.green / 255, viewport.blue / 255, viewport.alpha);
 	}
 	
 	public function end():Void

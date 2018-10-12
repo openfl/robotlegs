@@ -18,6 +18,8 @@ interface IViewport
 	var onChange(get, null):Signal0;
 	var colour(get, set):UInt;
 	
+	var alpha(get, set):Float;
+	
 	var red(get, null):UInt;
 	var green(get, null):UInt;
 	var blue(get, null):UInt;

@@ -3,6 +3,7 @@ package robotlegs.bender.extensions.display.base.api;
 /**
  * @author P.J.Shand
  */
+@:keepSub
 interface ILayers 
 {
 	var renderContext:IRenderContext;

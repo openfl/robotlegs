@@ -70,7 +70,7 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public var uninitialized(get_uninitialized, null):Bool;
+	public var uninitialized(get, null):Bool;
 	public function get_uninitialized():Bool
 	{
 		return _state == LifecycleState.UNINITIALIZED;
@@ -79,7 +79,7 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public var initialized(get_initialized, null):Bool;
+	public var initialized(get, null):Bool;
 	public function get_initialized():Bool
 	{
 		return _state != LifecycleState.UNINITIALIZED
@@ -89,7 +89,7 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public var active(get_active, null):Bool;
+	public var active(get, null):Bool;
 	public function get_active():Bool
 	{
 		return _state == LifecycleState.ACTIVE;
@@ -98,7 +98,7 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public var suspended(get_suspended, null):Bool;
+	public var suspended(get, null):Bool;
 	public function get_suspended():Bool
 	{
 		return _state == LifecycleState.SUSPENDED;
@@ -107,7 +107,7 @@ class Lifecycle implements ILifecycle
 	/**
 	 * @inheritDoc
 	 */
-	public var destroyed(get_destroyed, null):Bool;
+	public var destroyed(get, null):Bool;
 	public function get_destroyed():Bool
 	{
 		return _state == LifecycleState.DESTROYED;

@@ -110,9 +110,6 @@ class Stage3DRenderContext implements DescribedType implements IRenderContext
 	private function contextCreatedErrorHandler(e:ErrorEvent):Void 
 	{
 		trace("Can't Create Context3D: " + e.toString());
-		#if html5
-		trace('make sure <haxedef if="html5" name="dom"/> is set');
-		#end
 	}
 	
 	private function OnViewportChange():Void 

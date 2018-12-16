@@ -5,5 +5,5 @@ package robotlegs.bender.extensions.logicMap.api;
  */
 interface ILogicMap 
 {
-	function map(type:Class<ILogic>, autoInitialize:Bool=true):Void;
+	function map(type:Class<ILogic>, autoInitialize:Bool=true):ILogic;
 }

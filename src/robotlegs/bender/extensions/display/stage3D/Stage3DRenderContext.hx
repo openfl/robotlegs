@@ -171,7 +171,7 @@ class Stage3DRenderContext implements DescribedType implements IRenderContext
 	
 	public function snap(width:Int, height:Int):BitmapData
 	{
-		var bmd:BitmapData = new BitmapData(width, height, false, 0xFF0000);
+		var bmd:BitmapData = new BitmapData(width, height, (viewport.alpha < 1), (viewport.alpha < 1 ? 0 : viewport.colour));
 		context3D.drawToBitmapData(bmd);
 		return bmd;
 	}

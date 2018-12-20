@@ -21,13 +21,12 @@ class LogicMap implements ILogicMap implements DescribedType
 	
 	/* INTERFACE robotlegs.bender.extensions.logicMap.api.ILogicMap */
 	
-	public function map(type:Class<ILogic>, autoInitialize:Bool=true):Void 
+	public function map(type:Class<ILogic>, autoInitialize:Bool=true):ILogic 
 	{
 		injector.map(type).asSingleton();
 		
-		if (autoInitialize){
-			var instance:ILogic = injector.getInstance(type);
-			instance.initialize();
-		}
+		var instance:ILogic = injector.getInstance(type);
+		if (autoInitialize) instance.initialize();
+		return instance;
 	}
 }

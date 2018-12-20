@@ -41,8 +41,7 @@ class FuseLayer extends Sprite implements ILayer implements DescribedType
 	{
 		//trace([x, y, width, height]);
 		//fuse.viewPort.setTo(x, y, width, height);
-		fuse.stage.stageWidth = Math.floor(width);
-		fuse.stage.stageHeight = Math.floor(height);
+		fuse.stage.updateDimensions(Math.floor(width), Math.floor(height));
 	}
 	
 	public function set_renderContext(value:IRenderContext):IRenderContext 

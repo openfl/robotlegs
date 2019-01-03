@@ -15,6 +15,7 @@ import robotlegs.bender.extensions.eventDispatcher.EventDispatcherExtension;
 import robotlegs.bender.extensions.localEventMap.LocalEventMapExtension;
 import robotlegs.bender.extensions.signalCommandMap.SignalCommandMapExtension;
 import robotlegs.bender.extensions.vigilance.VigilanceExtension;
+import robotlegs.bender.extensions.logicMap.LogicMapExtension;
 import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.LogLevel;
@@ -52,7 +53,8 @@ class NodeBundle implements IBundle
 			DirectCommandMapExtension,
 			EventCommandMapExtension,
 			SignalCommandMapExtension,
-			LocalEventMapExtension
+			LocalEventMapExtension,
+			LogicMapExtension
 			]);
 			
 		//context.configure([ContextViewListenerConfig]);

@@ -112,7 +112,7 @@ class MediatorMapper implements IMediatorMapper implements IMediatorUnmapper
 		if (_logger != null) _logger.warn('{0} already mapped to {1}\n' +
 			'If you have overridden this mapping intentionally you can use "unmap()" ' +
 			'prior to your replacement mapping in order to avoid seeing this message.\n',
-			[_typeFilter, mapping]);
+			[_typeFilter.descriptor, Type.getClassName(mapping.mediatorClass)]);
 		deleteMapping(mapping);
 		return createMapping(mapping.mediatorClass);
 	}

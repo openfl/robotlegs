@@ -6,8 +6,12 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.extensions.signalCommandMap.impl;
-
+#if msignal
 import msignal.Signal;
+#end
+#if signals
+import signal.Signal;
+#end
 import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.extensions.commandCenter.api.ICommandExecutor;
 import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
@@ -74,23 +78,40 @@ class SignalCommandTrigger implements ICommandTrigger
 		if (!_injector.hasMapping(_signalClass))
 			_injector.map(_signalClass).asSingleton();
 		_signal = _injector.getInstance(_signalClass);
-		if (Std.is(_signal, Signal0)) {
+		
+		#if signals
+		if (Std.is(_signal, signal.Signal)) {
+			_signal.add(function() {
+				routePayloadToCommands([]);
+			});
+		} else if (Std.is(_signal, signal.Signal1)) {
+			var signal1:signal.Signal1<Dynamic> = cast _signal;
+			signal1.add(function(arg1:Dynamic) {
+				Reflect.makeVarArgs(routePayloadToCommands)(arg1);
+			});
+		} else if (Std.is(_signal, signal.Signal2)) {
+			var signal2:signal.Signal2<Dynamic, Dynamic> = cast _signal;
+			signal2.add(function(arg1:Dynamic, arg2:Dynamic):Void {
+				Reflect.makeVarArgs(routePayloadToCommands)(arg1, arg2);
+			});
+		} #end #if (signals&&msignal) else #end #if msignal if (Std.is(_signal, msignal.Signal.Signal0)) {
 			_signal.add(function() {
 				routePayloadToCommands([]);
 			});
 		}
-		else if (Std.is(_signal, Signal1)) {
-			var signal1:Signal1<Dynamic> = cast _signal;
+		else if (Std.is(_signal, msignal.Signal.Signal1)) {
+			var signal1:msignal.Signal.Signal1<Dynamic> = cast _signal;
 			signal1.add(function(arg1:Dynamic) {
 				Reflect.makeVarArgs(routePayloadToCommands)(arg1);
 			});
 		}
-		else if (Std.is(_signal, Signal2)) {
-			var signal2:Signal2<Dynamic, Dynamic> = cast _signal;
+		else if (Std.is(_signal, msignal.Signal.Signal2)) {
+			var signal2:msignal.Signal.Signal2<Dynamic, Dynamic> = cast _signal;
 			signal2.add(function(arg1:Dynamic, arg2:Dynamic):Void {
 				Reflect.makeVarArgs(routePayloadToCommands)(arg1, arg2);
 			});
 		}
+		#end
 	}
 
 	/**

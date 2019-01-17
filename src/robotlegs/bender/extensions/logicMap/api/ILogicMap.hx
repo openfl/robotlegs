@@ -1,6 +1,7 @@
 package robotlegs.bender.extensions.logicMap.api;
 
-import robotlegs.bender.extensions.logicMap.impl.LogicMap.Signal;
+import robotlegs.bender.extensions.logicMap.impl.LogicMap.SignalA;
+import robotlegs.bender.extensions.logicMap.impl.LogicMap.SignalB;
 import haxe.extern.EitherType;
 
 /**
@@ -8,5 +9,5 @@ import haxe.extern.EitherType;
  */
 interface ILogicMap 
 {
-	function map(type:Class<ILogic>, initialize:EitherType<Bool, Signal>=true):ILogic;
+	function map(type:Class<ILogic>, initialize:EitherType<Bool, EitherType<SignalA, SignalB>>=true):ILogic;
 }

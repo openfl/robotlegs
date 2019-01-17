@@ -19,7 +19,7 @@ class LogicMap implements ILogicMap implements DescribedType
 		
 	}
 	
-	public function map(type:Class<ILogic>, initialize:EitherType<Bool, Signal>=true):ILogic 
+	public function map(type:Class<ILogic>, initialize:EitherType<Bool, EitherType<SignalA, SignalB>>=true):ILogic 
 	{
 		injector.map(type).asSingleton();
 		
@@ -28,20 +28,23 @@ class LogicMap implements ILogicMap implements DescribedType
 		if (Std.is(initialize, Bool)){
 			if (initialize == true) instance.initialize();
 		} else {
-			var initSignal:Signal = initialize;
-			if (initSignal != null){
-				initSignal.add(() -> {
-					instance.initialize();
-				});
-			}
+			var add = Reflect.getProperty(initialize, 'add');
+			Reflect.callMethod(initialize, add, [() -> { instance.initialize(); }]);
 		}
 		
 		return instance;
 	}
 }
 
-typedef Signal =
+typedef SignalA =
 {
 	function dispatch():Void;
 	function add(callback:Void -> Void):Void;
+	
+}
+
+typedef SignalB =
+{
+	function dispatch():Void;
+	function add(callback:Void -> Void, ?fireOnce:Bool, ?priority:Int, ?fireOnAdd:Null<Bool>):Void;
 }

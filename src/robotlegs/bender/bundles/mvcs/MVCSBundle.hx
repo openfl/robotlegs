@@ -25,6 +25,7 @@ import robotlegs.bender.extensions.viewManager.StageObserverExtension;
 import robotlegs.bender.extensions.viewManager.ViewManagerExtension;
 import robotlegs.bender.extensions.viewProcessorMap.ViewProcessorMapExtension;
 import robotlegs.bender.extensions.vigilance.VigilanceExtension;
+import robotlegs.bender.extensions.config.ConfigExtension;
 import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.LogLevel;
@@ -71,7 +72,8 @@ class MVCSBundle implements IBundle
 			LogicMapExtension,
 			ViewProcessorMapExtension,
 			StageCrawlerExtension,
-			StageSyncExtension
+			StageSyncExtension,
+			ConfigExtension
 			]);
 			
 		context.configure([ContextViewListenerConfig]);

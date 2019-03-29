@@ -56,13 +56,13 @@ class FuseLayer extends Sprite implements ILayer implements DescribedType
 	
 	function get_changeAvailable():Bool 
 	{
-		#if air
+		//#if air
 			if (Fuse.skipUnchangedFrames) {
 				return Fuse.current.conductorData.changeAvailable == 1;
 			}
 			else return true;
-		#else
-			return true;
-		#end
+		//#else
+		//	return true;
+		//#end
 	}
 }

@@ -18,6 +18,7 @@ import robotlegs.bender.framework.api.IExtension;
 @:keepSub
 class DisplayExtension implements IExtension
 {
+	static var INSTALLED:Bool = false;
 
 	public function new() 
 	{
@@ -26,6 +27,8 @@ class DisplayExtension implements IExtension
 	
 	public function extend(context:IContext):Void 
 	{
+		if (INSTALLED) return;
+		
 		context.injector.map(ILayers).toSingleton(Layers);
 		context.injector.map(IStack).toSingleton(Stack);
 		context.injector.map(IRenderer).toSingleton(Renderer);
@@ -34,6 +37,7 @@ class DisplayExtension implements IExtension
 		
 		var layers:ILayers = context.injector.getInstance(ILayers);
 		layers.init();
+		INSTALLED = true;
 	}
 	
 }

@@ -31,7 +31,9 @@ class SignalCommandMapExtension implements IExtension
 	
     public function extend(context:IContext):Void
     {
-		context.injector.map(ISignalCommandMap).toSingleton(SignalCommandMap);
+        if (!context.injector.hasMapping(ISignalCommandMap)){
+            context.injector.map(ISignalCommandMap).toSingleton(SignalCommandMap);
+        }
     }
 
     public function toString():String

@@ -15,6 +15,8 @@ class Stage3DStackExtension implements IExtension
 	public function extend(context:IContext):Void
 	{
 		context.install([DisplayExtension]);
-		context.injector.map(IRenderContext).toSingleton(Stage3DRenderContext);
+		if (!context.injector.hasMapping(IRenderContext)){
+			context.injector.map(IRenderContext).toSingleton(Stage3DRenderContext);
+		}
 	}
 }

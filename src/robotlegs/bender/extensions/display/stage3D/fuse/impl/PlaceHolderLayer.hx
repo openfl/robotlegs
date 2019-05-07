@@ -36,6 +36,11 @@ class PlaceHolderLayer implements ILayer
 	{
 		
 	}
+
+	public function snap():Void
+	{
+		// needs to be implemented
+	}
 	
 	function get_changeAvailable():Bool 
 	{

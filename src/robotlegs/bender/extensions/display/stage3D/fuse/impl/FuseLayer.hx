@@ -32,6 +32,11 @@ class FuseLayer extends Sprite implements ILayer implements DescribedType
 		}
 	}
 	
+	public function snap():Void
+	{
+        process();
+    }
+	
 	public function setFuse(fuse:Fuse):Void
 	{
 		this.fuse = fuse;

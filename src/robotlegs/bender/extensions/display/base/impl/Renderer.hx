@@ -119,7 +119,7 @@ class Renderer implements DescribedType implements IRenderer
 			// in some instances context3D is set to null in this loop
 			if (!renderContext.available) break;
 			if (layers.layers[i].active){
-				layers.layers[i].process();
+				layers.layers[i].snap();
 			}
 		}
 		

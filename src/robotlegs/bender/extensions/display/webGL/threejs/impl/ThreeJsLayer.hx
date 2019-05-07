@@ -45,6 +45,11 @@ class ThreeJsLayer extends Sprite implements ILayer
 		render();
 	}
 	
+	public function snap():Void
+	{
+		render();
+	}
+	
     function render():Void
 	{
 		camera.updateProjectionMatrix();

@@ -9,6 +9,7 @@ interface ILayer
 {
 	var active:Bool;
 	function process():Void;
+	function snap():Void;
 	
 	//var iRenderer(get, set):IRenderer;
 	var changeAvailable(get, null):Bool;

@@ -122,6 +122,11 @@ class AwayStereoLayer extends StereoView3D implements ILayer implements IAwayLay
 		if (_touch3DManager != null) _touch3DManager.fireTouchEvents();
 	}
 	
+	public function snap():Void
+	{
+        render();
+    }
+	
 	/*override private function set_stereoEnabled(val:Bool):Bool {
         
 		_stereoEnabled = val;

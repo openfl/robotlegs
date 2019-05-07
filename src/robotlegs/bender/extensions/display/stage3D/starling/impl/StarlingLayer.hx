@@ -31,6 +31,14 @@ class StarlingLayer extends Sprite implements ILayer implements DescribedType
 		}
 	}
 	
+	public function snap():Void
+	{
+        starling.makeCurrent();
+        starling.stage.advanceTime(0);
+        starling.juggler.advanceTime(0);
+		starling.render();
+	}
+	
 	public function setStarling(starling:Starling):Void
 	{
 		this.starling = starling;

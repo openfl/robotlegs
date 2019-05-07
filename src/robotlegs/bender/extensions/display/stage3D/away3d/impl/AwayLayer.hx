@@ -38,6 +38,11 @@ class AwayLayer extends View3D implements ILayer implements IAwayLayer
 		if (_touch3DManager != null) _touch3DManager.fireTouchEvents();
 	}
 	
+	public function process():Void
+	{
+		this.render();
+    }
+	
 	public function setTo(x:Float, y:Float, width:Float, height:Float):Void
 	{
 		this.x = stage3DProxy.x = x;

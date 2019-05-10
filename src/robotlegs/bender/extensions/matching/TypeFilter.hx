@@ -6,7 +6,6 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.extensions.matching;
-import openfl.errors.ArgumentError;
 import org.swiftsuspenders.utils.CallProxy;
 
 /**
@@ -75,7 +74,7 @@ class TypeFilter implements ITypeFilter
 	public function new(allOf:Array<Class<Dynamic>>, anyOf:Array<Class<Dynamic>>, noneOf:Array<Class<Dynamic>>)
 	{
 		if (allOf == null || anyOf == null || noneOf == null)
-			throw new ArgumentError('TypeFilter parameters can not be null');
+			throw 'TypeFilter parameters can not be null';
 		this.allOfTypes = allOf;
 		this.anyOfTypes = anyOf;
 		this.noneOfTypes = noneOf;

@@ -31,7 +31,7 @@ class MediatorMap implements DescribedType implements IMediatorMap implements IV
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _mappers = new Map<String,Dynamic>();
+	private var _mappers:Map<String,Dynamic> = new Map<String,Dynamic>();
 
 	private var _logger:ILogger;
 
@@ -64,10 +64,13 @@ class MediatorMap implements DescribedType implements IMediatorMap implements IV
 	 */
 	public function mapMatcher(matcher:ITypeMatcher):IMediatorMapper
 	{
-		if (_mappers[matcher.createTypeFilter().descriptor] == null) {
-			_mappers[matcher.createTypeFilter().descriptor] = createMapper(matcher);
+		var descriptor:String = matcher.createTypeFilter().descriptor;
+		var mediatorMapper:IMediatorMapper = _mappers.get(descriptor);
+		if (mediatorMapper == null) {
+			mediatorMapper = createMapper(matcher);
+			_mappers.set(descriptor, mediatorMapper);
 		}
-		return _mappers[matcher.createTypeFilter().descriptor];
+		return mediatorMapper;
 	}
 
 	/**
@@ -83,7 +86,8 @@ class MediatorMap implements DescribedType implements IMediatorMap implements IV
 	 */
 	public function unmapMatcher(matcher:ITypeMatcher):IMediatorUnmapper
 	{
-		var val = _mappers[matcher.createTypeFilter().descriptor];
+		var descriptor:String = matcher.createTypeFilter().descriptor;
+		var val = _mappers.get(descriptor);
 		if (val != null) return val;
 		else return NULL_UNMAPPER;
 		//return _mappers[matcher.createTypeFilter().descriptor] || NULL_UNMAPPER;

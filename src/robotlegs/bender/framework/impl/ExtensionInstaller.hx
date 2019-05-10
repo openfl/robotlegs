@@ -10,10 +10,10 @@ package robotlegs.bender.framework.impl;
 
 import org.swiftsuspenders.InjectorMacro;
 import org.swiftsuspenders.utils.CallProxy;
-import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.ILogger;
+import haxe.ds.ObjectMap;
 
 /**
  * Installs custom extensions into a given context
@@ -28,7 +28,7 @@ class ExtensionInstaller
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _classes = new Map<String,Bool>();
+	private var _classes = new ObjectMap<Dynamic,Bool>();
 
 	private var _context:IContext;
 
@@ -57,27 +57,29 @@ class ExtensionInstaller
 	 */
 	public function install(extension:Dynamic):Void
 	{
-		if (Std.is(extension, Class))
-		{
-			var extensionInstance = Type.createInstance(extension, []);
-			install(extensionInstance);
-			InjectorMacro.keep(extensionInstance);
-		}
-		else
-		{
-			var id = UID.instanceID(extension);
-			if (_classes[id] == true) return;
-			var extensionClass:Class<Dynamic> = Type.getClass(extension);
-			
-			_logger.debug("Installing extension {0}", [id]);
-			_classes[id] = true;
-			
-			var hasExtendField = CallProxy.hasField(extension, "extend");
-			
-			if (hasExtendField == true) {
-				
-				extension.extend(_context);
-			}
+		if (Std.is(extension, Class)) installClass(extension);
+		else installInstance(extension);
+	}
+
+	inline function installClass(extension:Class<Dynamic>)
+	{
+		if (_classes.get(extension) == true) return;
+
+		var extensionInstance = Type.createInstance(extension, []);
+		installInstance(extensionInstance);
+		InjectorMacro.keep(extensionInstance); // check if this line is still needed
+	}
+
+	inline function installInstance(extension:{ extend: IContext -> Void })
+	{
+		var extensionClass:Class<Dynamic> = Type.getClass(extension);
+		if (_classes.get(extensionClass) == true) return;
+		_classes.set(extensionClass, true);
+
+		_logger.debug("Installing extension {0}", [Type.getClassName(extensionClass)]);
+		
+		if (extension.extend != null) {
+			extension.extend(_context);
 		}
 	}
 
@@ -86,9 +88,8 @@ class ExtensionInstaller
 	 */
 	public function destroy():Void
 	{
-		var fields = Reflect.fields (_classes);
-		for (propertyName in fields) {
-			_classes.remove(propertyName);
+		for (_class in _classes.keys()){
+			_classes.remove(_class);
 		}
 	}
 }

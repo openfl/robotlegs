@@ -182,51 +182,15 @@ class ConfigManager
 
 	private function processClass(type:Class<Dynamic>):Void
 	{
-		//var config = cast(_injector.getOrCreateNewInstance(type), IConfig);
-		// CHECK
-		//config && config.configure();
-		//if (config != null) config.configure();
-		
-		var object = _injector.getOrCreateNewInstance(type);
-		
-		//catch (e:Error) {
-		//	throw new Error("Can't cast " + type + " to IConfig, check you are using the @:keepSub meta tag");
-		//}
-		
-		if (object != null) {
-			
-			
-			var className = Type.getClassName(type);
-			var hasFeild = CallProxy.hasField(object, "configure");
-			if (hasFeild) {
-				#if js
-					untyped __js__("object['configure']();");
-				#else 
-					var func = Reflect.getProperty(object, "configure");
-					if (func != null) func();
-				#end
-			}
-		}
+		processObject(_injector.getOrCreateNewInstance(type), false);
 	}
 
-	private function processObject(object:Dynamic):Void
+	private function processObject(object:IConfig, inject:Bool=true):Void
 	{
-		_injector.injectInto(object);
-		//var config = cast(object, IConfig);
+		if (object == null) return;
+		if (inject) _injector.injectInto(object);
 		
-		//config && config.configure();
-		//if (config != null) config.configure();
-		// CHECK
-		var hasFeild = CallProxy.hasField(object, "configure");
-		if (hasFeild) {
-			#if js
-				
-				untyped __js__("object['configure']();");
-			#else 
-				var func = Reflect.getProperty(object, "configure");
-				if (func != null) func();
-			#end
-		}
-		
+		var configure:Void -> Void = object.configure;
+		if (configure != null) configure();
 	}
 }

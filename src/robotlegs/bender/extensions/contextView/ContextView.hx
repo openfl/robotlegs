@@ -8,12 +8,11 @@
 package robotlegs.bender.extensions.contextView;
 
 import openfl.display.DisplayObjectContainer;
-import org.swiftsuspenders.utils.DescribedType;
 
 /**
  * The Context View represents the root DisplayObjectContainer for a Context
  */
-class ContextView implements DescribedType
+class ContextView
 {
 
 	/*============================================================================*/
@@ -21,14 +20,6 @@ class ContextView implements DescribedType
 	/*============================================================================*/
 
 	public var view:DisplayObjectContainer;
-	//public var view(get, null):DisplayObjectContainer;
-	/**
-	 * The root DisplayObjectContainer for this Context
-	 */
-	//public function get_view():DisplayObjectContainer
-	//{
-		//return _view;
-	//}
 
 	/*============================================================================*/
 	/* Constructor                                                                */

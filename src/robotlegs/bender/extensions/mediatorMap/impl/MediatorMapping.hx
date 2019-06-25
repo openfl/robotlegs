@@ -10,6 +10,7 @@ import robotlegs.bender.extensions.matching.ITypeFilter;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
 import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorConfigurator;
 import robotlegs.bender.framework.impl.Guard;
+import robotlegs.bender.framework.impl.Hook;
 
 /**
  * @private
@@ -37,9 +38,9 @@ class MediatorMapping implements IMediatorMapping implements IMediatorConfigurat
 		return guards;
 	}
 
-	public var hooks(get, null):Array<Dynamic> = new Array<Dynamic>();
+	public var hooks(get, null):Array<Hook> = new Array<Hook>();
 
-	function get_hooks():Array<Dynamic> {
+	function get_hooks():Array<Hook> {
 		return hooks;
 	}
 
@@ -75,19 +76,21 @@ class MediatorMapping implements IMediatorMapping implements IMediatorConfigurat
 		if (guard != null) {
 			this.guards.push(guard);
 		}
-
-		// _guards = _guards.concat.apply(null, guards);
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function withHooks(hooks:Array<Dynamic>):IMediatorConfigurator {
-		for (i in 0...hooks.length) {
-			this.hooks.push(hooks[i]);
+	public function withHooks(?hooks:Array<Hook>, ?hook:Hook):IMediatorConfigurator {
+		if (hooks != null) {
+			for (i in 0...hooks.length) {
+				this.hooks.push(hooks[i]);
+			}
 		}
-		// _hooks = _hooks.concat.apply(null, hooks);
+		if (hook != null) {
+			this.hooks.push(hook);
+		}
 		return this;
 	}
 

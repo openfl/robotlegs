@@ -7,6 +7,7 @@
 package robotlegs.bender.extensions.mediatorMap.dsl;
 
 import robotlegs.bender.framework.impl.Guard;
+import robotlegs.bender.framework.impl.Hook;
 /**
  * Configures a mediator mapping
  */
@@ -23,7 +24,7 @@ interface IMediatorConfigurator {
 	 * @param hooks Hooks
 	 * @return Self
 	 */
-	function withHooks(hooks:Array<Dynamic>):IMediatorConfigurator;
+	function withHooks(?hooks:Array<Hook>, ?hook:Hook):IMediatorConfigurator;
 
 	/**
 	 * Should the mediator be removed when the mediated item looses scope?

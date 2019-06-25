@@ -8,6 +8,8 @@
 package robotlegs.bender.extensions.directCommandMap.dsl;
 
 import robotlegs.bender.extensions.directCommandMap.api.IDirectCommandMapper;
+import robotlegs.bender.framework.impl.Guard;
+import robotlegs.bender.framework.impl.Hook;
 
 /**
  * @private
@@ -27,14 +29,14 @@ interface IDirectCommandConfigurator extends IDirectCommandMapper
 	 * @return Self
 	 */
 	
-	function withGuards(guards:Array<Dynamic>):IDirectCommandConfigurator;
+	function withGuards(?guards:Array<Guard>, ?guard:Guard):IDirectCommandConfigurator;
 
 	/**
 	 * Hooks to run before command execution
 	 * @param hooks Hooks
 	 * @return Self
 	 */
-	function withHooks(hooks:Array<Dynamic>):IDirectCommandConfigurator;
+	function withHooks(?hooks:Array<Hook>, ?hook:Hook):IDirectCommandConfigurator;
 
 	/**
 	 * Should the payload values be injected into the command instance?

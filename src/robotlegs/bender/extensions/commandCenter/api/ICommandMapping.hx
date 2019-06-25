@@ -7,6 +7,7 @@
 package robotlegs.bender.extensions.commandCenter.api;
 
 import robotlegs.bender.framework.impl.Guard;
+import robotlegs.bender.framework.impl.Hook;
 
 /**
  * @private
@@ -50,12 +51,12 @@ interface ICommandMapping {
 	/**
 	 * A list of Guards to query before execution
 	 */
-	function addGuards(guards:Array<Dynamic>):ICommandMapping;
+	function addGuards(?guards:Array<Guard>, ?guard:Guard):ICommandMapping;
 
 	/**
 	 * A list of Hooks to run during execution
 	 */
-	function addHooks(hooks:Array<Dynamic>):ICommandMapping;
+	function addHooks(?hooks:Array<Hook>, ?hook:Hook):ICommandMapping;
 
 	/**
 	 * Unmaps a Command after a successful execution

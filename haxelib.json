@@ -5,7 +5,7 @@
 	"tags": [ "mvc", "robotlegs", "openfl", "flash", "js", "web", "starling", "away3D", "fuse" ],
 	"description": "Robotlegs v2 is a popular Micro-Architecture framework which integrates with OpenFL, Starling, Away3D, ThreeJS and Fuse",
 	"version": "1.2.8",
-	"releasenote": "strongly type guards",
+	"releasenote": "strongly type guards and hooks",
 	"contributors": [ "p.j.shand", "tbyrne" ],
 	"dependencies": {
 		"swiftsuspenders": "",

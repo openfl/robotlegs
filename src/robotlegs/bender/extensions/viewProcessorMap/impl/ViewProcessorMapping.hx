@@ -10,6 +10,7 @@ import robotlegs.bender.extensions.matching.ITypeFilter;
 import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorMapping;
 import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorMappingConfig;
 import robotlegs.bender.framework.impl.Guard;
+import robotlegs.bender.framework.impl.Hook;
 
 /**
  * @private
@@ -100,24 +101,30 @@ class ViewProcessorMapping implements IViewProcessorMapping implements IViewProc
 	/**
 	 * @inheritDoc
 	 */
-	public function withGuards(guards:Array<Dynamic>):IViewProcessorMappingConfig {
-		// CHECK
-		for (i in 0...guards.length) {
-			_guards.push(guards[i]);
+	public function withGuards(?guards:Array<Guard>, ?guard:Guard):IViewProcessorMappingConfig {
+		if (guards != null) {
+			for (i in 0...guards.length) {
+				_guards.push(guards[i]);
+			}
 		}
-		// _guards = _guards.concat.apply(null, guards);
+		if (guard != null) {
+			_guards.push(guard);
+		}
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function withHooks(hooks:Array<Dynamic>):IViewProcessorMappingConfig {
-		// CHECK
-		for (i in 0...hooks.length) {
-			_hooks.push(hooks[i]);
+	public function withHooks(?hooks:Array<Hook>, ?hook:Hook):IViewProcessorMappingConfig {
+		if (hooks != null){
+			for (i in 0...hooks.length) {
+				_hooks.push(hooks[i]);
+			}
 		}
-		// _hooks = _hooks.concat.apply(null, hooks);
+		if (hook != null){
+			_hooks.push(hook);
+		}
 		return this;
 	}
 

@@ -8,6 +8,7 @@ package robotlegs.bender.extensions.commandCenter.impl;
 
 import robotlegs.bender.extensions.commandCenter.api.ICommandMapping;
 import robotlegs.bender.framework.impl.Guard;
+import robotlegs.bender.framework.impl.Hook;
 
 /**
  * @private
@@ -50,14 +51,14 @@ class CommandMapping implements ICommandMapping {
 		return _guards;
 	}
 
-	private var _hooks:Array<Dynamic> = [];
+	private var _hooks:Array<Hook> = [];
 
-	public var hooks(get, null):Array<Dynamic>;
+	public var hooks(get, null):Array<Hook>;
 
 	/**
 	 * @inheritDoc
 	 */
-	public function get_hooks():Array<Dynamic> {
+	public function get_hooks():Array<Hook> {
 		return _hooks;
 	}
 
@@ -108,18 +109,30 @@ class CommandMapping implements ICommandMapping {
 	/**
 	 * @inheritDoc
 	 */
-	public function addGuards(guards:Array<Dynamic>):ICommandMapping {
-		// _guards = _guards.concat.apply(null, guards);
-		_guards = Reflect.callMethod(null, _guards.concat, guards);
+	public function addGuards(?guards:Array<Guard>, ?guard:Guard):ICommandMapping {
+		if (guards != null) {
+			for (i in 0...guards.length) {
+				_guards.push(guards[i]);
+			}
+		}
+		if (guard != null) {
+			_guards.push(guard);
+		}
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function addHooks(hooks:Array<Dynamic>):ICommandMapping {
-		// _hooks = _hooks.concat.apply(null, hooks);
-		_hooks = Reflect.callMethod(null, _hooks.concat, hooks);
+	public function addHooks(?hooks:Array<Hook>, ?hook:Hook):ICommandMapping {
+		if (hooks != null) {
+			for (i in 0...hooks.length) {
+				_hooks.push(hooks[i]);
+			}
+		}
+		if (hook != null) {
+			_hooks.push(hook);
+		}
 		return this;
 	}
 

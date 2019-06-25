@@ -58,23 +58,6 @@ class GuardsApprove {
 						return false;
 				}
 			}
-
-			/*if (Reflect.isFunction(guard))
-				{
-					if (guard())
-						continue;
-					return false;
-				}
-
-				if (Std.is(guard, Class))
-				{
-					guard = (injector != null)
-						? injector.instantiateUnmapped(cast(guard, Class<Dynamic>))
-						//: Type.createInstance(guard, []);
-						: Type.createInstance(guard, []);
-				}
-				if (guard.approve() == false)
-					return false; */
 		}
 		return true;
 	}

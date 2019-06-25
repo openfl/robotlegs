@@ -1,23 +1,22 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.mediatorMap.dsl;
 
+import robotlegs.bender.framework.impl.Guard;
 /**
  * Configures a mediator mapping
  */
-interface IMediatorConfigurator
-{
+interface IMediatorConfigurator {
 	/**
 	 * Guards to check before allowing a mediator to be created
 	 * @param guards Guards
 	 * @return Self
 	 */
-	function withGuards(guards:Array<Dynamic>):IMediatorConfigurator;
+	function withGuards(?guards:Array<Guard>, ?guard:Guard):IMediatorConfigurator;
 
 	/**
 	 * Hooks to run before a mediator is created
@@ -37,3 +36,4 @@ interface IMediatorConfigurator
 	 */
 	function autoRemove(value:Bool = true):IMediatorConfigurator;
 }
+

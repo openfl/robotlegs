@@ -88,8 +88,8 @@ public class MyAppConfig implements IConfig
 
     public function configure():void
     {
-        // Map UserModel as a context enforced singleton
-        injector.map(UserModel).asSingleton();
+        // Map UsersModel as a context enforced singleton
+        injector.map(UsersModel).asSingleton();
 
         // Create a UserProfileMediator for each UserProfileView
         // that lands inside of the Context View
@@ -143,7 +143,7 @@ public class UserSignInCommand extends Command
 {
     @inject public var event:UserEvent;
 
-    @inject public var model:UserModel;
+    @inject public var model:UsersModel;
 
     override public function execute():void
     {

@@ -4,19 +4,20 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.framework.impl;
 
 import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.framework.api.IInjector;
+import robotlegs.bender.framework.impl.Guard;
+import robotlegs.bender.framework.impl.Guard.GuardFunction;
+import robotlegs.bender.framework.impl.Guard.GuardObject;
+import robotlegs.bender.framework.impl.Guard.GuardClass;
 
 @:keepSub
-class GuardsApprove
-{
+class GuardsApprove {
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * <p>A guard can be a function, object or class.</p>
 	 *
@@ -34,26 +35,46 @@ class GuardsApprove
 	 *
 	 * @return A Bool value of false if any guard returns false
 	 */
-	public static function call(guards:Array<Dynamic>, injector:IInjector = null):Bool
-	{
-		for (guard in guards)
-		{
-			if (Reflect.isFunction(guard))
-			{
-				if (guard())
-					continue;
-				return false;
+	public static function call(guards:Array<Guard>, injector:IInjector = null):Bool {
+		for (guard in guards) {
+			if (Reflect.isFunction(guard)) {
+				var guardFunction:GuardFunction = guard;
+				if (guardFunction() == false)
+					return false;
+			} else {
+				var guardObject:GuardObject = null;
+				if (Std.is(guard, Class)) {
+					var _GuardClass:GuardClass = guard;
+					if (injector != null) {
+						guardObject = injector.instantiateUnmapped(_GuardClass);
+					} else {
+						guardObject = Type.createInstance(guard, []);
+					}
+				} else {
+					guardObject = guard;
+				}
+				if (guardObject != null) {
+					if (guardObject.approve() == false)
+						return false;
+				}
 			}
-			
-			if (Std.is(guard, Class))
-			{
-				guard = (injector != null)
-					? injector.instantiateUnmapped(cast(guard, Class<Dynamic>))
-					//: Type.createInstance(guard, []);
-					: Type.createInstance(guard, []);
-			}
-			if (guard.approve() == false)
-				return false;
+
+			/*if (Reflect.isFunction(guard))
+				{
+					if (guard())
+						continue;
+					return false;
+				}
+
+				if (Std.is(guard, Class))
+				{
+					guard = (injector != null)
+						? injector.instantiateUnmapped(cast(guard, Class<Dynamic>))
+						//: Type.createInstance(guard, []);
+						: Type.createInstance(guard, []);
+				}
+				if (guard.approve() == false)
+					return false; */
 		}
 		return true;
 	}

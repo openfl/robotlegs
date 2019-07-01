@@ -2,7 +2,7 @@ package robotlegs.bender.extensions.display.stage3D;
 
 import flash.display3D.Context3DProfile;
 import flash.display3D.Context3DRenderMode;
-import msignal.Signal.Signal0;
+import robotlegs.signal.Signal.Signal0;
 import openfl.display.BitmapData;
 import openfl.display.Stage3D;
 import openfl.display3D.Context3D;

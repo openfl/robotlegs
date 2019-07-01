@@ -1,6 +1,6 @@
 package robotlegs.bender.extensions.display.base.impl;
 
-import msignal.Signal.Signal0;
+import robotlegs.signal.Signal.Signal0;
 import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.display.base.api.IViewport;
 /**

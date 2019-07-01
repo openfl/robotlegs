@@ -1,6 +1,6 @@
 package robotlegs.bender.extensions.signalCommandMap.impl.signals;
 
-import msignal.Signal.Signal0;
+import robotlegs.signal.Signal.Signal0;
 
 /**
  * ...

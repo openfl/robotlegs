@@ -1,6 +1,6 @@
 package robotlegs.bender.extensions.display.webGL;
 
-import msignal.Signal.Signal0;
+import robotlegs.signal.Signal.Signal0;
 import openfl.display.BitmapData;
 import openfl.errors.Error;
 import openfl.events.ErrorEvent;

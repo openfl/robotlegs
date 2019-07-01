@@ -3,7 +3,7 @@ package robotlegs.bender.extensions.display.base.impl;
 import openfl.Lib;
 import openfl.display.BitmapData;
 import openfl.events.Event;
-import msignal.Signal.Signal0;
+import robotlegs.signal.Signal.Signal0;
 import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.display.base.api.ILayers;

@@ -28,7 +28,7 @@ class Away3DInitializer extends BaseInitializer
 		awayLayer.renderContext = renderContext;
 		
 		var awayCollection = new AwayCollection([awayLayer, id]);
-		context.configure([awayCollection]);
+		context.configure(awayCollection);
 		contextView.view.addChildAt(cast awayLayer, added);
 		added++;
 		

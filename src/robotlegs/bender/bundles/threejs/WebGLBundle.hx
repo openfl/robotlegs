@@ -11,8 +11,8 @@ class WebGLBundle implements IBundle
 	
 	public function extend(context:IContext):Void
 	{
-		context.install([
+		context.install(
 			WebGLStackExtension,
-		]);
+		);
 	}
 }

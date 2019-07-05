@@ -14,10 +14,10 @@ class StarlingBundle implements IBundle
 	/** @inheritDoc **/
 	public function extend(context:IContext):Void
 	{
-		context.install([
+		context.install(
 			StarlingIntegrationExtension,
 			StarlingStageSyncExtension
-		]);
+		);
 		
 	}
 }

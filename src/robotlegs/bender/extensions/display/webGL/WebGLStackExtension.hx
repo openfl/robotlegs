@@ -15,7 +15,7 @@ class WebGLStackExtension implements IExtension
 {
 	public function extend(context:IContext):Void
 	{
-		context.install([DisplayExtension]);
+		context.install(DisplayExtension);
 		context.injector.map(IRenderContext).toSingleton(WebGLRenderContext);
 	}
 }

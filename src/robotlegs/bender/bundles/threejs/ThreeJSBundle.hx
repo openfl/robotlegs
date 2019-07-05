@@ -21,8 +21,8 @@ class ThreeJSBundle implements IBundle
 	
 	public function extend(context:IContext):Void
 	{
-		context.install([
+		context.install(
 			ThreeJsIntegrationExtension,
-		]);
+		);
 	}
 }

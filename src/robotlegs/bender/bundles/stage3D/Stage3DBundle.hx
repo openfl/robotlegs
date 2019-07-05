@@ -18,8 +18,8 @@ class Stage3DBundle implements IBundle
 	/** @inheritDoc **/
 	public function extend(context:IContext):Void
 	{
-		context.install([
+		context.install(
 			Stage3DStackExtension
-		]);
+		);
 	}
 }

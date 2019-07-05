@@ -44,7 +44,7 @@ class KeaBundle implements IBundle
 	{
 		context.logLevel = LogLevel.INFO;
 		
-		context.install([
+		context.install(
 			TraceLoggingExtension,
 			VigilanceExtension,
 			InjectableLoggerExtension,
@@ -53,8 +53,8 @@ class KeaBundle implements IBundle
 			EventCommandMapExtension,
 			SignalCommandMapExtension,
 			LocalEventMapExtension
-			]);
+		);
 			
-		//context.configure([ContextViewListenerConfig]);
+		//context.configure(ContextViewListenerConfig);
 	}
 }

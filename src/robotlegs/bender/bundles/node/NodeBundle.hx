@@ -45,7 +45,7 @@ class NodeBundle implements IBundle
 	{
 		context.logLevel = LogLevel.INFO;
 		
-		context.install([
+		context.install(
 			TraceLoggingExtension,
 			VigilanceExtension,
 			InjectableLoggerExtension,
@@ -55,8 +55,8 @@ class NodeBundle implements IBundle
 			SignalCommandMapExtension,
 			LocalEventMapExtension,
 			LogicMapExtension
-			]);
+		);
 			
-		//context.configure([ContextViewListenerConfig]);
+		//context.configure(ContextViewListenerConfig);
 	}
 }

@@ -15,9 +15,9 @@ class Away3DBundle implements IBundle
 	/** @inheritDoc **/
 	public function extend(context:IContext):Void
 	{
-		context.install([
+		context.install(
 			AwayIntegrationExtension,
 			AwayStageSyncExtension
-		]);
+		);
 	}
 }

@@ -84,7 +84,7 @@ interface IContext extends IEventDispatcher {
 	 * @param extensions Objects or classes implementing IExtension or IBundle
 	 * @return this
 	 */
-	function install(?ext1:IExtension_Or_Class, ?ext2:IExtension_Or_Class, ?ext3:IExtension_Or_Class, ?ext4:IExtension_Or_Class, ?ext5:IExtension_Or_Class,
+	function install(ext1:IExtension_Or_Class, ?ext2:IExtension_Or_Class, ?ext3:IExtension_Or_Class, ?ext4:IExtension_Or_Class, ?ext5:IExtension_Or_Class,
 		?ext6:IExtension_Or_Class, ?ext7:IExtension_Or_Class, ?ext8:IExtension_Or_Class, ?ext9:IExtension_Or_Class, ?ext10:IExtension_Or_Class):IContext;
 
 	/**
@@ -93,7 +93,7 @@ interface IContext extends IEventDispatcher {
 	 * @return this
 	 */
 	// function configure(?configs:Array<Dynamic>, ?config:Dynamic):IContext;
-	public function configure(?config1:IConfig_Or_Class, ?config2:IConfig_Or_Class, ?config3:IConfig_Or_Class, ?config4:IConfig_Or_Class,
+	public function configure(config1:IConfig_Or_Class, ?config2:IConfig_Or_Class, ?config3:IConfig_Or_Class, ?config4:IConfig_Or_Class,
 		?config5:IConfig_Or_Class, ?config6:IConfig_Or_Class, ?config7:IConfig_Or_Class, ?config8:IConfig_Or_Class, ?config9:IConfig_Or_Class,
 		?config10:IConfig_Or_Class):IContext;
 

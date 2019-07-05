@@ -8,6 +8,7 @@ package robotlegs.bender.extensions.mediatorMap.api;
 
 import robotlegs.bender.extensions.matching.ITypeFilter;
 import robotlegs.bender.framework.impl.Guard;
+import robotlegs.bender.bundles.mvcs.Mediator;
 
 /**
  * Represents a Mediator mapping
@@ -21,7 +22,7 @@ interface IMediatorMapping {
 	/**
 	 * The concrete mediator class
 	 */
-	public var mediatorClass(get, null):Class<Dynamic>;
+	public var mediatorClass(get, null):Class<Mediator>;
 
 	/**
 	 * A list of guards to check before allowing mediator creation

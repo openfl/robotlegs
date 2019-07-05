@@ -1,22 +1,22 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.mediatorMap.dsl;
+
+import robotlegs.bender.bundles.mvcs.Mediator;
 
 /**
  * Unmaps a Mediator
  */
-interface IMediatorUnmapper
-{
+interface IMediatorUnmapper {
 	/**
 	 * Unmaps a mediator from this matcher
 	 * @param mediatorClass Mediator to unmap
 	 */
-	function fromMediator(mediatorClass:Class<Dynamic>):Void;
+	function fromMediator(mediatorClass:Class<Mediator>):Void;
 
 	/**
 	 * Unmaps all mediator mappings for this matcher

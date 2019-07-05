@@ -4,7 +4,6 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.framework.impl;
 
 import haxe.io.Error;
@@ -16,122 +15,124 @@ import robotlegs.bender.framework.api.ILogTarget;
 import robotlegs.bender.framework.api.ILogger;
 import robotlegs.bender.framework.api.IMatcher;
 import robotlegs.bender.framework.api.LifecycleEvent;
+import haxe.extern.EitherType;
+import haxe.extern.Rest;
+import robotlegs.bender.framework.api.IExtension.IExtension_Or_Class;
+import robotlegs.bender.framework.api.IConfig.IConfig_Or_Class;
 
-@:meta(Event(name="destroy", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="detain", type="robotlegs.bender.framework.api.PinEvent"))
-@:meta(Event(name="initialize", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postDestroy", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postInitialize", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postResume", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postSuspend", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preDestroy", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preInitialize", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preResume", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preSuspend", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="release", type="robotlegs.bender.framework.api.PinEvent"))
-@:meta(Event(name="resume", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="stateChange", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="suspend", type="robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "destroy", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "detain", type = "robotlegs.bender.framework.api.PinEvent"))
+@:meta(Event(name = "initialize", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postDestroy", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postInitialize", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postResume", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postSuspend", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preDestroy", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preInitialize", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preResume", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preSuspend", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "release", type = "robotlegs.bender.framework.api.PinEvent"))
+@:meta(Event(name = "resume", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "stateChange", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "suspend", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+
 /**
  * The core Robotlegs Context implementation
  */
 @:keepSub
-class Context extends EventDispatcher implements IContext
-{
-
+class Context extends EventDispatcher implements IContext {
 	/*============================================================================*/
 	/* Public Properties                                                          */
 	/*============================================================================*/
-
 	private var _injector:IInjector = new RobotlegsInjector();
 
 	/**
 	 * @inheritDoc
 	 */
-	public var injector (get, null):IInjector;
-	public function get_injector():IInjector
-	{
+	public var injector(get, null):IInjector;
+
+	public function get_injector():IInjector {
 		return _injector;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public var logLevel (get, set):UInt;
-	public function get_logLevel():UInt
-	{
+	public var logLevel(get, set):UInt;
+
+	public function get_logLevel():UInt {
 		return _logManager.logLevel;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function set_logLevel(value:UInt):UInt
-	{
+	public function set_logLevel(value:UInt):UInt {
 		_logManager.logLevel = value;
 		return value;
 	}
 
 	public var state(get, null):String;
-	//[Bindable("stateChange")]
+
+	// [Bindable("stateChange")]
+
 	@:meta(Bindable('stateChange'))
+
 	/**
 	 * @inheritDoc
 	 */
-	public function get_state():String
-	{
+	public function get_state():String {
 		return _lifecycle.state;
 	}
 
 	public var uninitialized(get, null):Bool;
+
 	/**
 	 * @inheritDoc
 	 */
-	public function get_uninitialized():Bool
-	{
+	public function get_uninitialized():Bool {
 		return _lifecycle.uninitialized;
 	}
 
 	public var initialized(get, null):Bool;
+
 	/**
 	 * @inheritDoc
 	 */
-	public function get_initialized():Bool
-	{
+	public function get_initialized():Bool {
 		return _lifecycle.initialized;
 	}
 
 	public var active(get, null):Bool;
+
 	/**
 	 * @inheritDoc
 	 */
-	public function get_active():Bool
-	{
+	public function get_active():Bool {
 		return _lifecycle.active;
 	}
-	
+
 	public var suspended(get, null):Bool;
+
 	/**
 	 * @inheritDoc
 	 */
-	public function get_suspended():Bool
-	{
+	public function get_suspended():Bool {
 		return _lifecycle.suspended;
 	}
 
 	public var destroyed(get, null):Bool;
+
 	/**
 	 * @inheritDoc
 	 */
-	public function get_destroyed():Bool
-	{
+	public function get_destroyed():Bool {
 		return _lifecycle.destroyed;
 	}
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _uid:String = UID.create(Context);
 
 	private var _logManager:LogManager = new LogManager();
@@ -151,12 +152,10 @@ class Context extends EventDispatcher implements IContext
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * Creates a new Context
 	 */
-	public function new()
-	{
+	public function new() {
 		setup();
 		super();
 	}
@@ -164,44 +163,38 @@ class Context extends EventDispatcher implements IContext
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */
-	public function initialize(callback:Void->Void = null):Void
-	{
+	public function initialize(callback:Void->Void = null):Void {
 		_lifecycle.initialize(callback);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function suspend(callback:Void->Void = null):Void
-	{
+	public function suspend(callback:Void->Void = null):Void {
 		_lifecycle.suspend(callback);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function resume(callback:Void->Void = null):Void
-	{
+	public function resume(callback:Void->Void = null):Void {
 		_lifecycle.resume(callback);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function destroy(callback:Void->Void = null):Void
-	{
+	public function destroy(callback:Void->Void = null):Void {
 		_lifecycle.destroy(callback);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function beforeInitializing(handler:Void->Void):IContext
-	{
+	public function beforeInitializing(handler:Void->Void):IContext {
 		_lifecycle.beforeInitializing(handler);
 		return this;
 	}
@@ -209,8 +202,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function whenInitializing(handler:Void->Void):IContext
-	{
+	public function whenInitializing(handler:Void->Void):IContext {
 		_lifecycle.whenInitializing(handler);
 		return this;
 	}
@@ -218,8 +210,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function afterInitializing(handler:Void->Void):IContext
-	{
+	public function afterInitializing(handler:Void->Void):IContext {
 		_lifecycle.afterInitializing(handler);
 		return this;
 	}
@@ -227,8 +218,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function beforeSuspending(handler:Void->Void):IContext
-	{
+	public function beforeSuspending(handler:Void->Void):IContext {
 		_lifecycle.beforeSuspending(handler);
 		return this;
 	}
@@ -236,8 +226,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function whenSuspending(handler:Void->Void):IContext
-	{
+	public function whenSuspending(handler:Void->Void):IContext {
 		_lifecycle.whenSuspending(handler);
 		return this;
 	}
@@ -245,8 +234,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function afterSuspending(handler:Void->Void):IContext
-	{
+	public function afterSuspending(handler:Void->Void):IContext {
 		_lifecycle.afterSuspending(handler);
 		return this;
 	}
@@ -254,8 +242,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function beforeResuming(handler:Void->Void):IContext
-	{
+	public function beforeResuming(handler:Void->Void):IContext {
 		_lifecycle.beforeResuming(handler);
 		return this;
 	}
@@ -263,8 +250,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function whenResuming(handler:Void->Void):IContext
-	{
+	public function whenResuming(handler:Void->Void):IContext {
 		_lifecycle.whenResuming(handler);
 		return this;
 	}
@@ -272,8 +258,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function afterResuming(handler:Void->Void):IContext
-	{
+	public function afterResuming(handler:Void->Void):IContext {
 		_lifecycle.afterResuming(handler);
 		return this;
 	}
@@ -281,8 +266,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function beforeDestroying(handler:Void->Void):IContext
-	{
+	public function beforeDestroying(handler:Void->Void):IContext {
 		_lifecycle.beforeDestroying(handler);
 		return this;
 	}
@@ -290,8 +274,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function whenDestroying(handler:Void->Void):IContext
-	{
+	public function whenDestroying(handler:Void->Void):IContext {
 		_lifecycle.whenDestroying(handler);
 		return this;
 	}
@@ -299,8 +282,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function afterDestroying(handler:Void->Void):IContext
-	{
+	public function afterDestroying(handler:Void->Void):IContext {
 		_lifecycle.afterDestroying(handler);
 		return this;
 	}
@@ -308,65 +290,51 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	
-	public function install(extensions:Dynamic):IContext
-	{
-		if (Std.is(extensions, Array)) {
-			var extensionsArray:Array<Dynamic> = cast(extensions);
-			for (extension in extensionsArray)
-			{
-				_extensionInstaller.install(extension);
-			}
-		}
-		else {
-			var extension = extensions;
-			_extensionInstaller.install(extension);
-		}
+	public function install(ext1:IExtension_Or_Class, ?ext2:IExtension_Or_Class, ?ext3:IExtension_Or_Class, ?ext4:IExtension_Or_Class,
+			?ext5:IExtension_Or_Class, ?ext6:IExtension_Or_Class, ?ext7:IExtension_Or_Class, ?ext8:IExtension_Or_Class, ?ext9:IExtension_Or_Class,
+			?ext10:IExtension_Or_Class):IContext {
+		_extensionInstaller.install(ext1);
+		_extensionInstaller.install(ext2);
+		_extensionInstaller.install(ext3);
+		_extensionInstaller.install(ext4);
+		_extensionInstaller.install(ext5);
+		_extensionInstaller.install(ext6);
+		_extensionInstaller.install(ext7);
+		_extensionInstaller.install(ext8);
+		_extensionInstaller.install(ext9);
+		_extensionInstaller.install(ext10);
 		return this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function configure(configs:Dynamic):IContext
-	{
-		if (Std.is(configs, Array)) {
-			var configsArray:Array<Dynamic> = cast(configs);
-			for (config in configsArray)
-			{
-				configureObject(config);
-			}
-		}
-		else {
-			configureObject(configs);
-		}
+	public function configure(config1:IConfig_Or_Class, ?config2:IConfig_Or_Class, ?config3:IConfig_Or_Class, ?config4:IConfig_Or_Class,
+			?config5:IConfig_Or_Class, ?config6:IConfig_Or_Class, ?config7:IConfig_Or_Class, ?config8:IConfig_Or_Class, ?config9:IConfig_Or_Class,
+			?config10:IConfig_Or_Class):IContext {
+		_configManager.addConfig(config1);
+		_configManager.addConfig(config2);
+		_configManager.addConfig(config3);
+		_configManager.addConfig(config4);
+		_configManager.addConfig(config5);
+		_configManager.addConfig(config6);
+		_configManager.addConfig(config7);
+		_configManager.addConfig(config8);
+		_configManager.addConfig(config9);
+		_configManager.addConfig(config10);
 		return this;
-	}
-	
-	private function configureObject(config:Dynamic):Void
-	{
-		#if (js)
-			if (!Std.is(config, Class)) {
-				Reflect.setProperty(config, "constructor", Type.getClass(config));
-			}
-		#end
-		_configManager.addConfig(config);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function addChild(child:IContext):IContext
-	{
-		if (_children.indexOf(child) == -1)
-		{
+	public function addChild(child:IContext):IContext {
+		if (_children.indexOf(child) == -1) {
 			_logger.info("Adding child context {0}", [child]);
-			if (child.uninitialized)
-			{
+			if (child.uninitialized) {
 				_logger.warn("Child context {0} must be uninitialized", [child]);
 			}
-			if (child.injector.parent != null)
-			{
+			if (child.injector.parent != null) {
 				_logger.warn("Child context {0} must not have a parent Injector", [child]);
 			}
 			_children.push(child);
@@ -379,18 +347,14 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function removeChild(child:IContext):IContext
-	{
+	public function removeChild(child:IContext):IContext {
 		var childIndex:Int = _children.indexOf(child);
-		if (childIndex > -1)
-		{
+		if (childIndex > -1) {
 			_logger.info("Removing child context {0}", [child]);
 			_children.splice(childIndex, 1);
 			child.injector.parent = null;
 			child.removeEventListener(LifecycleEvent.POST_DESTROY, onChildDestroy);
-		}
-		else
-		{
+		} else {
 			_logger.warn("Child context {0} must be a child of {1}", [child, this]);
 		}
 		return this;
@@ -399,8 +363,7 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function addConfigHandler(matcher:IMatcher, handler:Dynamic):IContext
-	{
+	public function addConfigHandler(matcher:IMatcher, handler:Dynamic):IContext {
 		_configManager.addConfigHandler(matcher, handler);
 		return this;
 	}
@@ -408,17 +371,15 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function getLogger(source:Dynamic):ILogger
-	{
+	public function getLogger(source:Dynamic):ILogger {
 		var returnVal:ILogger = _logManager.getLogger(source);
 		return returnVal;
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
-	public function addLogTarget(target:ILogTarget):IContext
-	{
+	public function addLogTarget(target:ILogTarget):IContext {
 		_logManager.addLogTarget(target);
 		return this;
 	}
@@ -426,16 +387,13 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function detain(instances:Dynamic):IContext
-	{
+	public function detain(instances:Dynamic):IContext {
 		if (Std.is(instances, Array)) {
 			var instancesArray:Array<Dynamic> = cast(instances);
-			for (instance in instancesArray)
-			{
+			for (instance in instancesArray) {
 				_pin.detain(instance);
 			}
-		}
-		else {
+		} else {
 			_pin.detain(instances);
 		}
 		return this;
@@ -444,16 +402,13 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	public function release(instances:Dynamic):IContext
-	{
+	public function release(instances:Dynamic):IContext {
 		if (Std.is(instances, Array)) {
 			var instancesArray:Array<Dynamic> = cast(instances);
-			for (instance in instancesArray)
-			{
+			for (instance in instancesArray) {
 				_pin.release(instance);
 			}
-		}
-		else {
+		} else {
 			_pin.release(instances);
 		}
 		return this;
@@ -462,20 +417,17 @@ class Context extends EventDispatcher implements IContext
 	/**
 	 * @inheritDoc
 	 */
-	override public function toString():String
-	{
+	override public function toString():String {
 		return _uid;
 	}
 
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
 	/**
 	 * Configures mandatory context dependencies
 	 */
-	private function setup():Void
-	{
+	private function setup():Void {
 		_injector.map(IInjector).toValue(_injector);
 		_injector.map(IContext).toValue(this);
 		_logger = _logManager.getLogger(this);
@@ -489,23 +441,19 @@ class Context extends EventDispatcher implements IContext
 		afterDestroying(afterDestroyingCallback);
 	}
 
-	private function beforeInitializingCallback():Void
-	{
+	private function beforeInitializingCallback():Void {
 		_logger.info("Initializing...");
 	}
 
-	private function afterInitializingCallback():Void
-	{
+	private function afterInitializingCallback():Void {
 		_logger.info("Initialize complete");
 	}
 
-	private function beforeDestroyingCallback():Void
-	{
+	private function beforeDestroyingCallback():Void {
 		_logger.info("Destroying...");
 	}
 
-	private function afterDestroyingCallback():Void
-	{
+	private function afterDestroyingCallback():Void {
 		_extensionInstaller.destroy();
 		_configManager.destroy();
 		_pin.releaseAll();
@@ -515,16 +463,13 @@ class Context extends EventDispatcher implements IContext
 		_logManager.removeAllTargets();
 	}
 
-	private function onChildDestroy(event:LifecycleEvent):Void
-	{
+	private function onChildDestroy(event:LifecycleEvent):Void {
 		removeChild(cast(event.target, IContext));
 	}
 
-	private function removeChildren():Void
-	{
+	private function removeChildren():Void {
 		// CHECK
-		for (child in _children)
-		{
+		for (child in _children) {
 			removeChild(child);
 		}
 		_children = [];

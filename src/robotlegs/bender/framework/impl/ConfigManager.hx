@@ -16,6 +16,7 @@ import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.framework.api.ILogger;
 import robotlegs.bender.framework.api.IMatcher;
 import robotlegs.bender.framework.api.LifecycleEvent;
+import robotlegs.bender.framework.api.IConfig.IConfig_Or_Class;
 
 /**
  * The config manager handles configuration files and
@@ -77,8 +78,17 @@ class ConfigManager
 	 * <p>If the manager is not initialized the configuration will be queued.</p>
 	 * @param config The configuration object or class
 	 */
-	public function addConfig(config:Dynamic):Void
+	public function addConfig(config:IConfig_Or_Class):Void
 	{
+		if (config == null)
+			return;
+		
+		#if (js)
+		if (!Std.is(config, Class)) {
+			Reflect.setProperty(config, "constructor", Type.getClass(config));
+		}
+		#end
+
 		var id = UID.instanceID(config);
 		if (_configs[id] == null)
 		{

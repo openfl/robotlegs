@@ -4,38 +4,39 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.framework.api;
 
 import openfl.events.IEventDispatcher;
+import robotlegs.bender.framework.api.IExtension.IExtension_Or_Class;
+import robotlegs.bender.framework.api.IConfig.IConfig_Or_Class;
 
-@:meta(Event(name="destroy", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="detain", type="robotlegs.bender.framework.api.PinEvent"))
-@:meta(Event(name="initialize", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postDestroy", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postInitialize", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postResume", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postSuspend", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preDestroy", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preInitialize", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preResume", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preSuspend", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="release", type="robotlegs.bender.framework.api.PinEvent"))
-@:meta(Event(name="resume", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="stateChange", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="suspend", type="robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "destroy", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "detain", type = "robotlegs.bender.framework.api.PinEvent"))
+@:meta(Event(name = "initialize", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postDestroy", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postInitialize", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postResume", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postSuspend", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preDestroy", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preInitialize", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preResume", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preSuspend", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "release", type = "robotlegs.bender.framework.api.PinEvent"))
+@:meta(Event(name = "resume", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "stateChange", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "suspend", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+
 /**
  * The Robotlegs context contract
  */
 @:keepSub
-interface IContext extends IEventDispatcher
-{
+interface IContext extends IEventDispatcher {
 	/**
 	 * The context dependency injector
 	 */
-	//@:getter(injector) function get_injector():String;
+	// @:getter(injector) function get_injector():String;
 	public var injector(get, null):IInjector;
-	
+
 	/**
 	 * The current log level
 	 */
@@ -45,7 +46,7 @@ interface IContext extends IEventDispatcher
 	 * Sets the current log level
 	 * @param value The log level. Use a constant from LogLevel
 	 */
-	//function set_logLevel(value:UInt):Void;
+	// function set_logLevel(value:UInt):Void;
 
 	/**
 	 * The current lifecycle state
@@ -55,8 +56,9 @@ interface IContext extends IEventDispatcher
 	/**
 	 * Is this context uninitialized?
 	 */
-	//public var uninitialized():Bool;
+	// public var uninitialized():Bool;
 	public var uninitialized(get, null):Bool;
+
 	/**
 	 * Is this context initialized?
 	 */
@@ -82,14 +84,18 @@ interface IContext extends IEventDispatcher
 	 * @param extensions Objects or classes implementing IExtension or IBundle
 	 * @return this
 	 */
-	function install(extensions:Dynamic):IContext;
+	function install(?ext1:IExtension_Or_Class, ?ext2:IExtension_Or_Class, ?ext3:IExtension_Or_Class, ?ext4:IExtension_Or_Class, ?ext5:IExtension_Or_Class,
+		?ext6:IExtension_Or_Class, ?ext7:IExtension_Or_Class, ?ext8:IExtension_Or_Class, ?ext9:IExtension_Or_Class, ?ext10:IExtension_Or_Class):IContext;
 
 	/**
 	 * Configures the context with custom configurations
 	 * @param configs Configuration objects or classes of any type
 	 * @return this
 	 */
-	function configure(configs:Dynamic):IContext;
+	// function configure(?configs:Array<Dynamic>, ?config:Dynamic):IContext;
+	public function configure(?config1:IConfig_Or_Class, ?config2:IConfig_Or_Class, ?config3:IConfig_Or_Class, ?config4:IConfig_Or_Class,
+		?config5:IConfig_Or_Class, ?config6:IConfig_Or_Class, ?config7:IConfig_Or_Class, ?config8:IConfig_Or_Class, ?config9:IConfig_Or_Class,
+		?config10:IConfig_Or_Class):IContext;
 
 	/**
 	 * Adds an uninitialized context as a child

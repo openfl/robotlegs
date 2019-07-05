@@ -26,7 +26,7 @@ class ThreeJsInitializer extends BaseInitializer
 		threeJsLayer.renderContext = renderContext;
 		
 		var threeJsCollection = new ThreeJsCollection([threeJsLayer, id]);
-		context.configure([threeJsCollection]);
+		context.configure(threeJsCollection);
 		contextView.view.addChild(threeJsLayer);
 		
 		if (index == -1) layers.addLayer(threeJsLayer);

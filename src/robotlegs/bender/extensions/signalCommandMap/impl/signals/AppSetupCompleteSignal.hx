@@ -1,12 +1,12 @@
 package robotlegs.bender.extensions.signalCommandMap.impl.signals;
 
-import robotlegs.signal.Signal.Signal0Type;
+import robotlegs.signal.Signal.SignalType;
 
 /**
  * ...
  * @author P.J.Shand
  */
-class AppSetupCompleteSignal extends Signal0Type 
+class AppSetupCompleteSignal extends SignalType 
 {
 	
 	public function new() 

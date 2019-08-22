@@ -84,7 +84,7 @@ abstract Signal2<T, K>(msignal.Signal.Signal2<T, K>) from Signal2Type<T, K>
     public inline function new() this = new msignal.Signal.Signal2();
 
     // fireOnAdd=true not yet supported
-    public inline function add(callback:T->K->Void, ?fireOnce:Bool=false, ?priority:Int = 0) : Void
+    public inline function add(callback:T->K->Void, ?fireOnce:Bool=false, ?priority:Int = 0, ?fireOnAdd:Null<Bool> = null) : Void
     {
         if(fireOnce){
             this.addOnceWithPriority(callback, priority);

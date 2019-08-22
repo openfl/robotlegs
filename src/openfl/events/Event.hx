@@ -1,5 +1,8 @@
 package openfl.events;
 
+#if (openfl >= "8.8.0")
+import openfl._internal.utils.ObjectPool;
+#end
 import haxe.macro.Expr;
 
 class Event {
@@ -23,6 +26,7 @@ class Event {
 	public static inline var INIT = "init";
 	public static inline var MOUSE_LEAVE = "mouseLeave";
 	public static inline var OPEN = "open";
+    public static inline var PASTE = "paste";
 	public static inline var REMOVED = "removed";
 	public static inline var REMOVED_FROM_STAGE = "removedFromStage";
 	public static inline var RENDER = "render";
@@ -42,6 +46,10 @@ class Event {
 	public var eventPhase (default, null):EventPhase;
 	public var target (default, null):Dynamic;
 	public var type (default, null):String;
+    
+    #if (openfl >= "8.8.0")
+    @:noCompletion private static var __pool:ObjectPool<Event> = new ObjectPool<Event>(function() return new Event(null), function(event) event.__init());
+    #end
 	
 	private var __isCanceled:Bool;
 	private var __isCanceledNow:Bool;
@@ -149,5 +157,16 @@ class Event {
 		output += "]";
 		return output;
 		
-	}	
+	}
+    
+    @:noCompletion private function __init():Void
+	{
+		// type = null;
+		bubbles = false;
+		cancelable = false;
+		eventPhase = AT_TARGET;
+		__isCanceled = false;
+		__isCanceledNow = false;
+		__preventDefault = false;
+	}
 }

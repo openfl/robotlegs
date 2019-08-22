@@ -102,9 +102,11 @@ class CommandPayload
 	 */
 	public function hasPayload():Bool
 	{
-		// todo: the final clause will make this fail silently
-		// todo: rethink
-		// CHECK
+		return values.length > 0;
+	}
+
+	public function payloadInjectable():Bool
+	{
 		if (this.values != null && this.classes != null) {
 			if (this.values.length > 0 && this.classes.length == this.values.length) {
 				return true;

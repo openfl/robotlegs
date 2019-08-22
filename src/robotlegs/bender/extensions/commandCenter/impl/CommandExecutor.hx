@@ -74,7 +74,7 @@ class CommandExecutor implements ICommandExecutor
 		
 		var hasPayload:Bool = (payload != null) && payload.hasPayload();
 		
-		var injectionEnabled:Bool = hasPayload && mapping.payloadInjectionEnabled;
+		var injectionEnabled:Bool = payload.payloadInjectable() && mapping.payloadInjectionEnabled;
 		var command:Dynamic = null;
 
 		if (injectionEnabled) mapPayload(payload);
@@ -101,7 +101,7 @@ class CommandExecutor implements ICommandExecutor
 			var executeMethod:Dynamic = Reflect.getProperty(command, mapping.executeMethod);
 			var result:Dynamic;
 			if ((hasPayload && executeMethod.length > 0)) {
-				result = Reflect.callMethod(null, executeMethod, payload.values);
+				result = Reflect.callMethod(command, executeMethod, payload.values);
 				//result = executeMethod.apply(null, payload.values);
 			}
 			else {

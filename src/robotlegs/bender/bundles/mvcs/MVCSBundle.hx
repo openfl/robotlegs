@@ -16,6 +16,7 @@ import robotlegs.bender.extensions.eventCommandMap.EventCommandMapExtension;
 import robotlegs.bender.extensions.eventDispatcher.EventDispatcherExtension;
 import robotlegs.bender.extensions.localEventMap.LocalEventMapExtension;
 import robotlegs.bender.extensions.logicMap.LogicMapExtension;
+import robotlegs.bender.extensions.modelMap.ModelExtension;
 import robotlegs.bender.extensions.mediatorMap.MediatorMapExtension;
 import robotlegs.bender.extensions.modularity.ModularityExtension;
 import robotlegs.bender.extensions.signalCommandMap.SignalCommandMapExtension;
@@ -60,6 +61,7 @@ class MVCSBundle implements IBundle {
 		context.install(StageObserverExtension);
 		context.install(MediatorMapExtension);
 		context.install(LogicMapExtension);
+		context.install(ModelExtension);
 		context.install(ViewProcessorMapExtension);
 		context.install(StageCrawlerExtension);
 		context.install(StageSyncExtension);

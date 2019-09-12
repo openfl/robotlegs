@@ -9,6 +9,9 @@ import haxe.Timer;
 #if notifier
 import notifier.Notifier;
 #end
+#if html5
+import js.Browser;
+#end
 
 /**
  * ...
@@ -18,9 +21,40 @@ class ModelMap implements IModelMap implements DescribedType {
 	@inject public var injector:IInjector;
 
 	var types:Array<ModelDef> = [];
+	var keys:Array<NotifierDef> = [];
 	var timerActive:Bool = false;
+	var initialized:Bool = false;
 
-	public function new(context:IContext) {}
+	public function new(context:IContext) {
+		#if js
+		if (initialized)
+			return;
+		initialized = true;
+		untyped Object.defineProperties(Window.prototype, {
+			"list": {
+				get: ListModels
+			},
+		});
+		#end
+	}
+
+	function ListModels() {
+		#if js
+		keys.sort((f1, f2) -> {
+			if (f1.parent > f2.parent)
+				return 1;
+			else if (f1.parent < f2.parent)
+				return -1;
+			if (f1.name > f2.name)
+				return 1;
+			else if (f1.name < f2.name)
+				return -1;
+			else
+				return 0;
+		});
+		Browser.console.table(keys);
+		#end
+	}
 
 	public function map(type:Class<Dynamic>, key:String = null):InjectionMapping {
 		#if js
@@ -50,7 +84,6 @@ class ModelMap implements IModelMap implements DescribedType {
 				name = split[split.length - 1];
 				if (name != null && name != "") {
 					var a = name.split("");
-					a[0] = a[0].toLowerCase();
 					name = a.join("");
 				}
 			}
@@ -61,7 +94,7 @@ class ModelMap implements IModelMap implements DescribedType {
 			for (field in Reflect.fields(instance)) {
 				var prop = Reflect.getProperty(instance, field);
 				if (Std.is(prop, Notifier)) {
-					addProp(field, prop);
+					addProp(field, prop, 0, name);
 				}
 			}
 			#end
@@ -70,7 +103,7 @@ class ModelMap implements IModelMap implements DescribedType {
 		types = [];
 	}
 
-	function addProp(key:String, value:Dynamic, suffix:Int = 0) {
+	function addProp(key:String, value:Dynamic, suffix:Int = 0, parentName:String = null) {
 		var key1:String = key;
 		if (suffix > 0)
 			key1 = key + suffix;
@@ -78,9 +111,21 @@ class ModelMap implements IModelMap implements DescribedType {
 		var currentValue = Reflect.getProperty(js.Browser.window, key1);
 		if (currentValue == null) {
 			Reflect.setProperty(js.Browser.window, key1, value);
+			if (parentName != null) {
+				keys.push({
+					parent: parentName,
+					name: key1
+				});
+			}
 		} else {
 			// trace("prop " + key + " already exists");
 			addProp(key, value, ++suffix);
+			if (parentName != null) {
+				keys.push({
+					parent: parentName,
+					name: key
+				});
+			}
 		}
 	}
 	#end
@@ -89,4 +134,9 @@ class ModelMap implements IModelMap implements DescribedType {
 typedef ModelDef = {
 	type:Class<Dynamic>,
 	?key:String
+}
+
+typedef NotifierDef = {
+	parent:String,
+	name:String
 }

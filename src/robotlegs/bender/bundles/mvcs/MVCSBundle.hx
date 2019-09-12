@@ -15,7 +15,6 @@ import robotlegs.bender.extensions.viewManager.StageCrawlerExtension;
 import robotlegs.bender.extensions.viewManager.StageObserverExtension;
 import robotlegs.bender.extensions.viewManager.ViewManagerExtension;
 import robotlegs.bender.extensions.viewProcessorMap.ViewProcessorMapExtension;
-
 import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 
@@ -27,15 +26,13 @@ import robotlegs.bender.framework.api.IContext;
  */
 @:keepSub
 class MVCSBundle extends MCSBundle implements IBundle {
-	public function new() {}
-
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
 	/**
 	 * @inheritDoc
 	 */
-	public function extend(context:IContext):Void {
+	override public function extend(context:IContext):Void {
 		super.extend(context);
 
 		context.install(ContextViewExtension);

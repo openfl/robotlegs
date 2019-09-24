@@ -5,14 +5,10 @@ import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 
 @:keepSub
-class WebGLBundle implements IBundle
-{
-	public function new() { }
-	
-	public function extend(context:IContext):Void
-	{
-		context.install(
-			WebGLStackExtension,
-		);
+class WebGLBundle implements IBundle {
+	public function new() {}
+
+	public function extend(context:IContext):Void {
+		context.install(WebGLStackExtension);
 	}
 }

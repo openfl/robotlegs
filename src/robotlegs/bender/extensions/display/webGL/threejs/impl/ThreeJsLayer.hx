@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.display.webGL.threejs.impl;
 
+import js.three.WebGLRendererParameters;
 import js.Browser;
 import js.three.PerspectiveCamera;
 import js.three.Scene;
@@ -20,7 +21,7 @@ class ThreeJsLayer extends Sprite implements ILayer {
 	public var active:Bool = true;
 	public var scene = new Scene();
 
-	public var renderer = new WebGLRenderer({alpha: true, antialias: true});
+	public var renderer = new WebGLRenderer();
 
 	public var camera:PerspectiveCamera;
 	public var changeAvailable(get, null):Bool;
@@ -28,11 +29,16 @@ class ThreeJsLayer extends Sprite implements ILayer {
 	var _width:Float = 0;
 	var _height:Float = 0;
 
-	public function new(clearColor:UInt = 0x00000) {
+	public function new(options:WebGLRendererParameters) {
 		super();
 
+		renderer = new WebGLRenderer(options);
 		renderer.setPixelRatio(js.Browser.window.devicePixelRatio == null ? 1 : js.Browser.window.devicePixelRatio);
-		renderer.setClearColor(clearColor, 1.0);
+
+		if (options != null) {
+			renderer.setClearColor(options.clearColor, 1.0);
+		}
+
 		renderer.sortObjects = false;
 
 		renderer.domElement.style.top = "0px";
@@ -78,8 +84,7 @@ class ThreeJsLayer extends Sprite implements ILayer {
 		camera.aspect = width / height;
 		camera.updateProjectionMatrix();
 
-		renderer.setSize(width, height);
-
+		renderer.setSize(Math.floor(width), Math.floor(height));
 		// camera.aspect = Browser.window.innerWidth / Browser.window.innerHeight;
 		// camera.updateProjectionMatrix();
 		// renderer.setSize(Browser.window.innerWidth, Browser.window.innerHeight);

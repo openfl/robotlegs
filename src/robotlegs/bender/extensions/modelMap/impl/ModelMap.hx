@@ -31,14 +31,14 @@ class ModelMap implements IModelMap implements DescribedType {
 			return;
 		initialized = true;
 		untyped Object.defineProperties(Window.prototype, {
-			"list": {
-				get: ListModels
+			"notifiers": {
+				get: listModels
 			},
 		});
 		#end
 	}
 
-	function ListModels() {
+	function listModels() {
 		#if js
 		keys.sort((f1, f2) -> {
 			if (f1.parent > f2.parent)

@@ -18,9 +18,9 @@ package robotlegs.signal;
  * @author Thomas Byrne
  */
 #if signals
-typedef Signal = signal.Signal;
-typedef Signal1<T> = signal.Signal1<T>;
-typedef Signal2<T, K> = signal.Signal2<T, K>;
+typedef Signal = signals.Signal;
+typedef Signal1<T> = signals.Signal1<T>;
+typedef Signal2<T, K> = signals.Signal2<T, K>;
 typedef SignalType = Signal;
 typedef Signal1Type<T> = Signal1<T>;
 typedef Signal2Type<T, K> = Signal2<T, K>;

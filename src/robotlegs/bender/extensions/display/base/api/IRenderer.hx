@@ -1,7 +1,9 @@
 package robotlegs.bender.extensions.display.base.api;
 
 import robotlegs.signal.Signal.Signal0;
+#if openfl
 import openfl.display.BitmapData;
+#end
 /**
  * ...
  * @author P.J.Shand
@@ -19,5 +21,7 @@ interface IRenderer
 	function start():Void;
 	function stop():Void;
 	function render():Void;
+	#if openfl
 	function snap(width:Int, height:Int):BitmapData;
+	#end
 }

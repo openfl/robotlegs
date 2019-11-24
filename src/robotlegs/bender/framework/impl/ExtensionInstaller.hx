@@ -54,8 +54,10 @@ class ExtensionInstaller {
 			return;
 		if (Std.is(extension, Class))
 			installClass(extension);
-		else
-			installInstance(extension);
+		else {
+			var iextension:IExtension = extension;
+			installInstance(iextension);
+		}	
 	}
 
 	inline function installClass(extension:Class<IExtension>) {

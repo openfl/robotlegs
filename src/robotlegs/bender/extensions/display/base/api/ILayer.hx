@@ -1,6 +1,5 @@
 package robotlegs.bender.extensions.display.base.api;
 
-import flash.geom.Rectangle;
 /**
  * ...
  * @author P.J.Shand

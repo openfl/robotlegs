@@ -38,7 +38,7 @@ class ObjectProcessor
 	 * @param matcher The matcher
 	 * @param handler The handler function
 	 */
-	public function addObjectHandler(matcher:IMatcher, handler:Void->Void):Void
+	public function addObjectHandler(matcher:IMatcher, handler:Dynamic):Void
 	{
 		_handlers.push(new ObjectHandler(matcher, handler));
 	}

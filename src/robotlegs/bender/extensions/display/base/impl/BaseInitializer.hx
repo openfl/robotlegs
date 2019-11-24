@@ -1,7 +1,6 @@
 package robotlegs.bender.extensions.display.base.impl; 
 
 import org.swiftsuspenders.utils.DescribedType;
-import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.display.base.api.ILayerInitializer;
 import robotlegs.bender.extensions.display.base.api.ILayers;
 import robotlegs.bender.extensions.display.base.api.IRenderContext;
@@ -15,7 +14,6 @@ class BaseInitializer implements DescribedType implements ILayerInitializer
 {
 	@inject public var renderer:IRenderer;
 	@inject public var renderContext:IRenderContext;
-	@inject public var contextView:ContextView;
 	@inject public var context:IContext;
 	@inject public var layers:ILayers;
 	

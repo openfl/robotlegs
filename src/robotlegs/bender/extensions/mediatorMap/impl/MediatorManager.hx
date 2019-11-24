@@ -7,8 +7,8 @@
 
 package robotlegs.bender.extensions.mediatorMap.impl;
 
-import openfl.display.DisplayObject;
 import openfl.events.Event;
+import openfl.events.EventDispatcher;
 import org.swiftsuspenders.utils.CallProxy;
 //import flash.utils.getDefinitionByName;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
@@ -75,14 +75,14 @@ class MediatorManager
 	 */
 	public function addMediator(mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping):Void
 	{
-		var displayObject:DisplayObject = null;
-		if (Std.is(item, DisplayObject)) {
-			displayObject = cast(item, DisplayObject);
+		var eventDispatcher:EventDispatcher = null;
+		if (Std.is(item, EventDispatcher)) {
+			eventDispatcher = cast(item, EventDispatcher);
 		}
 		
 		// Watch Display Dynamic for removal
-		if (displayObject != null && mapping.autoRemoveEnabled)
-			displayObject.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		if (eventDispatcher != null && mapping.autoRemoveEnabled)
+			eventDispatcher.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 
 		// Synchronize with item life-cycle
 		if (itemInitialized(item))
@@ -91,8 +91,8 @@ class MediatorManager
 		}
 		else
 		{
-			var mediatorManagerAddMediator:MediatorManagerAddMediator = new MediatorManagerAddMediator(initializeMediator, _factory, displayObject, mediator, item, mapping);
-			displayObject.addEventListener(MediatorManager.CREATION_COMPLETE, mediatorManagerAddMediator.creationComplete);
+			var mediatorManagerAddMediator:MediatorManagerAddMediator = new MediatorManagerAddMediator(initializeMediator, _factory, eventDispatcher, mediator, item, mapping);
+			eventDispatcher.addEventListener(MediatorManager.CREATION_COMPLETE, mediatorManagerAddMediator.creationComplete);
 		}
 	}
 	
@@ -101,8 +101,8 @@ class MediatorManager
 	 */
 	public function removeMediator(mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping):Void
 	{
-		if (Std.is(item, DisplayObject))
-			cast(item, DisplayObject).removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		if (Std.is(item, EventDispatcher))
+			cast(item, EventDispatcher).removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 
 		if (itemInitialized(item))
 			destroyMediator(mediator);
@@ -158,26 +158,26 @@ class MediatorManager
 @:keepSub
 class MediatorManagerAddMediator
 {
-	var displayObject:DisplayObject;
+	var eventDispatcher:EventDispatcher;
 	var mediator:Dynamic;
 	var item:Dynamic;
 	var mapping:IMediatorMapping;
 	var _factory:MediatorFactory;
 	var initializeMediator:Dynamic;
 	
-	public function new(initializeMediator:Dynamic -> Dynamic -> Void, _factory:MediatorFactory, displayObject:DisplayObject, mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping)
+	public function new(initializeMediator:Dynamic -> Dynamic -> Void, _factory:MediatorFactory, eventDispatcher:EventDispatcher, mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping)
 	{
 		this.initializeMediator = initializeMediator;
 		this._factory = _factory;
 		this.mapping = mapping;
 		this.item = item;
 		this.mediator = mediator;
-		this.displayObject = displayObject;
+		this.eventDispatcher = eventDispatcher;
 	}
 	
 	public function creationComplete(e:Event):Void 
 	{
-		displayObject.removeEventListener(MediatorManager.CREATION_COMPLETE, creationComplete);
+		eventDispatcher.removeEventListener(MediatorManager.CREATION_COMPLETE, creationComplete);
 		// Ensure that we haven't been removed in the meantime
 		if (_factory.getMediator(item, mapping) == mediator) {
 			initializeMediator(mediator, item);

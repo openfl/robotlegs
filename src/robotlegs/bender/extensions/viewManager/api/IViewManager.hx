@@ -7,7 +7,6 @@
 
 package robotlegs.bender.extensions.viewManager.api;
 
-import openfl.display.DisplayObjectContainer;
 import openfl.events.IEventDispatcher;
 
 @:meta(Event(name="containerAdd", type="robotlegs.bender.extensions.viewManager.impl.ViewManagerEvent"))
@@ -23,19 +22,19 @@ interface IViewManager extends IEventDispatcher
 	/**
 	 * A list of currently registered container
 	 */
-	public var containers(get, null):Array<DisplayObjectContainer>;
+	public var containers(get, null):Array<Dynamic>;
 	
 	/**
 	 * Adds a container as a "view root" into the context
 	 * @param container
 	 */
-	function addContainer(container:DisplayObjectContainer):Void;
+	function addContainer(container:Dynamic):Void;
 
 	/**
 	 * Removes a container from this context
 	 * @param container
 	 */
-	function removeContainer(container:DisplayObjectContainer):Void;
+	function removeContainer(container:Dynamic):Void;
 
 	/**
 	 * Registers a view handler

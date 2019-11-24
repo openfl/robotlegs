@@ -9,7 +9,7 @@ import haxe.Timer;
 #if notifier
 import notifier.Notifier;
 #end
-#if html5
+#if js
 import js.Browser;
 #end
 

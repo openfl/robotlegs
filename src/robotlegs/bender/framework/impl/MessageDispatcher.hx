@@ -7,47 +7,35 @@
 
 package robotlegs.bender.framework.impl;
 
-
-import openfl.errors.Error;
+//import robotlegs.bender.framework.impl.safelyCallBack;
 import robotlegs.bender.framework.impl.SafelyCallBack;
-
 /**
  * Message Dispatcher implementation.
  */
-@:keepSub
 class MessageDispatcher
 {
-
-	/*============================================================================*/
-	/* Private Properties                                                         */
-	/*============================================================================*/
-
-	private var _handlers = new Map<String,Dynamic>();
-	
-	/*============================================================================*/
-	/* Public Functions                                                           */
-	/*============================================================================*/
+	private var _handlers = new Map<String, Array<Callback>>();
 
 	public function new()
 	{
 	}
-
 	/**
 	 * Registers a message handler with a MessageDispatcher.
 	 * @param message The interesting message
 	 * @param handler The handler function
 	 */
-	public function addMessageHandler(message:Dynamic, handler:Void->Void):Void
+	public function addMessageHandler(message:String, handler:Function):Void
 	{
-		var messageHandlers:Array<Dynamic> = _handlers[message];
+		var messageHandlers:Array<Callback> = _handlers.get(message);
+		var callback:Callback = new Callback(handler);
 		if (messageHandlers != null)
 		{
-			if (messageHandlers.indexOf(handler) == -1)
-				messageHandlers.push(handler);
+			if (messageHandlers.indexOf(callback) == -1)
+				messageHandlers.push(callback);
 		}
 		else
 		{
-			_handlers[message] = [handler];
+			_handlers.set(message, [callback]);
 		}
 	}
 
@@ -56,9 +44,9 @@ class MessageDispatcher
 	 * @param message The interesting message
 	 * @return A value of true if a handler of the specified message is registered; false otherwise.
 	 */
-	public function hasMessageHandler(message:Dynamic):Bool
+	public function hasMessageHandler(message:String):Bool
 	{
-		return _handlers[message];
+		return _handlers.get(message) != null;
 	}
 
 	/**
@@ -66,15 +54,18 @@ class MessageDispatcher
 	 * @param message The interesting message
 	 * @param handler The handler function
 	 */
-	public function removeMessageHandler(message:Dynamic, handler:Void->Void):Void
+	public function removeMessageHandler(message:String, handler:Function):Void
 	{
-		var messageHandlers:Array<Dynamic> = _handlers[message];
-		var index:Int = (messageHandlers != null) ? messageHandlers.indexOf(handler):-1;
+		var messageHandlers:Array<Callback> = _handlers.get(message);
+		var index:Int = messageHandlers != null ? messageHandlers.indexOf(handler) : -1;
 		if (index != -1)
 		{
 			messageHandlers.splice(index, 1);
-			if (messageHandlers.length == 0)
+			if (messageHandlers.length == 0){
 				_handlers.remove(message);
+				//delete _handlers[message];
+			}
+				
 		}
 	}
 
@@ -84,25 +75,26 @@ class MessageDispatcher
 	 * @param callback The completion callback function
 	 * @param reverse Should handlers be called in reverse order
 	 */
-	public function dispatchMessage(message:Dynamic, callback:Dynamic = null, reverse:Bool = false):Void
+	public function dispatchMessage(message:String, func:Function = null, reverse:Bool = false):Void
 	{
-		var handlers:Array<Dynamic> = _handlers[message];
-		// CHECK
-		if (handlers != null && handlers.length > 0)
+		var handlers:Array<Callback> = _handlers.get(message);
+		var callback:Callback = new Callback(func);
+		if (handlers != null)
 		{
 			handlers = handlers.concat([]);
-			if (!reverse) handlers.reverse();
-			var messageRunner = new MessageRunner(message, handlers, callback);
-			messageRunner.run();
+			if (reverse) handlers.reverse();
+			new MessageRunner(message, handlers, callback).run();
 		}
 		else
 		{
-			if (callback != null) SafelyCallBack.call(callback);
+			if (callback != null) {
+				callback.call(null, null);
+				//SafelyCallBack.call(callback);
+			}
 		}
 	}
 }
 
-@:keepSub
 class MessageRunner
 {
 
@@ -110,11 +102,11 @@ class MessageRunner
 	/* Private Properties                                                         */
 	/*============================================================================*/
 
-	private var _message:Dynamic;
+	private var _message:String;
 
-	private var _handlers:Array<Dynamic>;
+	private var _handlers:Array<Callback>;
 
-	private var _callback:Void->Void;
+	private var _callback:Callback;
 
 	/*============================================================================*/
 	/* Constructor                                                                */
@@ -123,7 +115,7 @@ class MessageRunner
 	/**
 	 * @private
 	 */
-	public function new(message:Dynamic, handlers:Array<Dynamic>, callback:Void->Void)
+	public function new(message:String, handlers:Array<Callback>, callback:Callback)
 	{
 		_message = message;
 		_handlers = handlers;
@@ -151,34 +143,32 @@ class MessageRunner
 		// Try to keep things synchronous with a simple loop,
 		// forcefully breaking out for async handlers and recursing.
 		// We do this to avoid increasing the stack depth unnecessarily.
-		var handler:Dynamic;
-		// CHECK
-		
+		var handler:Callback;
 		while ((handler = _handlers.pop()) != null)
 		{
-			if (handler.length == null) { // cpp can't read .length (will need to create a FIX for this)
-				handler();
-			}
-			else if (handler.length == 0) // sync handler: ()
+			if (handler.length == 0) // sync handler: ()
 			{
-				handler();
+				handler.call(null, null);
 			}
 			else if (handler.length == 1) // sync handler: (message)
 			{
-				handler(_message);
+				handler.call(_message, null);
 			}
 			else if (handler.length == 2) // sync or async handler: (message, callback)
 			{
 				var handled:Bool = false;
-				handler(_message, function(error:Dynamic = null, msg:Dynamic = null):Void
+				handler.call(_message, function(error:Dynamic = null, msg:Dynamic = null):Void
 				{
 					// handler must not invoke the callback more than once
 					if (handled) return;
 
 					handled = true;
-					if (error != null || _handlers.length == 0)
+					if (error || _handlers.length == 0)
 					{
-						if (_callback != null) SafelyCallBack.call(_callback, error, _message);
+						if (_callback != null) {
+							_callback.call(error, _message);
+							//SafelyCallBack.call(_callback, error, _message);
+						}
 					}
 					else
 					{
@@ -190,16 +180,62 @@ class MessageRunner
 			}
 			else // ERROR: this should NEVER happen
 			{
-				//#if cpp
-					trace("Bad handler signature");
-				//#else
-				//	throw new Error("Bad handler signature");
-				//#end
+				throw "Bad handler signature";
 			}
 		}
-		// If we got here then this loop finished synchronously.
+		// If we got here then th
+		// is loop finished synchronously.
 		// Nobody broke out, so we are done.
 		// This relies on the various return statements above. Be careful.
-		if (_callback != null) SafelyCallBack.call(_callback, null, _message);
+		if (_callback != null) {
+			_callback.call(null, _message);
+			//SafelyCallBack.call(_callback, null, _message);
+		}
+	}
+}
+
+typedef Function = Dynamic;
+
+/*typedef Callback = {
+	callback0:Void -> Void;
+	callback1:Dynamic -> Void;
+	callback2:Dynamic -> Dynamic -> Void;
+	length:Int
+}*/
+
+class Callback
+{
+	public var call:Dynamic -> Dynamic -> Void;
+	public var length:Int = 0;
+	public function new(value:Dynamic){
+		var func0:Void -> Void = null;
+		try {
+			func0 = value;
+			call = (v1:Dynamic, v2:Dynamic) -> {
+				func0();
+			}
+			length = 0;
+		} catch (e:Dynamic){
+			var func1:Dynamic -> Void = null;
+			try {
+				func1 = value;
+				call = (v1:Dynamic, v2:Dynamic) -> {
+					func1(v1);
+				}
+				length = 1;
+			} catch (e:Dynamic){
+				var func2:Dynamic -> Dynamic -> Void = null;
+				try {
+					func2 = value;
+					call = (v1:Dynamic, v2:Dynamic) -> {
+						func2(v1, v2);
+					}
+					length = 2;
+				} catch (e:Dynamic){
+					throw "Bad handler signature";
+					call = null;
+				}
+			}
+		}
 	}
 }

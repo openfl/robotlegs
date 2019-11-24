@@ -24,7 +24,7 @@ class MediatorMapper implements IMediatorMapper implements IMediatorUnmapper {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-	private var _mappings = new Map<ClassMediator, MediatorMapping>();
+	private var _mappings = new Map<String, MediatorMapping>();
 
 	private var _typeFilter:ITypeFilter;
 
@@ -52,7 +52,7 @@ class MediatorMapper implements IMediatorMapper implements IMediatorUnmapper {
 	 */
 	public function toMediator(mediatorClass:Class<Mediator>):IMediatorConfigurator {
 		InjectorMacro.keep(mediatorClass);
-		var mapping:IMediatorMapping = _mappings.get(mediatorClass);
+		var mapping:IMediatorMapping = _mappings.get(UID.classID(mediatorClass));
 		return (mapping != null) ? overwriteMapping(mapping) : createMapping(mediatorClass);
 	}
 
@@ -60,7 +60,7 @@ class MediatorMapper implements IMediatorMapper implements IMediatorUnmapper {
 	 * @inheritDoc
 	 */
 	public function fromMediator(mediatorClass:Class<Mediator>):Void {
-		var mapping:IMediatorMapping = _mappings.get(mediatorClass);
+		var mapping:IMediatorMapping = _mappings.get(UID.classID(mediatorClass));
 		if (mapping != null)
 			deleteMapping(mapping);
 	}
@@ -80,7 +80,7 @@ class MediatorMapper implements IMediatorMapper implements IMediatorUnmapper {
 	private function createMapping(mediatorClass:Class<Mediator>):MediatorMapping {
 		var mapping:MediatorMapping = new MediatorMapping(_typeFilter, mediatorClass);
 		_handler.addMapping(mapping);
-		_mappings.set(mediatorClass, mapping);
+		_mappings.set(UID.classID(mediatorClass), mapping);
 		if (_logger != null)
 			_logger.debug('{0} mapped to {1}', [_typeFilter, mapping]);
 		return mapping;
@@ -88,7 +88,7 @@ class MediatorMapper implements IMediatorMapper implements IMediatorUnmapper {
 
 	private function deleteMapping(mapping:IMediatorMapping):Void {
 		_handler.removeMapping(mapping);
-		_mappings.remove(mapping.mediatorClass);
+		_mappings.remove(UID.classID(mapping.mediatorClass));
 		if (_logger != null)
 			_logger.debug('{0} unmapped from {1}', [_typeFilter, mapping]);
 	}

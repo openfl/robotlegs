@@ -7,8 +7,6 @@
 
 package robotlegs.bender.extensions.viewManager.api;
 
-import openfl.display.DisplayObject;
-
 /**
  * View handler contract
  */
@@ -19,5 +17,5 @@ interface IViewHandler
 	 * @param view The view instance to handle
 	 * @param type The class of the view instance
 	 */
-	function handleView(view:DisplayObject, type:Class<Dynamic>):Void;
+	function handleView(view:Dynamic, type:Class<Dynamic>):Void;
 }

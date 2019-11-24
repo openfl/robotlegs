@@ -7,7 +7,6 @@
 
 package robotlegs.bender.extensions.mediatorMap.impl;
 
-import openfl.display.DisplayObject;
 import org.swiftsuspenders.InjectorMacro;
 import org.swiftsuspenders.utils.DescribedType;
 
@@ -104,7 +103,7 @@ class MediatorMap implements DescribedType implements IMediatorMap implements IV
 	/**
 	 * @inheritDoc
 	 */
-	public function handleView(view:DisplayObject, type:Class<Dynamic>):Void
+	public function handleView(view:Dynamic, type:Class<Dynamic>):Void
 	{
 		_viewHandler.handleView(view, type);
 	}

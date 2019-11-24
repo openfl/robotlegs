@@ -7,7 +7,6 @@
 
 package robotlegs.bender.extensions.mediatorMap.impl;
 
-import openfl.display.DisplayObject;
 import org.swiftsuspenders.utils.UID;
 
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMapping;
@@ -74,7 +73,7 @@ class MediatorViewHandler implements IViewHandler
 	/**
 	 * @private
 	 */
-	public function handleView(view:DisplayObject, type:Class<Dynamic>):Void
+	public function handleView(view:Dynamic, type:Class<Dynamic>):Void
 	{
 		var interestedMappings:Array<Dynamic> = getInterestedMappingsFor(view, type);
 		if (interestedMappings != null)

@@ -5,7 +5,6 @@ import haxe.Timer;
 import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.display.base.api.ILayerInitializer;
 import robotlegs.bender.extensions.display.base.api.ILayers;
-import robotlegs.bender.extensions.display.base.api.IRenderContext;
 import robotlegs.bender.extensions.display.base.api.IStack;
 import robotlegs.bender.framework.api.IInjector;
 import robotlegs.bender.framework.api.IContext;
@@ -26,7 +25,6 @@ class Stack implements DescribedType implements IStack
 	private var context:IContext;
 	private var initializers:Array<ILayerInitializer> = [];
 	
-	@inject public var renderContext:IRenderContext;
 	@inject public var layers:ILayers;
 	
 	public static var layerCount:Int = 0;

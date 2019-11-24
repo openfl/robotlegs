@@ -7,7 +7,7 @@
 
 package robotlegs.bender.framework.api;
 
-import openfl.errors.Error;
+import robotlegs.errors.Error;
 import openfl.events.Event;
 
 /**
@@ -58,10 +58,6 @@ class LifecycleEvent extends Event
 	/**
 	 * Associated lifecycle error
 	 */
-	/*public function get_error():Error
-	{
-		return _error;
-	}*/
 
 	/*============================================================================*/
 	/* Constructor                                                                */

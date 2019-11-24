@@ -1,4 +1,4 @@
-package openfl.errors;
+package robotlegs.errors;
 
 
 import haxe.CallStack;

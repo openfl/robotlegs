@@ -6,7 +6,6 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.framework.impl;
-import openfl.errors.Error;
 
 @:keepSub
 class SafelyCallBack 
@@ -50,15 +49,15 @@ class SafelyCallBack
 				try {
 					callback(errorMsg, message);
 				}
-				catch( error : Error ) {
+				catch( error : Dynamic ) {
 					try {
 						callback(errorMsg);
 					}
-					catch( error2 : Error ) {
+					catch( error2 : Dynamic ) {
 						try {
 							callback();
 						}
-						catch( error3 : Error ) {
+						catch( error3 : Dynamic ) {
 							trace("Error calling CallBack : " + error3 );
 						}
 					}
@@ -68,11 +67,11 @@ class SafelyCallBack
 				try {
 					callback(errorMsg);
 				}
-				catch( error2 : Error ) {
+				catch( error2 : Dynamic ) {
 					try {
 						callback();
 					}
-					catch( error3 : Error ) {
+					catch( error3 : Dynamic ) {
 						trace("Error calling CallBack : " + error3 );
 					}
 				}
@@ -81,15 +80,15 @@ class SafelyCallBack
 			try {
 				callback(errorMsg, message);
 			}
-			catch( error : Error ) {
+			catch( error : Dynamic ) {
 				try {
 					callback(errorMsg);
 				}
-				catch( error2 : Error ) {
+				catch( error2 : Dynamic ) {
 					try {
 						callback();
 					}
-					catch( error3 : Error ) {
+					catch( error3 : Dynamic ) {
 						trace("Error calling CallBack : " + error3 );
 					}
 				}

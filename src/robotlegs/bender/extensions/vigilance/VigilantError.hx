@@ -6,14 +6,13 @@
 //------------------------------------------------------------------------------
 
 package robotlegs.bender.extensions.vigilance;
-import openfl.errors.Error;
+import robotlegs.errors.Error;
 
 /**
  * Vigilant Error
  */
 @:keepSub
-//class VigilantError extends Error
-class VigilantError
+class VigilantError extends Error
 {
 
 	/*============================================================================*/
@@ -26,7 +25,6 @@ class VigilantError
 	 */
 	public function new(message:String)
 	{
-		//super(message);
-		trace(message);
+		super(message);
 	}
 }

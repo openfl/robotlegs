@@ -11,7 +11,6 @@ import away3d.containers.ObjectContainer3D;
 import away3d.containers.Scene3D;
 import away3d.containers.View3D;
 import away3d.events.Scene3DEvent;
-import openfl.errors.Error;
 import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 import robotlegs.bender.extensions.display.stage3D.away3d.impl.AwayCollection;
@@ -82,7 +81,7 @@ class Away3DViewMap implements DescribedType implements IAway3DViewMap
 			mediatorMap.mediate(view);
 		}
 		else
-			throw new Error("Not sure what to do with this view type..");
+			throw "Not sure what to do with this view type..";
 	}
 
 	/** @inheritDoc **/

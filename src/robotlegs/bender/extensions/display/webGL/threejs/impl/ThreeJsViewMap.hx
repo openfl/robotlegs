@@ -7,7 +7,6 @@
 package robotlegs.bender.extensions.display.webGL.threejs.impl;
 
 import js.three.Scene;
-import openfl.errors.Error;
 import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 import robotlegs.bender.extensions.display.base.api.IDisplayObject;
@@ -76,7 +75,7 @@ class ThreeJsViewMap implements DescribedType implements IThreeJsViewMap {
 
 			mediatorMap.mediate(view);
 		} else
-			throw new Error("Not sure what to do with this view type..");
+			throw "Not sure what to do with this view type..";
 	}
 
 	/** @inheritDoc **/

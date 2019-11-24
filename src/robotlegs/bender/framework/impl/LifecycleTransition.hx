@@ -7,7 +7,6 @@
 
 package robotlegs.bender.framework.impl;
 
-import openfl.errors.Error;
 import robotlegs.bender.framework.api.LifecycleEvent;
 
 /**
@@ -234,9 +233,7 @@ class LifecycleTransition
 	private function reportError(message:Dynamic, callbacks:Array<Dynamic> = null):Void
 	{
 		// turn message into Error
-		var error:Error = Std.is(message, Error)
-			? cast(message, Error)
-			: new Error(message);
+		var error = message;
 
 		// dispatch error event if a listener exists, or throw
 		if (_lifecycle.hasEventListener(LifecycleEvent.ERROR))

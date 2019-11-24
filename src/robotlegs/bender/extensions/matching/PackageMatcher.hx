@@ -7,7 +7,7 @@
 
 package robotlegs.bender.extensions.matching;
 
-import openfl.errors.IllegalOperationError;
+import robotlegs.errors.IllegalOperationError;
 
 /**
  * A Package Matcher matches types in a given package

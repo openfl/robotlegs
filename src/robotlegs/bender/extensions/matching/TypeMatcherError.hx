@@ -7,7 +7,7 @@
 
 package robotlegs.bender.extensions.matching;
 
-import openfl.errors.Error;
+import robotlegs.errors.Error;
 
 /**
  * Type Matcher Error

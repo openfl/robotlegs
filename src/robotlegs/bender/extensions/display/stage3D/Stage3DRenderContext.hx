@@ -9,7 +9,6 @@ import openfl.display3D.Context3D;
 import openfl.display3D.Context3DCompareMode;
 import openfl.display3D.Context3DStencilAction;
 import openfl.display3D.Context3DTriangleFace;
-import openfl.errors.Error;
 import openfl.events.ErrorEvent;
 import openfl.events.Event;
 import openfl.geom.Rectangle;
@@ -121,7 +120,7 @@ class Stage3DRenderContext implements DescribedType implements IRenderContext {
 			try {
 				// trace(["RESIZE", width, height, antiAlias]);
 				context3D.configureBackBuffer(width, height, antiAlias, true);
-			} catch (e:Error) {
+			} catch (e:Dynamic) {
 				trace("e = " + e);
 				return;
 			}

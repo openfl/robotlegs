@@ -2,7 +2,6 @@ package robotlegs.bender.extensions.display.webGL;
 
 import robotlegs.signal.Signal.Signal0;
 import openfl.display.BitmapData;
-import openfl.errors.Error;
 import openfl.events.ErrorEvent;
 import openfl.events.Event;
 import org.swiftsuspenders.utils.DescribedType;

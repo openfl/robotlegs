@@ -8,7 +8,6 @@
 package robotlegs.bender.extensions.viewManager.impl;
 
 import openfl.display.DisplayObjectContainer;
-import openfl.errors.Error;
 import openfl.events.EventDispatcher;
 import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.viewManager.api.IViewHandler;
@@ -165,7 +164,7 @@ class ViewManager extends EventDispatcher implements IViewManager implements Des
 				return false;
 
 			if (registeredContainer.contains(container) || container.contains(registeredContainer))
-				throw new Error("Containers can not be nested");
+				throw "Containers can not be nested";
 		}
 		return true;
 	}

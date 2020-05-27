@@ -30,11 +30,13 @@ class ModelMap implements IModelMap implements DescribedType {
 		if (initialized)
 			return;
 		initialized = true;
-		untyped Object.defineProperties(Window.prototype, {
-			"notifiers": {
-				get: listModels
-			},
-		});
+		try {
+			untyped Object.defineProperties(Window.prototype, {
+				"notifiers": {
+					get: listModels
+				},
+			});
+		} catch (e:Dynamic) {}
 		#end
 	}
 

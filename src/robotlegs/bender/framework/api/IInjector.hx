@@ -1,10 +1,9 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.framework.api;
 
 import openfl.events.IEventDispatcher;
@@ -25,7 +24,7 @@ import org.swiftsuspenders.typedescriptions.TypeDescription;
  *
  * @eventType org.swiftsuspenders.MappingEvent.POST_MAPPING_REMOVE
  */
-@:meta(Event(name='mappingOverride', type='org.swiftsuspenders.mapping.MappingEvent'))
+@:meta(Event(name = 'mappingOverride', type = 'org.swiftsuspenders.mapping.MappingEvent'))
 /**
  * This event is dispatched each time the injector created and fully initialized a new instance
  *
@@ -41,23 +40,23 @@ import org.swiftsuspenders.typedescriptions.TypeDescription;
  *
  * @eventType org.swiftsuspenders.InjectionEvent.POST_CONSTRUCT
  */
-@:meta(Event(name='postConstruct', type='org.swiftsuspenders.InjectionEvent'))
+@:meta(Event(name = 'postConstruct', type = 'org.swiftsuspenders.InjectionEvent'))
 /**
-* This event is dispatched each time the injector instantiated a class
-*
-* <p>At the point where the event is dispatched none of the injection points have been processed.</p>
-*
-* <p>The only difference to the <code>PRE_CONSTRUCT</code> event is that
-* <code>POST_INSTANTIATE</code> is only dispatched for instances that are created in the
-* injector, whereas <code>PRE_CONSTRUCT</code> is also dispatched for instances the injector
-* only injects into.</p>
-*
-* <p>This event is only dispatched if there are one or more relevant listeners attached to
-* the dispatching injector.</p>
-*
-* @eventType org.swiftsuspenders.InjectionEvent.POST_INSTANTIATE
-*/
-@:meta(Event(name='postInstantiate', type='org.swiftsuspenders.InjectionEvent'))
+ * This event is dispatched each time the injector instantiated a class
+ *
+ * <p>At the point where the event is dispatched none of the injection points have been processed.</p>
+ *
+ * <p>The only difference to the <code>PRE_CONSTRUCT</code> event is that
+ * <code>POST_INSTANTIATE</code> is only dispatched for instances that are created in the
+ * injector, whereas <code>PRE_CONSTRUCT</code> is also dispatched for instances the injector
+ * only injects into.</p>
+ *
+ * <p>This event is only dispatched if there are one or more relevant listeners attached to
+ * the dispatching injector.</p>
+ *
+ * @eventType org.swiftsuspenders.InjectionEvent.POST_INSTANTIATE
+ */
+@:meta(Event(name = 'postInstantiate', type = 'org.swiftsuspenders.InjectionEvent'))
 /**
  * This event is dispatched each time an injector mapping is changed in any way, right after
  * the change is applied.
@@ -70,7 +69,7 @@ import org.swiftsuspenders.typedescriptions.TypeDescription;
  *
  * @eventType org.swiftsuspenders.MappingEvent.POST_MAPPING_CHANGE
  */
-@:meta(Event(name='postMappingChange', type='org.swiftsuspenders.mapping.MappingEvent'))
+@:meta(Event(name = 'postMappingChange', type = 'org.swiftsuspenders.mapping.MappingEvent'))
 /**
  * This event is dispatched each time the injector creates a new mapping for a type/ name
  * combination, right after the mapping was created
@@ -83,7 +82,7 @@ import org.swiftsuspenders.typedescriptions.TypeDescription;
  *
  * @eventType org.swiftsuspenders.MappingEvent.POST_MAPPING_CREATE
  */
-@:meta(Event(name='postMappingCreate', type='org.swiftsuspenders.mapping.MappingEvent'))
+@:meta(Event(name = 'postMappingCreate', type = 'org.swiftsuspenders.mapping.MappingEvent'))
 /**
  * This event is dispatched each time an injector mapping is removed, right after
  * the mapping is deleted from the configuration.
@@ -96,7 +95,7 @@ import org.swiftsuspenders.typedescriptions.TypeDescription;
  *
  * @eventType org.swiftsuspenders.MappingEvent.POST_MAPPING_REMOVE
  */
-@:meta(Event(name='postMappingRemove', type='org.swiftsuspenders.mapping.MappingEvent'))
+@:meta(Event(name = 'postMappingRemove', type = 'org.swiftsuspenders.mapping.MappingEvent'))
 /**
  * This event is dispatched each time the injector is about to inject into a class
  *
@@ -112,7 +111,7 @@ import org.swiftsuspenders.typedescriptions.TypeDescription;
  *
  * @eventType org.swiftsuspenders.InjectionEvent.PRE_CONSTRUCT
  */
-@:meta(Event(name='preConstruct', type='org.swiftsuspenders.InjectionEvent'))
+@:meta(Event(name = 'preConstruct', type = 'org.swiftsuspenders.InjectionEvent'))
 /**
  * This event is dispatched each time an injector mapping is changed in any way, right before
  * the change is applied.
@@ -125,7 +124,7 @@ import org.swiftsuspenders.typedescriptions.TypeDescription;
  *
  * @eventType org.swiftsuspenders.MappingEvent.PRE_MAPPING_CHANGE
  */
-@:meta(Event(name='preMappingChange', type='org.swiftsuspenders.mapping.MappingEvent'))
+@:meta(Event(name = 'preMappingChange', type = 'org.swiftsuspenders.mapping.MappingEvent'))
 /**
  * This event is dispatched each time the injector creates a new mapping for a type/ name
  * combination, right before the mapping is created
@@ -138,58 +137,51 @@ import org.swiftsuspenders.typedescriptions.TypeDescription;
  *
  * @eventType org.swiftsuspenders.MappingEvent.PRE_MAPPING_CREATE
  */
-@:meta(Event(name='preMappingCreate', type='org.swiftsuspenders.mapping.MappingEvent'))
+@:meta(Event(name = 'preMappingCreate', type = 'org.swiftsuspenders.mapping.MappingEvent'))
+
 /**
  * The <code>Injector</code> manages the mappings and acts as the central hub from which all
  * injections are started.
  */
 @:keepSub
-interface IInjector extends IEventDispatcher
-{
+interface IInjector extends IEventDispatcher {
 	/**
 	 * Sets the parent <code>IInjector</code>
 	 * @param parentInjector The parent IInjector
 	 */
 	public var parent(get, set):IInjector;
+
 	/**
 	 * Returns the <code>IInjector</code> used for dependencies the current
 	 * <code>Injector</code> can't supply
 	 */
-	
-
 	/**
 	 * Sets the ApplicationDomain to use for type reflection
 	 * @param applicationDomain The ApplicationDomain
 	 */
 	@:isVar public var applicationDomain(get, set):Null<ApplicationDomain>;
+
 	/**
 	 * The ApplicationDomain used for type reflection
 	 */
-	
-
 	/**
 	 * Sets the Fallback Provider
 	 * @param provider FallbackDependencyProvider
 	 */
-	
 	public var fallbackProvider(get, set):FallbackDependencyProvider;
-	
+
 	/**
 	 * The current FallbackDependencyProvider
 	 */
-	//public var fallbackProvider:FallbackDependencyProvider;
-
+	// public var fallbackProvider:FallbackDependencyProvider;
 	/**
 	 * Disables parent FallbackProvider
 	 * @param value True/false
 	 */
-	
 	/**
 	 * Is the parent FallbackProvider blocked?
 	 */
 	public var blockParentFallbackProvider(get, set):Bool;
-	
-	
 
 	/**
 	 * Instructs the injector to use the description for the given type when constructing or

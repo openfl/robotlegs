@@ -16,7 +16,6 @@ import robotlegs.bender.extensions.logicMap.LogicMapExtension;
 import robotlegs.bender.extensions.modelMap.ModelExtension;
 import robotlegs.bender.extensions.config.ConfigExtension;
 import robotlegs.bender.extensions.vigilance.VigilanceExtension;
-
 import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.LogLevel;

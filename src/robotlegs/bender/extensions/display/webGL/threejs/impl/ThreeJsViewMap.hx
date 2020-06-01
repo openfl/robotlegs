@@ -6,14 +6,14 @@
 // ------------------------------------------------------------------------------
 package robotlegs.bender.extensions.display.webGL.threejs.impl;
 
-import js.three.Scene;
+import three.scenes.Scene;
 import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 import robotlegs.bender.extensions.display.base.api.IDisplayObject;
 import robotlegs.bender.extensions.display.webGL.threejs.api.IThreeJsViewMap;
 import robotlegs.bender.extensions.display.webGL.threejs.impl.ThreeJsCollection;
 import robotlegs.bender.extensions.display.webGL.threejs.impl.ThreeJsLayer;
-import js.three.Object3D;
+import three.core.Object3D;
 import js.html.Event;
 
 /**

@@ -85,7 +85,8 @@ class Stage3DRenderContext implements DescribedType implements IRenderContext {
 		context3D.configureBackBuffer(contextView.view.stage.stageWidth, contextView.view.stage.stageHeight, antiAlias, true);
 		// trace("1 DriverInfo: " + context3D.driverInfo + " AntiAlias: " + antiAlias);
 
-		context3D.setStencilActions(cast Context3DTriangleFace.FRONT_AND_BACK, cast Context3DCompareMode.EQUAL, cast Context3DStencilAction.DECREMENT_SATURATE);
+		context3D.setStencilActions(cast Context3DTriangleFace.FRONT_AND_BACK, cast Context3DCompareMode.EQUAL,
+			cast Context3DStencilAction.DECREMENT_SATURATE);
 
 		viewport.onChange.add(OnViewportChange);
 		viewport.setTo(0, 0, contextView.view.stage.stageWidth, contextView.view.stage.stageHeight);
@@ -100,8 +101,10 @@ class Stage3DRenderContext implements DescribedType implements IRenderContext {
 	}
 
 	private function OnViewportChange():Void {
-		if (currentDimensions.x == viewport.x && currentDimensions.y == viewport.y && currentDimensions.width == viewport.width && currentDimensions
-			.height == viewport.height) {
+		if (currentDimensions.x == viewport.x
+			&& currentDimensions.y == viewport.y
+			&& currentDimensions.width == viewport.width
+			&& currentDimensions.height == viewport.height) {
 			return;
 		}
 
@@ -150,10 +153,11 @@ class Stage3DRenderContext implements DescribedType implements IRenderContext {
 	public function end():Void {
 		context3D.present();
 	}
-	
-	public function snap(width:Int, height:Int):BitmapData {
+
+	public function snap(x:Int, y:Int, width:Int, height:Int):BitmapData {
 		var bmd:BitmapData = new BitmapData(width, height, (viewport.alpha < 1), (viewport.alpha < 1 ? 0 : viewport.colour));
-		context3D.drawToBitmapData(bmd);
+		var rect:Rectangle = new Rectangle(x, y, width, height);
+		context3D.drawToBitmapData(bmd, rect, rect.topLeft);
 		return bmd;
 	}
 

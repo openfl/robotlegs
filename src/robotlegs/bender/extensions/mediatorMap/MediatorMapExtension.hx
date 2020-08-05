@@ -4,7 +4,6 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.mediatorMap;
 
 import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
@@ -17,15 +16,11 @@ import robotlegs.bender.framework.api.IInjector;
 /**
  * This extension installs a shared IMediatorMap into the context
  */
-
 @:keepSub
-class MediatorMapExtension implements IExtension
-{
-
+class MediatorMapExtension implements IExtension {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _injector:IInjector;
 
 	private var _mediatorMap:MediatorMap;
@@ -35,15 +30,11 @@ class MediatorMapExtension implements IExtension
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */
-	public function extend(context:IContext):Void
-	{
-		context.beforeInitializing(beforeInitializing)
-			.beforeDestroying(beforeDestroying)
-			.whenDestroying(whenDestroying);
+	public function extend(context:IContext):Void {
+		context.beforeInitializing(beforeInitializing).beforeDestroying(beforeDestroying).whenDestroying(whenDestroying);
 		_injector = context.injector;
 		_injector.map(IMediatorMap).toSingleton(MediatorMap);
 	}
@@ -51,31 +42,24 @@ class MediatorMapExtension implements IExtension
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function beforeInitializing():Void
-	{
+	private function beforeInitializing():Void {
 		_mediatorMap = _injector.getInstance(IMediatorMap);
-		if (_injector.satisfiesDirectly(IViewManager))
-		{
+		if (_injector.satisfiesDirectly(IViewManager)) {
 			_viewManager = _injector.getInstance(IViewManager);
 			_viewManager.addViewHandler(_mediatorMap);
 		}
 	}
 
-	private function beforeDestroying():Void
-	{
+	private function beforeDestroying():Void {
 		_mediatorMap.unmediateAll();
-		if (_injector.satisfiesDirectly(IViewManager))
-		{
+		if (_injector.satisfiesDirectly(IViewManager)) {
 			_viewManager = _injector.getInstance(IViewManager);
 			_viewManager.removeViewHandler(_mediatorMap);
 		}
 	}
 
-	private function whenDestroying():Void
-	{
-		if (_injector.satisfiesDirectly(IMediatorMap))
-		{
+	private function whenDestroying():Void {
+		if (_injector.satisfiesDirectly(IMediatorMap)) {
 			_injector.unmap(IMediatorMap);
 		}
 	}

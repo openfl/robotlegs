@@ -6,18 +6,12 @@ import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 
 @:keepSub
-class Away3DBundle implements IBundle
-{
+class Away3DBundle implements IBundle {
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/** @inheritDoc **/
-	public function extend(context:IContext):Void
-	{
-		context.install(
-			AwayIntegrationExtension,
-			AwayStageSyncExtension
-		);
+	public function extend(context:IContext):Void {
+		context.install(AwayIntegrationExtension, AwayStageSyncExtension);
 	}
 }

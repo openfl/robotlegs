@@ -4,9 +4,7 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.viewProcessorMap.impl;
-
 
 import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IInjector;
@@ -16,32 +14,27 @@ import robotlegs.bender.framework.api.IInjector;
  * @private
  */
 @:keepSub
-class ViewInjectionProcessor
-{
-
+class ViewInjectionProcessor {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
-	private var _injectedObjects = new Map<String,Dynamic>();
+	private var _injectedObjects = new Map<String, Dynamic>();
 
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function process(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
-	{
-		if (!_injectedObjects[UID.instanceID(view)]) injectAndRemember(view, injector);
+	public function process(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void {
+		if (!_injectedObjects[UID.instanceID(view)])
+			injectAndRemember(view, injector);
 	}
 
 	/**
 	 * @private
 	 */
-	public function unprocess(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void
-	{
+	public function unprocess(view:Dynamic, type:Class<Dynamic>, injector:IInjector):Void {
 		// assumption is that teardown is not wanted.
 		// if you *do* want teardown, copy this class
 	}
@@ -49,9 +42,7 @@ class ViewInjectionProcessor
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function injectAndRemember(view:Dynamic, injector:IInjector):Void
-	{
+	private function injectAndRemember(view:Dynamic, injector:IInjector):Void {
 		injector.injectInto(view);
 		_injectedObjects[UID.instanceID(view)] = view;
 	}

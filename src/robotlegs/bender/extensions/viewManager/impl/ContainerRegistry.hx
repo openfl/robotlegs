@@ -8,7 +8,7 @@ package robotlegs.bender.extensions.viewManager.impl;
 
 import openfl.display.DisplayObject;
 import openfl.display.DisplayObjectContainer;
-import openfl.events.EventDispatcher;
+import polyfill.events.EventDispatcher;
 
 @:meta(Event(name = "containerAdd", type = "robotlegs.bender.extensions.viewManager.impl.ContainerRegistryEvent"))
 @:meta(Event(name = "containerRemove", type = "robotlegs.bender.extensions.viewManager.impl.ContainerRegistryEvent"))

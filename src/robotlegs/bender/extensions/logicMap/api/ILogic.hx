@@ -3,7 +3,6 @@ package robotlegs.bender.extensions.logicMap.api;
 /**
  * @author P.J.Shand
  */
-interface ILogic
-{
+interface ILogic {
 	public function initialize():Void;
 }

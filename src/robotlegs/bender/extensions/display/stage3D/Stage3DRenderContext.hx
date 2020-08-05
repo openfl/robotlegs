@@ -10,7 +10,7 @@ import openfl.display3D.Context3DCompareMode;
 import openfl.display3D.Context3DStencilAction;
 import openfl.display3D.Context3DTriangleFace;
 import openfl.events.ErrorEvent;
-import openfl.events.Event;
+import polyfill.events.Event;
 import openfl.geom.Rectangle;
 import org.swiftsuspenders.utils.DescribedType;
 import robotlegs.bender.extensions.contextView.ContextView;

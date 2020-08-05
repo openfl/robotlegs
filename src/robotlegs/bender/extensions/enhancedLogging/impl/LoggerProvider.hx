@@ -4,9 +4,7 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.enhancedLogging.impl;
-
 
 import org.swiftsuspenders.Injector;
 import org.swiftsuspenders.dependencyproviders.DependencyProvider;
@@ -15,45 +13,35 @@ import robotlegs.bender.framework.api.IContext;
 /**
  * @private
  */
-
 @:keepSub
-class LoggerProvider implements DependencyProvider
-{
-
+class LoggerProvider implements DependencyProvider {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _context:IContext;
 
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function new(context:IContext)
-	{
+	public function new(context:IContext) {
 		_context = context;
 	}
 
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */
-	public function apply(targetType:Class<Dynamic>, activeInjector:Injector, injectParameters:Map<Dynamic,Dynamic>):Dynamic
-	{
+	public function apply(targetType:Class<Dynamic>, activeInjector:Injector, injectParameters:Map<Dynamic, Dynamic>):Dynamic {
 		return _context.getLogger(targetType);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function destroy():Void
-	{
-	}
+	public function destroy():Void {}
 }

@@ -4,11 +4,10 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.eventCommandMap.impl;
 
-import openfl.events.Event;
-import openfl.events.IEventDispatcher;
+import polyfill.events.Event;
+import polyfill.events.IEventDispatcher;
 import robotlegs.bender.extensions.commandCenter.api.ICommandExecutor;
 import robotlegs.bender.extensions.commandCenter.api.ICommandMappingList;
 import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
@@ -22,15 +21,11 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
-
 @:keepSub
-class EventCommandTrigger implements ICommandTrigger
-{
-
+class EventCommandTrigger implements ICommandTrigger {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _dispatcher:IEventDispatcher;
 
 	private var _type:String;
@@ -44,12 +39,11 @@ class EventCommandTrigger implements ICommandTrigger
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function new(injector:IInjector, dispatcher:IEventDispatcher, type:String, eventClass:Class<Dynamic> = null, processors:Array<Dynamic> = null, logger:ILogger = null)
-	{
+	public function new(injector:IInjector, dispatcher:IEventDispatcher, type:String, eventClass:Class<Dynamic> = null, processors:Array<Dynamic> = null,
+			logger:ILogger = null) {
 		_dispatcher = dispatcher;
 		_type = type;
 		_eventClass = eventClass;
@@ -60,56 +54,43 @@ class EventCommandTrigger implements ICommandTrigger
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function createMapper():CommandMapper
-	{
+	public function createMapper():CommandMapper {
 		return new CommandMapper(_mappings);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function activate():Void
-	{
+	public function activate():Void {
 		_dispatcher.addEventListener(_type, eventHandler);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function deactivate():Void
-	{
+	public function deactivate():Void {
 		_dispatcher.removeEventListener(_type, eventHandler);
 	}
 
-	public function toString():String
-	{
+	public function toString():String {
 		return _eventClass + " with selector '" + _type + "'";
 	}
 
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function eventHandler(event:Event):Void
-	{
-		
+	private function eventHandler(event:Event):Void {
 		var eventConstructor:Class<Dynamic> = Type.getClass(event);
 		var payloadEventClass:Class<Dynamic>;
-		//not pretty, but optimized to avoid duplicate checks and shortest paths
-		if (eventConstructor == _eventClass || (_eventClass == null))
-		{
+		// not pretty, but optimized to avoid duplicate checks and shortest paths
+		if (eventConstructor == _eventClass || (_eventClass == null)) {
 			payloadEventClass = eventConstructor;
-		}
-		else if (_eventClass == Event)
-		{
+		} else if (_eventClass == Event) {
 			payloadEventClass = _eventClass;
-		}
-		else
-		{
+		} else {
 			return;
 		}
 		_executor.executeCommands(_mappings.getList(), new CommandPayload([event], [payloadEventClass]));

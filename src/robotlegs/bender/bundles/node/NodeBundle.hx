@@ -1,10 +1,9 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.bundles.node;
 
 import robotlegs.bender.extensions.directCommandMap.DirectCommandMapExtension;
@@ -26,37 +25,22 @@ import robotlegs.bender.framework.api.LogLevel;
  * <p>This bundle installs a number of extensions commonly used
  * in typical Robotlegs applications and modules.</p>
  */
-
 @:keepSub
-class NodeBundle implements IBundle
-{
-	public function new() 
-	{
-		
-	}
+class NodeBundle implements IBundle {
+	public function new() {}
+
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-	
 	/**
 	 * @inheritDoc
 	 */
-	public function extend(context:IContext):Void
-	{
+	public function extend(context:IContext):Void {
 		context.logLevel = LogLevel.INFO;
-		
-		context.install(
-			TraceLoggingExtension,
-			VigilanceExtension,
-			InjectableLoggerExtension,
-			EventDispatcherExtension,
-			DirectCommandMapExtension,
-			EventCommandMapExtension,
-			SignalCommandMapExtension,
-			LocalEventMapExtension,
-			LogicMapExtension
-		);
-			
-		//context.configure(ContextViewListenerConfig);
+
+		context.install(TraceLoggingExtension, VigilanceExtension, InjectableLoggerExtension, EventDispatcherExtension, DirectCommandMapExtension,
+			EventCommandMapExtension, SignalCommandMapExtension, LocalEventMapExtension, LogicMapExtension);
+
+		// context.configure(ContextViewListenerConfig);
 	}
 }

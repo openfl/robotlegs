@@ -4,7 +4,6 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.signalCommandMap.impl;
 
 import org.swiftsuspenders.utils.DescribedType;
@@ -21,13 +20,10 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
-class SignalCommandMap implements DescribedType implements ISignalCommandMap
-{
-
+class SignalCommandMap implements DescribedType implements ISignalCommandMap {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _mappingProcessors:Array<Dynamic> = [];
 
 	private var _injector:IInjector;
@@ -39,16 +35,14 @@ class SignalCommandMap implements DescribedType implements ISignalCommandMap
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function new(context:IContext)
-	{
+	public function new(context:IContext) {
 		_injector = context.injector;
 		_logger = context.getLogger(this);
 		_triggerMap = new CommandTriggerMap(getKey, createTrigger);
-		
+
 		context.injector.map(AppSetupCompleteSignal).asSingleton();
 		var appSetupCompleteSignal:AppSetupCompleteSignal = context.injector.getInstance(AppSetupCompleteSignal);
 		appSetupCompleteSignal.dispatch();
@@ -57,25 +51,21 @@ class SignalCommandMap implements DescribedType implements ISignalCommandMap
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */
-	public function map(signalClass:Class<Dynamic>):ICommandMapper
-	{
+	public function map(signalClass:Class<Dynamic>):ICommandMapper {
 		return getTrigger(signalClass).createMapper();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function unmap(signalClass:Class<Dynamic>):ICommandUnmapper
-	{
+	public function unmap(signalClass:Class<Dynamic>):ICommandUnmapper {
 		return getTrigger(signalClass).createMapper();
 	}
 
-	public function addMappingProcessor(handler:Dynamic):ISignalCommandMap
-	{
+	public function addMappingProcessor(handler:Dynamic):ISignalCommandMap {
 		if (_mappingProcessors.indexOf(handler) == -1)
 			_mappingProcessors.push(handler);
 		return this;
@@ -84,19 +74,15 @@ class SignalCommandMap implements DescribedType implements ISignalCommandMap
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function getTrigger(signalClass:Class<Dynamic>):SignalCommandTrigger
-	{
+	private function getTrigger(signalClass:Class<Dynamic>):SignalCommandTrigger {
 		return cast(_triggerMap.getTrigger([signalClass]), SignalCommandTrigger);
 	}
 
-	private function getKey(signalClass:Class<Dynamic>):String
-	{
+	private function getKey(signalClass:Class<Dynamic>):String {
 		return "" + signalClass;
 	}
-	
-	private function createTrigger(signalClass:Class<Dynamic>):ICommandTrigger
-	{
+
+	private function createTrigger(signalClass:Class<Dynamic>):ICommandTrigger {
 		return new SignalCommandTrigger(_injector, signalClass, _mappingProcessors);
 	}
 }

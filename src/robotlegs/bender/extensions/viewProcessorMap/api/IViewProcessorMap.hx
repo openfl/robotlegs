@@ -1,10 +1,9 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.viewProcessorMap.api;
 
 import robotlegs.bender.extensions.matching.ITypeMatcher;
@@ -14,8 +13,7 @@ import robotlegs.bender.extensions.viewProcessorMap.dsl.IViewProcessorUnmapper;
 /**
  * The View Processor Map allows you to bind views to processors
  */
-interface IViewProcessorMap
-{
+interface IViewProcessorMap {
 	/**
 	 * Maps a matcher that will be tested against incoming items to be handled.
 	 * @param matcher The type or package matcher specifying the rules for matching.

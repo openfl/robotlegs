@@ -31,7 +31,6 @@ class VigilanceExtension implements IExtension implements ILogTarget {
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */

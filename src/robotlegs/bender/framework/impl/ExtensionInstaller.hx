@@ -57,7 +57,7 @@ class ExtensionInstaller {
 		else {
 			var iextension:IExtension = extension;
 			installInstance(iextension);
-		}	
+		}
 	}
 
 	inline function installClass(extension:Class<IExtension>) {

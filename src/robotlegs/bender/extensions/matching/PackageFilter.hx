@@ -1,44 +1,42 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.matching;
+
 import org.swiftsuspenders.utils.CallProxy;
 
 /**
  * A filter that describes a package matcher
  */
-
 @:keepSub
-class PackageFilter implements ITypeFilter
-{
-
+class PackageFilter implements ITypeFilter {
 	/*============================================================================*/
 	/* Public Properties                                                          */
 	/*============================================================================*/
-
 	private var _descriptor:String;
+
 	public var descriptor(get_descriptor, null):String;
+
 	/**
 	 * @inheritDoc
 	 */
-	function get_descriptor():String
-	{
+	function get_descriptor():String {
 		// CHECK
-		if (_descriptor == null) _descriptor = createDescriptor();
+		if (_descriptor == null)
+			_descriptor = createDescriptor();
 		return _descriptor;
-		//return _descriptor ||= createDescriptor();
+		// return _descriptor ||= createDescriptor();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public var allOfTypes(get_allOfTypes, null):Array<Class<Dynamic>>;
-	function get_allOfTypes():Array<Class<Dynamic>>
-	{
+
+	function get_allOfTypes():Array<Class<Dynamic>> {
 		return emptyVector;
 	}
 
@@ -46,8 +44,8 @@ class PackageFilter implements ITypeFilter
 	 * @inheritDoc
 	 */
 	public var anyOfTypes(get_anyOfTypes, null):Array<Class<Dynamic>>;
-	function get_anyOfTypes():Array<Class<Dynamic>>
-	{
+
+	function get_anyOfTypes():Array<Class<Dynamic>> {
 		return emptyVector;
 	}
 
@@ -55,15 +53,14 @@ class PackageFilter implements ITypeFilter
 	 * @inheritDoc
 	 */
 	public var noneOfTypes(get_noneOfTypes, null):Array<Class<Dynamic>>;
-	function get_noneOfTypes():Array<Class<Dynamic>>
-	{
+
+	function get_noneOfTypes():Array<Class<Dynamic>> {
 		return emptyVector;
 	}
 
 	/*============================================================================*/
 	/* private Properties                                                       */
 	/*============================================================================*/
-
 	private var emptyVector:Array<Class<Dynamic>> = new Array<Class<Dynamic>>();
 
 	private var _requirePackage:String;
@@ -75,15 +72,13 @@ class PackageFilter implements ITypeFilter
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * Creates a new Package Filter
 	 * @param requiredPackage
 	 * @param anyOfPackages
 	 * @param noneOfPackages
 	 */
-	public function new(requiredPackage:String, anyOfPackages:Array<String>, noneOfPackages:Array<String>)
-	{
+	public function new(requiredPackage:String, anyOfPackages:Array<String>, noneOfPackages:Array<String>) {
 		_requirePackage = requiredPackage;
 		_anyOfPackages = anyOfPackages;
 		_noneOfPackages = noneOfPackages;
@@ -94,26 +89,22 @@ class PackageFilter implements ITypeFilter
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */
-	public function matches(item:Dynamic):Bool
-	{
+	public function matches(item:Dynamic):Bool {
 		var fqcn:String = Type.getClassName(item);
 		var packageName:String;
 
 		if (_requirePackage != null && (!matchPackageInFQCN(_requirePackage, fqcn)))
 			return false;
 
-		for (packageName in _noneOfPackages)
-		{
+		for (packageName in _noneOfPackages) {
 			if (matchPackageInFQCN(packageName, fqcn))
 				return false;
 		}
 
-		for (packageName in _anyOfPackages)
-		{
+		for (packageName in _anyOfPackages) {
 			if (matchPackageInFQCN(packageName, fqcn))
 				return true;
 		}
@@ -132,11 +123,8 @@ class PackageFilter implements ITypeFilter
 	/*============================================================================*/
 	/* private Functions                                                        */
 	/*============================================================================*/
-
-	private function stringSort(item1:String, item2:String):Int
-	{
-		if (item1 > item2)
-		{
+	private function stringSort(item1:String, item2:String):Int {
+		if (item1 > item2) {
 			return 1;
 		}
 		return -1;
@@ -145,16 +133,11 @@ class PackageFilter implements ITypeFilter
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function createDescriptor():String
-	{
-		return "require: " + _requirePackage
-			+ ", any of: " + _anyOfPackages.toString()
-			+ ", none of: " + _noneOfPackages.toString();
+	private function createDescriptor():String {
+		return "require: " + _requirePackage + ", any of: " + _anyOfPackages.toString() + ", none of: " + _noneOfPackages.toString();
 	}
 
-	private function matchPackageInFQCN(packageName:String, fqcn:String):Bool
-	{
+	private function matchPackageInFQCN(packageName:String, fqcn:String):Bool {
 		return (fqcn.indexOf(packageName) == 0);
 	}
 }

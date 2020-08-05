@@ -1,26 +1,22 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.framework.api;
 
 import robotlegs.errors.Error;
-import openfl.events.Event;
+import polyfill.events.Event;
 
 /**
  * Robotlegs object lifecycle event
  */
 @:keepSub
-class LifecycleEvent extends Event
-{
-
+class LifecycleEvent extends Event {
 	/*============================================================================*/
 	/* Public Static Properties                                                   */
 	/*============================================================================*/
-
 	public static var ERROR:String = "_error";
 
 	public static var STATE_CHANGE:String = "stateChange";
@@ -52,24 +48,22 @@ class LifecycleEvent extends Event
 	/*============================================================================*/
 	/* Public Properties                                                          */
 	/*============================================================================*/
-
 	private var _error:Error;
+
 	public var error(default, null):Error;
+
 	/**
 	 * Associated lifecycle error
 	 */
-
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * Creates a Lifecycle Event
 	 * @param type The event type
 	 * @param error Optional error
 	 */
-	public function new(type:String, error:Error = null)
-	{
+	public function new(type:String, error:Error = null) {
 		super(type);
 		_error = error;
 	}
@@ -77,12 +71,10 @@ class LifecycleEvent extends Event
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */
-	override public function clone():Event
-	{
+	override public function clone():Event {
 		return new LifecycleEvent(type, error);
 	}
 }

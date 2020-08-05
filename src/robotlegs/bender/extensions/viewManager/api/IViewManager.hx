@@ -1,29 +1,27 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.viewManager.api;
 
-import openfl.events.IEventDispatcher;
+import polyfill.events.IEventDispatcher;
 
-@:meta(Event(name="containerAdd", type="robotlegs.bender.extensions.viewManager.impl.ViewManagerEvent"))
-@:meta(Event(name="containerRemove", type="robotlegs.bender.extensions.viewManager.impl.ViewManagerEvent"))
-@:meta(Event(name="handlerAdd", type="robotlegs.bender.extensions.viewManager.impl.ViewManagerEvent"))
-@:meta(Event(name="handlerRemove", type="robotlegs.bender.extensions.viewManager.impl.ViewManagerEvent"))
+@:meta(Event(name = "containerAdd", type = "robotlegs.bender.extensions.viewManager.impl.ViewManagerEvent"))
+@:meta(Event(name = "containerRemove", type = "robotlegs.bender.extensions.viewManager.impl.ViewManagerEvent"))
+@:meta(Event(name = "handlerAdd", type = "robotlegs.bender.extensions.viewManager.impl.ViewManagerEvent"))
+@:meta(Event(name = "handlerRemove", type = "robotlegs.bender.extensions.viewManager.impl.ViewManagerEvent"))
+
 /**
  * The View Manager allows you to add multiple "view root" containers to a context
  */
-interface IViewManager extends IEventDispatcher
-{
-
+interface IViewManager extends IEventDispatcher {
 	/**
 	 * A list of currently registered container
 	 */
 	public var containers(get, null):Array<Dynamic>;
-	
+
 	/**
 	 * Adds a container as a "view root" into the context
 	 * @param container

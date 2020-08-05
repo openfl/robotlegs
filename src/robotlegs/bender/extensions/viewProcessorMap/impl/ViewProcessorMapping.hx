@@ -117,12 +117,12 @@ class ViewProcessorMapping implements IViewProcessorMapping implements IViewProc
 	 * @inheritDoc
 	 */
 	public function withHooks(?hooks:Array<Hook>, ?hook:Hook):IViewProcessorMappingConfig {
-		if (hooks != null){
+		if (hooks != null) {
 			for (i in 0...hooks.length) {
 				_hooks.push(hooks[i]);
 			}
 		}
-		if (hook != null){
+		if (hook != null) {
 			_hooks.push(hook);
 		}
 		return this;

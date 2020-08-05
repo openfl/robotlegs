@@ -1,3 +1,0 @@
-haxe build.hxml
-
-pause

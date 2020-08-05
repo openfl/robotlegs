@@ -4,7 +4,6 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.framework.impl;
 
 import org.swiftsuspenders.utils.CallProxy;
@@ -26,16 +25,13 @@ import robotlegs.bender.framework.api.IConfig.IConfig_Or_Class;
  * @private
  */
 @:keepSub
-class ConfigManager
-{
-
+class ConfigManager {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _objectProcessor:ObjectProcessor = new ObjectProcessor();
 
-	private var _configs = new Map<String,Bool>();
+	private var _configs = new Map<String, Bool>();
 
 	private var _queue:Array<Dynamic> = [];
 
@@ -50,14 +46,12 @@ class ConfigManager
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function new(context:IContext)
-	{
+	public function new(context:IContext) {
 		_context = context;
-		
+
 		_injector = context.injector;
 		_logger = context.getLogger(this);
 		addConfigHandler(new ClassMatcher(), handleClass);
@@ -71,17 +65,15 @@ class ConfigManager
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * Process a given configuration object by running it through registered handlers.
 	 * <p>If the manager is not initialized the configuration will be queued.</p>
 	 * @param config The configuration object or class
 	 */
-	public function addConfig(config:IConfig_Or_Class):Void
-	{
+	public function addConfig(config:IConfig_Or_Class):Void {
 		if (config == null)
 			return;
-		
+
 		#if (js)
 		if (!Std.is(config, Class)) {
 			Reflect.setProperty(config, "constructor", Type.getClass(config));
@@ -89,8 +81,7 @@ class ConfigManager
 		#end
 
 		var id = UID.instanceID(config);
-		if (_configs[id] == null)
-		{
+		if (_configs[id] == null) {
 			_configs[id] = true;
 			_objectProcessor.processObject(config);
 		}
@@ -101,21 +92,18 @@ class ConfigManager
 	 * @param matcher Pattern to match configuration objects
 	 * @param handler Handler to process matching configurations
 	 */
-	public function addConfigHandler(matcher:IMatcher, handler:Dynamic):Void
-	{
+	public function addConfigHandler(matcher:IMatcher, handler:Dynamic):Void {
 		_objectProcessor.addObjectHandler(matcher, handler);
 	}
 
 	/**
 	 * Destroy
 	 */
-	public function destroy():Void
-	{
+	public function destroy():Void {
 		_context.removeEventListener(LifecycleEvent.INITIALIZE, initialize);
 		_objectProcessor.removeAllHandlers();
 		_queue = [];
-		for (config in _configs)
-		{
+		for (config in _configs) {
 			_configs.remove(UID.clearInstanceID(config));
 		}
 	}
@@ -123,83 +111,68 @@ class ConfigManager
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function initialize(event:LifecycleEvent):Void
-	{
-		if (_initialized == false)
-		{
+	private function initialize(event:LifecycleEvent):Void {
+		if (_initialized == false) {
 			_initialized = true;
 			processQueue();
 		}
 	}
 
-	private function handleClass(type:Class<Dynamic>):Void
-	{
-		if (_initialized)
-		{
+	private function handleClass(type:Class<Dynamic>):Void {
+		if (_initialized) {
 			_logger.debug("Already initialized. Instantiating config class {0}", [type]);
 			processClass(type);
-		}
-		else
-		{
+		} else {
 			_logger.debug("Not yet initialized. Queuing config class {0}", [type]);
 			_queue.push(type);
 		}
 	}
 
-	private function handleObject(object:Dynamic):Void
-	{
-		if (_initialized)
-		{
+	private function handleObject(object:Dynamic):Void {
+		if (_initialized) {
 			_logger.debug("Already initialized. Injecting into config object {0}", [object]);
 			processObject(object);
-		}
-		else
-		{
+		} else {
 			_logger.debug("Not yet initialized. Queuing config object {0}", [object]);
 			_queue.push(object);
 		}
 	}
 
-	private function processQueue():Void
-	{
-		for (config in _queue)
-		{
-			if (Std.is(config, Class))
-			{
+	private function processQueue():Void {
+		for (config in _queue) {
+			if (Std.is(config, Class)) {
 				#if js
-					_logger.debug("Now initializing. Instantiating config class {0}", [Type.getClassName(config)]);
-				#else 
-					_logger.debug("Now initializing. Instantiating config class {0}", [config]);
+				_logger.debug("Now initializing. Instantiating config class {0}", [Type.getClassName(config)]);
+				#else
+				_logger.debug("Now initializing. Instantiating config class {0}", [config]);
 				#end
-				
+
 				processClass(cast(config, Class<Dynamic>));
-			}
-			else
-			{
+			} else {
 				#if js
-					_logger.debug("Now initializing. Injecting into config object {0}", [Type.getClassName((Type.getClass(config)))]);
-				#else 
-					_logger.debug("Now initializing. Injecting into config object {0}", [config]);
+				_logger.debug("Now initializing. Injecting into config object {0}", [Type.getClassName((Type.getClass(config)))]);
+				#else
+				_logger.debug("Now initializing. Injecting into config object {0}", [config]);
 				#end
-				
+
 				processObject(config);
 			}
 		}
 		_queue = [];
 	}
 
-	private function processClass(type:Class<Dynamic>):Void
-	{
+	private function processClass(type:Class<Dynamic>):Void {
 		processObject(_injector.getOrCreateNewInstance(type), false);
 	}
 
-	private function processObject(object:IConfig, inject:Bool=true):Void
-	{
-		if (object == null) return;
-		if (inject) _injector.injectInto(object);
-		
-		var configure:Void -> Void = object.configure;
-		if (configure != null) configure();
+	private function processObject(object:IConfig, inject:Bool = true):Void {
+		if (object == null)
+			return;
+		if (inject)
+			_injector.injectInto(object);
+
+		var configure:Void->Void = object.configure;
+		if (configure != null)
+			configure();
 	}
 }

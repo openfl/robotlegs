@@ -7,10 +7,6 @@ import org.swiftsuspenders.utils.DescribedType;
  * ...
  * @author P.J.Shand
  */
-class Logic implements ILogic implements DescribedType
-{
-	public function initialize():Void
-    {
-        
-    }
+class Logic implements ILogic implements DescribedType {
+	public function initialize():Void {}
 }

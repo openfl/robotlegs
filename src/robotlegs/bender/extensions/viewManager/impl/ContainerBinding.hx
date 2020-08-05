@@ -8,7 +8,7 @@ package robotlegs.bender.extensions.viewManager.impl;
 
 import openfl.display.DisplayObject;
 import openfl.display.DisplayObjectContainer;
-import openfl.events.EventDispatcher;
+import polyfill.events.EventDispatcher;
 import robotlegs.bender.extensions.viewManager.api.IViewHandler;
 
 @:meta(Event(name = "bindingEmpty", type = "robotlegs.bender.extensions.viewManager.impl.ContainerBindingEvent"))

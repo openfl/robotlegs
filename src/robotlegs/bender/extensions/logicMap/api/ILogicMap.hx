@@ -7,7 +7,6 @@ import haxe.extern.EitherType;
 /**
  * @author P.J.Shand
  */
-interface ILogicMap 
-{
-	function map(type:Class<ILogic>, initialize:EitherType<Bool, EitherType<SignalA, SignalB>>=true):ILogic;
+interface ILogicMap {
+	function map(type:Class<ILogic>, initialize:EitherType<Bool, EitherType<SignalA, SignalB>> = true):ILogic;
 }

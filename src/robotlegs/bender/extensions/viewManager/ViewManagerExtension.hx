@@ -4,7 +4,6 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.viewManager;
 
 import robotlegs.bender.extensions.viewManager.api.IViewManager;
@@ -17,22 +16,17 @@ import robotlegs.bender.framework.api.IInjector;
 /**
  * This extension install a View Manager into the context
  */
-
 @:keepSub
-class ViewManagerExtension implements IExtension
-{
-
+class ViewManagerExtension implements IExtension {
 	/*============================================================================*/
 	/* Private Static Properties                                                  */
 	/*============================================================================*/
-
 	// Really? Yes, there can be only one.
 	private static var _containerRegistry:ContainerRegistry;
 
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _injector:IInjector;
 
 	private var _viewManager:IViewManager;
@@ -40,27 +34,24 @@ class ViewManagerExtension implements IExtension
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */
-	public function extend(context:IContext):Void
-	{
+	public function extend(context:IContext):Void {
 		context.whenInitializing(whenInitializing);
 		context.whenDestroying(whenDestroying);
 
 		_injector = context.injector;
 
-		
 		// Just one Container Registry
-		
+
 		if (_containerRegistry == null) {
 			_containerRegistry = new ContainerRegistry();
 		}
-		//_containerRegistry ||= new ContainerRegistry();
-		
+		// _containerRegistry ||= new ContainerRegistry();
+
 		_injector.map(ContainerRegistry).toValue(_containerRegistry);
-		
+
 		// But you get your own View Manager
 		_injector.map(IViewManager).toSingleton(ViewManager);
 	}
@@ -68,14 +59,11 @@ class ViewManagerExtension implements IExtension
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function whenInitializing():Void
-	{
+	private function whenInitializing():Void {
 		_viewManager = _injector.getInstance(IViewManager);
 	}
 
-	private function whenDestroying():Void
-	{
+	private function whenDestroying():Void {
 		_viewManager.removeAllHandlers();
 		_injector.unmap(IViewManager);
 		_injector.unmap(ContainerRegistry);

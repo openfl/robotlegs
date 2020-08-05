@@ -4,11 +4,10 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.modularity.impl;
 
-import openfl.events.EventDispatcher;
-import openfl.events.IEventDispatcher;
+import polyfill.events.EventDispatcher;
+import polyfill.events.IEventDispatcher;
 import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.extensions.modularity.api.IModuleConnector;
 import robotlegs.bender.extensions.modularity.dsl.IModuleConnectionAction;
@@ -18,15 +17,11 @@ import robotlegs.bender.framework.api.IInjector;
 /**
  * @private
  */
-
 @:keepSub
-class ModuleConnector implements IModuleConnector
-{
-
+class ModuleConnector implements IModuleConnector {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _rootInjector:IInjector;
 
 	private var _localDispatcher:IEventDispatcher;
@@ -36,12 +31,10 @@ class ModuleConnector implements IModuleConnector
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function new(context:IContext)
-	{
+	public function new(context:IContext) {
 		var injector:IInjector = context.injector;
 		_rootInjector = getRootInjector(injector);
 		_localDispatcher = injector.getInstance(IEventDispatcher);
@@ -51,31 +44,25 @@ class ModuleConnector implements IModuleConnector
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */
-	public function onChannel(channelId:String):IModuleConnectionAction
-	{
+	public function onChannel(channelId:String):IModuleConnectionAction {
 		return getOrCreateConfigurator(channelId);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onDefaultChannel():IModuleConnectionAction
-	{
+	public function onDefaultChannel():IModuleConnectionAction {
 		return getOrCreateConfigurator('global');
 	}
 
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function destroy():Void
-	{
-		for (channelId in _configuratorsByChannel)
-		{
+	private function destroy():Void {
+		for (channelId in _configuratorsByChannel) {
 			var id = cast(channelId, String);
 			var configurator:ModuleConnectionConfigurator = _configuratorsByChannel[id];
 			configurator.destroy();
@@ -87,33 +74,27 @@ class ModuleConnector implements IModuleConnector
 		_rootInjector = null;
 	}
 
-	private function getOrCreateConfigurator(channelId:String):ModuleConnectionConfigurator
-	{
+	private function getOrCreateConfigurator(channelId:String):ModuleConnectionConfigurator {
 		// CHECK
 		if (!CallProxy.hasField(_configuratorsByChannel, channelId)) {
-		//if (_configuratorsByChannel[channelId] == null) {
+			// if (_configuratorsByChannel[channelId] == null) {
 			Reflect.setField(_configuratorsByChannel, channelId, createConfigurator(channelId));
-			//_configuratorsByChannel[channelId] = createConfigurator(channelId);
+			// _configuratorsByChannel[channelId] = createConfigurator(channelId);
 		}
 		return Reflect.getProperty(_configuratorsByChannel, channelId);
-		//return _configuratorsByChannel[channelId];
-		//return _configuratorsByChannel[channelId] ||= createConfigurator(channelId);
+		// return _configuratorsByChannel[channelId];
+		// return _configuratorsByChannel[channelId] ||= createConfigurator(channelId);
 	}
 
-	private function createConfigurator(channelId:String):ModuleConnectionConfigurator
-	{
-		if (_rootInjector.hasMapping(IEventDispatcher, channelId))
-		{
-			_rootInjector.map(IEventDispatcher, channelId)
-				.toValue(new EventDispatcher());
+	private function createConfigurator(channelId:String):ModuleConnectionConfigurator {
+		if (_rootInjector.hasMapping(IEventDispatcher, channelId)) {
+			_rootInjector.map(IEventDispatcher, channelId).toValue(new EventDispatcher());
 		}
 		return new ModuleConnectionConfigurator(_localDispatcher, _rootInjector.getInstance(IEventDispatcher, channelId));
 	}
 
-	private function getRootInjector(injector:IInjector):IInjector
-	{
-		while (injector.parent != null)
-		{
+	private function getRootInjector(injector:IInjector):IInjector {
+		while (injector.parent != null) {
 			injector = injector.parent;
 		}
 		return injector;

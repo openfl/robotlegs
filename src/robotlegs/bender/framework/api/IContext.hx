@@ -6,7 +6,7 @@
 //------------------------------------------------------------------------------
 package robotlegs.bender.framework.api;
 
-import openfl.events.IEventDispatcher;
+import polyfill.events.IEventDispatcher;
 import robotlegs.bender.framework.api.IExtension.IExtension_Or_Class;
 import robotlegs.bender.framework.api.IConfig.IConfig_Or_Class;
 

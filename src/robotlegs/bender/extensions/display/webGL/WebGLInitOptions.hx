@@ -5,7 +5,6 @@ import flash.display3D.Context3DProfile;
 /**
  * @author P.J.Shand
  */
-typedef WebGLInitOptions =
-{
+typedef WebGLInitOptions = {
 	antiAlias:Int
 }

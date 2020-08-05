@@ -4,7 +4,7 @@ import flash.display3D.Context3DRenderMode;
 import fuse.Fuse;
 import fuse.core.front.FuseConfig;
 import fuse.events.FuseEvent;
-import openfl.events.Event;
+import polyfill.events.Event;
 import robotlegs.bender.extensions.display.base.impl.BaseInitializer;
 
 /**

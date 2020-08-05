@@ -1,12 +1,9 @@
 //------------------------------------------------------------------------------
 //  Copyright (c) 2012 the original author or authors. All Rights Reserved.
-// 
-
-
+//
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.display.stage3D.away3d;
 
 import flash.display.DisplayObjectContainer;
@@ -26,15 +23,11 @@ import robotlegs.bender.framework.impl.UID;
  *
  * <p>It should be installed before context initialization.</p>
  */
-
 @:keepSub
-class AwayStageSyncExtension implements IExtension
-{
-
+class AwayStageSyncExtension implements IExtension {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	/** Extension UID. **/
 	private var _uid:String;
 
@@ -46,55 +39,46 @@ class AwayStageSyncExtension implements IExtension
 
 	/** Logger used to log messaged when using this extension. **/
 	private var _logger:ILogger;
-	
-	public function AwayStageSyncExtension() { }
-	
+
+	public function AwayStageSyncExtension() {}
+
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/** @inheritDoc **/
-	public function extend(context:IContext):Void
-	{
+	public function extend(context:IContext):Void {
 		_uid = UID.create(AwayStageSyncExtension);
-		
+
 		_context = context;
 		_logger = context.getLogger(this);
-		
+
 		_context.addConfigHandler(InstanceOfType.call(ContextView), handleContextView);
 	}
 
 	/**
 	 * Returns the string representation of the specified object.
 	 */
-	public function toString():String
-	{
+	public function toString():String {
 		return _uid;
 	}
 
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
 	/**
 	 * Initialize context view.
 	 *
 	 * @param contextView View being set as context view.
 	 */
-	private function handleContextView(contextView:ContextView):Void
-	{
-		if (_contextView != null)
-		{
+	private function handleContextView(contextView:ContextView):Void {
+		if (_contextView != null) {
 			_logger.warn('A contextView has already been set, ignoring {0}', [contextView.view]);
 			return;
 		}
 		_contextView = contextView.view;
-		if (_contextView.stage != null)
-		{
+		if (_contextView.stage != null) {
 			initializeContext();
-		}
-		else
-		{
+		} else {
 			_logger.debug("Context view is not yet on stage. Waiting...");
 			_contextView.addEventListener(flash.events.Event.ADDED_TO_STAGE, onAddedToStage);
 		}
@@ -105,12 +89,11 @@ class AwayStageSyncExtension implements IExtension
 	 *
 	 * @param event View has been added to stage.
 	 */
-	private function onAddedToStage(event:flash.events.Event):Void
-	{
+	private function onAddedToStage(event:flash.events.Event):Void {
 		_logger.debug("Context view added on stage.");
 		_contextView.removeEventListener(flash.events.Event.ADDED_TO_STAGE, onAddedToStage);
 		_contextView.addEventListener(flash.events.Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-		
+
 		initializeContext();
 	}
 
@@ -119,13 +102,12 @@ class AwayStageSyncExtension implements IExtension
 	 *
 	 * @param event View has been removed from stage.
 	 */
-	private function onRemovedFromStage(event:flash.events.Event):Void
-	{
+	private function onRemovedFromStage(event:flash.events.Event):Void {
 		_logger.debug("Context view has left the stage. Destroying context...");
 		_contextView.removeEventListener(flash.events.Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		_context.destroy();
 	}
-	
+
 	//---------------------------------------------------------------
 	// Initialization
 	//---------------------------------------------------------------
@@ -134,8 +116,7 @@ class AwayStageSyncExtension implements IExtension
 	 * Initialize context if default context view is ready and if
 	 * all Starling view instances have their context prepared.
 	 */
-	private function initializeContext():Void
-	{
+	private function initializeContext():Void {
 		_logger.debug("Away3D context views are now on stage. Initializing context...");
 		_context.initialize();
 	}

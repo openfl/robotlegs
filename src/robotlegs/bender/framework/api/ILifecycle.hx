@@ -1,34 +1,33 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.framework.api;
 
-import openfl.events.IEventDispatcher;
+import polyfill.events.IEventDispatcher;
 
-@:meta(Event(name="destroy", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="error", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="initialize", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postDestroy", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postInitialize", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postResume", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="postSuspend", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preDestroy", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preInitialize", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preResume", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="preSuspend", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="resume", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="stateChange", type="robotlegs.bender.framework.api.LifecycleEvent"))
-@:meta(Event(name="suspend", type="robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "destroy", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "error", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "initialize", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postDestroy", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postInitialize", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postResume", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "postSuspend", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preDestroy", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preInitialize", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preResume", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "preSuspend", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "resume", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "stateChange", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+@:meta(Event(name = "suspend", type = "robotlegs.bender.framework.api.LifecycleEvent"))
+
 /**
  * The Robotlegs object lifecycle contract
  */
 @:keepSub
-interface ILifecycle extends IEventDispatcher
-{
+interface ILifecycle extends IEventDispatcher {
 	/**
 	 * The current lifecycle state of the target object
 	 */

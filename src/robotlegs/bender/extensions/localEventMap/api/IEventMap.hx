@@ -1,20 +1,18 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.localEventMap.api;
 
-import openfl.events.IEventDispatcher;
+import polyfill.events.IEventDispatcher;
 
 /**
  * The Event Map keeps track of listeners and provides the ability
  * to unregister all listeners with a single method call.
  */
-interface IEventMap
-{
+interface IEventMap {
 	/**
 	 * The same as calling <code>addEventListener</code> directly on the <code>IEventDispatcher</code>,
 	 * but keeps a list of listeners for easy (usually automatic) removal.
@@ -27,7 +25,8 @@ interface IEventMap
 	 * @param priority
 	 * @param useWeakReference
 	 */
-	function mapListener(dispatcher:IEventDispatcher, type:String, listener:Dynamic->Void, eventClass:Class<Dynamic> = null, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = true):Void;
+	function mapListener(dispatcher:IEventDispatcher, type:String, listener:Dynamic->Void, eventClass:Class<Dynamic> = null, useCapture:Bool = false,
+		priority:Int = 0, useWeakReference:Bool = true):Void;
 
 	/**
 	 * The same as calling <code>removeEventListener</code> directly on the <code>IEventDispatcher</code>,

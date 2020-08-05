@@ -9,17 +9,12 @@ import robotlegs.bender.extensions.display.stage3D.Stage3DStackExtension;
  * @author P.J.Shand
  */
 @:keepSub
-class Stage3DBundle implements IBundle
-{
+class Stage3DBundle implements IBundle {
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/** @inheritDoc **/
-	public function extend(context:IContext):Void
-	{
-		context.install(
-			Stage3DStackExtension
-		);
+	public function extend(context:IContext):Void {
+		context.install(Stage3DStackExtension);
 	}
 }

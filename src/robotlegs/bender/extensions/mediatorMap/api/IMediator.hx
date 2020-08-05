@@ -1,18 +1,16 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.mediatorMap.api;
 
 /**
  * Optional Mediator interface
  */
 @:keepSub
-interface IMediator
-{
+interface IMediator {
 	/**
 	 * Initializes the mediator. This is run automatically by the mediatorMap when a mediator is created.
 	 * Normally the initialize function is where you would add handlers using the eventMap.

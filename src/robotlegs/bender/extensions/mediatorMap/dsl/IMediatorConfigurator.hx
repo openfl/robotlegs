@@ -8,6 +8,7 @@ package robotlegs.bender.extensions.mediatorMap.dsl;
 
 import robotlegs.bender.framework.impl.Guard;
 import robotlegs.bender.framework.impl.Hook;
+
 /**
  * Configures a mediator mapping
  */
@@ -37,4 +38,3 @@ interface IMediatorConfigurator {
 	 */
 	function autoRemove(value:Bool = true):IMediatorConfigurator;
 }
-

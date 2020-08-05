@@ -1,10 +1,9 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.commandCenter.impl;
 
 import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
@@ -12,29 +11,20 @@ import robotlegs.bender.extensions.commandCenter.api.ICommandTrigger;
 /**
  * @private
  */
-
 @:keepSub
-class NullCommandTrigger implements ICommandTrigger
-{
-	public function new()
-	{
-		
-	}
+class NullCommandTrigger implements ICommandTrigger {
+	public function new() {}
+
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
+	/**
+	 * @private
+	 */
+	public function activate():Void {}
 
 	/**
 	 * @private
 	 */
-	public function activate():Void
-	{
-	}
-
-	/**
-	 * @private
-	 */
-	public function deactivate():Void
-	{
-	}
+	public function deactivate():Void {}
 }

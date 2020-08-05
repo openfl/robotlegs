@@ -4,7 +4,6 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.signalCommandMap;
 
 import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
@@ -14,33 +13,27 @@ import robotlegs.bender.framework.api.IExtension;
 import robotlegs.bender.framework.impl.UID;
 
 @:keepSub
-class SignalCommandMapExtension implements IExtension
-{
+class SignalCommandMapExtension implements IExtension {
+	/*============================================================================*/
+	/* Private Properties                                                         */
+	/*============================================================================*/
+	private var _uid:String;
 
-    /*============================================================================*/
-    /* Private Properties                                                         */
-    /*============================================================================*/
+	/*============================================================================*/
+	/* Public Functions                                                           */
+	/*============================================================================*/
+	public function new() {}
 
-    private var _uid:String;
+	public function extend(context:IContext):Void {
+		if (!context.injector.hasMapping(ISignalCommandMap)) {
+			context.injector.map(ISignalCommandMap).toSingleton(SignalCommandMap);
+		}
+	}
 
-    /*============================================================================*/
-    /* Public Functions                                                           */
-    /*============================================================================*/
-	
-	public function new() { }
-	
-    public function extend(context:IContext):Void
-    {
-        if (!context.injector.hasMapping(ISignalCommandMap)){
-            context.injector.map(ISignalCommandMap).toSingleton(SignalCommandMap);
-        }
-    }
-
-    public function toString():String
-    {
+	public function toString():String {
 		if (_uid == null) {
 			_uid = UID.create(SignalCommandMapExtension);
 		}
-        return _uid;
-    }
+		return _uid;
+	}
 }

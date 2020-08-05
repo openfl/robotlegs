@@ -1,10 +1,9 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.modularity.impl;
 
 import openfl.display.DisplayObjectContainer;
@@ -14,15 +13,11 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
-
 @:keepSub
-class ContextViewBasedExistenceWatcher
-{
-
+class ContextViewBasedExistenceWatcher {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _logger:ILogger;
 
 	private var _contextView:DisplayObjectContainer;
@@ -32,12 +27,10 @@ class ContextViewBasedExistenceWatcher
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function new(context:IContext, contextView:DisplayObjectContainer)
-	{
+	public function new(context:IContext, contextView:DisplayObjectContainer) {
 		_logger = context.getLogger(this);
 		_contextView = contextView;
 		_context = context;
@@ -48,27 +41,23 @@ class ContextViewBasedExistenceWatcher
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function init():Void
-	{
+	private function init():Void {
 		_logger.debug("Listening for context existence events on contextView {0}", [_contextView]);
 		_contextView.addEventListener(ModularContextEvent.CONTEXT_ADD, onContextAdd);
 	}
 
-	private function destroy():Void
-	{
+	private function destroy():Void {
 		_logger.debug("Removing modular context existence event listener from contextView {0}", [_contextView]);
 		_contextView.removeEventListener(ModularContextEvent.CONTEXT_ADD, onContextAdd);
 	}
 
-	private function onContextAdd(event:ModularContextEvent):Void
-	{
+	private function onContextAdd(event:ModularContextEvent):Void {
 		// We might catch out own existence event, so ignore that
-		if (event.context != _context)
-		{
+		if (event.context != _context) {
 			event.stopImmediatePropagation();
 			_logger.debug("Context existence event caught. Configuring child context {0}", [event.context]);
-			if (event.context != null) _context.addChild(event.context);
+			if (event.context != null)
+				_context.addChild(event.context);
 		}
 	}
 }

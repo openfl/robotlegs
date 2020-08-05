@@ -6,11 +6,8 @@ import robotlegs.signal.Signal.SignalType;
  * ...
  * @author P.J.Shand
  */
-class AppSetupCompleteSignal extends SignalType 
-{
-	
-	public function new() 
-	{
+class AppSetupCompleteSignal extends SignalType {
+	public function new() {
 		super();
-	}	
+	}
 }

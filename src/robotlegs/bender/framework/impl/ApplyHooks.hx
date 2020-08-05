@@ -4,19 +4,16 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.framework.impl;
 
 import org.swiftsuspenders.utils.CallProxy;
 import robotlegs.bender.framework.api.IInjector;
 
 @:keepSub
-class ApplyHooks
-{
+class ApplyHooks {
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * <p>A hook can be a function, object or class.</p>
 	 *
@@ -29,27 +26,18 @@ class ApplyHooks
 	 * @param hooks An array of hooks
 	 * @param injector An optional Injector
 	 */
-	public static function call(hooks:Array<Dynamic>, injector:IInjector = null):Void
-	{
-		for (hook in hooks)
-		{
-			
-			if (Reflect.isFunction(hook))
-			{
+	public static function call(hooks:Array<Dynamic>, injector:IInjector = null):Void {
+		for (hook in hooks) {
+			if (Reflect.isFunction(hook)) {
 				hook();
 				continue;
 			}
-			
-			if (Std.is(hook, Class))
-			{
-				hook = (injector != null)
-					? injector.instantiateUnmapped(cast(hook, Class<Dynamic>))
-					/*: Type.createInstance(hook, []);*/
+
+			if (Std.is(hook, Class)) {
+				hook = (injector != null) ? injector.instantiateUnmapped(cast(hook, Class<Dynamic>)) /*: Type.createInstance(hook, []);*/
 					: Type.createInstance(hook, []);
 			}
 			hook.hook();
-			
-			
 		}
 	}
 }

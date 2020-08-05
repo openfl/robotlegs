@@ -1,10 +1,9 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.modularity.impl;
 
 import openfl.display.DisplayObjectContainer;
@@ -16,15 +15,11 @@ import robotlegs.bender.framework.api.ILogger;
 /**
  * @private
  */
-
 @:keepSub
-class ViewManagerBasedExistenceWatcher
-{
-
+class ViewManagerBasedExistenceWatcher {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _logger:ILogger;
 
 	private var _viewManager:IViewManager;
@@ -34,12 +29,10 @@ class ViewManagerBasedExistenceWatcher
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function new(context:IContext, viewManager:IViewManager)
-	{
+	public function new(context:IContext, viewManager:IViewManager) {
 		_logger = context.getLogger(this);
 		_viewManager = viewManager;
 		_context = context;
@@ -50,11 +43,8 @@ class ViewManagerBasedExistenceWatcher
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function init():Void
-	{
-		for (container in _viewManager.containers)
-		{
+	private function init():Void {
+		for (container in _viewManager.containers) {
 			_logger.debug("Adding context existence event listener to container {0}", [container]);
 			container.addEventListener(ModularContextEvent.CONTEXT_ADD, onContextAdd);
 		}
@@ -62,10 +52,8 @@ class ViewManagerBasedExistenceWatcher
 		_viewManager.addEventListener(ViewManagerEvent.CONTAINER_REMOVE, onContainerRemove);
 	}
 
-	private function destroy():Void
-	{
-		for (container in _viewManager.containers)
-		{
+	private function destroy():Void {
+		for (container in _viewManager.containers) {
 			_logger.debug("Removing context existence event listener from container {0}", [container]);
 			container.removeEventListener(ModularContextEvent.CONTEXT_ADD, onContextAdd);
 		}
@@ -73,23 +61,19 @@ class ViewManagerBasedExistenceWatcher
 		_viewManager.removeEventListener(ViewManagerEvent.CONTAINER_REMOVE, onContainerRemove);
 	}
 
-	private function onContainerAdd(event:ViewManagerEvent):Void
-	{
+	private function onContainerAdd(event:ViewManagerEvent):Void {
 		_logger.debug("Adding context existence event listener to container {0}", [event.container]);
 		event.container.addEventListener(ModularContextEvent.CONTEXT_ADD, onContextAdd);
 	}
 
-	private function onContainerRemove(event:ViewManagerEvent):Void
-	{
+	private function onContainerRemove(event:ViewManagerEvent):Void {
 		_logger.debug("Removing context existence event listener from container {0}", [event.container]);
 		event.container.removeEventListener(ModularContextEvent.CONTEXT_ADD, onContextAdd);
 	}
 
-	private function onContextAdd(event:ModularContextEvent):Void
-	{
+	private function onContextAdd(event:ModularContextEvent):Void {
 		// We might catch out own existence event, so ignore that
-		if (event.context != _context)
-		{
+		if (event.context != _context) {
 			event.stopImmediatePropagation();
 			_logger.debug("Context existence event caught. Configuring child context {0}", [event.context]);
 			_context.addChild(event.context);

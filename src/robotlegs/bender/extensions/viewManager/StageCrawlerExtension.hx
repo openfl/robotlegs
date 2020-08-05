@@ -4,7 +4,6 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.viewManager;
 
 import openfl.display.DisplayObjectContainer;
@@ -24,15 +23,11 @@ import robotlegs.bender.framework.api.ILogger;
  * This extension checks for views that might already be on the stage
  * after context initialization and ensures that those views are handled.
  */
-
 @:keepSub
-class StageCrawlerExtension implements IExtension
-{
-
+class StageCrawlerExtension implements IExtension {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _logger:ILogger;
 
 	private var _injector:IInjector;
@@ -42,12 +37,10 @@ class StageCrawlerExtension implements IExtension
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */
-	public function extend(context:IContext):Void
-	{
+	public function extend(context:IContext):Void {
 		_injector = context.injector;
 		_logger = context.getLogger(this);
 		context.afterInitializing(afterInitializing);
@@ -56,34 +49,28 @@ class StageCrawlerExtension implements IExtension
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function afterInitializing():Void
-	{
+	private function afterInitializing():Void {
 		_containerRegistry = _injector.getInstance(ContainerRegistry);
-		_injector.hasDirectMapping(IViewManager)
-			? scanViewManagedContainers()
-			: scanContextView();
+		_injector.hasDirectMapping(IViewManager) ? scanViewManagedContainers() : scanContextView();
 	}
 
-	private function scanViewManagedContainers():Void
-	{
+	private function scanViewManagedContainers():Void {
 		_logger.debug("ViewManager is installed. Checking for managed containers...");
 		var viewManager:IViewManager = _injector.getInstance(IViewManager);
-		for (container in viewManager.containers)
-		{
-			if (container.stage != null) scanContainer(container);
+		for (container in viewManager.containers) {
+			if (container.stage != null)
+				scanContainer(container);
 		}
 	}
 
-	private function scanContextView():Void
-	{
+	private function scanContextView():Void {
 		_logger.debug("ViewManager is not installed. Checking the ContextView...");
 		var contextView:ContextView = _injector.getInstance(ContextView);
-		if (contextView.view.stage != null) scanContainer(contextView.view);
+		if (contextView.view.stage != null)
+			scanContainer(contextView.view);
 	}
 
-	private function scanContainer(container:DisplayObjectContainer):Void
-	{
+	private function scanContainer(container:DisplayObjectContainer):Void {
 		var binding:ContainerBinding = _containerRegistry.getBinding(container);
 		_logger.debug("StageCrawler scanning container {0} ...", [container]);
 		new StageCrawler(binding).scan(container);

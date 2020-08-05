@@ -7,7 +7,7 @@
 package robotlegs.bender.framework.impl;
 
 import haxe.io.Error;
-import openfl.events.EventDispatcher;
+import polyfill.events.EventDispatcher;
 import org.swiftsuspenders.utils.UID;
 import robotlegs.bender.framework.api.IContext;
 import robotlegs.bender.framework.api.IInjector;

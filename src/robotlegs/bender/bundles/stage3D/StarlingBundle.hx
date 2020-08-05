@@ -5,19 +5,12 @@ import robotlegs.bender.extensions.display.stage3D.starling.StarlingStageSyncExt
 import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 
-class StarlingBundle implements IBundle
-{
+class StarlingBundle implements IBundle {
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/** @inheritDoc **/
-	public function extend(context:IContext):Void
-	{
-		context.install(
-			StarlingIntegrationExtension,
-			StarlingStageSyncExtension
-		);
-		
+	public function extend(context:IContext):Void {
+		context.install(StarlingIntegrationExtension, StarlingStageSyncExtension);
 	}
 }

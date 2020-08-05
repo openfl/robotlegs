@@ -1,17 +1,15 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.viewProcessorMap.dsl;
 
 /**
  * Maps a matcher to a process
  */
-interface IViewProcessorMapper
-{
+interface IViewProcessorMapper {
 	/**
 	 * Specifies the process to be mapped against the type or matcher.
 	 * @param processClassOrInstance An instance of a class, or a class implementing the following methods:

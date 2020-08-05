@@ -4,7 +4,6 @@
 //  NOTICE: You are permitted to use, modify, and distribute this file
 //  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.signalCommandMap.impl;
 
 import robotlegs.signal.Signal;
@@ -21,13 +20,10 @@ import robotlegs.bender.framework.api.ILogger;
  * @private
  */
 @:keepSub
-class SignalCommandTrigger implements ICommandTrigger
-{
-
+class SignalCommandTrigger implements ICommandTrigger {
 	/*============================================================================*/
 	/* Private Properties                                                         */
 	/*============================================================================*/
-
 	private var _signalClass:Class<Dynamic>;
 
 	private var _signal:AnySignal;
@@ -41,12 +37,10 @@ class SignalCommandTrigger implements ICommandTrigger
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function new(injector:IInjector, signalClass:Class<Dynamic>, processors:Array<Dynamic> = null, logger:ILogger = null)
-	{
+	public function new(injector:IInjector, signalClass:Class<Dynamic>, processors:Array<Dynamic> = null, logger:ILogger = null) {
 		_injector = injector;
 
 		_signalClass = signalClass;
@@ -57,24 +51,21 @@ class SignalCommandTrigger implements ICommandTrigger
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function createMapper():CommandMapper
-	{
+	public function createMapper():CommandMapper {
 		return new CommandMapper(_mappings);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function activate():Void
-	{
+	public function activate():Void {
 		if (!_injector.hasMapping(_signalClass))
 			_injector.map(_signalClass).asSingleton();
 		_signal = _injector.getInstance(_signalClass);
-		
+
 		if (Std.is(_signal, SignalType)) {
 			var signal0:Signal0 = cast _signal;
 			signal0.add(function() {
@@ -96,24 +87,20 @@ class SignalCommandTrigger implements ICommandTrigger
 	/**
 	 * @inheritDoc
 	 */
-	public function deactivate():Void
-	{
+	public function deactivate():Void {
 		// FIX
-		//if (_signal != null)
+		// if (_signal != null)
 		//	_signal.remove(routePayloadToCommands);
 	}
 
-	public function toString():String
-	{
+	public function toString():String {
 		return Type.getClassName(_signalClass);
 	}
 
 	/*============================================================================*/
 	/* Private Functions                                                          */
 	/*============================================================================*/
-
-	private function routePayloadToCommands(valueObjects:Array<Dynamic>):Void
-	{
+	private function routePayloadToCommands(valueObjects:Array<Dynamic>):Void {
 		var payload:CommandPayload = new CommandPayload(valueObjects, null);
 		_executor.executeCommands(_mappings.getList(), payload);
 	}

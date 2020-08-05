@@ -1,10 +1,9 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.bundles.mvcs;
 
 import org.swiftsuspenders.utils.DescribedType;
@@ -17,17 +16,12 @@ import robotlegs.bender.extensions.commandCenter.api.ICommand;
  * Any class with an execute method can be used.</p>
  */
 @:keepSub
-class Command implements DescribedType implements ICommand
-{
-
+class Command implements DescribedType implements ICommand {
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/**
 	 * @inheritDoc
 	 */
-	public function execute():Void
-	{
-	}
+	public function execute():Void {}
 }

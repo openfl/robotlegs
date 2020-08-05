@@ -1,26 +1,21 @@
 //------------------------------------------------------------------------------
-//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved. 
-// 
-//  NOTICE: You are permitted to use, modify, and distribute this file 
-//  in accordance with the terms of the license agreement accompanying it. 
+//  Copyright (c) 2009-2013 the original author or authors. All Rights Reserved.
+//
+//  NOTICE: You are permitted to use, modify, and distribute this file
+//  in accordance with the terms of the license agreement accompanying it.
 //------------------------------------------------------------------------------
-
 package robotlegs.bender.extensions.localEventMap.impl;
 
-import openfl.events.IEventDispatcher;
+import polyfill.events.IEventDispatcher;
 
 /**
  * @private
  */
-
 @:keepSub
-class EventMapConfig
-{
-
+class EventMapConfig {
 	/*============================================================================*/
 	/* Public Properties                                                          */
 	/*============================================================================*/
-
 	public var dispatcher(default, null):IEventDispatcher;
 
 	public var eventString(default, null):String;
@@ -36,12 +31,11 @@ class EventMapConfig
 	/*============================================================================*/
 	/* Constructor                                                                */
 	/*============================================================================*/
-
 	/**
 	 * @private
 	 */
-	public function new(dispatcher:IEventDispatcher, eventString:String, listener:Void->Void, eventClass:Class<Dynamic>, callback:Dynamic->Void, useCapture:Bool)
-	{
+	public function new(dispatcher:IEventDispatcher, eventString:String, listener:Void->Void, eventClass:Class<Dynamic>, callback:Dynamic->Void,
+			useCapture:Bool) {
 		this.dispatcher = dispatcher;
 		this.eventString = eventString;
 		this.listener = listener;
@@ -50,12 +44,8 @@ class EventMapConfig
 		this.useCapture = useCapture;
 	}
 
-	public function equalTo(dispatcher:IEventDispatcher, eventString:String, listener:Void->Void, eventClass:Class<Dynamic>, useCapture:Bool):Bool
-	{
-		return this.eventString == eventString
-			&& this.eventClass == eventClass
-			&& this.dispatcher == dispatcher
-			&& this.listener == listener
+	public function equalTo(dispatcher:IEventDispatcher, eventString:String, listener:Void->Void, eventClass:Class<Dynamic>, useCapture:Bool):Bool {
+		return this.eventString == eventString && this.eventClass == eventClass && this.dispatcher == dispatcher && this.listener == listener
 			&& this.useCapture == useCapture;
 	}
 }

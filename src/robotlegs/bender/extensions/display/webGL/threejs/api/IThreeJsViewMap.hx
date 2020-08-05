@@ -9,20 +9,19 @@ package robotlegs.bender.extensions.display.webGL.threejs.api;
 /**
  * The <code>IThreeJsViewMap</code> interface defines methods which will enable
  * view instance to be added or removed from mediation.
- */	
-interface IThreeJsViewMap
-{
+ */
+interface IThreeJsViewMap {
 	/**
 	 * Add view to mediator map.
-	 * 
+	 *
 	 * @param view View instance that needs to be mediated.
-	 */		
+	 */
 	function addView(view:Dynamic):Void;
-	
+
 	/**
 	 * Remove view from mediator map.
-	 * 
+	 *
 	 * @param view View instance that needs to remove mediation.
-	 */		
+	 */
 	function removeView(view:Dynamic):Void;
 }

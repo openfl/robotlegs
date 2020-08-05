@@ -6,8 +6,8 @@
 //------------------------------------------------------------------------------
 package robotlegs.bender.framework.api;
 
-import openfl.events.IEventDispatcher;
-import openfl.system.ApplicationDomain;
+import polyfill.events.IEventDispatcher;
+import polyfill.system.ApplicationDomain;
 import org.swiftsuspenders.dependencyproviders.FallbackDependencyProvider;
 import org.swiftsuspenders.mapping.InjectionMapping;
 import org.swiftsuspenders.typedescriptions.TypeDescription;

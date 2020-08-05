@@ -6,19 +6,12 @@ import robotlegs.bender.framework.api.IBundle;
 import robotlegs.bender.framework.api.IContext;
 import fuse.Fuse;
 
-class FuseBundle implements IBundle
-{
+class FuseBundle implements IBundle {
 	/*============================================================================*/
 	/* Public Functions                                                           */
 	/*============================================================================*/
-
 	/** @inheritDoc **/
-	public function extend(context:IContext):Void
-	{
-		context.install(
-			FuseIntegrationExtension,
-			FuseStageSyncExtension
-		);
-		
+	public function extend(context:IContext):Void {
+		context.install(FuseIntegrationExtension, FuseStageSyncExtension);
 	}
 }

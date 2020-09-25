@@ -32,7 +32,8 @@ class DomContainer implements IDomContainer {
 	public var onAddChild = new Signal1<IDomContainer>();
 	public var onRemoveChild = new Signal1<IDomContainer>();
 	public var children:Array<DomContainer> = [];
-	public var removeOnTransition:Bool = true;
+	public var removeOnTransition(get, set):Bool;
+	public var hidePolicy:HidePolicy = HidePolicy.REMOVE;
 
 	var parentElement:Element;
 	var added:Bool = false;
@@ -148,7 +149,7 @@ class DomContainer implements IDomContainer {
 			return value;
 		this.visible = value;
 
-		if (removeOnTransition) {
+		if (hidePolicy == HidePolicy.REMOVE) {
 			if (parentElement != null) {
 				if (visible) {
 					if (!added) {
@@ -163,11 +164,17 @@ class DomContainer implements IDomContainer {
 					}
 				}
 			}
-		} else {
+		} else if (hidePolicy == HidePolicy.VISIBILITY) {
 			if (visible) {
 				view.style.visibility = 'inherit';
 			} else {
 				view.style.visibility = 'hidden';
+			}
+		} else if (hidePolicy == HidePolicy.DISPLAY) {
+			if (visible) {
+				view.style.display = 'inherit';
+			} else {
+				view.style.display = 'none';
 			}
 		}
 
@@ -175,8 +182,23 @@ class DomContainer implements IDomContainer {
 	}
 
 	function dispatch(element:Element, eventStr:String) {
-		var event = new Event(eventStr);
-		element.dispatchEvent(event);
+		var event:Event = null;
+
+		try {
+			event = new Event(eventStr);
+		} catch (e:Dynamic) {
+			try {
+				event = js.Browser.document.createEvent('Event');
+				event.initEvent('eventStr', true, true);
+			} catch (e:Dynamic) {
+				//
+			}
+		}
+
+		if (event != null) {
+			element.dispatchEvent(event);
+		}
+
 		for (child in element.children) {
 			dispatch(child, eventStr);
 		}
@@ -268,6 +290,19 @@ class DomContainer implements IDomContainer {
 
 	function get_window():Window {
 		return window;
+	}
+
+	function get_removeOnTransition():Bool {
+		return hidePolicy == HidePolicy.REMOVE;
+	}
+
+	function set_removeOnTransition(value:Bool):Bool {
+		if (value) {
+			hidePolicy = HidePolicy.REMOVE;
+		} else {
+			hidePolicy = HidePolicy.VISIBILITY;
+		}
+		return removeOnTransition;
 	}
 }
 #end

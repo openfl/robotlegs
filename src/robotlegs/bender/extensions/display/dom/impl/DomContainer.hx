@@ -79,9 +79,11 @@ class DomContainer implements IDomContainer {
 	public function removeChild(child:DomContainer):Void {
 		children.remove(child);
 		try {
+			if (child.view.parentNode != null) {
+				child.view.parentNode.removeChild(child.view);
+			}
 			child.parentElement = null;
 			child.added = false;
-			child.view.remove();
 		} catch (e:Dynamic) {
 			trace(e);
 		}

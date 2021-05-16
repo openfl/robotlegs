@@ -100,7 +100,7 @@ class PackageMatcher implements ITypeMatcher {
 	}
 
 	private function pushValuesToStringVector(values:Array<Dynamic>, vector:Array<String>):Void {
-		if (values.length == 1 && (Std.is(values[0], Array))) {
+		if (values.length == 1 && (Std.isOfType(values[0], Array))) {
 			var flieds = Reflect.fields(values[0]);
 			for (i in 0...flieds.length) {
 				vector.push(flieds[i]);

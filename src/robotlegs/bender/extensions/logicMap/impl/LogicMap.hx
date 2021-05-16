@@ -21,7 +21,7 @@ class LogicMap implements ILogicMap implements DescribedType {
 
 		var instance:ILogic = injector.getInstance(type);
 
-		if (Std.is(initialize, Bool)) {
+		if (Std.isOfType(initialize, Bool)) {
 			if (initialize == true)
 				instance.initialize();
 		} else {

@@ -388,7 +388,7 @@ class Context extends EventDispatcher implements IContext {
 	 * @inheritDoc
 	 */
 	public function detain(instances:Dynamic):IContext {
-		if (Std.is(instances, Array)) {
+		if (Std.isOfType(instances, Array)) {
 			var instancesArray:Array<Dynamic> = cast(instances);
 			for (instance in instancesArray) {
 				_pin.detain(instance);
@@ -403,7 +403,7 @@ class Context extends EventDispatcher implements IContext {
 	 * @inheritDoc
 	 */
 	public function release(instances:Dynamic):IContext {
-		if (Std.is(instances, Array)) {
+		if (Std.isOfType(instances, Array)) {
 			var instancesArray:Array<Dynamic> = cast(instances);
 			for (instance in instancesArray) {
 				_pin.release(instance);

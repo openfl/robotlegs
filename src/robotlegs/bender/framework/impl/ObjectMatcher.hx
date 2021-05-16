@@ -11,6 +11,6 @@ class ObjectMatcher implements IMatcher {
 	public function new() {}
 
 	public function matches(item:Dynamic):Bool {
-		return Std.is(item, Class) == false;
+		return Std.isOfType(item, Class) == false;
 	}
 }

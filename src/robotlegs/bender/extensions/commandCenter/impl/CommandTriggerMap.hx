@@ -45,7 +45,7 @@ class CommandTriggerMap {
 	 */
 	public function getTrigger(params:Array<Dynamic>):ICommandTrigger {
 		var key:Dynamic = getKey(params);
-		if (Std.is(key, String) == false)
+		if (Std.isOfType(key, String) == false)
 			key = UID.instanceID(key);
 		if (_triggers[key] == null) {
 			_triggers[key] = createTrigger(params);

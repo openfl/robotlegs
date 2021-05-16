@@ -67,7 +67,7 @@ class ThreeJsViewMap implements DescribedType implements IThreeJsViewMap {
 	/** @inheritDoc **/
 	public function addView(view:Dynamic):Void {
 		if (validateView(view)) {
-			/*if (Std.is(view, IDisplayObject)) {
+			/*if (Std.isOfType(view, IDisplayObject)) {
 
 				var displayObject:IDisplayObject = view;
 				displayObject.init();
@@ -80,7 +80,7 @@ class ThreeJsViewMap implements DescribedType implements IThreeJsViewMap {
 
 	/** @inheritDoc **/
 	public function removeView(view:Dynamic):Void {
-		/*if (Std.is(view, IDisplayObject)) {
+		/*if (Std.isOfType(view, IDisplayObject)) {
 			var displayObject:IDisplayObject = view;
 			displayObject.destroy();
 		}*/
@@ -101,7 +101,7 @@ class ThreeJsViewMap implements DescribedType implements IThreeJsViewMap {
 	 * otherwise.
 	 */
 	private function validateView(view:Dynamic):Bool {
-		if (Std.is(view, Scene) || Std.is(view, Object3D)) {
+		if (Std.isOfType(view, Scene) || Std.isOfType(view, Object3D)) {
 			return true;
 		} else
 			return false;

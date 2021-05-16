@@ -66,17 +66,17 @@ class SignalCommandTrigger implements ICommandTrigger {
 			_injector.map(_signalClass).asSingleton();
 		_signal = _injector.getInstance(_signalClass);
 
-		if (Std.is(_signal, SignalType)) {
+		if (Std.isOfType(_signal, SignalType)) {
 			var signal0:Signal0 = cast _signal;
 			signal0.add(function() {
 				routePayloadToCommands([]);
 			});
-		} else if (Std.is(_signal, Signal1Type)) {
+		} else if (Std.isOfType(_signal, Signal1Type)) {
 			var signal1:Signal1<Dynamic> = cast _signal;
 			signal1.add(function(arg1:Dynamic) {
 				Reflect.makeVarArgs(routePayloadToCommands)(arg1);
 			});
-		} else if (Std.is(_signal, Signal2Type)) {
+		} else if (Std.isOfType(_signal, Signal2Type)) {
 			var signal2:Signal2<Dynamic, Dynamic> = cast _signal;
 			signal2.add(function(arg1:Dynamic, arg2:Dynamic):Void {
 				Reflect.makeVarArgs(routePayloadToCommands)(arg1, arg2);

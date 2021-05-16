@@ -134,7 +134,7 @@ class Lifecycle implements ILifecycle {
 	 */
 	public function new(target:Dynamic) {
 		_target = target;
-		if (Std.is(target, IEventDispatcher))
+		if (Std.isOfType(target, IEventDispatcher))
 			_dispatcher = cast(target, IEventDispatcher);
 		else
 			_dispatcher = new EventDispatcher(this);

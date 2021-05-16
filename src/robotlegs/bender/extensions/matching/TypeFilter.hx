@@ -84,14 +84,14 @@ class TypeFilter implements ITypeFilter {
 	public function matches(item:Dynamic):Bool {
 		var i:UInt = this.allOfTypes.length;
 		while (i-- > 0) {
-			if (!(Std.is(item, this.allOfTypes[i]))) {
+			if (!(Std.isOfType(item, this.allOfTypes[i]))) {
 				return false;
 			}
 		}
 
 		i = this.noneOfTypes.length;
 		while (i-- > 0) {
-			if (Std.is(item, this.noneOfTypes[i])) {
+			if (Std.isOfType(item, this.noneOfTypes[i])) {
 				return false;
 			}
 		}
@@ -102,7 +102,7 @@ class TypeFilter implements ITypeFilter {
 
 		i = this.anyOfTypes.length;
 		while (i-- > 0) {
-			if (Std.is(item, this.anyOfTypes[i])) {
+			if (Std.isOfType(item, this.anyOfTypes[i])) {
 				return true;
 			}
 		}

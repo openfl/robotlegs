@@ -152,7 +152,7 @@ class EventMap implements DescribedType implements IEventMap {
 	 * @param originalEventClass
 	 */
 	private function routeEventToListener(event:Event, listener:Dynamic, originalEventClass:Class<Dynamic>):Void {
-		if (Std.is(event, originalEventClass)) {
+		if (Std.isOfType(event, originalEventClass)) {
 			listener(event);
 		}
 	}

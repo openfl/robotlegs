@@ -184,7 +184,7 @@ class ViewProcessorFactoryCreateRemovedListener {
 		this.view = view;
 		this._listenersByView = _listenersByView;
 
-		if (Std.is(view, DisplayObject)) {
+		if (Std.isOfType(view, DisplayObject)) {
 			// CHECK
 			if (_listenersByView[UID.instanceID(view)] == null)
 				_listenersByView[UID.instanceID(view)] = [];

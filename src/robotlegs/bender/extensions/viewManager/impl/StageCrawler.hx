@@ -47,7 +47,7 @@ class StageCrawler {
 		var numChildren:Int = container.numChildren;
 		for (i in 0...numChildren) {
 			var child:DisplayObject = container.getChildAt(i);
-			Std.is(child, DisplayObjectContainer) ? scanContainer(cast(child, DisplayObjectContainer)) : processView(child);
+			Std.isOfType(child, DisplayObjectContainer) ? scanContainer(cast(child, DisplayObjectContainer)) : processView(child);
 		}
 	}
 

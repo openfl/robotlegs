@@ -75,7 +75,7 @@ class ConfigManager {
 			return;
 
 		#if (js)
-		if (!Std.is(config, Class)) {
+		if (!Std.isOfType(config, Class)) {
 			Reflect.setProperty(config, "constructor", Type.getClass(config));
 		}
 		#end
@@ -140,7 +140,7 @@ class ConfigManager {
 
 	private function processQueue():Void {
 		for (config in _queue) {
-			if (Std.is(config, Class)) {
+			if (Std.isOfType(config, Class)) {
 				#if js
 				_logger.debug("Now initializing. Instantiating config class {0}", [Type.getClassName(config)]);
 				#else

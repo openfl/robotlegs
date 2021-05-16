@@ -63,7 +63,7 @@ class MediatorManager {
 	 */
 	public function addMediator(mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping):Void {
 		var eventDispatcher:EventDispatcher = null;
-		if (Std.is(item, EventDispatcher)) {
+		if (Std.isOfType(item, EventDispatcher)) {
 			eventDispatcher = cast(item, EventDispatcher);
 		}
 
@@ -85,7 +85,7 @@ class MediatorManager {
 	 * @private
 	 */
 	public function removeMediator(mediator:Dynamic, item:Dynamic, mapping:IMediatorMapping):Void {
-		if (Std.is(item, EventDispatcher))
+		if (Std.isOfType(item, EventDispatcher))
 			cast(item, EventDispatcher).removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 
 		if (itemInitialized(item))
@@ -100,7 +100,7 @@ class MediatorManager {
 	}
 
 	private function itemInitialized(item:Dynamic):Bool {
-		if (flexAvailable && (Std.is(item, UIComponentClass)) && !CallProxy.hasField(item, 'initialized'))
+		if (flexAvailable && (Std.isOfType(item, UIComponentClass)) && !CallProxy.hasField(item, 'initialized'))
 			return false;
 		return true;
 	}

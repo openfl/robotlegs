@@ -43,7 +43,7 @@ class GuardsApprove {
 					return false;
 			} else {
 				var guardObject:GuardObject = null;
-				if (Std.is(guard, Class)) {
+				if (Std.isOfType(guard, Class)) {
 					var _GuardClass:GuardClass = guard;
 					if (injector != null) {
 						guardObject = injector.instantiateUnmapped(_GuardClass);

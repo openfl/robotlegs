@@ -52,7 +52,7 @@ class ExtensionInstaller {
 	public function install(extension:IExtension_Or_Class):Void {
 		if (extension == null)
 			return;
-		if (Std.is(extension, Class))
+		if (Std.isOfType(extension, Class))
 			installClass(extension);
 		else {
 			var iextension:IExtension = extension;

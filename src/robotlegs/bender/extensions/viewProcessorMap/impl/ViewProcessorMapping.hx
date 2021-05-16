@@ -136,7 +136,7 @@ class ViewProcessorMapping implements IViewProcessorMapping implements IViewProc
 	/* Private Functions                                                          */
 	/*============================================================================*/
 	private function setProcessor(processor:Dynamic):Void {
-		if (Std.is(processor, Class)) {
+		if (Std.isOfType(processor, Class)) {
 			_processorClass = cast(processor, Class<Dynamic>);
 		} else {
 			_processor = processor;

@@ -33,7 +33,7 @@ class ApplyHooks {
 				continue;
 			}
 
-			if (Std.is(hook, Class)) {
+			if (Std.isOfType(hook, Class)) {
 				hook = (injector != null) ? injector.instantiateUnmapped(cast(hook, Class<Dynamic>)) /*: Type.createInstance(hook, []);*/
 					: Type.createInstance(hook, []);
 			}

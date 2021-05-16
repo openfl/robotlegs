@@ -103,9 +103,9 @@ class TypeMatcher implements ITypeMatcher implements ITypeMatcherFactory {
 	}
 
 	private function pushValuesToClassVector(values:Array<Dynamic>, vector:Array<Class<Dynamic>>):Void {
-		var isArray = Std.is(values[0], Array);
+		var isArray = Std.isOfType(values[0], Array);
 
-		// var isClass = Std.is(values[0], Array<Class<Dynamic>>);
+		// var isClass = Std.isOfType(values[0], Array<Class<Dynamic>>);
 		if (values.length == 1 && (isArray)) {
 			var array = cast(values[0], Array<Dynamic>);
 			for (type in array) {

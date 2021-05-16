@@ -67,7 +67,7 @@ class Away3DViewMap implements DescribedType implements IAway3DViewMap {
 	/** @inheritDoc **/
 	public function addAway3DView(view:Dynamic):Void {
 		if (validateView(view)) {
-			if (Std.is(view, IDisplayObject)) {
+			if (Std.isOfType(view, IDisplayObject)) {
 				var displayObject:IDisplayObject = view;
 				displayObject.init();
 			}
@@ -78,7 +78,7 @@ class Away3DViewMap implements DescribedType implements IAway3DViewMap {
 
 	/** @inheritDoc **/
 	public function removeAway3DView(view:Dynamic):Void {
-		if (Std.is(view, IDisplayObject)) {
+		if (Std.isOfType(view, IDisplayObject)) {
 			var displayObject:IDisplayObject = view;
 			displayObject.destroy();
 		}
@@ -99,7 +99,7 @@ class Away3DViewMap implements DescribedType implements IAway3DViewMap {
 	 * otherwise.
 	 */
 	private function validateView(view:Dynamic):Bool {
-		if (Std.is(view, Scene3D) || Std.is(view, ObjectContainer3D)) {
+		if (Std.isOfType(view, Scene3D) || Std.isOfType(view, ObjectContainer3D)) {
 			return true;
 		} else
 			return false;

@@ -20,7 +20,7 @@ class ApplyThreePatch {
 	}
 
 	static function injectExtraAddCode() {
-		untyped __js__("
+		untyped js.Syntax.code("
 		var add = THREE.Object3D.prototype.add;
 		THREE.Object3D.prototype.add = function (object) {
 			
@@ -32,7 +32,7 @@ class ApplyThreePatch {
 	}
 
 	static function injectExtraRemoveCode() {
-		untyped __js__("
+		untyped js.Syntax.code("
 		var remove = THREE.Object3D.prototype.remove;
 		THREE.Object3D.prototype.remove = function (object) {
 			

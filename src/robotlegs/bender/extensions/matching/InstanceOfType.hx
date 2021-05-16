@@ -50,6 +50,6 @@ class InstanceOfMatcher implements IMatcher {
 	 * @inheritDoc
 	 */
 	public function matches(item:Dynamic):Bool {
-		return Std.is(item, _type);
+		return Std.isOfType(item, _type);
 	}
 }

@@ -58,7 +58,7 @@ class StarlingViewMap implements DescribedType implements IStarlingViewMap {
 	}
 
 	function mediateChildren(view:DisplayObject) {
-		if (Std.is(view, DisplayObjectContainer)) {
+		if (Std.isOfType(view, DisplayObjectContainer)) {
 			var v:DisplayObjectContainer = untyped view;
 			for (i in 0...v.numChildren) {
 				mediateChildren(v.getChildAt(i));
@@ -73,7 +73,7 @@ class StarlingViewMap implements DescribedType implements IStarlingViewMap {
 	}
 
 	function unmediateChildren(view:DisplayObject) {
-		if (Std.is(view, DisplayObjectContainer)) {
+		if (Std.isOfType(view, DisplayObjectContainer)) {
 			var v:DisplayObjectContainer = untyped view;
 			for (i in 0...v.numChildren) {
 				unmediateChildren(v.getChildAt(i));

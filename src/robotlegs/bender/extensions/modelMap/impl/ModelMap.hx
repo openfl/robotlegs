@@ -95,7 +95,7 @@ class ModelMap implements IModelMap implements DescribedType {
 			#if notifier
 			for (field in Reflect.fields(instance)) {
 				var prop = Reflect.getProperty(instance, field);
-				if (Std.is(prop, Notifier)) {
+				if (Std.isOfType(prop, Notifier)) {
 					addProp(field, prop, 0, name);
 				}
 			}

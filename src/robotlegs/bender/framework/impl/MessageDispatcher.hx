@@ -178,6 +178,26 @@ class Callback {
 	public var length:Int = 0;
 
 	public function new(value:Dynamic) {
+		#if flash
+		length = Reflect.field(value, "length");
+		call = (v1:Dynamic, v2:Dynamic) -> {
+			if (length == 0) {
+				var func0:Void->Void = value;
+				func0();
+			}
+			else if (length == 1) {
+				var func1:Dynamic->Void = value;
+				func1(v1);
+			}
+			else if (length == 2) {
+				var func2:Dynamic->Dynamic->Void = value;
+				func2(v1, v2);
+			}
+			else {
+				throw "Bad handler signature";
+			}
+		}
+		#else
 		var func0:Void->Void = null;
 		try {
 			func0 = value;
@@ -207,5 +227,6 @@ class Callback {
 				}
 			}
 		}
+		#end
 	}
 }

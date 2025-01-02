@@ -1,7 +1,7 @@
 The MIT License
 
 Copyright (c) 2013-2025 Joshua Granick and other OpenFL contributors
-Copyright (c) 2009 - 2013 the original author or authors
+Copyright (c) 2009-2013 the original author or authors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
